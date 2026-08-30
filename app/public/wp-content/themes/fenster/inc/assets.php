@@ -474,6 +474,19 @@ function fenster_link_card_image(string $url): string
                whole misted window rather than the leaded close-up: at card size a
                scene reads and a close-up reads as texture. */
             'double-glazing-replacement' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-view-misted-1400w.jpg',
+            /* Added 2026-08-30, found on /bow-bay-windows/ where this route is one
+               of seven cards and was the only one rendering as bare text. Uses the
+               card crop that already exists in `product_media`, cut for a 4:3 cell
+               -- the hero on this route is a 3.2:1 band and centre-crops to a wall
+               and a lampshade, which is why the crop was made in the first place.
+
+               DELIBERATELY NOT one of the `Tilt-turn-*.jpeg` mechanism shots. They
+               are Liniar studio renders, and a render among six photographs is the
+               thing this file already took off the doors hub. Also not
+               `tilt-turn-brick-1600w.webp`, which is a side-hung casement opening
+               outward and was removed from this route in 2026-08 for exactly that
+               reason -- it does not show a tilt and turn at all. */
+            'tilt-turn-windows' => '/wp-content/themes/fenster/assets/images/products/tilt-turn/tilt-turn-room-card-1200w.webp',
             'roofline' => $curated . 'liniar-roofline-fascia.jpg',
         ];
     }

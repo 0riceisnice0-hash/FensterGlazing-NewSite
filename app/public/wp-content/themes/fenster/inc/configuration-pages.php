@@ -65,9 +65,9 @@ function fenster_configuration_page_data(string $slug): array
         'french-casement-windows' => [
             'eyebrow' => 'Window configuration',
             'mechanic' => [
-                'heading' => 'The centre post is not fixed. It travels with the sash.',
-                'copy' => 'On a standard pair of windows there is a mullion down the middle, fixed to the frame, and it is still there when both windows are open. A French casement does away with it. The two sashes are side-hung and they meet each other, with the meeting stile carried on the closing leaf, so when the pair is open the aperture is the full width of the frame with nothing standing in it. It is the arrangement a pair of French doors uses, in a window.',
-                'aside' => 'This is why it is a configuration rather than a range. It changes how the opening works, not what the window is made of, so it is specified on whichever window you were already choosing.',
+                'heading' => 'The centre stile is carried on the closing sash.',
+                'copy' => 'A standard pair of windows has a mullion fixed to the frame between them, and it stays there whether the sashes are open or shut. On a French casement the two sashes are side-hung and close against each other, with the meeting stile carried on the closing leaf. Open both and the aperture is the full width of the frame.',
+                'aside' => 'The arrangement changes how the opening works rather than what the window is made of, so it is specified on the window you were already choosing.',
             ],
             /* THE OWNER'S ANSWER, ASKED FOR RATHER THAN INFERRED, 2026-08-30.
                The phrasing was "all of our windows except t&t", and taken
@@ -84,7 +84,7 @@ function fenster_configuration_page_data(string $slug): array
                arrangement. The five below ARE the answer -- anything absent from
                the list is not on it -- so nothing is actually lost except the
                tone. The matching FAQ went with it for the same reason. */
-            'products_copy' => 'It is the same window, profile, colour and hardware you would have had, opening differently. Pick the window first and add the configuration to it.',
+            'products_copy' => 'The profile, colour, glass and hardware stay whatever that window already offers.',
             'products' => [
                 ['slug' => 'casement-windows', 'material' => 'uPVC', 'note' => 'The standard 70mm Liniar EnergyPlus casement, in a French pair.'],
                 ['slug' => 'flush-casement-windows', 'material' => 'uPVC', 'note' => 'Flush sash faces, so the pair sits level with the frame all round.'],
@@ -106,8 +106,8 @@ function fenster_configuration_page_data(string $slug): array
                ours to make in advance. */
             'highlight' => [
                 'eyebrow' => 'Means of escape',
-                'heading' => 'It is the configuration you want for an escape window.',
-                'copy' => 'Where a habitable room needs a means of escape window, the thing that decides it is the CLEAR opening once the window is open. A fixed central mullion works against you twice over: it takes width out of the middle, and the width it leaves is split into two halves rather than one aperture. A French pair opens the whole way across, so the clear opening is the frame.',
+                'heading' => 'The clear opening is the full width of the frame.',
+                'copy' => 'Where a habitable room needs a means of escape window, what decides it is the clear opening once the window is open. A fixed central mullion costs you twice: it takes width out of the middle, and it splits what is left into two apertures rather than one. A French pair opens the whole way across.',
                 'criteria_heading' => 'What Approved Document B asks for',
                 'criteria' => [
                     ['label' => 'Clear openable area', 'value' => 'At least 0.33 m²'],
@@ -121,7 +121,7 @@ function fenster_configuration_page_data(string $slug): array
                 ['label' => 'Meeting stile', 'value' => 'Carried on the closing sash, so it swings away with the leaf rather than staying in the opening'],
                 ['label' => 'Locking', 'value' => 'The closing sash shoots bolts into the head and the cill, so both leaves are held into the frame rather than into each other'],
                 ['label' => 'Keeps', 'value' => 'Set where the two sashes meet, into the frame around the pair'],
-                ['label' => 'Order of opening', 'value' => 'One leaf is the master and carries the handle; which one is a choice made at survey'],
+                ['label' => 'Order of opening', 'value' => 'One leaf is the master and carries the handle, chosen at survey'],
                 ['label' => 'Glazing', 'value' => 'The same options as the window it is built in, including obscured glass and Georgian or astragal bars across the pair'],
             ],
             /* REPLACES THE uPVC COLOUR CHART, which is gated off on a
@@ -146,12 +146,12 @@ function fenster_configuration_page_data(string $slug): array
         'french-doors' => [
             'eyebrow' => 'Door configuration',
             'mechanic' => [
-                'heading' => 'Two leaves that meet each other, not a fixed post.',
-                'copy' => 'A French door is a pair of hinged doors that close against one another. There is no mullion between them: the meeting stile is carried on one of the leaves, so it swings away when that leaf does and the opening is the width of the frame rather than the width of one door. It is the arrangement the French casement borrows, at door height.',
-                'aside' => 'It is a configuration rather than a door range of its own. You choose the door, in uPVC or in aluminium, and have it as a pair.',
+                'heading' => 'One leaf carries the stile the other closes against.',
+                'copy' => 'A French door is a pair of hinged doors closing against one another rather than against a mullion. The meeting stile is carried on one leaf, so it swings away when that leaf does and the opening is the width of the frame rather than the width of one door.',
+                'aside' => 'You choose the door, in uPVC or in aluminium, and have it hung as a pair.',
             ],
             'products_heading' => 'Three doors can be built as a pair.',
-            'products_copy' => 'The profile, the colour, the glass and the hardware are whatever that door already offers. The configuration changes how it opens.',
+            'products_copy' => 'The profile, colour, glass and hardware stay whatever that door already offers.',
             'products' => [
                 ['slug' => 'upvc-doors', 'material' => 'uPVC', 'note' => 'The standard uPVC door, hung as a pair rather than a single leaf.'],
                 ['slug' => 'aluminium-doors', 'material' => 'Aluminium', 'note' => 'Sheerline aluminium, for slimmer frames around more glass.'],
@@ -159,7 +159,7 @@ function fenster_configuration_page_data(string $slug): array
             ],
             'highlight' => [
                 'eyebrow' => 'The opening you get',
-                'heading' => 'One leaf for every day, both when you need the width.',
+                'heading' => 'One leaf for every day. Both when the width matters.',
                 'copy' => 'Most of the time a French pair is used as a single door: one leaf carries the handle and is the one you walk through. The second is held shut top and bottom until you release it, and then the whole width is open. That is what the configuration is for, and it is the reason it suits a garden room, a patio or anywhere furniture has to come through.',
                 'note' => 'Which leaf carries the handle, which way the pair opens, and the threshold detail underneath are all decided at the technical survey against how the room and the outside space are actually used.',
             ],
@@ -167,7 +167,7 @@ function fenster_configuration_page_data(string $slug): array
             'detail' => [
                 ['label' => 'Meeting stile', 'value' => 'Carried on one leaf, so it travels with the door rather than staying in the opening'],
                 ['label' => 'Master leaf', 'value' => 'Takes the handle and the multi-point lock, and is the leaf used day to day'],
-                ['label' => 'Second leaf', 'value' => 'Held into the head and the cill by shootbolts, released when the full width is wanted'],
+                ['label' => 'Second leaf', 'value' => 'Held into the head and the cill by shootbolts, released when the full width is needed'],
                 ['label' => 'Opening', 'value' => 'Inward or outward, and which leaf leads, both confirmed at survey'],
                 ['label' => 'Glazing', 'value' => 'The same options as the door it is built in, including obscured glass and bars across the pair'],
             ],
@@ -188,24 +188,24 @@ function fenster_configuration_page_data(string $slug): array
         'bow-bay-windows' => [
             'eyebrow' => 'Window configuration',
             'mechanic' => [
-                'heading' => 'It is not a window. It is windows, joined at an angle.',
-                'copy' => 'A bay is a run of frames joined by angled posts so the whole thing steps out past the face of the wall. A bow does the same with more facets and shallower angles, so it reads as a curve. Either way what projects is the window you already chose, built as three, four or five lights instead of one, and the room gains the depth the run sticks out by.',
-                'aside' => 'That is why it is a configuration rather than a product. The shape is the arrangement of the frames; the window inside it is yours to pick.',
+                'heading' => 'Frames joined at an angle, standing proud of the wall.',
+                'copy' => 'A bay is a run of frames joined by angled posts, so the run steps out past the face of the wall. A bow does the same across more facets at shallower angles, which reads as a curve. What projects is the window you already chose, built as three, four or five lights rather than one, and the room gains the depth it projects.',
+                'aside' => 'The shape is the arrangement of the frames. The window inside it is specified exactly as it would be on a flat elevation.',
             ],
             'products_heading' => 'Any of our windows can form a bay.',
-            'products_copy' => 'The lights in a bay are ordinary windows joined together, so the choice is the same one you would make for a flat elevation. Fixed panes, openers, or a mixture across the run.',
+            'products_copy' => 'The lights in a bay are ordinary windows joined together. Fixed panes, openers, or a mixture across the run.',
             'products' => [
-                ['slug' => 'casement-windows', 'material' => 'uPVC', 'note' => 'The usual choice, and the one most existing bays are replaced with.'],
+                ['slug' => 'casement-windows', 'material' => 'uPVC', 'note' => 'The usual replacement for an existing uPVC or timber bay.'],
                 ['slug' => 'flush-casement-windows', 'material' => 'uPVC', 'note' => 'Flush sashes across the run, for a period elevation.'],
-                ['slug' => 'sliding-sash-windows', 'material' => 'uPVC', 'note' => 'Vertical sliders in a bay, which is how most Victorian ones were built.'],
-                ['slug' => 'tilt-turn-windows', 'material' => 'uPVC', 'note' => 'Inward opening lights, which clean from inside the room.'],
-                ['slug' => 'aluminium-windows', 'material' => 'Aluminium', 'note' => 'Slim Prestige sightlines, so the posts take less light out.'],
+                ['slug' => 'sliding-sash-windows', 'material' => 'uPVC', 'note' => 'Vertical sliders in a bay, as most Victorian bays were originally built.'],
+                ['slug' => 'tilt-turn-windows', 'material' => 'uPVC', 'note' => 'Inward opening lights, cleaned from inside the room.'],
+                ['slug' => 'aluminium-windows', 'material' => 'Aluminium', 'note' => 'Slim Prestige sightlines, so the angled posts take less of the glass.'],
                 ['slug' => 'aluminium-flush-windows', 'material' => 'Aluminium', 'note' => 'The flush aluminium outer frame across the run.'],
                 ['slug' => 'heritage-windows', 'material' => 'Aluminium', 'note' => 'Steel-look sections for a bay on a period frontage.'],
             ],
             'highlight' => [
                 'eyebrow' => 'What holds it up',
-                'heading' => 'A bay carries what is above it, so the head is the survey.',
+                'heading' => 'A bay carries the wall above it.',
                 'copy' => 'A bay stands proud of the wall, which means the wall above it is sitting on the bay rather than on the brickwork behind. On most houses that load is already carried by the existing frames, and replacing them is the moment it has to be handled properly rather than assumed.',
                 'criteria_heading' => 'What we check before it is ordered',
                 'criteria' => [
@@ -220,8 +220,8 @@ function fenster_configuration_page_data(string $slug): array
                 ['label' => 'Shape', 'value' => 'Bay in set angles, or bow across more facets for a curve'],
                 ['label' => 'Lights', 'value' => 'Three, four or five across the run, fixed or opening in any mix'],
                 ['label' => 'Posts', 'value' => 'The angled joints between lights, in the same colour as the frames'],
-                ['label' => 'Below the glass', 'value' => 'Cill, and the board or brickwork the run sits on'],
-                ['label' => 'Colour', 'value' => 'Matched across the whole run inside and out, so the bay reads as one thing'],
+                ['label' => 'Below the glass', 'value' => 'Cill, and the board or brickwork carrying the run'],
+                ['label' => 'Colour', 'value' => 'Matched across the whole run inside and out, so it reads as a single window'],
             ],
             'colours' => [
                 'copy' => 'The colour range is the range of the window you choose rather than anything the shape decides, so a bay is available in the full uPVC foil range or in any RAL colour on aluminium.',
