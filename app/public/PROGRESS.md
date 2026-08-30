@@ -5,16 +5,53 @@ Last updated: 2026-08-30
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
-2026-08-30 ran to five live releases in one day and produced eight entries. Only
+2026-08-30 ran to six live releases in one day and produced nine entries. Only
 the newest carries `START HERE`; the rest of that day are plain dated entries
 below it, labelled with the release they shipped as, so the day reads as one
-sequence rather than eight competing starting points.
+sequence rather than nine competing starting points.
 
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (configuration pages, LIVE as 10a596a7)
+## START HERE, 2026-08-30 (commercial terminology and the shopfront split, LIVE as 30e3a543)
+
+**Live is `30e3a543`, tag `live-commercial-2026-08-30f`, still not an ancestor
+of `main` (`3ff5aa18`).** Sixth isolated release, cut from `10a596a7`. Read the
+Current Truth section of `LIVECHANGES.md` first.
+
+A second-pass SEO sweep of the commercial section produced ten opportunities;
+the owner sanity-checked them down and asked for two. Both are in one data
+file, `inc/commercial-product-data.php`, and nothing else in the theme moved.
+
+- **Shopfront intent was split, not deleted.** `/office-and-retail-glazing/`
+  and `/commercial-replacement-glazing/` were both reaching for shopfront
+  searches. Rather than strip the word from one, the frontage-as-an-assembly
+  intent went to office and retail (screen, entrance doors and glass ordered
+  together) and "any size" stayed with replacement glazing alone, with a link
+  each way. The rule is written up in `AI.md` under Commercial Intent
+  Ownership so the next pass does not re-merge them.
+- **Specifier vocabulary was added where it was already true.** Manifestation,
+  stick system, and fire-rated steel doorsets to SR3 are words specifiers
+  search for and the pages already described in plainer terms. **CWCT, EN
+  14351, UKCA, EI/FD ratings, brise soleil and CSCS were identified and
+  deliberately NOT added** — they are claims, not vocabulary, and nobody has
+  confirmed them.
+- **`rsync -a` on the live deploy would have bust every `?ver=` on the site.**
+  The dry run itemised 2,162 changes for a one-file release: one transfer and
+  2,161 mtime-only fix-ups, because `-a` implies `-t` and drags live's mtimes
+  back to the repo's. The cache-buster is `filemtime()`. `--checksum` does not
+  prevent it; `--no-times` collapsed the dry run to exactly one line. The
+  documented command in `nick.md` has been corrected.
+- **A rendered page caught a duplicate photograph twice in one day.** The
+  first was self-inflicted and fixed before shipping. The second shipped:
+  `/office-and-retail-glazing/` prints the curtain walling parade shot as both
+  its Shopfronts figure and its related-products card, because that strip is
+  positional — `commercial-product.php:73` slices the first three commercial
+  routes in declaration order, on all thirteen pages. Known, logged in
+  `LIVECHANGES.md`, fix is to change the figure rather than the strip.
+
+## 2026-08-30, release 5 of 6 — configuration pages (live as `10a596a7`, superseded)
 
 **Live is `10a596a7`, tag `live-configuration-2026-08-30e`, still not an
 ancestor of `main` (`88033ca4`).** Fifth isolated release. Read the Current
@@ -37,7 +74,7 @@ is a data entry in `fenster_configuration_page_data()` plus a slug in
   doors immediately exposed a hardcoded eyebrow and a key-spec strip that
   French casement had been hiding by having no `product_specs` entry.
 
-## 2026-08-30, release 4 of 5 — integral blind stack (live as `2d8bfab7`, superseded)
+## 2026-08-30, release 4 of 6 — integral blind stack (live as `2d8bfab7`, superseded)
 
 **Live is `2d8bfab7`, tag `live-blinds-2026-08-30d`, still not an ancestor of
 `main` (`e67125c0`).** Fourth isolated release, cut from `0718b840`, and the
@@ -55,7 +92,7 @@ approved for live*. Read the Current Truth section of `LIVECHANGES.md` first.
   byte-identical, JS the same length with one four-character difference. When a
   change is one constant, the proof should be that exact.
 
-## 2026-08-30, release 3 of 5 — satin opacity and rail layout (live as `0718b840`, superseded)
+## 2026-08-30, release 3 of 6 — satin opacity and rail layout (live as `0718b840`, superseded)
 
 **Live is `0718b840`, tag `live-obscured-glass-2026-08-30c`, still not an
 ancestor of `main` (`2563cc22`).** Third isolated release, cut from
@@ -78,7 +115,7 @@ The one finding worth the whole session:
   bug as "stale" because the pane was hidden and a genuinely stale capture had
   just been hit — cost a full round.
 
-## 2026-08-30, release 2 of 5 — rail order and mobile pass (live as `c07a7c3c`, superseded)
+## 2026-08-30, release 2 of 6 — rail order and mobile pass (live as `c07a7c3c`, superseded)
 
 **Live is `c07a7c3c`, tag `live-obscured-glass-2026-08-30b`, still not an
 ancestor of `main` (`09476ddf`).** Second isolated release, cut from
@@ -98,7 +135,7 @@ Three findings worth carrying:
   drifts.** `66vw` against a true `66.667vw` sliced a tile row at every screen
   size. Use a ratio on the container instead; it also survives the scrollbar.
 
-## 2026-08-30, release 1 of 5 — the obscured glass page (live as `c11cece9`, superseded)
+## 2026-08-30, release 1 of 6 — the obscured glass page (live as `c11cece9`, superseded)
 
 **Live is `c11cece9`, tag `live-obscured-glass-2026-08-30`, and it is NOT an
 ancestor of `main` (`443a1b44`).** Read the Current Truth section of

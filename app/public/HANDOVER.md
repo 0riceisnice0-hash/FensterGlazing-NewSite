@@ -9,17 +9,19 @@ carries the standing rules, including the Configuration Page Rule that governs
 three of the routes touched most recently.
 
 
-**LIVE IS `10a596a7`**, tag `live-configuration-2026-08-30e`, verified by
+**LIVE IS `30e3a543`**, tag `live-commercial-2026-08-30f`, verified by
 checksum rather than copied from a document. **It is NOT an ancestor of `main`.**
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `10a596a7` (tag `live-configuration-2026-08-30e`) | `41c13718` |
-| test | `88033ca4` | `c6409d49` |
-| `main` | `2a712a8b` (docs only above test) | `c6409d49` |
+| live | `30e3a543` (tag `live-commercial-2026-08-30f`) | `767daf31` |
+| test | `3ff5aa18` | `581ee12e` |
+| `main` | `3ff5aa18` (docs commit above it) | `581ee12e` |
 
-Test and `main` are theme-identical; the difference is a docs commit. Live is a
-**separate line** and 246 theme files differ from `main`.
+Test and `main` are theme-identical. Live is a **separate line** and 246 theme
+files differ from `main` — one fewer than before this release, because it
+spliced `inc/commercial-product-data.php` across, so the two lines now agree
+on that one file.
 
 ### Why live is not on `main`, and what that means for you
 
@@ -46,10 +48,11 @@ So:
   live-obscured-glass-2026-08-30b  c07a7c3c   superseded
   live-obscured-glass-2026-08-30c  0718b840   superseded
   live-blinds-2026-08-30d          2d8bfab7   superseded
-  live-configuration-2026-08-30e   10a596a7   LIVE
+  live-configuration-2026-08-30e   10a596a7   superseded
+  live-commercial-2026-08-30f      30e3a543   LIVE
   ```
 
-- **Either build on `10a596a7`, or ship a range from `main`** once the rest of
+- **Either build on `30e3a543`, or ship a range from `main`** once the rest of
   `main` is approved and the line can be retired.
 
 ### How a release is cut on this line

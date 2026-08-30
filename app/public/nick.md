@@ -86,8 +86,10 @@ ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglaz
 Deploy to live, only after the range check and explicit owner approval, replacing `<SHA>` with the exact commit verified on test. Never `origin/main`:
 
 ```bash
-ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin --prune && git reset --hard <SHA> && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush"
+ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin --prune && git reset --hard <SHA> && rsync -a --no-times --checksum --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush"
 ```
+
+**`--no-times --checksum` on the live rsync, and both halves matter.** Without them the line above was `rsync -a --delete`, and on 2026-08-30 its dry run itemised **2,162 changes for a one-file release**: one real transfer and 2,161 mtime-only fix-ups. Live's theme is stamped with the date of its last deploy while the server repo carries its original checkout dates, so `-a` — which implies `-t` — drags every mtime *backwards* to the repo's. `inc/assets.php` builds the cache-buster from `filemtime()`, so that is a sitewide `?ver=` change on the CSS, the JS, all eight font faces and every video, for no content change at all. **`--checksum` alone does not fix it**: it stops the data transfer and rsync still fixes up the attribute. `--no-times` collapsed the same dry run to exactly one line. `--checksum` earns its place separately — it hashes every file on both sides, so a clean dry run is a content-level proof that a cherry-picked release is not dragging another session's work with it.
 
 **`git fetch origin --prune`, not `git fetch origin main`.** A release SHA usually sits on a release branch, and fetching only `main` leaves it unknown to the server, so the `reset --hard` fails.
 
