@@ -976,8 +976,13 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'Working hours',
                     'title' => 'Say when the building has to be usable and we will work to it.',
                     'copy' => 'Most office and retail jobs come down to when we can be noisy and when we cannot. Early starts, evening work and weekend possessions all cost differently, so it is worth agreeing them at quote stage rather than discovering the constraint in week two.',
-                    'image' => $cs_base . 'cs-heals-tottenham-court-courtyard.webp',
-                    'alt' => 'The same courtyard partway through, openings still bare and the deck in use as the working platform, with occupied offices on the floors above and around it',
+                    /* An occupied building mid-job is the subject of this
+                       section, so the photograph is the inside of one: the
+                       lounge is still furnished and in use while the unit goes
+                       in from outside. It also moved Heal's off this section,
+                       which had it three times on one page. */
+                    'image' => $commercial_base . 'comm-occupied-office-lift-in-1600w.jpg',
+                    'alt' => 'A glazed unit lifted in from outside by vacuum lifter while the office lounge it serves stays furnished and in use, with the crane and the scaffold beyond the opening',
                     'points' => ['Out of hours where needed', 'Floor by floor possession', 'Agreed noisy hours'],
                 ],
                 [
@@ -992,24 +997,29 @@ function fenster_commercial_product_pages(): array
                     'alt' => 'The converted barn offices at Water End Barn, white replacement windows set into the original brick openings with a glazed entrance screen at the end of the range',
                     'points' => ['Individual opening survey', 'Sympathetic replacements', 'Conservation constraints checked'],
                 ],
-                /* THE ONLY RETAIL FRONTAGE PHOTOGRAPH WE OWN. It is the curtain
-                   walling hero as well, and that is deliberate rather than lazy:
-                   the ground floor of that parade is a glazed screen with entrance
-                   doors in it, which is what this section is about. Replace it the
-                   moment a shopfront of ours is photographed on its own. */
+                /* THE PARADE SHOT CANNOT BE USED HERE, and the reason is not
+                   taste. It is the curtain walling card image, and the related
+                   strip on this page is POSITIONAL, not semantic:
+                   commercial-product.php takes every commercial route, drops the
+                   current one and slices the first three in declaration order,
+                   so the curtain walling card is on all thirteen pages. Putting
+                   the parade in this figure printed the same photograph twice on
+                   this page, and it shipped live on 2026-08-30 before a render
+                   caught it. This frame is the nearest true subject we own: a
+                   glazed screen with the entrance door in it, which is exactly
+                   what the copy below describes. Replace it the moment a
+                   shopfront of ours is photographed on its own, and check the
+                   first three commercial routes before choosing. */
                 [
                     'eyebrow' => 'Shopfronts',
                     'title' => 'The frontage, the entrance doors and the glass are one order.',
                     'copy' => 'A shopfront is a screen, a door and the glass in it, and specifying those separately is how the reveal, the threshold and the door swing end up disagreeing on site. We survey the existing frontage, set the screen out from the opening rather than from the drawing, and order the doors and the glass with it. Toughened and laminated glass is supplied to order, and manifestation is applied to suit the screen.',
-                    'image' => $commercial_base . 'comm-curtain-walling-parade-1600w.jpg',
-                    /* ALT CORRECTED 2026-08-30. The first version read "a glazed
-                       aluminium frontage with entrance screens at ground floor",
-                       which is not what is in the frame and asserted a material
-                       nobody has confirmed. The owner's own description when he
-                       supplied it (commit 63e44990) is "a white curtain-walled
-                       shopfront and stair screen on a high street parade", and it
-                       is confirmed as our work. Written from that. */
-                    'alt' => 'A white curtain-walled shopfront and stair screen on a high street parade, with the neighbouring units trading either side',
+                    'image' => $cs_base . 'cs-heals-tottenham-court-door.webp',
+                    /* Written from the frame itself, not from the filename. The
+                       earlier alt on this section described a photograph nobody
+                       had opened and asserted a material nobody had confirmed,
+                       which took a correction on 2026-08-30. */
+                    'alt' => 'A black framed glazed screen at ground level with the entrance door at one end and the fixed lights running on from it, the unit behind still being fitted out',
                     'points' => ['Frontage, doors and glass together', 'Toughened and laminated to order', 'Manifestation to suit the screen'],
                 ],
             ],
