@@ -6214,7 +6214,19 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   const SLAT = 12.5;
   const SLAT_T = 0.18;
   const PITCH = 11.9;
-  const STACK_PITCH = 2.15;
+  /* HOW TIGHTLY THE SLATS NEST WHEN THE BLIND IS RAISED. Owner, 2026-08-30:
+     "when they bunch up, they end about half as small irl."
+
+     2.15 stacked the 52 slats into 112mm, nearly a fifth of the 626mm drop and
+     TWELVE times the 0.18mm thickness of a slat -- far more air than a bunched
+     venetian actually holds. 1.08 puts the stack at 56mm, which is six times
+     the slat thickness: enough for the crown of a curved slat and the ladder
+     tape between them, and inside the 45-60mm stack manufacturers quote for a
+     12.5mm slat over this sort of drop.
+
+     This is the pitch of the BUNCH, not of the hanging blind -- PITCH above is
+     the spacing while the blind is down and is unaffected. */
+  const STACK_PITCH = 1.08;
   const RAIL = 15;
   /* The Notan profile: the colour matched frame sealed inside the glass that
      the blind hangs in and that the two magnets run on. Notan describe it as a
