@@ -39994,8 +39994,21 @@ html.fg-blinds-reveal-locked {
   color: var(--color-line);
 }
 
+/* THESE BANDS CARRY THEIR OWN VERTICAL RHYTHM, because `.fg-cw-intro` has none.
+   It is a layout class -- it gives the split and nothing else -- and every
+   bespoke template that uses it pairs it with a route class that supplies the
+   padding (`.fg-hw-look` and the rest). Built without one, the first band sat
+   32px under the hero against a ~100px rhythm everywhere else on the page, and
+   the owner read it immediately: "the section after the hero is bunched up".
+   Anything added to the configuration middle needs a padding rule here. */
+.fg-cfg-mechanic,
+.fg-cfg-egress,
+.fg-cfg-detail {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
 .fg-cfg-products {
-  padding: clamp(2rem, 4vw, 3.25rem) 0;
+  padding: 0 0 clamp(2.5rem, 5vw, 4rem);
 }
 
 .fg-cfg-products__grid {
@@ -40065,45 +40078,6 @@ html.fg-blinds-reveal-locked {
   color: var(--color-muted);
   font-size: var(--fg-text-sm);
   line-height: 1.45;
-}
-
-.fg-cfg-excluded {
-  padding: 0 0 clamp(2rem, 4vw, 3.25rem);
-}
-
-.fg-cfg-excluded__title {
-  margin-bottom: 1rem;
-  font-size: clamp(1.35rem, 2vw, 1.8rem);
-}
-
-.fg-cfg-excluded__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 0.9rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-cfg-excluded__list li {
-  display: grid;
-  gap: 0.3rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--color-line);
-  border-left: 3px solid rgba(0, 45, 58, 0.22);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.fg-cfg-excluded__list strong,
-.fg-cfg-excluded__list a {
-  color: var(--color-steel);
-}
-
-.fg-cfg-excluded__list span {
-  color: var(--color-muted);
-  font-size: var(--fg-text-sm);
-  line-height: 1.5;
 }
 
 .fg-cfg-criteria {

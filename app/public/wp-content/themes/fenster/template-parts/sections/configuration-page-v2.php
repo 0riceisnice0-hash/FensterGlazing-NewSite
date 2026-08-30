@@ -29,14 +29,13 @@ if ($config === []) {
 $product_names = function_exists('fenster_location_matrix_products') ? fenster_location_matrix_products() : [];
 $mechanic = is_array($config['mechanic'] ?? null) ? $config['mechanic'] : [];
 $products = is_array($config['products'] ?? null) ? $config['products'] : [];
-$excluded = is_array($config['excluded'] ?? null) ? $config['excluded'] : [];
 $egress = is_array($config['egress'] ?? null) ? $config['egress'] : [];
 $detail = is_array($config['detail'] ?? null) ? $config['detail'] : [];
 $media = is_array($args['media'] ?? null) ? $args['media'] : [];
 ?>
 
 <?php if ($mechanic !== []) : ?>
-    <section class="fg-cw-intro" aria-labelledby="fg-cfg-mechanic-title">
+    <section class="fg-cw-intro fg-cfg-mechanic" aria-labelledby="fg-cfg-mechanic-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
             <?php if (! empty($media['mechanic']['src'])) : ?>
                 <figure class="fg-cw-media">
@@ -103,34 +102,6 @@ $media = is_array($args['media'] ?? null) ? $args['media'] : [];
                                 <span class="fg-cfg-products__note"><?php echo esc_html((string) ($product['note'] ?? '')); ?></span>
                             </span>
                         </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    </section>
-<?php endif; ?>
-
-<?php if ($excluded !== []) : ?>
-    <?php /* Saying what it CANNOT go on is not a caveat, it is the other half of
-             the answer, and it is the half that otherwise turns up at survey. */ ?>
-    <section class="fg-cfg-excluded" aria-labelledby="fg-cfg-excluded-title">
-        <div class="container">
-            <h2 id="fg-cfg-excluded-title" class="fg-cfg-excluded__title"><?php echo esc_html((string) ($config['excluded_heading'] ?? '')); ?></h2>
-            <ul class="fg-cfg-excluded__list">
-                <?php foreach ($excluded as $item) : ?>
-                    <li>
-                        <?php
-                        $excluded_slug = (string) ($item['slug'] ?? '');
-                        $excluded_name = (string) ($item['name'] ?? '');
-                        ?>
-                        <strong>
-                            <?php if ($excluded_slug !== '') : ?>
-                                <a href="<?php echo esc_url(home_url('/' . $excluded_slug . '/')); ?>"><?php echo esc_html($excluded_name); ?></a>
-                            <?php else : ?>
-                                <?php echo esc_html($excluded_name); ?>
-                            <?php endif; ?>
-                        </strong>
-                        <span><?php echo esc_html((string) ($item['why'] ?? '')); ?></span>
                     </li>
                 <?php endforeach; ?>
             </ul>

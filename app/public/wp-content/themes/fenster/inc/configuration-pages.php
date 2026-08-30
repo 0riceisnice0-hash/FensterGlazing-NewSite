@@ -78,6 +78,15 @@ function fenster_configuration_page_data(string $slug): array
                leaves for a floating stile to belong to. Confirmed as: uPVC
                casement and flush, aluminium casement, flush and heritage. */
             'products_heading' => 'Five windows can be built this way.',
+            /* SAY WHAT YOU CAN HAVE, NOT WHAT YOU CANNOT. There was a band here
+               headed "Two cannot, and it is worth knowing before survey",
+               listing tilt and turn and sliding sash with the reason for each. I
+               argued it saved a conversation at survey; the owner's read,
+               2026-08-30: "why are we stating what 'cant' be done. negative af."
+               Theirs is the better call on a page whose job is to sell an
+               arrangement. The five below ARE the answer -- anything absent from
+               the list is not on it -- so nothing is actually lost except the
+               tone. The matching FAQ went with it for the same reason. */
             'products_copy' => 'It is the same window, profile, colour and hardware you would have had, opening differently. Pick the window first and add the configuration to it.',
             'products' => [
                 ['slug' => 'casement-windows', 'material' => 'uPVC', 'note' => 'The standard 70mm Liniar EnergyPlus casement, in a French pair.'],
@@ -85,11 +94,6 @@ function fenster_configuration_page_data(string $slug): array
                 ['slug' => 'aluminium-windows', 'material' => 'Aluminium', 'note' => 'Sheerline Prestige, for the slimmest sightlines across the pair.'],
                 ['slug' => 'aluminium-flush-windows', 'material' => 'Aluminium', 'note' => 'The flush Prestige outer frame, in a French pair.'],
                 ['slug' => 'heritage-windows', 'material' => 'Aluminium', 'note' => 'Slim heritage sections where the elevation is period.'],
-            ],
-            'excluded_heading' => 'Two cannot, and it is worth knowing before survey.',
-            'excluded' => [
-                ['name' => 'Tilt and turn', 'slug' => 'tilt-turn-windows', 'why' => 'The sash comes inward on its own hinges and needs its frame on all four sides to do it. There is no pair for a floating stile to belong to.'],
-                ['name' => 'Sliding sash', 'slug' => 'sliding-sash-windows', 'why' => 'The sashes move vertically past each other rather than swinging. Nothing side-hung means nothing to carry a meeting stile.'],
             ],
             /* EGRESS IS THE REASON MOST PEOPLE ARRIVE. Owner, 2026-08-30:
                "egress is totally applicable for french. it's perfect for that."

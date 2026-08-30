@@ -1012,7 +1012,15 @@ $product_quote_embeds = [
     'double-glazing-replacement' => ['label' => 'Replacement Glazed Units', 'url' => 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=3'],
     'secondary-glazing' => ['label' => 'Secondary Glazing', 'url' => 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=bd73ed10-ee26-4c12-b95e-6220826dc9d3'],
 ];
-$product_quote_embed = $product_quote_embeds[$slug] ?? null;
+/* A CONFIGURATION ROUTE GETS THE WHOLE DESIGNER, NOT ONE COLLECTION. Owner,
+   2026-08-30: "maybe the designer can just be the main page with all products
+   rather than one specific?" Right, and it also settles a wart flagged on the
+   first pass: the embed here was the uPVC collection, so a page saying "uPVC or
+   aluminium" was headed "Design and price your uPVC Windows online". The tool
+   prices one collection at a time, so pointing it at either material picks a
+   side the page deliberately does not pick. With no embed the CTAs fall through
+   to `/online-quote/`, which is the all-products designer. */
+$product_quote_embed = $is_configuration_page ? null : ($product_quote_embeds[$slug] ?? null);
 $product_quote_embed_url = is_array($product_quote_embed) ? (string) ($product_quote_embed['url'] ?? '') : '';
 $product_quote_embed_label = is_array($product_quote_embed) ? (string) ($product_quote_embed['label'] ?? $title) : $title;
 $product_quote_link = $product_quote_embed_url !== '' ? '#fenster-product-quote' : home_url('/online-quote/');
