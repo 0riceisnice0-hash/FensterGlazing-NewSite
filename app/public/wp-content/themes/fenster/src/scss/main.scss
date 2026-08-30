@@ -39969,6 +39969,195 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
 }
 
+/* CONFIGURATION PAGES. Shared by every route in
+   `fenster_configuration_routes()`, so nothing here may name one of them --
+   `french-doors` and `bow-bay-windows` are expected to use the same classes.
+   Built on the `fg-cw-` split the bespoke templates already use, so only the
+   pieces a configuration page needs that a product page does not are new: the
+   product grid, the exclusions, and the two definition lists. */
+.fg-cfg-aside {
+  margin-top: 0.9rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  line-height: 1.5;
+}
+
+.fg-cfg-products {
+  padding: clamp(2rem, 4vw, 3.25rem) 0;
+}
+
+.fg-cfg-products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cfg-products__card > a {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 45, 58, 0.08);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.fg-cfg-products__card > a:hover,
+.fg-cfg-products__card > a:focus-visible {
+  border-color: rgba(46, 172, 102, 0.42);
+  box-shadow: 0 18px 36px rgba(0, 45, 58, 0.14);
+  transform: translateY(-2px);
+}
+
+.fg-cfg-products__media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.fg-cfg-products__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cfg-products__body {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem 1.1rem;
+}
+
+.fg-cfg-products__material {
+  color: var(--color-accent-dark);
+  font-size: var(--fg-text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-cfg-products__card strong {
+  color: var(--color-steel);
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+.fg-cfg-products__note {
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  line-height: 1.45;
+}
+
+.fg-cfg-excluded {
+  padding: 0 0 clamp(2rem, 4vw, 3.25rem);
+}
+
+.fg-cfg-excluded__title {
+  margin-bottom: 1rem;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+
+.fg-cfg-excluded__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cfg-excluded__list li {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid rgba(0, 45, 58, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.fg-cfg-excluded__list strong,
+.fg-cfg-excluded__list a {
+  color: var(--color-steel);
+}
+
+.fg-cfg-excluded__list span {
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  line-height: 1.5;
+}
+
+.fg-cfg-criteria {
+  align-self: start;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 45, 58, 0.08);
+}
+
+.fg-cfg-criteria__title {
+  margin: 0 0 0.6rem;
+  color: var(--color-accent-dark);
+  font-size: var(--fg-text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-cfg-criteria dl,
+.fg-cfg-specs {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.fg-cfg-specs {
+  margin-top: 1rem;
+}
+
+.fg-cfg-criteria dl > div,
+.fg-cfg-specs > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-cfg-criteria dl > div:last-child,
+.fg-cfg-specs > div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.fg-cfg-criteria dt,
+.fg-cfg-specs dt {
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  font-weight: 700;
+}
+
+.fg-cfg-criteria dd,
+.fg-cfg-specs dd {
+  margin: 0;
+  color: var(--color-steel);
+}
+
+@media (min-width: 861px) {
+  .fg-cfg-specs > div {
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: 0 1rem;
+  }
+}
+
 .fg-cw-facts {
   display: grid;
   gap: 0.45rem;

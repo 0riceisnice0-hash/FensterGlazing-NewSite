@@ -197,6 +197,21 @@ $is_alu_doors_bespoke = $slug === 'aluminium-doors';
    for this product. The materials section in the bespoke middle carries the
    colour answer instead, so gating the band leaves no heading over nothing. */
 $is_slide_fold_bespoke = $slug === 'slide-fold-doors';
+/* CONFIGURATION ROUTES take a shared bespoke middle instead of the product
+   journey's `fg-product-why` and `fg-product-intel`, both of which frame the
+   route as one material. The gallery band below is deliberately NOT gated:
+   photographs of the arrangement are exactly what a configuration page wants.
+
+   Unlike every other flag here this one is not a slug comparison. The list
+   lives in `fenster_configuration_routes()` so the tech banner and the uPVC
+   colour chart consult the SAME list, and a route cannot end up half converted
+   -- which is how the Liniar banner survived the first pass at
+   /french-casement-windows/. */
+$is_configuration_page = function_exists('fenster_is_configuration_route')
+    && fenster_is_configuration_route($slug);
+$configuration_data = $is_configuration_page && function_exists('fenster_configuration_page_data')
+    ? fenster_configuration_page_data($slug)
+    : [];
 /* Secondary glazing replaces the middle on the same terms, and additionally
    gates off the key-specification strip the way repairs does. Owner, 2026-08-07:
    keep the strip "only if we actually have relevant stats, dont want filler
@@ -1282,7 +1297,13 @@ $upvc_colour_routes = [
     'patio-doors',
     'french-doors',
 ];
-$is_upvc_colour_product = in_array($slug, $upvc_colour_routes, true);
+/* NOT ON A CONFIGURATION ROUTE. The chart is the uPVC foil range, and on a page
+   whose whole point is that the arrangement is available in uPVC OR aluminium it
+   states half the answer as though it were all of it. The configuration middle
+   points at both colour hubs instead. `french-doors` and `bow-bay-windows` are
+   still in the list above and still get the chart; they come out of it the day
+   they are added to `fenster_configuration_routes()`, with no edit here. */
+$is_upvc_colour_product = in_array($slug, $upvc_colour_routes, true) && ! $is_configuration_page;
 $product_colours = $is_upvc_colour_product
     ? [
         ['name' => 'White', 'hex' => '#f7f6ef', 'finish' => 'Standard smooth or grained foil'],
@@ -4878,7 +4899,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && ! $is_configuration_page) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -5042,7 +5063,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && ! $is_configuration_page && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -5427,6 +5448,34 @@ if ($is_commercial_hub) {
             get_template_part('template-parts/sections/aluminium-doors-v2', null, [
                 'brand' => $brand,
                 'trust_items' => $trust_items,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php if ($is_configuration_page && $configuration_data !== []) : ?>
+            <?php
+            /* The shared configuration middle. Everything route-specific is in
+               `fenster_configuration_page_data()`, so `french-doors` and
+               `bow-bay-windows` adopt this by adding a data entry and a slug to
+               `fenster_configuration_routes()` -- no change here.
+
+               Outside the specification-choices wrapper, like every other
+               bespoke dispatch: putting one inside gates the whole middle on a
+               condition about colour swatches and it silently renders nothing,
+               which has caught two people on this project already. */
+            $configuration_media = [
+                'mechanic' => [
+                    'src' => '/wp-content/themes/fenster/assets/images/imported/French-casement-mullion.jpeg',
+                    'alt' => __('The meeting stile on a French casement, carried on the closing sash rather than fixed to the frame', 'fenster'),
+                ],
+                'detail' => [
+                    'src' => '/wp-content/themes/fenster/assets/images/imported/French-casement-shootbolts.jpeg',
+                    'alt' => __('Shootbolt locking on the closing sash of a French casement window', 'fenster'),
+                ],
+            ];
+            get_template_part('template-parts/sections/configuration-page-v2', null, [
+                'config' => $configuration_data,
+                'media' => $slug === 'french-casement-windows' ? $configuration_media : [],
             ]);
             ?>
         <?php endif; ?>

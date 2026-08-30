@@ -592,6 +592,17 @@ function fenster_product_hub_data(string $slug): array
  */
 function fenster_tech_banner_args(string $slug): array
 {
+    /* NO SINGLE-SUPPLIER BANNER ON A CONFIGURATION ROUTE. Owner, 2026-08-30:
+       "it still shows the banner for liniar which is only partially
+       applicable." It is worse than partial on a page that says the arrangement
+       is available in aluminium too -- the first panel under the hero named one
+       uPVC system. Checked against the shared list rather than a slug, so a
+       route converted later cannot keep the banner by being left in the array
+       below. */
+    if (function_exists('fenster_is_configuration_route') && fenster_is_configuration_route($slug)) {
+        return [];
+    }
+
     $energyplus_routes = [
         'casement-windows',
         'flush-casement-windows',
