@@ -11151,51 +11151,64 @@ html.fg-gallery-lightbox-open body {
    The scale goes up with the blur. The copy is only `inset: -12px` at
    scale 1.055, about 32px of overhang, and a 44px blur fades in from the pane
    edge inside that -- it shows as a pale halo down the sides. */
-/* SCATTER HARDER, WASH LESS. Owner, 2026-08-30: "irl it's actually a bit less
-   opaque but disperses the light way more, so you can see more colour but less
-   detail." That is what an acid-etched surface does — it is a DIFFUSER, not a
-   veil. It redirects light over a wide angle rather than absorbing it, so the
-   colour arriving at your eye is the average of a large patch of the scene and
-   almost none of its structure survives. The previous tuning got the second half
-   by adding opacity, which throws the colour away with the detail.
+/* SCATTER HARDER, WASH LESS, AND STOP DESATURATING. Owner, 2026-08-30, with a
+   photograph of a real satin pane against a brick wall and three white windows:
+   "less detail, more colour."
 
-   `saturate(0.8)` is gone entirely. Scattering does not desaturate — a wide
-   average of a green garden is still green — and desaturating was fighting the
-   very thing the owner is asking to see more of. What washed the colour out was
-   the white overlay, and that is what comes down instead.
+   THE PHOTOGRAPH IS THE SPEC AND IT WAS MEASURED, not admired. Cropped to the
+   glass alone (inside the frame, above the plant) and resampled to the pane's
+   950px, it reads:
 
-   MEASURED OFFLINE against the real scene files, by replicating this filter
-   chain (CSS `blur(N)` is a Gaussian of standard deviation N) and compositing
-   the ::after wash over it:
+     grain 0.360   structure 0.120   lumaSpread 9.02   colour 2.100   mean 66.4
 
-     house  blur 44 -> 72, wash .78 -> .62 : detail -27%, colour +12%, mean -2.7
-     legend blur 24 -> 44, wash .70 -> .52 : detail -24%, colour +35%, mean -2.7
+   `grain` is the phone's sensor noise and is not ours to match. The number that
+   matters is **lumaSpread** -- the standard deviation of a heavily blurred
+   luminance, i.e. how much you can still make out the SHAPE of what is behind.
+   Fine detail had already gone; large soft blobs of light and dark had not, and
+   that is what still read as "detail". Live was 11.05 against the reference's
+   9.02, and the brick wall and three windows are entirely gone in the
+   photograph while the house's roofline and pond were still shapes on the page.
 
-   72 IS THE COLOUR OPTIMUM ON THE HOUSE, not a round number — pushing further
-   starts giving colour BACK, because averaging a mixed scene converges on grey.
-   At blur 96 the gain is +1.1% against +12.1% at 72, for no useful extra
-   obscuring. The near scene has no such turning point in range, so it takes the
-   larger share of the wash reduction instead.
+   `saturate(0.8)` is deleted. Scattering does not desaturate -- a wide average
+   of a brick wall is still brick-coloured, which is exactly what the photograph
+   shows -- so it was subtracting the one thing being asked for. On the near
+   scene, removing it is the WHOLE change: +27% colour at identical geometry,
+   brightness and silhouette.
 
-   Less detail, more colour and less opaque, all three at once — which is only
-   possible because blur and wash pull the two apart. The 2026-08-29 instruction
-   still holds: detail is DOWN, so it is still a coloured silhouette rather than
-   a legible scene.
+   What lifts the pane is `brightness()` on the far scene rather than more white.
+   The earlier note is right that it multiplies and so cannot rescue a shadow,
+   but multiplying also multiplies CHROMA, which a white overlay only ever
+   dilutes. So the wash comes down and the brightness goes up, and the pane ends
+   up brighter AND more colourful than it was.
 
-   THE SCALE HAS TO FOLLOW THE BLUR, and that is the trap the note below records.
-   The copy is `inset: -12px`, so the overhang past the pane edge is
-   ((W + 24) * scale - W) / 2 — about 109px at scale 1.2 on a 950px pane, which
-   is 2.5 standard deviations of a 44px blur. Leave the scale alone and a 72px
-   blur samples empty space inside the visible pane and fades in as a pale halo
-   down both sides. 1.34 and 1.2 restore roughly that same 2.5σ margin. */
+   Measured, against live, with the zoom modelled (the scale crops the scene, so
+   judging the blur on the uncropped file overstates what survives):
+
+     house  b44->110 bright1.08->1.30 wash.78->.54 : lumaSpread 11.05 -> 8.59,
+            colour +43%, mean 56.4 -> 58.6, nothing clipped
+     legend saturate only                          : colour +27%, all else equal
+
+   THE NEAR SCENE DELIBERATELY DOES NOT TAKE THE BIG DISPERSION. Owner,
+   2026-08-29: "the close subject keeps a silhouette; the distant one goes to
+   colour alone", and the new photograph is a distant subject, so it speaks to
+   the far case. Pushing the near one further also backfires twice over: the
+   extra blur forces a bigger scale, which crops into the dark cat and pulls the
+   pane 5 points DARKER, and it raises lumaSpread rather than lowering it,
+   because a black cat on pale bedding is a silhouette by construction.
+
+   THE SCALE MUST FOLLOW THE BLUR. Overhang past the pane edge is
+   ((W + 24) * scale - W) / 2, so 1.52 gives 265px on a 950px pane -- 2.4
+   standard deviations of a 110px blur. Leave it at 1.2 and the blur samples
+   empty space inside the visible pane and fades in as a pale halo down both
+   sides. 1.12 on the near scene is 2.9σ of its 24px blur and stays as it was. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
-  filter: blur(44px) brightness(108%) contrast(0.94);
-  transform: scale(1.2);
+  filter: blur(24px) brightness(108%) contrast(0.94);
+  transform: scale(1.12);
 }
 
 .fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::before {
-  filter: blur(72px) brightness(108%) contrast(0.94);
-  transform: scale(1.34);
+  filter: blur(110px) brightness(130%) contrast(0.94);
+  transform: scale(1.52);
 }
 
 /* THE PANE IS LIFTED WITH WHITE, NOT WITH `brightness()`, and that is the whole
@@ -11228,12 +11241,14 @@ html.fg-gallery-lightbox-open body {
      rule: the wash is what was removing the colour, so it comes down while the
      blur goes up. Everything the earlier note says about lifting with white
      rather than `brightness()` still stands — there is simply less of it. */
-  opacity: 0.52;
+  /* Unchanged from live at 0.7: the near scene's lift was never the problem,
+     and dropping it only made the pane darker. The house takes .54 below. */
+  opacity: 0.7;
   mix-blend-mode: normal;
 }
 
 .fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::after {
-  opacity: 0.62;
+  opacity: 0.54;
 }
 
 /* Desktop only. Left un-scoped, this grid also applied at phone widths,
