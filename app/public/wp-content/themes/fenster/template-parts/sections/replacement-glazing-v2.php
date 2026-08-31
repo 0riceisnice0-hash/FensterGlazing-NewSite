@@ -45,7 +45,7 @@
  *   - Existing beads and gaskets are almost always reused.
  *   - We survey and measure before anything is ordered, and the survey is free.
  *   - No minimum. One unit is a job.
- *   - One to two weeks from order. A typical unit takes about an hour to fit.
+ *   - One to two weeks from order. A single unit takes an hour at most to fit.
  *   - Access is needed inside and out. We take the old glass away.
  *   - Integral blinds retrofit into most windows and doors, including frames we
  *     never fitted. The owner asked specifically for this to be included and it
@@ -96,9 +96,15 @@ $takes_glass = [
         'name' => __('Leaded, Georgian and decorative', 'fenster'),
         'copy' => __('A leaded diamond pattern or Georgian bars can be matched into the new unit, so a period window comes back looking like the one that failed rather than a flat pane in an old frame.', 'fenster'),
     ],
+    /* WIDENED 2026-08-31, owner: "this should also cover double and triple?"
+       It did not. The card was written as if like for like were a single
+       glazing rule, when it is the rule for every frame on the page, and
+       reading it as a homeowner with a double glazed unit it looked like the
+       one option that did not apply to them. Stated positively, so it carries
+       the no-conversion position without writing what is not offered. */
     [
-        'name' => __('Single glazing, like for like', 'fenster'),
-        'copy' => __('Where a frame holds a single pane, a single pane is what goes back into it, cut and fitted the same way.', 'fenster'),
+        'name' => __('Like for like, single, double or triple', 'fenster'),
+        'copy' => __('What the frame already holds is what goes back into it, cut and fitted the same way. A single pane returns as a single pane, a double as a double and a triple as a triple.', 'fenster'),
     ],
 ];
 ?>
@@ -184,9 +190,19 @@ $takes_glass = [
                 <p class="eyebrow"><?php esc_html_e('On the day', 'fenster'); ?></p>
                 <h2 id="fg-rg-day-title"><?php esc_html_e('The frame stays exactly where it is.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The beads come off, the old unit lifts out, the new one goes in and the beads go back. The beads and gaskets already on your window are almost always the ones that go back on it, so the frame, the hinges, the handles and the locks are all left as they were.', 'fenster'); ?></p>
-                <p><?php esc_html_e('It is usually one of our service engineers, sometimes a fitter, and it is a quiet job. We leave the room as we found it.', 'fenster'); ?></p>
+                <?php /* "usually one of our service engineers, sometimes a
+                         fitter" cut 2026-08-31 on the owner's instruction. The
+                         owner confirmed the same day that the same engineers do
+                         repairs and glass alike, so the distinction is an
+                         internal job title and means nothing to a homeowner. */ ?>
+                <p><?php esc_html_e('It is a quiet job, and we leave the room as we found it.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('About an hour for a typical unit, longer for several or for something awkward', 'fenster'); ?></li>
+                    <?php /* "About an hour for a typical unit, longer for
+                             several or for something awkward" corrected
+                             2026-08-31, owner: "it's an hour max for a single
+                             unit." An hour is the ceiling, not the average, and
+                             "something awkward" contradicted that. */ ?>
+                    <li><?php esc_html_e('An hour at most for a single unit, longer where there are several', 'fenster'); ?></li>
                     <li><?php esc_html_e('We need to reach the window from inside and out', 'fenster'); ?></li>
                     <li><?php esc_html_e('The old glass leaves with us', 'fenster'); ?></li>
                 </ul>
@@ -206,8 +222,14 @@ $takes_glass = [
         <div class="container">
             <div class="fg-rg-band__head">
                 <div>
-                    <p class="eyebrow"><?php esc_html_e('What we put glass into', 'fenster'); ?></p>
-                    <h2 id="fg-rg-takes-title"><?php esc_html_e('If a new unit has to be made, this is the page.', 'fenster'); ?></h2>
+                    <?php /* "What we put glass into" over "If a new unit has to
+                             be made, this is the page" was information about the
+                             WEBSITE, not about the reader's window. Nobody arrives
+                             knowing or caring which page they are on. The question
+                             underneath it is "can you do mine", and the four cards
+                             answer that, so the heading now asks it. 2026-08-31. */ ?>
+                    <p class="eyebrow"><?php esc_html_e('What we can reglaze', 'fenster'); ?></p>
+                    <h2 id="fg-rg-takes-title"><?php esc_html_e('Your frame stays, whatever it is made of.', 'fenster'); ?></h2>
                 </div>
                 <p>
                     <?php
@@ -228,7 +250,7 @@ $takes_glass = [
                            cheapest unit is £170 plus VAT. The rewrite was also
                            twice as long as what it replaced, which the owner
                            called out separately. Keep it to four sentences. */
-                        esc_html__('A %1$s is the hardware, the alignment or the seals. This page is the glass itself, made to your measurements. Plenty of jobs need both, and the same engineers price and do them together. Larger and commercial work goes through %2$s.', 'fenster'),
+                        esc_html__('A %1$s is the hardware, the alignment or the seals. This is the glass itself, made to your measurements. Plenty of jobs need both, and the same engineers price and do them together. Larger and commercial work goes through %2$s.', 'fenster'),
                         '<a class="fg-cw-link" href="' . $repairs . '">' . esc_html__('repair', 'fenster') . '</a>',
                         '<a class="fg-cw-link" href="' . $commercial . '">' . esc_html__('commercial replacement glazing', 'fenster') . '</a>'
                     );
@@ -267,29 +289,30 @@ $takes_glass = [
     <section class="fg-cw-intro" aria-labelledby="fg-rg-while-title">
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
-                <?php /* REWRITTEN 2026-08-31. This was headed "While the glass
-                         is being made" over "The one moment it costs almost
-                         nothing to change something." Owner: "this is very
-                         misleading and weird", and it was wrong twice.
+                <?php /* UPGRADES, REBUILT 2026-08-31 on the owner's brief:
+                         "it's really about potential upgrades, whether you're
+                         replacing the glass anyway or not."
 
-                         THE TIMING WAS IMPOSSIBLE. You cannot change the spec
-                         while the unit is in production; it is fixed at order.
-                         The heading described a moment that does not exist.
+                         Two earlier versions were both wrong. The first sold a
+                         saving that does not exist ("costs almost nothing"). My
+                         replacement stated the constraint instead and read as a
+                         warning, which is worse than useless to somebody deciding
+                         whether they want blinds.
 
-                         THE SAVING DID NOT EXIST EITHER. Owner-confirmed the
-                         same day: any change means a new unit, the choice is
-                         made at order, there is no discount for specifying it
-                         with the original order, and "blinds are a big
-                         upgrade". So "costs almost nothing" and "easiest and
-                         cheapest now" were both false.
+                         THE AUDIENCE IS WIDER THAN A FAILED UNIT. Somebody may
+                         want obscure glass or integral blinds in windows that are
+                         working perfectly well, and the old framing offered them
+                         nothing. That is real demand the page was turning away.
 
-                         What is true is a constraint, not a saving, and it is
-                         a better reason to decide now: choose at order or buy
-                         a second unit later. Do not reintroduce a price
-                         argument here. */ ?>
-                <p class="eyebrow"><?php esc_html_e('At the order', 'fenster'); ?></p>
-                <h2 id="fg-rg-while-title"><?php esc_html_e('Anything you want changed goes in with the order.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The unit is made to your measurements, so the glass, a blind or an aperture is settled at the point it is ordered. A change of mind after that means another unit rather than an adjustment, which is the reason to think about it now.', 'fenster'); ?></p>
+                         The ordering constraint is true and stays, but as a
+                         closing practical note rather than the headline. Do not
+                         make a price claim here: any change means a new unit,
+                         there is no discount for specifying up front, and blinds
+                         are a big upgrade. */ ?>
+                <p class="eyebrow"><?php esc_html_e('Upgrades', 'fenster'); ?></p>
+                <h2 id="fg-rg-while-title"><?php esc_html_e('New glass is a chance to change what the window does.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('A unit is built to order, so what goes inside it is up to you. Blinds sealed into the glass, obscure glass where you want privacy, an aperture for the cat, or glass that cuts noise, heat or glare. The frame, the hinges and the handles all stay as they are.', 'fenster'); ?></p>
+                <p><?php esc_html_e('It does not have to be a failed unit. If the glass in a window that is working perfectly well is not doing what you want, we can change that unit on its own and leave the rest of the window alone.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Integral blinds are the one people ask about most. The blind sits sealed inside the unit, so there is nothing hanging in the room and nothing to dust, and it goes into most windows and doors including frames we never fitted in the first place.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Integral blinds, into most windows and doors', 'fenster'); ?></li>
@@ -297,6 +320,7 @@ $takes_glass = [
                     <li><?php esc_html_e('A cat or dog flap aperture cut into the new unit', 'fenster'); ?></li>
                     <li><?php esc_html_e('Toughened, laminated, acoustic and solar control glass', 'fenster'); ?></li>
                 </ul>
+                <p><?php esc_html_e('Each unit is made to your measurements, so whatever you want in it is chosen when it is ordered.', 'fenster'); ?></p>
                 <p class="fg-cw-actions">
                     <a class="fg-cw-link" href="<?php echo $integral; ?>"><?php esc_html_e('Integral blinds', 'fenster'); ?></a>
                     <a class="fg-cw-link" href="<?php echo $obscure; ?>"><?php esc_html_e('Obscure glass', 'fenster'); ?></a>
