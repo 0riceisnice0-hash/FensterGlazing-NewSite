@@ -411,7 +411,14 @@ PHP lint example:
 - `/window-and-door-repairs/` is the job where the fault is the hardware, the alignment, the locks or the seals.
 - `/double-glazing-replacement/` is the job where **the glass itself has to be made to measure** for a frame that stays where it is.
 
-**THE BOUNDARY IS THE SUBJECT OF THE WORK, NEVER THE LOGISTICS.** An earlier version of this rule, and the copy on the glazing page, drew it as "a repair is what happens on the visit when nothing has to be ordered". The owner rejected that on 2026-08-31: *"this is nonsense, sometimes we have to order parts for a repair."* He is right, and it contradicted the repairs page directly, which is built around a parts wall, sourcing hardware for systems nobody sells any more, and saying so when a part is obsolete. **Never define a repair by whether something gets ordered.** The owner's own wording is "new unit must be ordered", which is about the glass being manufactured to the opening, not about repairs never involving an order.
+**THE BOUNDARY IS GLASS OR NOT, AND NOTHING ELSE.** An earlier version of this rule, and the copy on the glazing page, drew it as "a repair is what happens on the visit when nothing has to be ordered". The owner rejected that on 2026-08-31: *"this is nonsense, sometimes we have to order parts for a repair."* It contradicted the repairs page directly, which is built around a parts wall, sourcing hardware for systems nobody sells any more, and saying so when a part is obsolete. **Never define a repair by whether something gets ordered, or by who attends, or by how fast it is.**
+
+Owner-confirmed operational facts, 2026-08-31, and all four kill a distinction the copy might otherwise reach for:
+
+- **The split is glass or not.** For these two pages that is the whole of it. A real job can be both.
+- **A combined job is one job.** It is priced and carried out together, in one go.
+- **The same engineers do both**, so who attends is not a difference between the pages and copy must not imply it is.
+- **The `£96` repairs minimum does not apply to glass work**, because the cheapest unit is `£170` plus VAT. Do not let the two figures be presented as alternatives for the same job.
 
 Three things follow, and all three were wrong before 2026-08-31:
 
