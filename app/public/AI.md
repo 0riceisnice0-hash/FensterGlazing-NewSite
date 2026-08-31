@@ -408,8 +408,10 @@ PHP lint example:
 
 **Two residential pages, one boundary, and it is the owner's own wording: "repairs is repairs and this page covers replacement glass only (subtle difference ie new unit must be ordered), both want to link to each other as they are closely related and one job may need both."**
 
-- `/window-and-door-repairs/` is the fix that happens on the visit. Hardware, alignment, locks, seals, and glass that does not need making.
-- `/double-glazing-replacement/` is the job where **something has to be manufactured**: a sealed unit measured to an existing frame.
+- `/window-and-door-repairs/` is the job where the fault is the hardware, the alignment, the locks or the seals.
+- `/double-glazing-replacement/` is the job where **the glass itself has to be made to measure** for a frame that stays where it is.
+
+**THE BOUNDARY IS THE SUBJECT OF THE WORK, NEVER THE LOGISTICS.** An earlier version of this rule, and the copy on the glazing page, drew it as "a repair is what happens on the visit when nothing has to be ordered". The owner rejected that on 2026-08-31: *"this is nonsense, sometimes we have to order parts for a repair."* He is right, and it contradicted the repairs page directly, which is built around a parts wall, sourcing hardware for systems nobody sells any more, and saying so when a part is obsolete. **Never define a repair by whether something gets ordered.** The owner's own wording is "new unit must be ordered", which is about the glass being manufactured to the opening, not about repairs never involving an order.
 
 Three things follow, and all three were wrong before 2026-08-31:
 
