@@ -15,8 +15,8 @@ checksum rather than copied from a document. **It is NOT an ancestor of `main`.*
 | | SHA | theme tree |
 | --- | --- | --- |
 | live | `c3b8164f` (tag `live-seo-2026-08-31c`) | `78b83ddb` |
-| test | `9dac1c0b` | `cd192d3a` |
-| `main` | `9dac1c0b` (docs commit above it) | `cd192d3a` |
+| test | `093359fc` | `70a61137` |
+| `main` | `093359fc` (docs commit above it) | `70a61137` |
 
 Test and `main` are theme-identical. Live is a **separate line** and 246 theme
 files differ from `main` — one fewer than before this release, because it
