@@ -45,7 +45,7 @@
  *   - Existing beads and gaskets are almost always reused.
  *   - We survey and measure before anything is ordered, and the survey is free.
  *   - No minimum. One unit is a job.
- *   - One to two weeks from order. A typical unit takes about an hour to fit.
+ *   - One to two weeks from order. A single unit takes an hour at most to fit.
  *   - Access is needed inside and out. We take the old glass away.
  *   - Integral blinds retrofit into most windows and doors, including frames we
  *     never fitted. The owner asked specifically for this to be included and it
@@ -96,9 +96,15 @@ $takes_glass = [
         'name' => __('Leaded, Georgian and decorative', 'fenster'),
         'copy' => __('A leaded diamond pattern or Georgian bars can be matched into the new unit, so a period window comes back looking like the one that failed rather than a flat pane in an old frame.', 'fenster'),
     ],
+    /* WIDENED 2026-08-31, owner: "this should also cover double and triple?"
+       It did not. The card was written as if like for like were a single
+       glazing rule, when it is the rule for every frame on the page, and
+       reading it as a homeowner with a double glazed unit it looked like the
+       one option that did not apply to them. Stated positively, so it carries
+       the no-conversion position without writing what is not offered. */
     [
-        'name' => __('Single glazing, like for like', 'fenster'),
-        'copy' => __('Where a frame holds a single pane, a single pane is what goes back into it, cut and fitted the same way.', 'fenster'),
+        'name' => __('Like for like, single, double or triple', 'fenster'),
+        'copy' => __('What the frame already holds is what goes back into it, cut and fitted the same way. A single pane returns as a single pane, a double as a double and a triple as a triple.', 'fenster'),
     ],
 ];
 ?>
@@ -191,7 +197,12 @@ $takes_glass = [
                          internal job title and means nothing to a homeowner. */ ?>
                 <p><?php esc_html_e('It is a quiet job, and we leave the room as we found it.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('About an hour for a typical unit, longer for several or for something awkward', 'fenster'); ?></li>
+                    <?php /* "About an hour for a typical unit, longer for
+                             several or for something awkward" corrected
+                             2026-08-31, owner: "it's an hour max for a single
+                             unit." An hour is the ceiling, not the average, and
+                             "something awkward" contradicted that. */ ?>
+                    <li><?php esc_html_e('An hour at most for a single unit, longer where there are several', 'fenster'); ?></li>
                     <li><?php esc_html_e('We need to reach the window from inside and out', 'fenster'); ?></li>
                     <li><?php esc_html_e('The old glass leaves with us', 'fenster'); ?></li>
                 </ul>

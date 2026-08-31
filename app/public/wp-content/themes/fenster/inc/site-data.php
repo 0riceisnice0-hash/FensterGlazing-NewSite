@@ -2108,7 +2108,7 @@ function fenster_site_data(): array
                 'faqs' => [
                     ['question' => 'Can misted double glazing be replaced without a new window?', 'answer' => 'Usually, yes. If the frame is sound and still opening and closing properly, the failed unit comes out and a new one made to the same size goes back into it. The frame, the hinges and the handles all stay. Where the frame is rotten or no longer closing properly we will tell you what we think is worth doing.'],
                     ['question' => 'Why does cleaning it make no difference?', 'answer' => 'Because the moisture is sealed between the two panes rather than on either surface. Once the seal has failed, damp air gets into that gap and condenses against the inside of the glass, which is why the haze comes back whatever you clean it with and why it often looks worse on a cold morning.'],
-                    ['question' => 'How long does it take?', 'answer' => 'Around one to two weeks from the order, because every unit is made to your measurements. We measure first, then come back to fit, and a typical unit takes about an hour once we are there. We need to get to the window from inside and out, and the old glass leaves with us.'],
+                    ['question' => 'How long does it take?', 'answer' => 'Around one to two weeks from the order, because every unit is made to your measurements. We measure first, then come back to fit, and a single unit takes an hour at most once we are there. We need to get to the window from inside and out, and the old glass leaves with us.'],
                     /* A PUBLISHED FIGURE, 2026-08-31, owner: "double glazed
                        units on our windowcad tool start at £170+vat,
                        installed."
