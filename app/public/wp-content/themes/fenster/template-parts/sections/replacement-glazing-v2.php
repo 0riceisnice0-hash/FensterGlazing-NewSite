@@ -213,7 +213,22 @@ $takes_glass = [
                     <?php
                     printf(
                         /* translators: 1: link to the repairs page, 2: link to the commercial glazing page */
-                        esc_html__('That is the whole difference between this and a %1$s, which is what we call it when the fix happens on the visit and nothing has to be ordered. Plenty of jobs turn out to need both. Larger and commercial work is handled through %2$s.', 'fenster'),
+                        /* CORRECTED 2026-08-31, owner: "this is nonsense,
+                           sometimes we have to order parts for a repair."
+                           He is right, and the page contradicted its own
+                           sibling: the repairs page is built around a parts
+                           wall, sourcing hardware for systems nobody sells any
+                           more, and telling you when a part is obsolete.
+                           "Nothing has to be ordered" is NOT the boundary.
+
+                           The boundary is the SUBJECT of the work, not the
+                           logistics. The owner's original wording, quoted at
+                           the top of this file, is "new unit must be ordered",
+                           meaning the glass itself has to be MADE to the
+                           opening. That got flattened into "nothing has to be
+                           ordered" for repairs, which is a different claim and
+                           a false one. */
+                        esc_html__('That is the whole difference between this and a %1$s. A repair puts right the hardware, the alignment or the seals, and parts get ordered for that too where they are needed. What makes it this page is the glass itself having to be made to your measurements. Plenty of jobs turn out to need both. Larger and commercial work is handled through %2$s.', 'fenster'),
                         '<a class="fg-cw-link" href="' . $repairs . '">' . esc_html__('repair', 'fenster') . '</a>',
                         '<a class="fg-cw-link" href="' . $commercial . '">' . esc_html__('commercial replacement glazing', 'fenster') . '</a>'
                     );
