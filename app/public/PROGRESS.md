@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-30
+Last updated: 2026-08-31
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -14,7 +14,44 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (office and retail imagery, LIVE as 873234ed)
+## START HERE, 2026-08-31 (repairs and replacement glazing SEO, LIVE as 12c7732e)
+
+**Live is `12c7732e`, tag `live-seo-2026-08-31`, still not an ancestor of
+`main` (`873ca8ec`).** Eighth isolated release, cut from `873234ed`. Read the
+Current Truth section of `LIVECHANGES.md` first.
+
+A full technical-SEO brief on the two residential service pages. Five theme
+files, no CSS or JS change, nothing invented.
+
+- **THE FIX WAS STRUCTURE, NOT MORE WORDS, and that is the useful lesson.**
+  The repairs page already carried the best content of any page in its SERP: a
+  seventeen-item list naming mechanisms, friction stays, gearboxes, multi-point
+  locks and euro cylinders. It rendered as one flat `<ul>` under the heading
+  "What we are called out for", so no component-level query had anything to
+  match. Four `H3` groups now expose it. **No item added, removed or reworded**,
+  count asserted at 17 either side. The competitor that ranks for these terms is
+  a thin national roll-up saying "Milton Keynes" 60+ times, which is what told
+  me these SERPs reward exposed taxonomy and local signals rather than better
+  prose.
+- **CHECK WHAT A CLASS ALREADY DOES BEFORE ADDING CSS.** Repeating
+  `fg-rp-wall__scope` per group gave labelled bands with the borders, spacing
+  and all three responsive steps for free, so the compiled bundles stayed
+  byte-identical to live's and the release needed no rebuild.
+- **THE GLAZING PAGE NAMED THE SYMPTOM AND NEVER THE SERVICE.** "Replacement
+  glass" appeared **zero times** on a page about replacing glass, and Google was
+  already rewriting the title in results to "Double Glazing Replacement Glass in
+  Milton Keynes". Retitled; the `Service` schema follows the H1, so entity
+  clarity improved with no schema added.
+- **A SITEWIDE ANCHOR WAS CONFLATING BOTH SERVICES.** The footer's only link
+  read "Repairs and replacement units" and pointed at the glazing page, on all
+  721 pages, while repairs had no footer link at all. Split in two.
+- **NO PRICE WAS INVENTED.** Competitors publish ranges; Fenster publishes
+  nothing for replacement units anywhere, including on the prices page. That is
+  the top outstanding item and it needs the owner's figure.
+- **`curl $A` does not word-split in zsh.** Auth failed silently and the test
+  page came back as the 19-byte `401` body `nick.md` warns about.
+
+## 2026-08-30, release 7 of 7 — office and retail imagery (live as `873234ed`, superseded)
 
 **Live is `873234ed`, tag `live-commercial-2026-08-30g`, still not an ancestor
 of `main` (`c7456298`).** Seventh isolated release, cut from `30e3a543`. Read

@@ -404,6 +404,21 @@ PHP lint example:
 - **No card may leave the commercial section.** The fifth product card pointed at `/double-glazing-replacement/`, a homeowner page headed "Misted and Blown Double Glazing", which then said commercial work is handled through commercial glazing and sent the visitor back to the hub. A commercial buyer clicking the most relevant card completed a loop and landed nowhere. The render harness asserts against this by name.
 - **The proof band reads the case-study library.** It used to carry three hardcoded cards, all three linking to the `/commercial-projects/` archive rather than to a study, two with completion dates nobody had confirmed. A study added to `inc/case-studies-data.php` with `'type' => 'Commercial'` now appears here on its own, with its own photograph and its own link.
 
+## Repairs and Replacement Glazing Boundary Rule
+
+**Two residential pages, one boundary, and it is the owner's own wording: "repairs is repairs and this page covers replacement glass only (subtle difference ie new unit must be ordered), both want to link to each other as they are closely related and one job may need both."**
+
+- `/window-and-door-repairs/` is the fix that happens on the visit. Hardware, alignment, locks, seals, and glass that does not need making.
+- `/double-glazing-replacement/` is the job where **something has to be manufactured**: a sealed unit measured to an existing frame.
+
+Three things follow, and all three were wrong before 2026-08-31:
+
+- **Name the service, not the symptom.** The glazing page was headed "Misted and Blown Double Glazing" and used the phrase "replacement glass" nowhere at all. A page has to say what it sells in the words people use to buy it. "Misted", "blown", "cloudy", "foggy" and "steamed up" are how the fault is described; "replacement glass" and "sealed unit replacement" are how the service is bought. The page needs both.
+- **Anchor text must not conflate them.** The footer carried one sitewide link labelled "Repairs and replacement units" pointing at the glazing page. Any anchor naming both services and resolving to one of them actively works against this boundary. Each link names one service.
+- **Do not consolidate the informational post into the service page.** `/misted-double-glazing-cloudy-windows/` overlaps the glazing page's primary term and is a legitimately distinct informational asset. The answer to that overlap is to sharpen the service page onto commercial intent, not to canonicalise a ranking page away.
+
+**The repairs page's `repair_services` list is its strongest SEO asset and it is grouped for a reason.** It names the components the searches are made of. Keep it under headings; a flat list under a vague heading is content Google cannot match. Adding an item is welcome, and it goes inside the group it belongs to.
+
 ## Commercial Related-Products Strip Rule
 
 **The related-products strip on the thirteen commercial routes is POSITIONAL, not semantic.** `template-parts/sections/commercial-product.php` takes every commercial route, removes the current one and slices the **first three in declaration order** from `fenster_commercial_product_pages()`. It does not choose by relevance and there is no per-route `related_products` key to edit.

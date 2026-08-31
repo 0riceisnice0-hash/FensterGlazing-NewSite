@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-## Current state, 2026-08-30 — read this before touching either environment
+## Current state, 2026-08-31 — read this before touching either environment
 
 **Read in this order if you are picking this up cold:** this section, then the
 Current Truth section of `LIVECHANGES.md` (the only authority on what is live
@@ -9,14 +9,14 @@ carries the standing rules, including the Configuration Page Rule that governs
 three of the routes touched most recently.
 
 
-**LIVE IS `873234ed`**, tag `live-commercial-2026-08-30g`, verified by
+**LIVE IS `12c7732e`**, tag `live-seo-2026-08-31`, verified by
 checksum rather than copied from a document. **It is NOT an ancestor of `main`.**
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `873234ed` (tag `live-commercial-2026-08-30g`) | `d44b10a3` |
-| test | `c7456298` | `2c057836` |
-| `main` | `c7456298` (docs commit above it) | `2c057836` |
+| live | `12c7732e` (tag `live-seo-2026-08-31`) | `a2e529c8` |
+| test | `873ca8ec` | `95074e92` |
+| `main` | `873ca8ec` (docs commit above it) | `95074e92` |
 
 Test and `main` are theme-identical. Live is a **separate line** and 246 theme
 files differ from `main` — one fewer than before this release, because it
@@ -50,10 +50,11 @@ So:
   live-blinds-2026-08-30d          2d8bfab7   superseded
   live-configuration-2026-08-30e   10a596a7   superseded
   live-commercial-2026-08-30f      30e3a543   superseded
-  live-commercial-2026-08-30g      873234ed   LIVE
+  live-commercial-2026-08-30g      873234ed   superseded
+  live-seo-2026-08-31              12c7732e   LIVE
   ```
 
-- **Either build on `873234ed`, or ship a range from `main`** once the rest of
+- **Either build on `12c7732e`, or ship a range from `main`** once the rest of
   `main` is approved and the line can be retired.
 
 ### How a release is cut on this line
