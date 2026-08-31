@@ -4171,7 +4171,14 @@ if ($is_commercial_hub) {
             <?php else : ?>
                 <aside class="fg-hero__panel fg-hero-card" aria-label="<?php esc_attr_e('Project enquiry', 'fenster'); ?>">
                     <p class="fg-hero-card__kicker"><?php esc_html_e('Start here', 'fenster'); ?></p>
-                    <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : ($offers_instant_price ? 'Get pricing or book a design chat.' : 'Book a design chat.')); ?></h2>
+                    <?php /* "Get pricing or book a design chat" is the
+                             new-windows journey talking. Owner, 2026-08-31, on
+                             the replacement glazing route: "doesnt make sense
+                             this for this page." Somebody with a blown unit is
+                             not designing anything. Scoped to that one slug so
+                             every other route keeps the existing wording, and
+                             it echoes the page's own closing CTA. */ ?>
+                    <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : ($slug === 'double-glazing-replacement' ? 'Get a price, or tell us which window it is.' : ($offers_instant_price ? 'Get pricing or book a design chat.' : 'Book a design chat.'))); ?></h2>
                     <div class="fg-hero-card__logos">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
                         <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
@@ -4345,7 +4352,12 @@ if ($is_commercial_hub) {
             'copy' => 'Fenster combines local installation experience with recognised accreditations and trusted glazing system partners.',
             'trust_items' => $trust_items,
             'limit' => 7,
-            'prioritise_context' => $slug === 'sliding-sash-windows' ? 'sash windows' : '',
+            /* Glass context added 2026-08-31. The showcase led with front
+               door and bi-fold reviews on a misted-glass page, which is weak
+               proof for the person reading it. Owner: "there will be specific
+               reviews on our google page." This re-sorts rather than filters,
+               so it degrades to the existing order if none mention glass. */
+            'prioritise_context' => $slug === 'sliding-sash-windows' ? 'sash windows' : ($slug === 'double-glazing-replacement' ? 'glass' : ''),
         ]);
         ?>
     <?php endif; ?>
@@ -6337,7 +6349,7 @@ if ($is_commercial_hub) {
             'copy' => 'Fenster combines local installation experience with recognised accreditations and trusted glazing system partners.',
             'trust_items' => $trust_items,
             'limit' => 7,
-            'prioritise_context' => $slug === 'sliding-sash-windows' ? 'sash windows' : ($is_composite_doors ? 'composite door' : ''),
+            'prioritise_context' => $slug === 'sliding-sash-windows' ? 'sash windows' : ($slug === 'double-glazing-replacement' ? 'glass' : ($is_composite_doors ? 'composite door' : '')),
         ]);
         ?>
     <?php endif; ?>
