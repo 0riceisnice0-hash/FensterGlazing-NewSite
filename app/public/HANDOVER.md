@@ -9,12 +9,12 @@ carries the standing rules, including the Configuration Page Rule that governs
 three of the routes touched most recently.
 
 
-**LIVE IS `47838b36`**, tag `live-seo-2026-08-31b`, verified by
+**LIVE IS `c3b8164f`**, tag `live-seo-2026-08-31c`, verified by
 checksum rather than copied from a document. **It is NOT an ancestor of `main`.**
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `47838b36` (tag `live-seo-2026-08-31b`) | `85f5af69` |
+| live | `c3b8164f` (tag `live-seo-2026-08-31c`) | `78b83ddb` |
 | test | `9dac1c0b` | `cd192d3a` |
 | `main` | `9dac1c0b` (docs commit above it) | `cd192d3a` |
 
@@ -52,10 +52,11 @@ So:
   live-commercial-2026-08-30f      30e3a543   superseded
   live-commercial-2026-08-30g      873234ed   superseded
   live-seo-2026-08-31              12c7732e   superseded
-  live-seo-2026-08-31b             47838b36   LIVE
+  live-seo-2026-08-31b             47838b36   superseded
+  live-seo-2026-08-31c             c3b8164f   LIVE
   ```
 
-- **Either build on `47838b36`, or ship a range from `main`** once the rest of
+- **Either build on `c3b8164f`, or ship a range from `main`** once the rest of
   `main` is approved and the line can be retired.
 
 ### How a release is cut on this line

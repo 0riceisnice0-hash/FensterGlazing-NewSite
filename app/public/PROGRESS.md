@@ -14,7 +14,27 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-31 (replacement glazing publishes a price, LIVE as 47838b36)
+## START HERE, 2026-08-31 (a false definition of a repair, corrected. LIVE as c3b8164f)
+
+**Live is `c3b8164f`, tag `live-seo-2026-08-31c`.** Tenth isolated release, cut
+from `47838b36`. One theme file, one paragraph.
+
+- **The glazing page defined a repair as the job where "nothing has to be
+  ordered".** Owner: *"this is nonsense, sometimes we have to order parts for a
+  repair."* It contradicted its own sibling, which is built around a parts wall
+  and an obsolete-part diagnosis.
+- **The boundary is the SUBJECT of the work, never the logistics.** The owner's
+  wording is "new unit must be ordered", about the glass being made to the
+  opening. Flattening that into "repairs never involve an order" was a different
+  and false claim.
+- **The same error was in the `AI.md` rule written the day before**, which is
+  the more dangerous half, because a wrong standing rule propagates.
+- **A reviewed paragraph is not a verified one.** This survived the rebuild that
+  wrote it and a full SEO audit that read the boundary closely enough to write a
+  rule about it. Domain claims about how the business actually works need the
+  owner, not the codebase.
+
+## 2026-08-31, release 2 of 3 — replacement glazing publishes a price (live as `47838b36`, superseded)
 
 **Live is `47838b36`, tag `live-seo-2026-08-31b`, still not an ancestor of
 `main` (`9dac1c0b`).** Ninth isolated release, cut from `12c7732e`. Two theme
@@ -32,7 +52,7 @@ files. Read the Current Truth section of `LIVECHANGES.md` first.
   VAT at £204 and both bases were put to the owner, who chose plus VAT. Recorded
   in `inc/site-data.php` so nobody converts one side to "fix" it.
 
-## 2026-08-31, release 1 of 2 — repairs and replacement glazing SEO (live as `12c7732e`, superseded)
+## 2026-08-31, release 1 of 3 — repairs and replacement glazing SEO (live as `12c7732e`, superseded)
 
 **Live is `12c7732e`, tag `live-seo-2026-08-31`, still not an ancestor of
 `main` (`873ca8ec`).** Eighth isolated release, cut from `873234ed`. Read the
