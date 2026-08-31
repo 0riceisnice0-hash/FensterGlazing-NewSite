@@ -255,19 +255,42 @@ $takes_glass = [
         </div>
     </section>
 
-    <?php /* ---------- While the glass is being made -----------------------------
-             The one honest upsell on the page, and it is honest because the timing
-             argument is true: the unit is being manufactured from scratch, so this is
-             the only moment changing something costs almost nothing extra. Integral
-             blinds leads and gets the photograph on the owner's instruction that it
-             is a real and frequent job and wants including. */ ?>
+    <?php /* ---------- At the order ---------------------------------------------
+             This was called "the one honest upsell on the page", on the reasoning
+             that the unit is manufactured from scratch so this is "the only moment
+             changing something costs almost nothing extra". That reasoning was
+             wrong and the section was rebuilt on 2026-08-31; the detail is in the
+             comment on the copy below. There is no saving here. The argument is a
+             constraint: choose at order, or pay for a second unit. Integral blinds
+             leads and gets the photograph on the owner's instruction that it is a
+             real and frequent job and wants including. */ ?>
     <section class="fg-cw-intro" aria-labelledby="fg-rg-while-title">
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
-                <p class="eyebrow"><?php esc_html_e('While the glass is being made', 'fenster'); ?></p>
-                <h2 id="fg-rg-while-title"><?php esc_html_e('The one moment it costs almost nothing to change something.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The unit is being built from scratch to fit your frame, so anything you have been meaning to change about that window is easiest and cheapest now rather than as a job of its own later.', 'fenster'); ?></p>
-                <p><?php esc_html_e('Integral blinds are the one people are most surprised by. The blind sits sealed inside the unit, so there is nothing hanging in the room and nothing to dust, and it goes into most windows and doors including frames we never fitted in the first place.', 'fenster'); ?></p>
+                <?php /* REWRITTEN 2026-08-31. This was headed "While the glass
+                         is being made" over "The one moment it costs almost
+                         nothing to change something." Owner: "this is very
+                         misleading and weird", and it was wrong twice.
+
+                         THE TIMING WAS IMPOSSIBLE. You cannot change the spec
+                         while the unit is in production; it is fixed at order.
+                         The heading described a moment that does not exist.
+
+                         THE SAVING DID NOT EXIST EITHER. Owner-confirmed the
+                         same day: any change means a new unit, the choice is
+                         made at order, there is no discount for specifying it
+                         with the original order, and "blinds are a big
+                         upgrade". So "costs almost nothing" and "easiest and
+                         cheapest now" were both false.
+
+                         What is true is a constraint, not a saving, and it is
+                         a better reason to decide now: choose at order or buy
+                         a second unit later. Do not reintroduce a price
+                         argument here. */ ?>
+                <p class="eyebrow"><?php esc_html_e('At the order', 'fenster'); ?></p>
+                <h2 id="fg-rg-while-title"><?php esc_html_e('Anything you want changed goes in with the order.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The unit is made to your measurements, so the glass, a blind or an aperture is settled at the point it is ordered. A change of mind after that means another unit rather than an adjustment, which is the reason to think about it now.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Integral blinds are the one people ask about most. The blind sits sealed inside the unit, so there is nothing hanging in the room and nothing to dust, and it goes into most windows and doors including frames we never fitted in the first place.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Integral blinds, into most windows and doors', 'fenster'); ?></li>
                     <li><?php esc_html_e('Obscure glass where a bathroom or a landing wants privacy', 'fenster'); ?></li>
