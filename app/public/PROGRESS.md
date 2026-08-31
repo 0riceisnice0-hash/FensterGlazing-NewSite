@@ -14,7 +14,25 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-31 (repairs and replacement glazing SEO, LIVE as 12c7732e)
+## START HERE, 2026-08-31 (replacement glazing publishes a price, LIVE as 47838b36)
+
+**Live is `47838b36`, tag `live-seo-2026-08-31b`, still not an ancestor of
+`main` (`9dac1c0b`).** Ninth isolated release, cut from `12c7732e`. Two theme
+files. Read the Current Truth section of `LIVECHANGES.md` first.
+
+- **The price gap the SEO release could not close is closed.** Owner: *"double
+  glazed units on our windowcad tool start at £170+vat, installed."* It is in
+  the cost FAQ and the meta description, and it is verifiable by the reader on
+  the same WindowCAD collection the route already links to.
+- **PUBLISHING A FIGURE MEANS SWEEPING FOR THE SENTENCE THAT PROMISED NOT TO.**
+  The old answer read "we price each one rather than publish a range". Left in,
+  the page would have contradicted itself in the same accordion.
+- **The two service pages now quote on different VAT bases, deliberately.**
+  Repairs is `£96 including VAT`, this is `£170 plus VAT`. It was drafted inc
+  VAT at £204 and both bases were put to the owner, who chose plus VAT. Recorded
+  in `inc/site-data.php` so nobody converts one side to "fix" it.
+
+## 2026-08-31, release 1 of 2 — repairs and replacement glazing SEO (live as `12c7732e`, superseded)
 
 **Live is `12c7732e`, tag `live-seo-2026-08-31`, still not an ancestor of
 `main` (`873ca8ec`).** Eighth isolated release, cut from `873234ed`. Read the

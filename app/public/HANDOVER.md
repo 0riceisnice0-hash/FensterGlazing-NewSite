@@ -9,14 +9,14 @@ carries the standing rules, including the Configuration Page Rule that governs
 three of the routes touched most recently.
 
 
-**LIVE IS `12c7732e`**, tag `live-seo-2026-08-31`, verified by
+**LIVE IS `47838b36`**, tag `live-seo-2026-08-31b`, verified by
 checksum rather than copied from a document. **It is NOT an ancestor of `main`.**
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `12c7732e` (tag `live-seo-2026-08-31`) | `a2e529c8` |
-| test | `873ca8ec` | `95074e92` |
-| `main` | `873ca8ec` (docs commit above it) | `95074e92` |
+| live | `47838b36` (tag `live-seo-2026-08-31b`) | `85f5af69` |
+| test | `9dac1c0b` | `cd192d3a` |
+| `main` | `9dac1c0b` (docs commit above it) | `cd192d3a` |
 
 Test and `main` are theme-identical. Live is a **separate line** and 246 theme
 files differ from `main` — one fewer than before this release, because it
@@ -51,10 +51,11 @@ So:
   live-configuration-2026-08-30e   10a596a7   superseded
   live-commercial-2026-08-30f      30e3a543   superseded
   live-commercial-2026-08-30g      873234ed   superseded
-  live-seo-2026-08-31              12c7732e   LIVE
+  live-seo-2026-08-31              12c7732e   superseded
+  live-seo-2026-08-31b             47838b36   LIVE
   ```
 
-- **Either build on `12c7732e`, or ship a range from `main`** once the rest of
+- **Either build on `47838b36`, or ship a range from `main`** once the rest of
   `main` is approved and the line can be retired.
 
 ### How a release is cut on this line
