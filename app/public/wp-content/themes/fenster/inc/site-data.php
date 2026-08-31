@@ -2109,7 +2109,31 @@ function fenster_site_data(): array
                     ['question' => 'Can misted double glazing be replaced without a new window?', 'answer' => 'Usually, yes. If the frame is sound and still opening and closing properly, the failed unit comes out and a new one made to the same size goes back into it. The frame, the hinges and the handles all stay. Where the frame is rotten or no longer closing properly we will tell you what we think is worth doing.'],
                     ['question' => 'Why does cleaning it make no difference?', 'answer' => 'Because the moisture is sealed between the two panes rather than on either surface. Once the seal has failed, damp air gets into that gap and condenses against the inside of the glass, which is why the haze comes back whatever you clean it with and why it often looks worse on a cold morning.'],
                     ['question' => 'How long does it take?', 'answer' => 'Around one to two weeks from the order, because every unit is made to your measurements. We measure first, then come back to fit, and a typical unit takes about an hour once we are there. We need to get to the window from inside and out, and the old glass leaves with us.'],
-                    ['question' => 'What does it cost?', 'answer' => 'It depends on the size of the unit, the glass in it and how many there are, so we price each one rather than publish a range. Send rough sizes and a photograph and we can usually give you a price without coming out, or price it yourself on our online tool. There is no minimum.'],
+                    /* A PUBLISHED FIGURE, 2026-08-31, owner: "double glazed
+                       units on our windowcad tool start at £170+vat,
+                       installed."
+
+                       PLUS VAT IS THE OWNER'S EXPLICIT CHOICE, asked and
+                       answered the same day. It was drafted as £204 including
+                       VAT and he was shown both: the site's own convention to
+                       homeowners is inc VAT and the repairs page publishes
+                       "£96 including VAT", so the two sibling pages now quote
+                       on different bases. That is a known and accepted
+                       inconsistency, not an oversight. Do not "fix" it by
+                       converting this one; if the bases are ever aligned it is
+                       the owner's call which way, and both pages move together.
+
+                       "Fitted" is load-bearing and stays: competitor figures in
+                       this SERP are commonly supply-only, which is the whole
+                       reason a like-for-like number reads higher.
+
+                       The old answer said we "price each one rather than
+                       publish a range", which had to go or the page would
+                       contradict itself. The figure is verifiable by the reader
+                       on the same WindowCAD collection this route already links
+                       to, so it is a starting price with something behind it
+                       rather than a claim. */
+                    ['question' => 'What does it cost?', 'answer' => 'Units start at £170 plus VAT, fitted, and the price moves with the size of the unit, the glass in it and how many there are. Send rough sizes and a photograph and we can usually give you a price without coming out, or price it yourself on our online tool. There is no minimum.'],
                     ['question' => 'Will new glass make the room warmer?', 'answer' => 'A new unit performs the way a working one should, so where the old one had failed you will notice it. How much difference it makes overall depends on the frame around it, which is why we would rather look at the window than promise a figure. If warmth across the whole house is the aim, that is a conversation about the windows rather than the glass, and we will say so.'],
                 ],
             ],
