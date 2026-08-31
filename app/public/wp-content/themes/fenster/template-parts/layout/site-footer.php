@@ -13,7 +13,15 @@ $footer_products = [
     ['label' => 'Bifolds and sliders', 'url' => home_url('/aluminium-bifold-doors/')],
     ['label' => 'Roof lanterns', 'url' => home_url('/roof-lanterns/')],
     ['label' => 'Flat rooflights', 'url' => home_url('/flat-rooflights/')],
-    ['label' => 'Repairs and replacement units', 'url' => home_url('/double-glazing-replacement/')],
+    /* SPLIT 2026-08-31. One sitewide footer link read "Repairs and
+       replacement units" and pointed at the REPLACEMENT GLAZING page, so the
+       only footer anchor either service had led with the wrong word and the
+       repairs page had no footer link at all. It is on all 721 pages, which
+       makes it the single most repeated anchor text on the site describing
+       these two services, and it conflated the exact distinction both pages
+       exist to draw. Two links, each naming its own service. */
+    ['label' => 'Replacement glass', 'url' => home_url('/double-glazing-replacement/')],
+    ['label' => 'Window and door repairs', 'url' => home_url('/window-and-door-repairs/')],
     ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
 ];
 $footer_company = [
