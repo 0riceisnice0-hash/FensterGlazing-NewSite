@@ -706,16 +706,31 @@ $wall = [
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <?php if ($services !== []) : ?>
+            <?php /* GROUPED 2026-08-31. Each group repeats `fg-rp-wall__scope`
+                     rather than nesting inside one, which is deliberate: that
+                     class already carries the top border, the margin and the
+                     three-column list, and it already has the 2-column and
+                     1-column responsive steps. Repeating it renders the four
+                     groups as labelled bands with NO new CSS and therefore no
+                     compiled-bundle change. Do not "tidy" this into a wrapper
+                     with modifier classes without rebuilding main.css. */ ?>
+            <?php foreach ($services as $group) : ?>
+                <?php
+                $group_name = is_array($group) ? (string) ($group['group'] ?? '') : '';
+                $group_items = is_array($group) ? (array) ($group['items'] ?? []) : [];
+                if ($group_name === '' || $group_items === []) {
+                    continue;
+                }
+                ?>
                 <div class="fg-rp-wall__scope">
-                    <h3><?php esc_html_e('What we are called out for', 'fenster'); ?></h3>
+                    <h3><?php echo esc_html($group_name); ?></h3>
                     <ul>
-                        <?php foreach ($services as $service) : ?>
+                        <?php foreach ($group_items as $service) : ?>
                             <li><?php echo esc_html((string) $service); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
-            <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </section>
 

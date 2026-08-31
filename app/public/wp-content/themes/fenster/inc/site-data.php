@@ -3137,24 +3137,55 @@ function fenster_site_data(): array
            hinges, mechanisms, handles, adjustments, gaskets, cylinders, gaining
            entry, make-safe, sills, glazing reports and pet flaps. If a service
            is not on that list it does not belong here. */
+        /* GROUPED 2026-08-31, and the grouping is the whole point. These
+           seventeen were a single flat list rendered under one vague heading,
+           "What we are called out for". The content was already the best thing
+           on the page: it names mechanisms, friction stays, gearboxes,
+           multi-point locks and euro cylinders, which is exactly the language
+           the component-level searches are made of. Nothing could match it,
+           because it was seventeen list fragments under a heading that said
+           nothing. The groups put that vocabulary under headings instead, and
+           they are also the first place on the page the phrases "window
+           repairs" and "door repairs" appear as nouns rather than as a verb in
+           a sentence. No item was added, removed or reworded. */
         'repair_services' => [
-            'Window mechanisms and locks',
-            'Window hinges and friction stays',
-            'Window handles, all finishes',
-            'Sash adjustment and realignment',
-            'Weather seals and gaskets',
-            'Door realignment, single and French',
-            'Patio and bifold realignment',
-            'Door gearboxes and multi-point locks',
-            'Euro and rim cylinders, keyed alike',
-            'Door handles and backplates',
-            'Door hinges',
-            'Gaining entry after a lockout',
-            'Making a door safe after a break-in',
-            'Sill repairs',
-            'Misted and broken sealed units',
-            'Cat and dog flaps, into glass or panel',
-            'Written glazing surveys and reports',
+            [
+                'group' => 'Window repairs',
+                'items' => [
+                    'Window mechanisms and locks',
+                    'Window hinges and friction stays',
+                    'Window handles, all finishes',
+                    'Sash adjustment and realignment',
+                    'Weather seals and gaskets',
+                ],
+            ],
+            [
+                'group' => 'Door repairs',
+                'items' => [
+                    'Door realignment, single and French',
+                    'Patio and bifold realignment',
+                    'Door handles and backplates',
+                    'Door hinges',
+                    'Sill repairs',
+                ],
+            ],
+            [
+                'group' => 'Locks and security',
+                'items' => [
+                    'Door gearboxes and multi-point locks',
+                    'Euro and rim cylinders, keyed alike',
+                    'Gaining entry after a lockout',
+                    'Making a door safe after a break-in',
+                ],
+            ],
+            [
+                'group' => 'Glass and sealed units',
+                'items' => [
+                    'Misted and broken sealed units',
+                    'Cat and dog flaps, into glass or panel',
+                    'Written glazing surveys and reports',
+                ],
+            ],
         ],
         /* greenteQ Alpha TBT, the tilt and turn handle. Facts are from the VBH
            product bulletin PB_CUS_greenteQ_Alpha_TBT_Handle_101125 (10/11/25).

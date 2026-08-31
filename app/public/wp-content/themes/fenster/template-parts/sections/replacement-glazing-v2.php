@@ -117,7 +117,13 @@ $takes_glass = [
                 <p class="eyebrow"><?php esc_html_e('What has happened', 'fenster'); ?></p>
                 <h2 id="fg-rg-what-title"><?php esc_html_e('The water is on the inside, which is why cleaning it does nothing.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('A double glazed unit is two panes of glass held apart by a spacer and sealed all the way round. The seal is the part that fails. Once it goes, damp air gets into the gap, and on a cold morning it condenses against the glass where no cloth will ever reach it.', 'fenster'); ?></p>
-                <p><?php esc_html_e('That is the haze, the tide marks and the streaks that come back however many times the window is cleaned. The frame around it is usually still perfectly good, which is why the glass on its own is the job.', 'fenster'); ?></p>
+                <?php /* "Cloudy, foggy, steamed up" added 2026-08-31. The page
+                         described the fault accurately in its own words and used
+                         none of the words people type: it said misted and blown
+                         and nothing else. These are the three that come up most
+                         in competitor copy and in the way callers describe it.
+                         One sentence, once, naming them as the same failure. */ ?>
+                <p><?php esc_html_e('That is the haze, the tide marks and the streaks that come back however many times the window is cleaned. Cloudy, foggy, steamed up: they are all the same failure. The frame around it is usually still perfectly good, which is why the glass on its own is the job.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('A pane that mists over when the weather turns, then clears again', 'fenster'); ?></li>
                     <li><?php esc_html_e('Streaks and tide marks that do not wipe off from either side', 'fenster'); ?></li>
@@ -265,6 +271,37 @@ $takes_glass = [
                     loading="lazy" width="1600" height="1000">
                 <figcaption><?php esc_html_e('Integral blinds, retrofitted into an existing window', 'fenster'); ?></figcaption>
             </figure>
+        </div>
+    </section>
+
+    <?php /* ---------- Where we work -----------------------------------------
+             ADDED 2026-08-31. The page carried no statement of coverage in its
+             body at all: the towns existed only inside the `areaServed` of the
+             Service schema, which no reader sees and which says nothing on its
+             own without visible copy behind it. The repairs page has carried
+             the same claim as an FAQ since it was rebuilt, so this is the
+             sibling page catching up rather than a new claim. Towns are taken
+             from that same `areaServed` list, unchanged.
+
+             The guarantee is the owner-confirmed fact recorded at the top of
+             this file, "ten years on the sealed unit, which is what the
+             manufacturer gives us", and it is stated as exactly that: the
+             manufacturer's, on the unit. Do not widen it to the workmanship or
+             to the frame, neither of which it covers.
+
+             Reuses `fg-rg-band` unchanged, so there is no CSS to rebuild. */ ?>
+    <section class="fg-rg-band" aria-labelledby="fg-rg-where-title">
+        <div class="container">
+            <div class="fg-rg-band__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Where we work', 'fenster'); ?></p>
+                    <h2 id="fg-rg-where-title"><?php esc_html_e('Replacement glass across Milton Keynes and the towns around it.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('Bletchley, Wolverton, Stony Stratford, Newport Pagnell and Woburn Sands among them, and out into the wider Buckinghamshire, Bedfordshire and Northamptonshire area. Glass is measured on site and made to the opening it is going into, so the distance matters less than the access does.', 'fenster'); ?></p>
+            </div>
+            <p class="fg-rg-band__note">
+                <?php esc_html_e('Every sealed unit we fit carries a ten year guarantee from the manufacturer that made it.', 'fenster'); ?>
+            </p>
         </div>
     </section>
 
