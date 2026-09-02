@@ -722,6 +722,24 @@ are the repair proposition.
 - **A NEW FILTER FOLDS AN EXPANDED PANEL BACK.** A filter is a new first look; leaving a panel expanded means somebody who filters to six doors is handed a "show fewer" button that does nothing useful.
 - **THE FILTER BAR SHIPS `hidden` AND THE CONTROLLER REVEALS IT**, the same bargain the collection switcher makes: with no JavaScript all six grids are complete and every link still works.
 
+## Composite Page Order Rule
+
+- **THE QUIZ IS THE LAST SECTION BEFORE THE ENQUIRY FORM, AND IT IS RENDERED FROM `generated-page.php`, NOT FROM `composite-doors-v2.php`.** Owner instruction 2026-08-27: *"move the quiz to be a little section at the bottom."*
+- **THE ARGUMENT FOR IT BEING THIRD WAS RIGHT ABOUT THE SENTENCE AND WRONG ABOUT THE PAGE.** Its opening line was that 142 doors is too many to choose from cold, which only lands after you have scrolled past 142 doors, so it sat under the range. But a five-question game is not what somebody who has just arrived wants, and putting it third made the page's own range look like something to be rescued from. At the bottom it is what it actually is: a shortcut for a reader who has been through the lot and still cannot pick. **The standfirst and the caveat were rewritten for the new position; do not move it back without moving them.**
+- **IT IS A CONTAINED PANEL, NOT A FULL-BLEED BAND.** The enquiry form directly under it is already the page's closing dark moment and two bands in a row is one too many.
+- **THE PAGE ORDER IS:** hero, choosing (the range), the cutaway, the guarantee, the through-link, the finishes, FAQ, quote tool, reviews, case studies, quiz, enquiry.
+
+## Composite Tail Rule
+
+- **THE TAIL IS ONE RUN OF PROOF AND PRICE, NOT FIVE CHAPTERS.** FAQ, quote tool, reviews and case studies meet at one padding rather than two, because five sections at 84px top and bottom put 168px of nothing between each. The quiz keeps a full join above it, because it IS a change of register and the reader should feel it arrive.
+- **THE QUOTE TOOL WAS RENDERING AT 394px.** It is the page's primary conversion surface and a door configurator needs room to draw a door; at that height the tool is mostly its own chrome, which is why the section read as broken. `clamp(520px, 62vh, 680px)` on this route.
+- **EQUAL CARDS WITH UNEQUAL CONTENTS NEED A FLEX FLOOR, NOT A GRID ONE.** Both the case-study and review cards left a band of white under the shortest one's link. `margin-top: auto` is the fix and **it does not work in a grid with `align-content: start`**: the grid packs its rows to the top and leaves the free space at the container's bottom, where an item's own auto margin cannot reach it. In a flex column the auto margin consumes it.
+
+### Two corrections to the design audit
+
+- **THE REVIEWS RAIL DOES NOT START MID-CARD.** The carousel auto-advances, and a screenshot taken seven seconds after load catches it between cards. That is the component working. **A moving component cannot be audited from one still.**
+- **THE "29 DISTINCT BOX-SHADOWS" FIGURE COUNTED THE SLAB DRAWING.** Recorded in full under the Design System Rule above.
+
 ## Composite Finishes Chapter Rule
 
 - **IT IS ONE SURFACE WITH THREE NUMBERED STEPS, NOT THREE SECTIONS ON BARE CANVAS.** It was 3,992px at 1440 — thirty per cent of the page — running glass into colour into handles with no change of ground and nothing marking where one decision ended and the next began. 3,408px now, and 6,828 to 4,128 on a phone.
