@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `d9e0ea3d`, NOT LIVE)
+## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `4cf04368`, NOT LIVE)
 
 Owner: *"the comparisons. they need to be full screen and less spreadsheet.
 with the ability to click left or right to see the other models ... big view of
@@ -63,6 +63,23 @@ cool animation. do this is the test site"*. Live is unmoved at `f26681b0`.
   1440x900 (controls bottom at 815px) and on a 720px laptop, a tall monitor
   gets a 720px stage, and the explanation is what runs on below. Shipped to
   test as `d9e0ea3d` and re-verified at 1440x900, 1440x1128 and 390x844.
+- **Third pass, same day, from the owner's second review:** *"i dont like the
+  flashiness that happens when you click next. and i need it to look less
+  like claude designed it and more wow. creative. cool wow factor. animations.
+  subtle colour choices, hand crafted with passion."* The flash was the facts
+  panel replaying its entrance, tiles staggering, on every change; it now
+  cross-fades in place (150ms out, 320ms in, nothing moves). The look moved
+  from a card on the canvas to a dark steel showroom band: the three windows
+  stand on a lit floor with their reflections in it (the same render flipped
+  and masked inside each slide, so it inherits position, scale and angle),
+  angled in towards the middle one, with a blurred glow behind it that shifts
+  tint per model and a staggered rise the first time the stage enters the
+  viewport. The meeting rail scale under the stage IS the switch: three stops
+  on one track and a marker that glides between them, arrows at either end.
+  The facts are hairline rows on dark glass with the rail photograph beside
+  the name. Shipped to test as `4cf04368` and re-verified at 1440x900,
+  1440x1128 and 390x844: stage and controls inside the first screen, no
+  overflow, no errors of ours.
 - **The other session committed twice in this checkout while this was in
   progress**, and neither commit swept the in-progress files, which was
   checked before pushing. The rebase step was blocked by that session's
