@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `a6355b85`, NOT LIVE)
+## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `d9e0ea3d`, NOT LIVE)
 
 Owner: *"the comparisons. they need to be full screen and less spreadsheet.
 with the ability to click left or right to see the other models ... big view of
@@ -50,6 +50,19 @@ cool animation. do this is the test site"*. Live is unmoved at `f26681b0`.
   only* fails its withdrawal call with a CORS error from the Marketing
   Dashboard (`authorization` is not in `Access-Control-Allow-Headers` on the
   preflight for `/api/website/withdraw`). Recorded, not fixed.
+- **Second pass, same day, from the owner's review on test:** *"need something
+  in the empty box looking space. like just a written bit about that window.
+  what it all means etc. and we still need the label under the currently
+  selected window as currently it dissapeirs."* Each panel now ends with two
+  short paragraphs under `What the details mean`, written from the figures
+  above them and kept in `meaning` on the model data (about 100 words a
+  model), and the selected window wears a dark name tag at every width; the
+  side tags stay light on desktop and are hidden on a phone. The stage stopped
+  stretching to the panel: it is `clamp(420px, 100svh - header - 250px,
+  720px)` tall, so the stage and its controls stay inside the first screen at
+  1440x900 (controls bottom at 815px) and on a 720px laptop, a tall monitor
+  gets a 720px stage, and the explanation is what runs on below. Shipped to
+  test as `d9e0ea3d` and re-verified at 1440x900, 1440x1128 and 390x844.
 - **The other session committed twice in this checkout while this was in
   progress**, and neither commit swept the in-progress files, which was
   checked before pushing. The rebase step was blocked by that session's
