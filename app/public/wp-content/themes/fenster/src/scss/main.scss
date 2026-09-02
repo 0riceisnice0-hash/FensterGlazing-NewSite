@@ -50580,15 +50580,22 @@ html.fg-blinds-reveal-locked {
  * ----------------------------------------------------------------- */
 
 .fg-wd-figure--band .fg-wd-figure__grid {
-  grid-template-columns: minmax(0, 22rem) minmax(0, 32rem);
+  /* Both tracks sized to their content rather than to a fraction, which is
+     what closed the hole. The right one is wider than its own measure on
+     purpose: the rules between the caveats run the full column and the text
+     rags inside them, so the band has an edge without a 90-character line. */
+  grid-template-columns: minmax(0, 22rem) minmax(0, 38rem);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: start;
 }
+
+.fg-wd-figure--band .fg-wd-figure__caveats li { max-width: 62ch; }
 
 /* The prose that used to sit under the numeral. It leads the right column, so
    it is a step up from the caveats under it. */
 .fg-wd-figure__lede {
   margin: 0 0 clamp(1.6rem, 3vw, 2.4rem);
+  max-width: 60ch;
   color: rgba(255, 255, 255, 0.86);
   font-size: 1.02rem;
   line-height: 1.6;
