@@ -49699,3 +49699,47 @@ html.fg-blinds-reveal-locked {
      need to be 760px of iframe before the enquiry form. */
   .fg-cdq__frame iframe { height: clamp(480px, 56vh, 620px); }
 }
+
+/* ==================================================================
+ * THE TAIL, 2026-08-27
+ *
+ * Five sections at 700-950px each on flat canvas, and three real faults
+ * in them. Scoped to this route: every component here is shared.
+ *
+ * A CORRECTION TO THE DESIGN AUDIT FIRST. It listed the reviews rail as
+ * "starting mid-card". It does not: the carousel auto-advances, and a
+ * screenshot taken seven seconds in catches it between cards. That is
+ * the component working. Nothing to fix, and the finding was wrong.
+ * ================================================================== */
+
+.generated-page--composite-doors {
+
+  /* THE QUOTE TOOL IS THE PAGE'S PRIMARY CONVERSION SURFACE AND IT WAS
+     RENDERING AS A 394px WHITE BOX. A door configurator needs room to
+     draw a door: at that height the tool is mostly its own chrome, which
+     is why the section read as broken rather than as a tool. */
+  .fg-product-quote-embed__frame {
+    height: clamp(520px, 62vh, 680px);
+  }
+
+  /* The three case-study cards are equal height and their CONTENTS were
+     not, so the shortest left a band of white under its link while the
+     other two ran on. The link goes to the floor of the card and the
+     three line up. */
+  .fg-cs-card__body {
+    display: grid;
+    align-content: start;
+    height: 100%;
+  }
+
+  .fg-cs-card__link,
+  .fg-cs-card__more { margin-top: auto; padding-top: 0.6rem; }
+
+  /* The FAQ's left track was 393px holding a 102px sticky heading, so a
+     third of the row was reserved for two lines of type. The questions
+     take the width instead. */
+  .fg-product-faq__grid {
+    grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+}
