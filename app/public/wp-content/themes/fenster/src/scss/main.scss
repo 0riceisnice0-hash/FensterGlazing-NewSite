@@ -49986,3 +49986,34 @@ html.fg-blinds-reveal-locked {
     &:first-child { border-top: 0; }
   }
 }
+
+/* THE SAME HERO FAULT, ON THE SECOND PAGE, FOR THE SAME REASON. The earlier
+   boxed-portrait rules for `.fg-wd-hero__media` still set `width: min(100%,
+   480px)`, `justify-self: end` and `aspect-ratio: 4/5`, and the full-bleed
+   rule above only positioned the box: it never reset those. So on desktop the
+   image was a 480px column right-aligned in a grid track, the canvas showed
+   through beside it, and white copy sat on a pale ground. Mobile worked only
+   because the old mobile rule already stretched it. Reset the lot. */
+.fg-wd-hero--bleed .fg-wd-hero__media {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  justify-self: stretch;
+  align-self: stretch;
+}
+
+.fg-wd-hero--bleed .fg-wd-hero__media img {
+  aspect-ratio: auto;
+  max-height: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* The enquiry heading was at the display ceiling, the same site-wide rule the
+   composite route scopes out. `STYLE.md`: form headings are supporting
+   content, not page heroes. */
+.fg-wd-page .fg-enquiry h2 {
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  line-height: 1.1;
+}
