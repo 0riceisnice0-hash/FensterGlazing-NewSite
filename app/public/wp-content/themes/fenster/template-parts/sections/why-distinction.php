@@ -236,9 +236,9 @@ $fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
                     <p class="eyebrow"><?php esc_html_e('The one number', 'fenster'); ?></p>
                     <h2 id="fg-wd-figure-title"><?php esc_html_e('The one number worth quoting.', 'fenster'); ?></h2>
                     <p class="fg-wd-stat"><span>50%</span> <?php esc_html_e('more thermally efficient', 'fenster'); ?></p>
-                    <p><?php esc_html_e('Distinction had their 44.5mm slab independently tested against a 48mm solid-timber-core composite door and a 44mm timber panelled door, and it came out 50% more thermally efficient than both. The testing was at the University of Salford\'s Energy House.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-wd-figure__caveats">
+                    <p class="fg-wd-figure__lede"><?php esc_html_e('Distinction had their 44.5mm slab independently tested against a 48mm solid-timber-core composite door and a 44mm timber panelled door, and it came out 50% more thermally efficient than both. The testing was at the University of Salford\'s Energy House.', 'fenster'); ?></p>
                     <h3><?php esc_html_e('What it does not tell you', 'fenster'); ?></h3>
                     <ul>
                         <li><?php esc_html_e('It is Distinction\'s test rather than ours, and it measures the slab rather than a finished doorset. Your frame, your glass, your threshold and how well the thing is fitted all move the real answer.', 'fenster'); ?></li>
