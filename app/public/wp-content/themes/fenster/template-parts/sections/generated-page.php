@@ -4686,10 +4686,12 @@ if ($is_commercial_hub) {
            Second review the same day: "i dont like the flashiness that happens
            when you click next. and i need it to look less like claude designed
            it and more wow. creative. cool wow factor. animations. subtle
-           colour choices, hand crafted with passion." So: a dark showroom band
-           rather than a card on the canvas; the three windows stand on a lit
-           floor with their reflections in it and angle in towards the one in
-           the middle; the meeting rail scale IS the switch, with a marker that
+           colour choices, hand crafted with passion." Then, after a dark steel
+           band was built for it: "why is your idea always to add a dark
+           background. dark looks bad ... any wow factor like this should be
+           light." So, in the light on the page canvas: the three windows stand
+           on a pale lit floor with their reflections in it and angle in towards
+           the one in the middle; the meeting rail scale IS the switch, with a marker that
            glides between the three; the facts are hairline rows on dark glass
            and cross-fade quietly rather than re-animating; and the windows
            rise into place the first time the stage comes into view.
