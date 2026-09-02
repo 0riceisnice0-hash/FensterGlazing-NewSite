@@ -516,7 +516,10 @@ if ($slug === 'sliding-sash-windows') {
             'rail_label' => '35mm meeting rail',
             'rail_mm' => 35,
             'alt' => 'Ultimate Rose sash window viewed externally',
-            'copy' => 'The premium choice when the window needs to look genuinely traditional up close, with the finest meeting rail and the most authentic joint detailing in the Rose Collection.',
+            'meaning' => [
+                'The meeting rail is the bar where the two sashes overlap, and at 35mm it is as close to the timber original as the range gets, which is why it is the model to show a conservation officer. The corners are jointed the way a joiner makes them, rail butting square onto stile, rather than welded across the mitre, and the glass sits behind a putty line, the bevel that glazing putty leaves on an old sash.',
+                'The horns are formed from the sash itself, the bottom rail is a deep 81mm, it takes a 28mm double glazed unit with a glass specification that reaches 1.2 W/m²K, and Globe furniture is the standard set.',
+            ],
             'best_for' => 'Conservation-led projects, high-detail period homes and front elevations where authenticity matters most.',
         ],
         [
@@ -527,7 +530,10 @@ if ($slug === 'sliding-sash-windows') {
             'rail_label' => '44.5mm meeting rail',
             'rail_mm' => 44.5,
             'alt' => 'Heritage Rose sash window viewed externally',
-            'copy' => 'A strong traditional sash specification with slim sightlines, putty-line detailing and welded frame construction for homeowners who want period character without stepping to the highest-detail model.',
+            'meaning' => [
+                'A 44.5mm meeting rail keeps a slim line where the sashes overlap, on a frame that is welded at the corners rather than jointed, which is the difference between this and Ultimate Rose from close up. It keeps the putty line at the glass and the deep 81mm bottom rail, so the proportions stay right from the street.',
+                'The horns can run through, clip on, or be left off for a window that never had them. It takes a 28mm double glazed unit with a glass specification that reaches 1.2 W/m²K, and Acorn furniture is the standard set.',
+            ],
             'best_for' => 'Traditional homes, Victorian or Edwardian styling and projects where a convincing timber-style appearance is needed.',
         ],
         [
@@ -538,7 +544,10 @@ if ($slug === 'sliding-sash-windows') {
             'rail_label' => '60mm meeting rail',
             'rail_mm' => 60,
             'alt' => 'Charisma Rose sash window viewed externally',
-            'copy' => 'The accessible Rose Collection option: still a proper vertical sliding sash window, but with a simpler sculptured profile and wider rail for projects balancing appearance and budget.',
+            'meaning' => [
+                'The 60mm meeting rail is the widest of the three, and the frame is welded at the corners with a sculptured ovolo profile, the rounded moulding of a standard uPVC window, in place of the putty line. The bottom rail is 68mm, the standard depth, so the whole window reads simpler and a little more modern from the street.',
+                'It slides and tilts in the same way as the other two, with the horns run through, clipped on, or left off. It takes a 24mm double glazed unit with a glass specification that reaches 1.4 W/m²K, and Acorn furniture is the standard set.',
+            ],
             'best_for' => 'Modern replacements, rental refurbishments and homes where sash operation matters more than maximum timber replication.',
         ],
     ];
@@ -4826,6 +4835,18 @@ if ($is_commercial_hub) {
                                         </div>
                                     <?php endforeach; ?>
                                 </dl>
+                                <?php /* Owner, 2026-09-02, after the first pass: "need something in
+                                         the empty box looking space. like just a written bit about
+                                         that window. what it all means etc." Two paragraphs per
+                                         model, written from the figures above them. */ ?>
+                                <?php if (! empty($model['meaning']) && is_array($model['meaning'])) : ?>
+                                    <div class="fg-sash-stage__meaning">
+                                        <strong><?php esc_html_e('What the details mean', 'fenster'); ?></strong>
+                                        <?php foreach ($model['meaning'] as $meaning_paragraph) : ?>
+                                            <p><?php echo esc_html((string) $meaning_paragraph); ?></p>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
                             </article>
                         <?php endforeach; ?>
                     </div>
