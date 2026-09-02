@@ -82,10 +82,20 @@ $fg_glass = '/wp-content/themes/fenster/assets/images/products/composite-distinc
 ?>
 <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title" data-fg-anatomy data-active-layer="0">
     <div class="container">
+        <?php
+        /* THE HEAD IS OVERRIDABLE, 2026-08-27, because `/why-distinction/` renders
+           this drawing too. That page owns the ARGUMENT for each layer and this
+           component owns the DRAWING; passing the page's own layers, head and
+           lede keeps one drawing and two sets of words rather than two
+           drawings. The defaults are the composite page's. */
+        $fg_eyebrow = (string) ($args['eyebrow'] ?? __('Construction', 'fenster'));
+        $fg_title   = (string) ($args['title'] ?? __('What is inside the slab.', 'fenster'));
+        $fg_lede    = (string) ($args['lede'] ?? __('A composite door looks like timber and is deliberately nothing like one inside. Open a layer and the drawing shows you where it sits.', 'fenster'));
+        ?>
         <header class="fg-cd3-anatomy__head">
-            <p class="eyebrow"><?php esc_html_e('Construction', 'fenster'); ?></p>
-            <h2 id="fg-cd3-anatomy-title"><?php esc_html_e('What is inside the slab.', 'fenster'); ?></h2>
-            <p class="fg-cd3-anatomy__lede"><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. Open a layer and the drawing shows you where it sits.', 'fenster'); ?></p>
+            <p class="eyebrow"><?php echo esc_html($fg_eyebrow); ?></p>
+            <h2 id="fg-cd3-anatomy-title"><?php echo esc_html($fg_title); ?></h2>
+            <p class="fg-cd3-anatomy__lede"><?php echo esc_html($fg_lede); ?></p>
         </header>
 
         <div class="fg-cd3-anatomy__explorer">
