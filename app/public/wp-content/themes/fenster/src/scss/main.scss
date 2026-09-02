@@ -50411,3 +50411,11 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 480px) {
   .fg-wd-band { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* THE 50% WAS 96px AND THE CEILING IS 57.6px. `STYLE.md` is explicit:
+   `--fg-font-size-max` is "the absolute site-wide ceiling" and applies to
+   "heroes, promotional headings and mobile overrides as well as ordinary page
+   headings". Making it the page's display moment does not exempt it, and I
+   have spent the day enforcing this rule on other people's CSS. It sits at the
+   ceiling instead of through it. */
+.fg-wd-stat span { font-size: clamp(3rem, 5.4vw, var(--fg-font-size-max, 3.6rem)); }
