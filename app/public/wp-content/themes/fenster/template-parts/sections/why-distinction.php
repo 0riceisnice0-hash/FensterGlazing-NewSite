@@ -318,7 +318,7 @@ $fg_phone = '01908 429200';
         <div class="container fg-enquiry__grid">
             <div class="fg-enquiry__copy">
                 <p class="eyebrow"><?php esc_html_e('Start your project', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Ask us anything about the door.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('Ask us anything.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Send the basics and we will come back with straight answers: which style suits the house, what the glass does to the price, and when we can survey.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $fg_phone)); ?>"><?php echo esc_html($fg_phone); ?></a>
