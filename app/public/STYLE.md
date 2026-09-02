@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-08-14
+Last updated: 2026-09-02
 
 This file is the source of truth for how the site should look and feel.
 
@@ -41,6 +41,7 @@ Two cautions before copying from them:
 
 ## Important Updates
 
+- **NO DARK BACKGROUND ON ANYTHING BIGGER THAN HALF A VIEWPORT, AND WOW IS LIGHT.** Owner instruction, 2026-09-02, given after the sliding sash comparison was built as a full-viewport dark steel band and pulled the same day. Full rule under Colour And Tone below. It is the second dark band pulled on this project; the bifold configuration rail's was the first, 2026-08-21.
 - **A REAL-WORLD DETAIL THAT IS NOT ALREADY IN THE REPO IS A GUESS, NOT KNOWLEDGE.** A showroom photograph was captioned with an invented street and district on 2026-08-27 and shipped to test. **Grep before writing any address, phone number, opening time or place name**, and pull it from `brand` rather than typing it, so one correction fixes every surface. See the Address And Contact Detail Rule in `AI.md`.
 - **A PAGE WHERE EVERY SECTION IS A BORDERED WHITE RECTANGLE READS AS UNSTYLED, AND THIS FILE ALREADY SAYS SO.** `/why-distinction/` was rebuilt on 2026-08-27 with the boxes taken off: the structure is a hairline and a type scale, and only the framed tool and the form keep a panel. **When a page is called unstyled, count the borders before adding anything.** The fault is usually that a border is doing the job type, rule and space should be doing.
 - **THERE WAS A THIRD BLANKET `!important` HEADING RULE, ON `h3`, AND IT SURVIVED THE FIRST CLEAR-OUT.** It sat twelve lines below the `h2` rule that was fixed, and it forced all twenty-eight h3s on `/composite-doors/` to one size. **When you find a blanket `!important` heading rule, read the whole block it lives in before assuming it is alone.** The expensive case was a quiz built around a large question where the question rendered smaller than the standfirst above it.
@@ -227,6 +228,7 @@ Cards should add structure, not turn every section into a grid of boxes.
 
 The site should use Fenster's green, teal/steel and soft neutrals with restraint.
 
+- **NO DARK BACKGROUND ON ANYTHING BIGGER THAN HALF A VIEWPORT. WOW IS LIGHT.** Owner instruction, 2026-09-02, after a full-viewport dark steel showroom band was built for the sliding sash comparison: *"why is your idea always to add a dark backgrounf. dark looks bad. add into style.md to no use dark backgrounds for things bigger than half a view port. any wow factor like this should be light"*. Dark steel stays where it already lives at small scale: the header, the CTA pair, proof strips, the footer, caption bars, a scrim over a photograph. A section, stage, panel or band that would cover more than half of a 1440x900 viewport is light: the page canvas, white, or the soft cool neutrals. Drama comes from light, depth, reflection, motion and photography on a light ground, never from painting the ground dark. **Do not propose a third dark band, and do not offer dark as the alternative.** Existing dark sections larger than that (the sash page's Real homes gallery, the `.fg-cw-gallery` closers, the casement page's chapters) predate the rule and are the owner's to review; do not add to them.
 - Avoid one-note palettes where the page becomes only green/teal/blue.
 - Use green mainly for action, highlights, proof and small emphasis.
 - Use dark steel for confidence and contrast.

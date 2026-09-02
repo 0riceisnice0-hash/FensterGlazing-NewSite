@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `4cf04368`, NOT LIVE)
+## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `39c618f7`, NOT LIVE)
 
 Owner: *"the comparisons. they need to be full screen and less spreadsheet.
 with the ability to click left or right to see the other models ... big view of
@@ -80,6 +80,14 @@ cool animation. do this is the test site"*. Live is unmoved at `f26681b0`.
   the name. Shipped to test as `4cf04368` and re-verified at 1440x900,
   1440x1128 and 390x844: stage and controls inside the first screen, no
   overflow, no errors of ours.
+- **Fourth pass, same day, from the owner's third review:** *"why is your idea always to add a dark backgrounf. dark looks bad. add into style.md to no use dark backgrounds for things bigger than half a view port. any wow factor like this should be light"*. The
+  dark steel band lasted one deploy. Same composition, in the light on the
+  page canvas: a pale wall running into a slightly deeper floor, the light
+  behind the middle window and the reflections on light, steel type on white.
+  **The rule is now in `STYLE.md`**, under Colour And Tone and Important
+  Updates, and it is the second dark band pulled on this project after the
+  bifold rail's on 2026-08-21. Shipped to test as `39c618f7` and re-verified at
+  1440x900 and 390x844.
 - **The other session committed twice in this checkout while this was in
   progress**, and neither commit swept the in-progress files, which was
   checked before pushing. The rebase step was blocked by that session's
