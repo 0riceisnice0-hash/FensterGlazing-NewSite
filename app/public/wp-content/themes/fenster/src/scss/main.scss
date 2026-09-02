@@ -50189,3 +50189,225 @@ html.fg-blinds-reveal-locked {
     font-size: 0.86rem;
   }
 }
+
+/* ==================================================================
+ * `/why-distinction/`: TAKE THE BOXES OFF, 2026-08-27
+ *
+ * Owner: "nothing is stylised. doesn't style.md tell you to avoid the
+ * boxes you have?" It does, in three places:
+ *
+ *   "Cards should add structure, not turn every section into a grid
+ *    of boxes."
+ *   "Do not put cards inside cards."
+ *   "If the page feels busy, reduce local backgrounds before reducing
+ *    useful content."
+ *
+ * Every section on this page was a bordered white rectangle: the
+ * caveats, the six figures, the two next-step cards, and the explorer,
+ * which had a bordered media box AND a bordered list INSIDE a bordered
+ * panel. The page had no typographic structure at all, because a border
+ * was doing the job type and rule should do.
+ *
+ * What survives as a panel: the cutaway explorer, and only its outer
+ * frame. `STYLE.md` allows a floating card where the section "is
+ * genuinely a framed tool", and an interactive drawing with a control
+ * list beside it is one. Everything else sits on the page canvas and is
+ * structured with a hairline and a type scale.
+ * ================================================================== */
+
+/* ---- The explorer: one frame, not three -------------------------- */
+
+.fg-wd-page .fg-cd3-anatomy__explorer {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+/* The media and the layer list are INSIDE the panel. Their own borders
+   were the cards-in-cards. */
+.fg-wd-page .fg-cd3-anatomy__media,
+.fg-wd-page .fg-cd3-anatomy__layers {
+  border: 0;
+  border-radius: 10px;
+}
+
+.fg-wd-page .fg-cd3-anatomy__layers {
+  border-radius: 0;
+  border-top: 1px solid rgba(2, 43, 53, 0.12);
+}
+
+/* Rows divided by a rule, which is what a list of six wants. */
+.fg-wd-page .fg-cd3-layer + .fg-cd3-layer { border-top: 1px solid rgba(2, 43, 53, 0.09); }
+
+/* ---- The one number: a display moment, not a box ----------------- */
+
+.fg-wd-figure__grid {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.fg-wd-stat {
+  margin: 0 0 1rem;
+
+  /* The page's one number, set like one. Nothing else on the page is
+     allowed near this size. */
+  span {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: clamp(3.4rem, 8vw, 6rem);
+    font-weight: 750;
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.fg-wd-figure__claim p {
+  max-width: 46ch;
+  color: rgba(2, 43, 53, 0.74);
+}
+
+/* The caveats were a bordered white card. They are a ruled list. */
+.fg-wd-figure__caveats {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+
+  h3 {
+    margin: 0 0 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(2, 43, 53, 0.16);
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(2, 43, 53, 0.55);
+  }
+
+  ul { gap: 0; }
+
+  li {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(2, 43, 53, 0.09);
+    color: rgba(2, 43, 53, 0.76);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  li:last-child { border-bottom: 0; }
+
+  /* The green dash was standing in for a bullet inside a box. Out here
+     the rule does the separating and the dash is noise. */
+  li::before { display: none; }
+  li { padding-left: 0; }
+}
+
+/* ---- The figures: typography, not a table ------------------------ */
+
+.fg-wd-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(1.5rem, 3.5vw, 3rem);
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fg-wd-band__cell {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: clamp(1.25rem, 2.6vw, 1.75rem) 0 clamp(1.5rem, 3vw, 2rem);
+  border: 0;
+  /* One rule per cell, along the top. Six numbers on the canvas read as
+     a run of facts; six numbers in a bordered grid read as a spec
+     table, which is what they were. */
+  border-top: 1px solid rgba(2, 43, 53, 0.18);
+
+  &:nth-child(-n + 3) { border-top: 1px solid rgba(2, 43, 53, 0.18); }
+  &:nth-child(3n + 1) { border-left: 0; }
+}
+
+.fg-wd-band__figure {
+  font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.fg-wd-band__label {
+  color: var(--fg-green);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+.fg-wd-band__cell dd {
+  max-width: 34ch;
+  font-size: 0.89rem;
+}
+
+.fg-wd-figures__care {
+  padding-top: clamp(1rem, 2vw, 1.4rem);
+  border-top: 1px solid rgba(2, 43, 53, 0.18);
+}
+
+/* ---- Where to go next: two rules, not two boxes ------------------ */
+
+.fg-wd-next__grid--two {
+  gap: 0 clamp(1.5rem, 3.5vw, 3rem);
+  max-width: none;
+}
+
+.fg-wd-next__card {
+  gap: 0.45rem;
+  padding: clamp(1.1rem, 2.4vw, 1.5rem) 0 clamp(1.25rem, 2.6vw, 1.75rem);
+  border: 0;
+  border-top: 1px solid rgba(2, 43, 53, 0.18);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+
+  strong { font-size: 1.1rem; }
+
+  span { max-width: 40ch; }
+}
+
+.fg-wd-next__card:hover,
+.fg-wd-next__card:focus-visible {
+  border-color: var(--fg-green);
+  background: none;
+  box-shadow: none;
+  transform: none;
+
+  strong { color: var(--fg-green); }
+  strong::after { transform: translateX(4px); }
+}
+
+/* ---- Rhythm the borders had been faking -------------------------- */
+
+/* With the boxes off, the space between things is doing the structuring,
+   so it has to be deliberate rather than left over. */
+.fg-wd-page .fg-chapter-head { margin-bottom: clamp(1.4rem, 2.8vw, 2.2rem); }
+
+.fg-wd-judgement__words p { color: rgba(2, 43, 53, 0.76); }
+
+.fg-wd-judgement__media img { border-radius: 10px; }
+
+@media (max-width: 860px) {
+  .fg-wd-figure__grid { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-wd-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .fg-wd-band__cell {
+    &:nth-child(n) { border-top: 1px solid rgba(2, 43, 53, 0.18); border-left: 0; }
+  }
+
+  .fg-wd-next__grid--two { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .fg-wd-band { grid-template-columns: minmax(0, 1fr); }
+}

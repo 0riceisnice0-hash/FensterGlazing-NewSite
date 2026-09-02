@@ -154,7 +154,21 @@ $fg_figures = [
     ],
 ];
 
-$fg_phone = '01908 429200';
+$fg_phone = (string) fenster_data('brand.phone', '01908 429200');
+$fg_email = (string) fenster_data('brand.email', 'info@fensterglazing.com');
+
+/* THE SHOWROOM CAPTION COMES FROM BRAND DATA AND IS NOT TYPED HERE.
+   A previous pass captioned this photograph "Tanners Drive, Blakelands",
+   which is not our address at all: it was invented, it went out on a
+   customer-facing page, and the owner had to catch it. The street and
+   district come off `brand.address` now, so the caption cannot drift from
+   the footer, the contact page or the schema. */
+$fg_addr = (array) fenster_data('brand.address', []);
+$fg_street = trim((string) ($fg_addr[0] ?? ''));
+$fg_district = trim((string) ($fg_addr[1] ?? ''));
+/* "98 Alston Drive" is a postal line; a caption wants the street. */
+$fg_street_name = trim(preg_replace('/^\s*\d+[A-Za-z]?\s+/', '', $fg_street));
+$fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
 ?>
 <main id="main" class="site-main fg-wd-page">
 
@@ -281,7 +295,13 @@ $fg_phone = '01908 429200';
                     src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/contact/contact-hub-showroom.webp')); ?>"
                     alt="The Fenster Glazing showroom in Milton Keynes, its window signage listing composite doors"
                     loading="lazy" decoding="async" width="1200" height="800">
-                <figcaption><?php esc_html_e('The showroom on Tanners Drive, Blakelands.', 'fenster'); ?></figcaption>
+                <figcaption>
+                    <?php
+                    echo esc_html($fg_where !== ''
+                        ? sprintf(__('Our showroom on %s, Milton Keynes.', 'fenster'), $fg_where)
+                        : __('Our showroom in Milton Keynes.', 'fenster'));
+                    ?>
+                </figcaption>
             </figure>
         </div>
     </section>
@@ -322,7 +342,7 @@ $fg_phone = '01908 429200';
                 <p><?php esc_html_e('Send the basics and we will come back with straight answers: which style suits the house, what the glass does to the price, and when we can survey.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $fg_phone)); ?>"><?php echo esc_html($fg_phone); ?></a>
-                    <a href="mailto:info@fensterglazing.com">info@fensterglazing.com</a>
+                    <a href="mailto:<?php echo esc_attr($fg_email); ?>"><?php echo esc_html($fg_email); ?></a>
                 </div>
             </div>
             <?php
