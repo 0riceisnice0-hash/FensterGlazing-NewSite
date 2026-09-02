@@ -50538,7 +50538,7 @@ html.fg-blinds-reveal-locked {
      the thing being argued about than beside a heading. */
   .fg-wd-figures__grid { grid-template-columns: minmax(0, 1fr); }
 
-  .fg-wd-figures__media img { aspect-ratio: 16 / 10; object-position: 50% 42%; }
+  .fg-wd-figures__media img { aspect-ratio: 1 / 1; object-position: 50% 42%; }
 
   .fg-wd-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
@@ -50589,7 +50589,11 @@ html.fg-blinds-reveal-locked {
   align-items: start;
 }
 
-.fg-wd-figure--band .fg-wd-figure__caveats li { max-width: 62ch; }
+/* Only while the band is two columns. Stacked, the column is the measure and
+   a cap here left every li rule 200px short of the h3 rule above it. */
+@media (min-width: 861px) {
+  .fg-wd-figure--band .fg-wd-figure__caveats li { max-width: 62ch; }
+}
 
 /* The prose that used to sit under the numeral. It leads the right column, so
    it is a step up from the caveats under it. */
