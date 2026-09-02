@@ -514,15 +514,10 @@ if ($slug === 'sliding-sash-windows') {
             'image' => $sash_asset_base . 'ultimate-rose-window-external.png',
             'rail_image' => $sash_asset_base . 'ultimate-35mm-meeting-rail.jpg',
             'rail_label' => '35mm meeting rail',
+            'rail_mm' => 35,
             'alt' => 'Ultimate Rose sash window viewed externally',
             'copy' => 'The premium choice when the window needs to look genuinely traditional up close, with the finest meeting rail and the most authentic joint detailing in the Rose Collection.',
             'best_for' => 'Conservation-led projects, high-detail period homes and front elevations where authenticity matters most.',
-            'specs' => [
-                ['label' => 'Meeting rail', 'value' => '35mm'],
-                ['label' => 'Corner detail', 'value' => 'Mechanical joints'],
-                ['label' => 'Bottom rail', 'value' => '81mm deep rail'],
-                ['label' => 'Glazing', 'value' => '28mm IGUs'],
-            ],
         ],
         [
             'name' => 'Heritage Rose',
@@ -530,15 +525,10 @@ if ($slug === 'sliding-sash-windows') {
             'image' => $sash_asset_base . 'heritage-rose-window.png',
             'rail_image' => $sash_asset_base . 'heritage-44mm-midrail.jpg',
             'rail_label' => '44.5mm meeting rail',
+            'rail_mm' => 44.5,
             'alt' => 'Heritage Rose sash window viewed externally',
             'copy' => 'A strong traditional sash specification with slim sightlines, putty-line detailing and welded frame construction for homeowners who want period character without stepping to the highest-detail model.',
             'best_for' => 'Traditional homes, Victorian or Edwardian styling and projects where a convincing timber-style appearance is needed.',
-            'specs' => [
-                ['label' => 'Meeting rail', 'value' => '44.5mm'],
-                ['label' => 'Corner detail', 'value' => 'Welded joints'],
-                ['label' => 'Bottom rail', 'value' => '81mm deep rail'],
-                ['label' => 'Glazing', 'value' => '28mm IGUs'],
-            ],
         ],
         [
             'name' => 'Charisma Rose',
@@ -546,15 +536,10 @@ if ($slug === 'sliding-sash-windows') {
             'image' => $sash_asset_base . 'charisma-rose-window.png',
             'rail_image' => $sash_asset_base . 'charisma-60mm-rail.jpg',
             'rail_label' => '60mm meeting rail',
+            'rail_mm' => 60,
             'alt' => 'Charisma Rose sash window viewed externally',
             'copy' => 'The accessible Rose Collection option: still a proper vertical sliding sash window, but with a simpler sculptured profile and wider rail for projects balancing appearance and budget.',
             'best_for' => 'Modern replacements, rental refurbishments and homes where sash operation matters more than maximum timber replication.',
-            'specs' => [
-                ['label' => 'Meeting rail', 'value' => '60mm'],
-                ['label' => 'Corner detail', 'value' => 'Welded joints'],
-                ['label' => 'Bottom rail', 'value' => '68mm standard'],
-                ['label' => 'Glazing', 'value' => '24mm IGUs'],
-            ],
         ],
     ];
     $sash_roseview_gallery = [
@@ -4682,143 +4667,173 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if (! empty($sash_roseview_models)) : ?>
-        <section class="fg-sash-collection" aria-labelledby="fg-sash-collection-title">
-            <div class="container">
-                <div class="fg-sash-collection__hero">
+        <?php
+        /* THE ROSEVIEW COMPARISON IS A STAGE, NOT A TABLE. Owner instruction,
+           2026-09-02: "the comparisons. they need to be full screen and less
+           spreadsheet. with the ability to click left or right to see the
+           other models ... big view of one selected, and then the other 2 are
+           off to the side until you click with a cool animation."
+
+           One model stands large in the middle of a section sized to the
+           viewport; the other two wait small at the sides and come forward
+           when clicked, on the arrows, on the segment switch, on a tick of the
+           meeting rail scale, or with a swipe. The facts for the model in the
+           middle sit beside it and cross-fade with it, which is the comparison
+           the eight-row table used to make, one model at a time. The table,
+           the three-card grid and the separate mobile carousel are gone; this
+           is one component at every width.
+
+           THE EIGHT DIFFERENCES LIVE IN ONE ARRAY and each model's panel reads
+           its own column from it. The old page carried the same rows three
+           times (per-card specs, a desktop table and a mobile list) and they
+           had already drifted: the cards said "81mm deep rail" where the table
+           said "81mm standard". Meeting rail is drawn as the scale rather than
+           printed as a tile, because it is the one numeric difference and the
+           one the copy argues most.
+
+           Geometry is in the stylesheet and state is in `src/js/main.js`
+           (`[data-fg-sash-stage]`). The controls ship `hidden` and the script
+           reveals them, so without JavaScript the three renders lay out in a
+           row and the first model's facts still show. */
+        $sash_comparison_rows = [
+            ['Meeting rail', '35mm', '44.5mm', '60mm'],
+            ['Corner detail', 'Mechanical joints', 'Welded joints', 'Welded joints'],
+            ['Profile detail', 'Putty line', 'Putty line', 'Sculptured ovolo'],
+            ['Bottom rail', '81mm standard', '81mm standard', '68mm standard'],
+            ['Horn options', 'Seamless run-through', 'Run-through, clip-on or none', 'Run-through, clip-on or none'],
+            ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
+            ['Best U-value', '1.2 W/m²K option', '1.2 W/m²K option', '1.4 W/m²K option'],
+            ['Furniture', 'Globe standard', 'Acorn standard', 'Acorn standard'],
+        ];
+        /* The scale runs 30mm to 65mm so all three ticks sit inside the track
+           with room for their labels; a tick's position is its rail width
+           read off that range. */
+        $sash_rail_scale_min = 30;
+        $sash_rail_scale_max = 65;
+        $sash_stage_positions = ['centre', 'right', 'left'];
+        ?>
+        <section class="fg-sash-stage" aria-labelledby="fg-sash-stage-title" data-fg-sash-stage>
+            <div class="container fg-sash-stage__inner">
+                <div class="fg-sash-stage__head">
                     <div>
                         <p class="eyebrow"><?php esc_html_e('Roseview sash systems', 'fenster'); ?></p>
-                        <h2 id="fg-sash-collection-title">
-                            <span class="fg-sash-heading--desktop"><?php esc_html_e('Choose the sash window by detail level, not just by name.', 'fenster'); ?></span>
-                            <span class="fg-sash-heading--mobile"><?php esc_html_e('Choose your Roseview sash.', 'fenster'); ?></span>
+                        <h2 id="fg-sash-stage-title">
+                            <span class="fg-sash-stage__title--desktop"><?php esc_html_e('Choose the sash window by detail level, not just by name.', 'fenster'); ?></span>
+                            <span class="fg-sash-stage__title--mobile"><?php esc_html_e('Choose your Roseview sash.', 'fenster'); ?></span>
                         </h2>
-                        <p><?php esc_html_e('Ultimate, Heritage and Charisma Rose all give a vertical sliding sash format. The important differences are the meeting rail, corner construction, horns, cills, glazing depth and how closely the window needs to reproduce timber.', 'fenster'); ?></p>
                     </div>
-                    <aside class="fg-sash-collection__note">
-                        <span><?php esc_html_e('Fenster survey note', 'fenster'); ?></span>
-                        <p><?php esc_html_e('We confirm the final model, colour, bar layout, horn detail, ventilation option and hardware before order so the sash suits the property rather than just the brochure.', 'fenster'); ?></p>
-                    </aside>
+                    <p><?php esc_html_e('Ultimate, Heritage and Charisma Rose all give a vertical sliding sash format. The important differences are the meeting rail, corner construction, horns, cills, glazing depth and how closely the window needs to reproduce timber.', 'fenster'); ?></p>
                 </div>
 
-                <?php
-                $sash_mobile_comparison_rows = [
-                    ['Meeting rail', '35mm', '44.5mm', '60mm'],
-                    ['Corner detail', 'Mechanical joints', 'Welded joints', 'Welded joints'],
-                    ['Profile', 'Putty line', 'Putty line', 'Sculptured ovolo'],
-                    ['Bottom rail', '81mm standard', '81mm standard', '68mm standard'],
-                    ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
-                    ['Best U-value', '1.2 W/m²K option', '1.2 W/m²K option', '1.4 W/m²K option'],
-                ];
-                ?>
+                <div class="fg-sash-stage__body">
+                    <div class="fg-sash-stage__scene-wrap">
+                        <div class="fg-sash-stage__scene" role="group" aria-label="<?php esc_attr_e('Roseview sash models', 'fenster'); ?>" data-fg-stage-scene>
+                            <?php foreach ($sash_roseview_models as $index => $model) : ?>
+                                <?php
+                                $model_image = (string) $model['image'];
+                                $model_image_dir = trailingslashit(dirname($model_image));
+                                $model_image_stem = pathinfo($model_image, PATHINFO_FILENAME);
+                                $model_name = (string) $model['name'];
+                                ?>
+                                <button
+                                    type="button"
+                                    class="fg-sash-stage__slide"
+                                    data-fg-stage-slide
+                                    data-fg-stage-select="<?php echo esc_attr((string) $index); ?>"
+                                    data-pos="<?php echo esc_attr($sash_stage_positions[$index] ?? 'left'); ?>"
+                                    aria-label="<?php echo esc_attr(sprintf(__('Show %s', 'fenster'), $model_name)); ?>"
+                                    aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
+                                    <?php echo $index === 0 ? 'tabindex="-1"' : ''; ?>
+                                >
+                                    <img
+                                        src="<?php echo esc_url(fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp')); ?>"
+                                        srcset="<?php echo esc_attr(fenster_generated_url($model_image_dir . $model_image_stem . '-400w.webp') . ' 400w, ' . fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp') . ' 800w'); ?>"
+                                        sizes="(max-width: 860px) 70vw, 28vw"
+                                        width="800"
+                                        height="1038"
+                                        alt="<?php echo esc_attr((string) $model['alt']); ?>"
+                                        loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
+                                        decoding="async"
+                                        draggable="false"
+                                    >
+                                    <span class="fg-sash-stage__slide-label" aria-hidden="true"><?php echo esc_html($model_name); ?></span>
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
 
-                <div class="fg-sash-carousel" data-fg-sash-carousel>
-                <div class="fg-sash-models" aria-label="<?php esc_attr_e('Roseview sash model comparison', 'fenster'); ?>" data-fg-sash-track>
-                    <?php foreach ($sash_roseview_models as $index => $model) : ?>
-                        <?php
-                        $model_image = (string) $model['image'];
-                        $model_image_dir = trailingslashit(dirname($model_image));
-                        $model_image_stem = pathinfo($model_image, PATHINFO_FILENAME);
-                        $model_image_srcset = implode(', ', [
-                            fenster_generated_url($model_image_dir . $model_image_stem . '-400w.webp') . ' 400w',
-                            fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp') . ' 800w',
-                        ]);
-                        ?>
-                        <article class="fg-sash-model" data-fg-sash-slide>
-                            <figure class="fg-sash-model__media" data-fg-depth="<?php echo esc_attr($index === 1 ? '0.045' : '0.065'); ?>">
-                                <img src="<?php echo esc_url(fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp')); ?>" srcset="<?php echo esc_attr($model_image_srcset); ?>" sizes="(max-width: 860px) 86vw, 30vw" alt="<?php echo esc_attr((string) $model['alt']); ?>" loading="lazy">
-                                <span class="fg-sash-model__rail-detail">
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy">
-                                    <strong><?php echo esc_html((string) $model['rail_label']); ?></strong>
-                                </span>
-                            </figure>
-                            <div class="fg-sash-model__body">
-                                <span><?php echo esc_html((string) $model['tagline']); ?></span>
+                        <div class="fg-sash-stage__controls" data-fg-stage-controls hidden>
+                            <button type="button" class="fg-sash-stage__arrow" data-fg-stage-prev aria-label="<?php esc_attr_e('Previous sash model', 'fenster'); ?>">
+                                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="fg-sash-stage__switch" role="group" aria-label="<?php esc_attr_e('Choose a sash window model', 'fenster'); ?>">
+                                <?php foreach ($sash_roseview_models as $index => $model) : ?>
+                                    <button
+                                        type="button"
+                                        data-fg-stage-select="<?php echo esc_attr((string) $index); ?>"
+                                        aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
+                                        aria-label="<?php echo esc_attr(sprintf(__('Show %s', 'fenster'), (string) $model['name'])); ?>"
+                                    ><?php echo esc_html(str_replace(' Rose', '', (string) $model['name'])); ?></button>
+                                <?php endforeach; ?>
+                            </div>
+                            <button type="button" class="fg-sash-stage__arrow" data-fg-stage-next aria-label="<?php esc_attr_e('Next sash model', 'fenster'); ?>">
+                                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                        </div>
+                        <p class="fg-sash-stage__sr" aria-live="polite" data-fg-stage-live></p>
+                    </div>
+
+                    <div class="fg-sash-stage__panels">
+                        <?php foreach ($sash_roseview_models as $index => $model) : ?>
+                            <article class="fg-sash-stage__panel" data-fg-stage-panel aria-label="<?php echo esc_attr((string) $model['name'] . ' specifications'); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
+                                <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
                                 <h3><?php echo esc_html((string) $model['name']); ?></h3>
-                                <p><?php echo esc_html((string) $model['copy']); ?></p>
-                                <div class="fg-sash-model__best">
-                                    <small><?php esc_html_e('Best for', 'fenster'); ?></small>
-                                    <strong><?php echo esc_html((string) $model['best_for']); ?></strong>
+                                <p class="fg-sash-stage__best"><strong><?php esc_html_e('Best for', 'fenster'); ?></strong><?php echo esc_html((string) $model['best_for']); ?></p>
+                                <div class="fg-sash-stage__rail">
+                                    <figure class="fg-sash-stage__rail-photo">
+                                        <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="104" height="78">
+                                        <figcaption><?php echo esc_html((string) $model['rail_label']); ?></figcaption>
+                                    </figure>
+                                    <div class="fg-sash-stage__scale">
+                                        <span class="fg-sash-stage__scale-title"><?php esc_html_e('The three rail widths', 'fenster'); ?></span>
+                                        <span class="fg-sash-stage__scale-track" aria-hidden="true"></span>
+                                        <?php foreach ($sash_roseview_models as $tick_index => $tick_model) : ?>
+                                            <?php
+                                            $tick_mm = (float) ($tick_model['rail_mm'] ?? 0);
+                                            $tick_left = ($tick_mm - $sash_rail_scale_min) / ($sash_rail_scale_max - $sash_rail_scale_min) * 100;
+                                            $tick_label = rtrim(rtrim(number_format($tick_mm, 1, '.', ''), '0'), '.') . 'mm';
+                                            ?>
+                                            <button
+                                                type="button"
+                                                class="fg-sash-stage__tick"
+                                                style="left: <?php echo esc_attr(number_format($tick_left, 1, '.', '')); ?>%;"
+                                                data-fg-stage-select="<?php echo esc_attr((string) $tick_index); ?>"
+                                                aria-pressed="<?php echo $tick_index === $index ? 'true' : 'false'; ?>"
+                                                aria-label="<?php echo esc_attr(sprintf(__('%1$s, %2$s meeting rail', 'fenster'), (string) $tick_model['name'], $tick_label)); ?>"
+                                            >
+                                                <i aria-hidden="true"></i>
+                                                <strong aria-hidden="true"><?php echo esc_html($tick_label); ?></strong>
+                                                <small aria-hidden="true"><?php echo esc_html(str_replace(' Rose', '', (string) $tick_model['name'])); ?></small>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
-                                <dl>
-                                    <?php foreach ($model['specs'] as $spec) : ?>
+                                <dl class="fg-sash-stage__facts">
+                                    <?php foreach ($sash_comparison_rows as $row) : ?>
+                                        <?php if ($row[0] === 'Meeting rail') { continue; } ?>
                                         <div>
-                                            <dt><?php echo esc_html((string) ($spec['label'] ?? '')); ?></dt>
-                                            <dd><?php echo esc_html((string) ($spec['value'] ?? '')); ?></dd>
+                                            <dt><?php echo esc_html((string) $row[0]); ?></dt>
+                                            <dd><?php echo esc_html((string) ($row[$index + 1] ?? '')); ?></dd>
                                         </div>
                                     <?php endforeach; ?>
                                 </dl>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
-
-                <div class="fg-sash-carousel__controls" aria-label="<?php esc_attr_e('Choose a sash window model', 'fenster'); ?>">
-                    <button type="button" data-fg-sash-prev aria-label="<?php esc_attr_e('Previous sash model', 'fenster'); ?>">&#8249;</button>
-                    <div class="fg-sash-carousel__status" aria-live="polite">
-                        <strong data-fg-sash-name><?php echo esc_html((string) ($sash_roseview_models[0]['name'] ?? '')); ?></strong>
-                        <span data-fg-sash-count><?php echo esc_html('01 / ' . sprintf('%02d', count($sash_roseview_models))); ?></span>
+                            </article>
+                        <?php endforeach; ?>
                     </div>
-                    <button type="button" data-fg-sash-next aria-label="<?php esc_attr_e('Next sash model', 'fenster'); ?>">&#8250;</button>
-                </div>
 
-                <div class="fg-sash-carousel__dots" aria-label="<?php esc_attr_e('Sash model slides', 'fenster'); ?>">
-                    <?php foreach ($sash_roseview_models as $index => $model) : ?>
-                        <button
-                            type="button"
-                            data-fg-sash-dot="<?php echo esc_attr((string) $index); ?>"
-                            aria-label="<?php echo esc_attr(sprintf(__('Show %s', 'fenster'), (string) $model['name'])); ?>"
-                            aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                        ></button>
-                    <?php endforeach; ?>
-                </div>
-
-                <div class="fg-sash-mobile-specs">
-                    <p class="eyebrow"><?php esc_html_e('Selected model specifications', 'fenster'); ?></p>
-                    <?php foreach ($sash_roseview_models as $model_index => $model) : ?>
-                        <section data-fg-sash-spec-panel <?php echo $model_index === 0 ? '' : 'hidden'; ?>>
-                            <h3><?php echo esc_html((string) $model['name']); ?></h3>
-                            <dl>
-                                <?php foreach ($sash_mobile_comparison_rows as $row) : ?>
-                                    <div>
-                                        <dt><?php echo esc_html((string) $row[0]); ?></dt>
-                                        <dd><?php echo esc_html((string) $row[$model_index + 1]); ?></dd>
-                                    </div>
-                                <?php endforeach; ?>
-                            </dl>
-                        </section>
-                    <?php endforeach; ?>
-                </div>
-                </div>
-
-                <div class="fg-sash-spec-table" aria-label="<?php esc_attr_e('Roseview sash model specification comparison', 'fenster'); ?>">
-                    <div class="fg-sash-spec-table__row fg-sash-spec-table__row--head">
-                        <span><?php esc_html_e('Difference', 'fenster'); ?></span>
-                        <strong><?php esc_html_e('Ultimate Rose', 'fenster'); ?></strong>
-                        <strong><?php esc_html_e('Heritage Rose', 'fenster'); ?></strong>
-                        <strong><?php esc_html_e('Charisma Rose', 'fenster'); ?></strong>
-                    </div>
-                    <?php
-                    $sash_comparison_rows = [
-                        ['Meeting rail', '35mm', '44.5mm', '60mm'],
-                        ['Corner detail', 'Mechanical joints', 'Welded joints', 'Welded joints'],
-                        ['Profile detail', 'Putty line', 'Putty line', 'Sculptured ovolo'],
-                        ['Bottom rail', '81mm standard', '81mm standard', '68mm standard'],
-                        ['Horn options', 'Seamless run-through', 'Run-through, clip-on or none', 'Run-through, clip-on or none'],
-                        ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
-                        ['Best U-value', '1.2 W/m²K option', '1.2 W/m²K option', '1.4 W/m²K option'],
-                        ['Furniture', 'Globe standard', 'Acorn standard', 'Acorn standard'],
-                    ];
-                    ?>
-                    <?php foreach ($sash_comparison_rows as $row) : ?>
-                        <div class="fg-sash-spec-table__row">
-                            <?php foreach ($row as $cell_index => $cell) : ?>
-                                <?php if ($cell_index === 0) : ?>
-                                    <span><?php echo esc_html($cell); ?></span>
-                                <?php else : ?>
-                                    <p><?php echo esc_html($cell); ?></p>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php /* A direct child of the body grid on purpose: it sits under the
+                             stage on desktop and after the facts on a phone, and CSS grid
+                             only places direct children. */ ?>
+                    <p class="fg-sash-stage__note"><?php esc_html_e('We confirm the final model, colour, bar layout, horn detail, ventilation option and hardware before order so the sash suits the property rather than just the brochure.', 'fenster'); ?></p>
                 </div>
             </div>
         </section>

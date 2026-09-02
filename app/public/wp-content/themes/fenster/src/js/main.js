@@ -616,7 +616,7 @@ if (legendAssistant) {
       'main [aria-label*="specification" i]',
       'main [aria-label*="technical" i]',
       'main .fg-product-intel__summary',
-      'main .fg-sash-spec-table',
+      'main .fg-sash-stage__facts',
       'main .fg-team-person',
     ].join(','));
 
@@ -7632,107 +7632,145 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
   update();
 });
 
-document.querySelectorAll('[data-fg-sash-carousel]').forEach((carousel) => {
-  const track = carousel.querySelector('[data-fg-sash-track]');
-  const slides = [...carousel.querySelectorAll('[data-fg-sash-slide]')];
-  const panels = [...carousel.querySelectorAll('[data-fg-sash-spec-panel]')];
-  const dots = [...carousel.querySelectorAll('[data-fg-sash-dot]')];
-  const previous = carousel.querySelector('[data-fg-sash-prev]');
-  const next = carousel.querySelector('[data-fg-sash-next]');
-  const name = carousel.querySelector('[data-fg-sash-name]');
-  const count = carousel.querySelector('[data-fg-sash-count]');
-  const mobileQuery = window.matchMedia('(max-width: 860px)');
-  let activeIndex = 0;
+/* THE ROSEVIEW SASH STAGE on /sliding-sash-windows/. Owner instruction,
+   2026-09-02: one model big in the middle, the other two off to the side until
+   clicked, with an animation. There is ONE piece of state, the model in the
+   middle. The geometry is all in the stylesheet: this writes `data-pos` on
+   each slide and `hidden` on each facts panel, and the CSS transitions do the
+   moving. Five ways in — the side windows, the arrows, the segment switch,
+   the meeting rail ticks and a swipe — all land in goTo().
+
+   NO POINTER CAPTURE, ON PURPOSE. Capturing the pointer on the scene retargets
+   pointerup to the scene, and a click is dispatched to the nearest common
+   ancestor of the down and up targets, so a plain tap on a side window would
+   stop being a click on that window. The drag listens on the window instead,
+   and a real drag swallows the click that follows it. A vertical drag is left
+   to the page: `touch-action: pan-y` on the scene hands it to the browser,
+   which then fires pointercancel, and the move handler ignores anything that
+   is more down than across. */
+document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
+  const scene = stage.querySelector('[data-fg-stage-scene]');
+  const slides = [...stage.querySelectorAll('[data-fg-stage-slide]')];
+  const panels = [...stage.querySelectorAll('[data-fg-stage-panel]')];
+  const selectors = [...stage.querySelectorAll('[data-fg-stage-select]')];
+  const controls = stage.querySelector('[data-fg-stage-controls]');
+  const live = stage.querySelector('[data-fg-stage-live]');
+  const count = slides.length;
+
+  if (!scene || count < 2) return;
+
+  let active = Math.max(0, slides.findIndex((slide) => slide.dataset.pos === 'centre'));
   let pointerId = null;
-  let pointerStartX = 0;
-  let dragDistance = 0;
+  let startX = 0;
+  let startY = 0;
+  let drag = 0;
+  let dragging = false;
 
-  if (!track || slides.length < 2) return;
+  const modelName = (index) => panels[index]?.querySelector('h3')?.textContent?.trim() || '';
 
-  const update = () => {
-    track.style.setProperty('--fg-sash-index', String(activeIndex));
-    track.style.setProperty('--fg-sash-drag', '0');
+  const positionFor = (index) => {
+    const offset = (index - active + count) % count;
+    if (offset === 0) return 'centre';
+    return offset === 1 ? 'right' : 'left';
+  };
 
+  const render = (announce) => {
     slides.forEach((slide, index) => {
-      if (mobileQuery.matches) {
-        slide.setAttribute('aria-hidden', index === activeIndex ? 'false' : 'true');
-      } else {
-        slide.removeAttribute('aria-hidden');
-      }
+      slide.dataset.pos = positionFor(index);
+      slide.setAttribute('aria-pressed', index === active ? 'true' : 'false');
+      slide.tabIndex = index === active ? -1 : 0;
     });
 
     panels.forEach((panel, index) => {
-      panel.hidden = index !== activeIndex;
+      panel.hidden = index !== active;
     });
 
-    dots.forEach((dot, index) => {
-      dot.setAttribute('aria-pressed', index === activeIndex ? 'true' : 'false');
+    selectors.forEach((control) => {
+      control.setAttribute('aria-pressed', Number(control.dataset.fgStageSelect) === active ? 'true' : 'false');
     });
 
-    if (name) {
-      name.textContent = slides[activeIndex]?.querySelector('h3')?.textContent?.trim() || '';
-    }
-
-    if (count) {
-      count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    if (announce && live) {
+      live.textContent = `Showing ${modelName(active)}`;
     }
   };
 
   const goTo = (index) => {
-    activeIndex = (index + slides.length) % slides.length;
-    update();
+    const next = ((index % count) + count) % count;
+    if (next === active) return;
+    active = next;
+    render(true);
   };
 
-  const finishDrag = (event) => {
-    if (pointerId === null || event.pointerId !== pointerId) return;
-    const threshold = Math.min(72, carousel.clientWidth * 0.16);
+  selectors.forEach((control) => {
+    control.addEventListener('click', () => goTo(Number(control.dataset.fgStageSelect)));
+  });
+  stage.querySelector('[data-fg-stage-prev]')?.addEventListener('click', () => goTo(active - 1));
+  stage.querySelector('[data-fg-stage-next]')?.addEventListener('click', () => goTo(active + 1));
 
-    carousel.classList.remove('is-dragging');
-    if (dragDistance <= -threshold) {
-      activeIndex = (activeIndex + 1) % slides.length;
-    } else if (dragDistance >= threshold) {
-      activeIndex = (activeIndex - 1 + slides.length) % slides.length;
+  const swallowClick = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+  };
+
+  const moveDrag = (event) => {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+
+    if (!dragging) {
+      if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy)) return;
+      dragging = true;
+      stage.classList.add('is-dragging');
+    }
+
+    drag = dx;
+    scene.style.setProperty('--fg-stage-drag', `${Math.max(-120, Math.min(120, dx * 0.35))}px`);
+  };
+
+  const endDrag = (event) => {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    window.removeEventListener('pointermove', moveDrag);
+    window.removeEventListener('pointerup', endDrag);
+    window.removeEventListener('pointercancel', endDrag);
+
+    const threshold = Math.min(70, scene.clientWidth * 0.14);
+    stage.classList.remove('is-dragging');
+    scene.style.setProperty('--fg-stage-drag', '0px');
+
+    if (dragging) {
+      scene.addEventListener('click', swallowClick, { capture: true, once: true });
+      setTimeout(() => scene.removeEventListener('click', swallowClick, { capture: true }), 0);
+      if (drag <= -threshold) goTo(active + 1);
+      else if (drag >= threshold) goTo(active - 1);
     }
 
     pointerId = null;
-    dragDistance = 0;
-    update();
+    drag = 0;
+    dragging = false;
   };
 
-  previous?.addEventListener('click', () => goTo(activeIndex - 1));
-  next?.addEventListener('click', () => goTo(activeIndex + 1));
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goTo(index));
-  });
-
-  track.addEventListener('pointerdown', (event) => {
-    if (!mobileQuery.matches) return;
+  scene.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
     pointerId = event.pointerId;
-    pointerStartX = event.clientX;
-    dragDistance = 0;
-    carousel.classList.add('is-dragging');
-    track.setPointerCapture?.(event.pointerId);
+    startX = event.clientX;
+    startY = event.clientY;
+    drag = 0;
+    dragging = false;
+    window.addEventListener('pointermove', moveDrag);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
   });
 
-  track.addEventListener('pointermove', (event) => {
-    if (pointerId === null || event.pointerId !== pointerId) return;
-    dragDistance = Math.max(-carousel.clientWidth, Math.min(carousel.clientWidth, event.clientX - pointerStartX));
-    track.style.setProperty('--fg-sash-drag', String(dragDistance));
-  });
-
-  track.addEventListener('pointerup', finishDrag);
-  track.addEventListener('pointercancel', finishDrag);
-
-  carousel.addEventListener('keydown', (event) => {
-    if (!mobileQuery.matches || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+  stage.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    if (event.target.closest('input, textarea, select')) return;
     event.preventDefault();
-    goTo(activeIndex + (event.key === 'ArrowRight' ? 1 : -1));
+    goTo(active + (event.key === 'ArrowRight' ? 1 : -1));
   });
 
-  carousel.setAttribute('tabindex', '0');
-  mobileQuery.addEventListener?.('change', update);
-  update();
+  if (controls) controls.hidden = false;
+  stage.classList.add('is-enhanced');
+  render(false);
 });
 
 document.querySelectorAll('[data-fg-case-steps]').forEach((stepper) => {
