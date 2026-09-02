@@ -220,21 +220,26 @@ $fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
        does not cover sits on the other, which is the shape the argument
        actually has. */
     ?>
-    <section class="fg-wd-figure" aria-labelledby="fg-wd-figure-title">
+    <?php
+    /* THE ONE NUMBER, ON A DARK BAND. It was two columns of text on the pale
+       canvas directly above six more columns of text on the pale canvas, which
+       is the "two consecutive text-heavy sections" `STYLE.md` rules out. A
+       number is set, not written: it takes the page's second dark moment, the
+       run of pale is broken, and the caveats sit beside it as a ruled list
+       instead of in the bordered box they had. No image, because here the
+       number IS the picture. */
+    ?>
+    <section class="fg-wd-figure fg-wd-figure--band" aria-labelledby="fg-wd-figure-title">
         <div class="container">
-            <header class="fg-chapter-head">
-                <p class="eyebrow"><?php esc_html_e('The one number', 'fenster'); ?></p>
-                <h2 id="fg-wd-figure-title"><?php esc_html_e('The one number worth quoting, with its conditions attached.', 'fenster'); ?></h2>
-            </header>
             <div class="fg-wd-figure__grid">
                 <div class="fg-wd-figure__claim">
+                    <p class="eyebrow"><?php esc_html_e('The one number', 'fenster'); ?></p>
+                    <h2 id="fg-wd-figure-title"><?php esc_html_e('The one number worth quoting.', 'fenster'); ?></h2>
                     <p class="fg-wd-stat"><span>50%</span> <?php esc_html_e('more thermally efficient', 'fenster'); ?></p>
-                    <p>
-                        <?php esc_html_e('Distinction had their 44.5mm slab independently tested against a 48mm solid-timber-core composite door and a 44mm timber panelled door, and it came out 50% more thermally efficient than both. The testing was at the University of Salford\'s Energy House.', 'fenster'); ?>
-                    </p>
+                    <p><?php esc_html_e('Distinction had their 44.5mm slab independently tested against a 48mm solid-timber-core composite door and a 44mm timber panelled door, and it came out 50% more thermally efficient than both. The testing was at the University of Salford\'s Energy House.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-wd-figure__caveats">
-                    <h3><?php esc_html_e('What it does not tell you.', 'fenster'); ?></h3>
+                    <h3><?php esc_html_e('What it does not tell you', 'fenster'); ?></h3>
                     <ul>
                         <li><?php esc_html_e('It is Distinction\'s test rather than ours, and it measures the slab rather than a finished doorset. Your frame, your glass, your threshold and how well the thing is fitted all move the real answer.', 'fenster'); ?></li>
                         <li><?php esc_html_e('It is a thermal comparison only. It says nothing about security, and nothing about how a timber core handles an impact, where a solid timber door may well have its own case.', 'fenster'); ?></li>
@@ -246,31 +251,48 @@ $fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
     </section>
 
     <?php
-    /* THE REST OF IT, AS A BAND OF FIGURES. Six paragraphs in six white cards
-       became six numbers with a line each. Same facts, same attribution, read
-       in a glance rather than skipped. */
+    /* ONE STRONG IMAGE, NOT SIX TEXT CELLS. `STYLE.md`: "Use one strong image
+       treatment before using several small ones. A single relevant project
+       image beside meaningful copy is more premium than a collection of
+       tiles." The six facts were a 3x2 grid of prose on a page that had a
+       folder of real doors going unused. */
+    $fg_figures_img = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/ruby-red-entrance-';
     ?>
     <section class="fg-wd-figures" aria-labelledby="fg-wd-figures-title">
-        <div class="container">
-            <header class="fg-chapter-head">
-                <p class="eyebrow"><?php esc_html_e('The rest of it', 'fenster'); ?></p>
-                <h2 id="fg-wd-figures-title"><?php esc_html_e('The rest of it, in figures.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('All Distinction\'s numbers, and each one says so. None of them is the reason we fit the door; that is further down.', 'fenster'); ?></p>
-            </header>
-            <dl class="fg-wd-band">
-                <?php foreach ($fg_figures as $fg_f) : ?>
-                    <div class="fg-wd-band__cell">
-                        <dt>
-                            <span class="fg-wd-band__figure"><?php echo esc_html($fg_f['figure']); ?></span>
-                            <span class="fg-wd-band__label"><?php echo esc_html($fg_f['label']); ?></span>
-                        </dt>
-                        <dd><?php echo esc_html($fg_f['copy']); ?></dd>
-                    </div>
-                <?php endforeach; ?>
-            </dl>
-            <p class="fg-wd-figures__care">
-                <span><?php esc_html_e('Looking after it is warm water and a soft cloth, and that is genuinely the whole routine. Do not paint one, because it voids the surface warranty, and skip anything abrasive, any solvent and the pressure washer.', 'fenster'); ?></span>
-            </p>
+        <div class="container fg-wd-figures__grid">
+            <figure class="fg-wd-figures__media">
+                <img
+                    src="<?php echo esc_url(fenster_generated_url($fg_figures_img . '800w.webp')); ?>"
+                    srcset="<?php echo esc_attr(implode(', ', [
+                        fenster_generated_url($fg_figures_img . '480w.webp') . ' 480w',
+                        fenster_generated_url($fg_figures_img . '800w.webp') . ' 800w',
+                    ])); ?>"
+                    sizes="(max-width: 860px) 92vw, 32vw"
+                    alt="<?php esc_attr_e('A red Distinction composite front door with a full-height decorative glass panel and a long brushed handle', 'fenster'); ?>"
+                    loading="lazy" decoding="async" width="800" height="1000">
+            </figure>
+
+            <div class="fg-wd-figures__words">
+                <header class="fg-chapter-head">
+                    <p class="eyebrow"><?php esc_html_e('The rest of it', 'fenster'); ?></p>
+                    <h2 id="fg-wd-figures-title"><?php esc_html_e('The rest of it, in figures.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('All Distinction\'s numbers, and each one says so. None of them is the reason we fit the door; that is further down.', 'fenster'); ?></p>
+                </header>
+                <dl class="fg-wd-band">
+                    <?php foreach ($fg_figures as $fg_f) : ?>
+                        <div class="fg-wd-band__cell">
+                            <dt>
+                                <span class="fg-wd-band__figure"><?php echo esc_html($fg_f['figure']); ?></span>
+                                <span class="fg-wd-band__label"><?php echo esc_html($fg_f['label']); ?></span>
+                            </dt>
+                            <dd><?php echo esc_html($fg_f['copy']); ?></dd>
+                        </div>
+                    <?php endforeach; ?>
+                </dl>
+                <p class="fg-wd-figures__care">
+                    <span><?php esc_html_e('Looking after it is warm water and a soft cloth, and that is genuinely the whole routine. Do not paint one, because it voids the surface warranty, and skip anything abrasive, any solvent and the pressure washer.', 'fenster'); ?></span>
+                </p>
+            </div>
         </div>
     </section>
 
@@ -316,15 +338,45 @@ $fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
                 <p class="eyebrow"><?php esc_html_e('Where to go next', 'fenster'); ?></p>
                 <h2 id="fg-wd-next-title"><?php esc_html_e('If that settles it, pick a door.', 'fenster'); ?></h2>
             </header>
+            <?php
+            /* IMAGE TILES. Two ruled text links were the same skeleton as
+               everything else on the page, and a traditional door beside a
+               modern one says "range" faster than the words under them do. */
+            $fg_next = [
+                [
+                    'href'  => $fg_range,
+                    'img'   => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/black-chatsworth-entrance-',
+                    'alt'   => __('A black Distinction composite front door with an arched decorative fanlight and gold furniture', 'fenster'),
+                    'title' => __('The full range', 'fenster'),
+                    'copy'  => __('All 142 doors we can price, drawn to scale and filterable by how much glass you want. Click one and the quote tool opens on it.', 'fenster'),
+                ],
+                [
+                    'href'  => $fg_quiz,
+                    'img'   => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/anthracite-entrance-',
+                    'alt'   => __('An anthracite grey Distinction composite front door with a long bar handle under a numbered fanlight', 'fenster'),
+                    'title' => __('Five questions instead', 'fenster'),
+                    'copy'  => __('If 142 is too many to look at cold, answer five questions about your house and we will point at one, in the colour you chose.', 'fenster'),
+                ],
+            ];
+            ?>
             <div class="fg-wd-next__grid fg-wd-next__grid--two">
-                <a class="fg-wd-next__card" href="<?php echo esc_url($fg_range); ?>">
-                    <strong><?php esc_html_e('The full range', 'fenster'); ?></strong>
-                    <span><?php esc_html_e('All 142 doors we can price, drawn to scale and filterable by how much glass you want. Click one and the quote tool opens on it.', 'fenster'); ?></span>
-                </a>
-                <a class="fg-wd-next__card" href="<?php echo esc_url($fg_quiz); ?>">
-                    <strong><?php esc_html_e('Five questions instead', 'fenster'); ?></strong>
-                    <span><?php esc_html_e('If 142 is too many to look at cold, answer five questions about your house and we will point at one, in the colour you chose.', 'fenster'); ?></span>
-                </a>
+                <?php foreach ($fg_next as $fg_n) : ?>
+                    <a class="fg-wd-next__card" href="<?php echo esc_url($fg_n['href']); ?>">
+                        <span class="fg-wd-next__media">
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url($fg_n['img'] . '800w.webp')); ?>"
+                                srcset="<?php echo esc_attr(implode(', ', [
+                                    fenster_generated_url($fg_n['img'] . '480w.webp') . ' 480w',
+                                    fenster_generated_url($fg_n['img'] . '800w.webp') . ' 800w',
+                                ])); ?>"
+                                sizes="(max-width: 860px) 92vw, 40vw"
+                                alt="<?php echo esc_attr($fg_n['alt']); ?>"
+                                loading="lazy" decoding="async" width="800" height="1000">
+                        </span>
+                        <strong><?php echo esc_html($fg_n['title']); ?></strong>
+                        <span class="fg-wd-next__copy"><?php echo esc_html($fg_n['copy']); ?></span>
+                    </a>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
