@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-31
+Last updated: 2026-09-02
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -13,6 +13,48 @@ sequence rather than ten competing starting points.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `a6355b85`, NOT LIVE)
+
+Owner: *"the comparisons. they need to be full screen and less spreadsheet.
+with the ability to click left or right to see the other models ... big view of
+one selected, and then the other 2 are off to the side untill you click with a
+cool animation. do this is the test site"*. Live is unmoved at `f26681b0`.
+
+- **One component at every width replaces three.** The three-card grid, the
+  eight-row comparison table and the separate mobile carousel on
+  `/sliding-sash-windows/` are gone. `.fg-sash-stage` puts one Roseview model
+  large in the middle of a section sized to the viewport below the header, the
+  other two small at the sides on a shared floor line, and brings one forward
+  on a click, the arrows, a three-segment switch, a tick on the meeting rail
+  scale, or a swipe. The facts for the middle model sit beside it and
+  cross-fade with it.
+- **The eight differences live in one array**, `$sash_comparison_rows` in
+  `generated-page.php`, and each panel reads its own column. The page had
+  carried them three times and they had drifted ("81mm deep rail" on the cards
+  against "81mm standard" in the table). Meeting rail is drawn as the scale
+  rather than printed as a tile, because it is the one numeric difference and
+  the one the copy argues most.
+- **Geometry is CSS, state is one integer.** The controller writes `data-pos`
+  on each slide and `hidden` on each panel; the transitions do the moving. No
+  pointer capture, because capture retargets the click and a tap on a side
+  window stopped being one. Controls ship `hidden` and are revealed, so
+  without JavaScript the three renders lay out in a row.
+- **Measured before shipping**, first in a standalone PHP harness with the
+  compiled bundles and then on test over CDP: the section fits inside 1440x900
+  (828px under the header) and 1280x720; no horizontal overflow at 390, 768 or
+  1440; no console errors of ours; every tap target 44px or more, where the old
+  carousel dots were 6px. Legend's fact selector now reads
+  `.fg-sash-stage__facts`.
+- **Seen on test and not caused by this change:** pressing *Use necessary
+  only* fails its withdrawal call with a CORS error from the Marketing
+  Dashboard (`authorization` is not in `Access-Control-Allow-Headers` on the
+  preflight for `/api/website/withdraw`). Recorded, not fixed.
+- **The other session committed twice in this checkout while this was in
+  progress**, and neither commit swept the in-progress files, which was
+  checked before pushing. The rebase step was blocked by that session's
+  unstaged files; the push was a fast-forward onto its latest commit, which is
+  the same result.
 
 ## START HERE, 2026-08-31 (a false definition of a repair, corrected. LIVE as c3b8164f)
 

@@ -1668,18 +1668,16 @@ Current accepted behaviour:
 
 - The page is Roseview-led, not Liniar-led.
 - `inc\product-hub-data.php` maps the product hub system to Roseview with the local logo `assets\partners\roseview-logo-new.png`; the old inherited Liniar badge should not render on this route.
-- Dedicated Roseview comparison content lives in `template-parts\sections\generated-page.php` for Ultimate Rose, Heritage Rose and Charisma Rose.
+- Dedicated Roseview comparison content lives in `template-parts\sections\generated-page.php` for Ultimate Rose, Heritage Rose and Charisma Rose. **Since 2026-09-02 it is the `.fg-sash-stage` component, ON TEST as `a6355b85` and not yet live**: one model large in the middle of a section sized to the viewport below the header, the other two small at the sides on a shared floor line, brought forward by clicking a side window, the arrows, the three-segment switch, a tick on the meeting rail scale or a swipe, with that model's facts beside it. The eight differences live once in `$sash_comparison_rows`. See the Sliding Sash Roseview Rule in `AI.md`.
 - Roseview model/detail assets live under `assets\images\products\sash-roseview`.
-- The page includes model cards, aligned `Best for` boxes, a comparison table, meeting-rail detail and mechanical/welded-joint detail.
-- The joint media panel stretches to match the copy card height on desktop.
+- The three-card grid, the eight-row comparison table and the meeting-rail/joint detail run are gone from the rendered page (the detail run's data arrays are still in the template but nothing renders them on this route).
 - The generic S2 window handle section is intentionally removed from this page.
 - Sash furniture renders from `inc\site-data.php` under `sash_furniture`: Globe furniture for Ultimate Rose, Acorn furniture for Heritage/Charisma Rose, Shark Fin Limit Stop and D Handle extras, plus the Roseview under/over 700mm furniture-count rule.
 - Runtime assets are local theme copies from the Roseview scrape. Do not reference the scrape export or `wp-content\fenster-reference` for this page.
 - Mobile QA: the top of the page is acceptable. Commit `c21bd46` tightened the Roseview model stats/cards for Ultimate Rose, Heritage Rose and Charisma Rose, corner/detail sections, comparison rows and large detail images for phone layouts. Continue to real-phone regression check this page because it is image-heavy.
-- At `860px` and below, the three Roseview model cards use a single-card swipe carousel with previous/next controls, position dots and a visible model counter. The desktop three-card grid remains unchanged.
-- The desktop comparison table remains unchanged. Mobile replaces it with a selected-model specification panel that updates with the carousel and shows meeting rail, corner detail, frame depth, glass unit, energy rating and ThermoVFlex information in a compact two-column grid. Do not restore the old mobile pattern that stacked every table row and repeated all three model values down the page.
+- The stage is one component at every width. At `860px` and below the scene takes about half the screen with the two side windows peeking at the edges, the arrows and the switch sit directly under it, and the facts follow in one column. Do not split desktop and mobile into two components again, and do not restore a table at either width.
 - The accepted mobile sash journey is deliberately shorter than desktop. At `860px` and below, hide the repeated sash detail run, generic Product information cards, generic More information checks, order-process rail and final related-link band. Their useful model facts are already covered by the selector and its selected-model specifications.
-- Mobile colour/glass choices and sash furniture are compact horizontal decision rails. Furniture cards show one representative product object instead of all ten images at once; desktop retains the complete three-range furniture presentation.
+- Mobile colour/glass choices are a compact horizontal rail. The furniture section is the fixed-height Globe/Acorn selector (2026-07-16) at every width, with all thirteen finish renders loaded eagerly so the stage never empties between picks.
 
 Recent verification:
 
