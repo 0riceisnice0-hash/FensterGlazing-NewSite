@@ -49726,14 +49726,17 @@ html.fg-blinds-reveal-locked {
      not, so the shortest left a band of white under its link while the
      other two ran on. The link goes to the floor of the card and the
      three line up. */
+  /* Flex, not grid. Under `align-content: start` a grid packs its rows to
+     the top and leaves the free space at the bottom of the container, where
+     an item's own `margin-top: auto` cannot reach it. In a flex column the
+     auto margin consumes it, which is the whole trick. */
   .fg-cs-card__body {
-    display: grid;
-    align-content: start;
+    display: flex;
+    flex-direction: column;
     height: 100%;
   }
 
-  .fg-cs-card__link,
-  .fg-cs-card__more { margin-top: auto; padding-top: 0.6rem; }
+  .fg-cs-card__more { margin-top: auto; padding-top: 0.7rem; }
 
   /* The FAQ's left track was 393px holding a 102px sticky heading, so a
      third of the row was reserved for two lines of type. The questions
