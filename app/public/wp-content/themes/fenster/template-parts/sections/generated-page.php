@@ -4683,22 +4683,29 @@ if ($is_commercial_hub) {
            other models ... big view of one selected, and then the other 2 are
            off to the side until you click with a cool animation."
 
-           One model stands large in the middle of a section sized to the
-           viewport; the other two wait small at the sides and come forward
-           when clicked, on the arrows, on the segment switch, on a tick of the
-           meeting rail scale, or with a swipe. The facts for the model in the
-           middle sit beside it and cross-fade with it, which is the comparison
-           the eight-row table used to make, one model at a time. The table,
-           the three-card grid and the separate mobile carousel are gone; this
-           is one component at every width.
+           Second review the same day: "i dont like the flashiness that happens
+           when you click next. and i need it to look less like claude designed
+           it and more wow. creative. cool wow factor. animations. subtle
+           colour choices, hand crafted with passion." So: a dark showroom band
+           rather than a card on the canvas; the three windows stand on a lit
+           floor with their reflections in it and angle in towards the one in
+           the middle; the meeting rail scale IS the switch, with a marker that
+           glides between the three; the facts are hairline rows on dark glass
+           and cross-fade quietly rather than re-animating; and the windows
+           rise into place the first time the stage comes into view.
+
+           One model stands large in the middle; the other two wait small at
+           the sides and come forward when clicked, on the arrows, on a tick of
+           the rail scale, or with a swipe. The facts for the model in the
+           middle sit beside it. The table, the three-card grid and the
+           separate mobile carousel are gone; this is one component at every
+           width.
 
            THE EIGHT DIFFERENCES LIVE IN ONE ARRAY and each model's panel reads
            its own column from it. The old page carried the same rows three
-           times (per-card specs, a desktop table and a mobile list) and they
-           had already drifted: the cards said "81mm deep rail" where the table
-           said "81mm standard". Meeting rail is drawn as the scale rather than
-           printed as a tile, because it is the one numeric difference and the
-           one the copy argues most.
+           times and they had drifted. Meeting rail is drawn as the scale
+           rather than printed as a row, because it is the one numeric
+           difference and the one the copy argues most.
 
            Geometry is in the stylesheet and state is in `src/js/main.js`
            (`[data-fg-sash-stage]`). The controls ship `hidden` and the script
@@ -4720,8 +4727,15 @@ if ($is_commercial_hub) {
         $sash_rail_scale_min = 30;
         $sash_rail_scale_max = 65;
         $sash_stage_positions = ['centre', 'right', 'left'];
+        $sash_tick_left = static function (array $model) use ($sash_rail_scale_min, $sash_rail_scale_max): string {
+            $mm = (float) ($model['rail_mm'] ?? 0);
+            return number_format(($mm - $sash_rail_scale_min) / ($sash_rail_scale_max - $sash_rail_scale_min) * 100, 1, '.', '');
+        };
+        $sash_tick_label = static function (array $model): string {
+            return rtrim(rtrim(number_format((float) ($model['rail_mm'] ?? 0), 1, '.', ''), '0'), '.') . 'mm';
+        };
         ?>
-        <section class="fg-sash-stage" aria-labelledby="fg-sash-stage-title" data-fg-sash-stage>
+        <section class="fg-sash-stage" aria-labelledby="fg-sash-stage-title" data-fg-sash-stage data-fg-active="0">
             <div class="container fg-sash-stage__inner">
                 <div class="fg-sash-stage__head">
                     <div>
@@ -4737,12 +4751,16 @@ if ($is_commercial_hub) {
                 <div class="fg-sash-stage__body">
                     <div class="fg-sash-stage__scene-wrap">
                         <div class="fg-sash-stage__scene" role="group" aria-label="<?php esc_attr_e('Roseview sash models', 'fenster'); ?>" data-fg-stage-scene>
+                            <span class="fg-sash-stage__glow" aria-hidden="true"></span>
                             <?php foreach ($sash_roseview_models as $index => $model) : ?>
                                 <?php
                                 $model_image = (string) $model['image'];
                                 $model_image_dir = trailingslashit(dirname($model_image));
                                 $model_image_stem = pathinfo($model_image, PATHINFO_FILENAME);
                                 $model_name = (string) $model['name'];
+                                $model_src = fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp');
+                                $model_srcset = fenster_generated_url($model_image_dir . $model_image_stem . '-400w.webp') . ' 400w, ' . $model_src . ' 800w';
+                                $model_loading = $index === 0 ? 'eager' : 'lazy';
                                 ?>
                                 <button
                                     type="button"
@@ -4755,77 +4773,76 @@ if ($is_commercial_hub) {
                                     <?php echo $index === 0 ? 'tabindex="-1"' : ''; ?>
                                 >
                                     <img
-                                        src="<?php echo esc_url(fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp')); ?>"
-                                        srcset="<?php echo esc_attr(fenster_generated_url($model_image_dir . $model_image_stem . '-400w.webp') . ' 400w, ' . fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp') . ' 800w'); ?>"
+                                        src="<?php echo esc_url($model_src); ?>"
+                                        srcset="<?php echo esc_attr($model_srcset); ?>"
                                         sizes="(max-width: 860px) 70vw, 28vw"
                                         width="800"
                                         height="1038"
                                         alt="<?php echo esc_attr((string) $model['alt']); ?>"
-                                        loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
+                                        loading="<?php echo esc_attr($model_loading); ?>"
                                         decoding="async"
                                         draggable="false"
                                     >
+                                    <?php /* The same render again, flipped and faded, is the reflection in
+                                             the floor. Decorative, so it carries no alt and is hidden from
+                                             assistive technology. */ ?>
+                                    <span class="fg-sash-stage__reflection" aria-hidden="true">
+                                        <img src="<?php echo esc_url($model_src); ?>" srcset="<?php echo esc_attr($model_srcset); ?>" sizes="(max-width: 860px) 70vw, 28vw" width="800" height="1038" alt="" loading="<?php echo esc_attr($model_loading); ?>" decoding="async" draggable="false">
+                                    </span>
                                     <span class="fg-sash-stage__slide-label" aria-hidden="true"><?php echo esc_html($model_name); ?></span>
                                 </button>
                             <?php endforeach; ?>
                         </div>
 
+                        <?php /* The rail scale is the switch: three stops on one track, the
+                                 marker glides to whichever model is in the middle, and the
+                                 arrows step along it. One control, and it is the product's own
+                                 key dimension. */ ?>
                         <div class="fg-sash-stage__controls" data-fg-stage-controls hidden>
                             <button type="button" class="fg-sash-stage__arrow" data-fg-stage-prev aria-label="<?php esc_attr_e('Previous sash model', 'fenster'); ?>">
-                                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
-                            <div class="fg-sash-stage__switch" role="group" aria-label="<?php esc_attr_e('Choose a sash window model', 'fenster'); ?>">
+                            <div class="fg-sash-stage__dial" role="group" aria-label="<?php esc_attr_e('Choose a sash window model by meeting rail width', 'fenster'); ?>">
+                                <span class="fg-sash-stage__dial-title" aria-hidden="true"><?php esc_html_e('Meeting rail', 'fenster'); ?></span>
+                                <span class="fg-sash-stage__dial-track" aria-hidden="true"></span>
+                                <span class="fg-sash-stage__dial-marker" data-fg-dial-marker style="left: <?php echo esc_attr($sash_tick_left($sash_roseview_models[0])); ?>%;" aria-hidden="true"></span>
                                 <?php foreach ($sash_roseview_models as $index => $model) : ?>
                                     <button
                                         type="button"
+                                        class="fg-sash-stage__tick"
+                                        style="left: <?php echo esc_attr($sash_tick_left($model)); ?>%;"
                                         data-fg-stage-select="<?php echo esc_attr((string) $index); ?>"
+                                        data-fg-tick-left="<?php echo esc_attr($sash_tick_left($model)); ?>"
                                         aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                                        aria-label="<?php echo esc_attr(sprintf(__('Show %s', 'fenster'), (string) $model['name'])); ?>"
-                                    ><?php echo esc_html(str_replace(' Rose', '', (string) $model['name'])); ?></button>
+                                        aria-label="<?php echo esc_attr(sprintf(__('%1$s, %2$s meeting rail', 'fenster'), (string) $model['name'], $sash_tick_label($model))); ?>"
+                                    >
+                                        <i aria-hidden="true"></i>
+                                        <strong aria-hidden="true"><?php echo esc_html($sash_tick_label($model)); ?></strong>
+                                        <small aria-hidden="true"><?php echo esc_html(str_replace(' Rose', '', (string) $model['name'])); ?></small>
+                                    </button>
                                 <?php endforeach; ?>
                             </div>
                             <button type="button" class="fg-sash-stage__arrow" data-fg-stage-next aria-label="<?php esc_attr_e('Next sash model', 'fenster'); ?>">
-                                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
                         </div>
                         <p class="fg-sash-stage__sr" aria-live="polite" data-fg-stage-live></p>
                     </div>
 
-                    <div class="fg-sash-stage__panels">
+                    <div class="fg-sash-stage__panels" data-fg-stage-panels>
                         <?php foreach ($sash_roseview_models as $index => $model) : ?>
                             <article class="fg-sash-stage__panel" data-fg-stage-panel aria-label="<?php echo esc_attr((string) $model['name'] . ' specifications'); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
-                                <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
-                                <h3><?php echo esc_html((string) $model['name']); ?></h3>
-                                <p class="fg-sash-stage__best"><strong><?php esc_html_e('Best for', 'fenster'); ?></strong><?php echo esc_html((string) $model['best_for']); ?></p>
-                                <div class="fg-sash-stage__rail">
+                                <header class="fg-sash-stage__panel-head">
+                                    <div>
+                                        <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
+                                        <h3><?php echo esc_html((string) $model['name']); ?></h3>
+                                    </div>
                                     <figure class="fg-sash-stage__rail-photo">
-                                        <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="104" height="78">
+                                        <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="96" height="72">
                                         <figcaption><?php echo esc_html((string) $model['rail_label']); ?></figcaption>
                                     </figure>
-                                    <div class="fg-sash-stage__scale">
-                                        <span class="fg-sash-stage__scale-title"><?php esc_html_e('The three rail widths', 'fenster'); ?></span>
-                                        <span class="fg-sash-stage__scale-track" aria-hidden="true"></span>
-                                        <?php foreach ($sash_roseview_models as $tick_index => $tick_model) : ?>
-                                            <?php
-                                            $tick_mm = (float) ($tick_model['rail_mm'] ?? 0);
-                                            $tick_left = ($tick_mm - $sash_rail_scale_min) / ($sash_rail_scale_max - $sash_rail_scale_min) * 100;
-                                            $tick_label = rtrim(rtrim(number_format($tick_mm, 1, '.', ''), '0'), '.') . 'mm';
-                                            ?>
-                                            <button
-                                                type="button"
-                                                class="fg-sash-stage__tick"
-                                                style="left: <?php echo esc_attr(number_format($tick_left, 1, '.', '')); ?>%;"
-                                                data-fg-stage-select="<?php echo esc_attr((string) $tick_index); ?>"
-                                                aria-pressed="<?php echo $tick_index === $index ? 'true' : 'false'; ?>"
-                                                aria-label="<?php echo esc_attr(sprintf(__('%1$s, %2$s meeting rail', 'fenster'), (string) $tick_model['name'], $tick_label)); ?>"
-                                            >
-                                                <i aria-hidden="true"></i>
-                                                <strong aria-hidden="true"><?php echo esc_html($tick_label); ?></strong>
-                                                <small aria-hidden="true"><?php echo esc_html(str_replace(' Rose', '', (string) $tick_model['name'])); ?></small>
-                                            </button>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
+                                </header>
+                                <p class="fg-sash-stage__best"><strong><?php esc_html_e('Best for', 'fenster'); ?></strong> <?php echo esc_html(lcfirst((string) $model['best_for'])); ?></p>
                                 <dl class="fg-sash-stage__facts">
                                     <?php foreach ($sash_comparison_rows as $row) : ?>
                                         <?php if ($row[0] === 'Meeting rail') { continue; } ?>

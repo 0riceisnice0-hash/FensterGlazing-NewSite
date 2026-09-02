@@ -7634,11 +7634,22 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
 
 /* THE ROSEVIEW SASH STAGE on /sliding-sash-windows/. Owner instruction,
    2026-09-02: one model big in the middle, the other two off to the side until
-   clicked, with an animation. There is ONE piece of state, the model in the
-   middle. The geometry is all in the stylesheet: this writes `data-pos` on
-   each slide and `hidden` on each facts panel, and the CSS transitions do the
-   moving. Five ways in — the side windows, the arrows, the segment switch,
-   the meeting rail ticks and a swipe — all land in goTo().
+   clicked, with an animation; and after review, no flash when the model
+   changes. There is ONE piece of state, the model in the middle. The geometry
+   is all in the stylesheet: this writes `data-pos` on each slide, `hidden` on
+   each facts panel, `data-fg-active` on the section (the glow takes its tint
+   from it) and the marker's position on the rail scale, and the CSS
+   transitions do the moving. Four ways in — the side windows, the arrows, the
+   ticks on the rail scale and a swipe — all land in goTo().
+
+   THE FACTS PANEL CROSS-FADES, IT DOES NOT RE-ANIMATE. The first build
+   replayed an entrance animation on the whole panel, tiles staggering in, on
+   every change, and the owner called it flashy. Now the panels wrapper fades
+   out over 150ms, the hidden flags swap, and it fades back in; nothing moves.
+
+   THE WINDOWS RISE INTO PLACE ONCE, when the stage first enters the viewport,
+   through `is-revealed`. There is a 2.5s fallback so nothing can stay hidden
+   if the observer never fires, which it does not in a hidden browser pane.
 
    NO POINTER CAPTURE, ON PURPOSE. Capturing the pointer on the scene retargets
    pointerup to the scene, and a click is dispatched to the nearest common
@@ -7651,10 +7662,13 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
 document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
   const scene = stage.querySelector('[data-fg-stage-scene]');
   const slides = [...stage.querySelectorAll('[data-fg-stage-slide]')];
+  const panelsWrap = stage.querySelector('[data-fg-stage-panels]');
   const panels = [...stage.querySelectorAll('[data-fg-stage-panel]')];
   const selectors = [...stage.querySelectorAll('[data-fg-stage-select]')];
+  const marker = stage.querySelector('[data-fg-dial-marker]');
   const controls = stage.querySelector('[data-fg-stage-controls]');
   const live = stage.querySelector('[data-fg-stage-live]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const count = slides.length;
 
   if (!scene || count < 2) return;
@@ -7665,6 +7679,7 @@ document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
   let startY = 0;
   let drag = 0;
   let dragging = false;
+  let switchTimer = 0;
 
   const modelName = (index) => panels[index]?.querySelector('h3')?.textContent?.trim() || '';
 
@@ -7674,20 +7689,39 @@ document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
     return offset === 1 ? 'right' : 'left';
   };
 
+  const applyPanels = () => {
+    panels.forEach((panel, index) => {
+      panel.hidden = index !== active;
+    });
+  };
+
   const render = (announce) => {
+    stage.dataset.fgActive = String(active);
+
     slides.forEach((slide, index) => {
       slide.dataset.pos = positionFor(index);
       slide.setAttribute('aria-pressed', index === active ? 'true' : 'false');
       slide.tabIndex = index === active ? -1 : 0;
     });
 
-    panels.forEach((panel, index) => {
-      panel.hidden = index !== active;
+    selectors.forEach((control) => {
+      const selected = Number(control.dataset.fgStageSelect) === active;
+      control.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      if (selected && marker && control.dataset.fgTickLeft) {
+        marker.style.left = `${control.dataset.fgTickLeft}%`;
+      }
     });
 
-    selectors.forEach((control) => {
-      control.setAttribute('aria-pressed', Number(control.dataset.fgStageSelect) === active ? 'true' : 'false');
-    });
+    if (!announce || reduced.matches || !panelsWrap) {
+      applyPanels();
+    } else {
+      panelsWrap.classList.add('is-switching');
+      clearTimeout(switchTimer);
+      switchTimer = setTimeout(() => {
+        applyPanels();
+        panelsWrap.classList.remove('is-switching');
+      }, 150);
+    }
 
     if (announce && live) {
       live.textContent = `Showing ${modelName(active)}`;
@@ -7767,6 +7801,20 @@ document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
     event.preventDefault();
     goTo(active + (event.key === 'ArrowRight' ? 1 : -1));
   });
+
+  const reveal = () => stage.classList.add('is-revealed');
+  if ('IntersectionObserver' in window && !reduced.matches) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        reveal();
+        observer.disconnect();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(scene);
+    setTimeout(reveal, 2500);
+  } else {
+    reveal();
+  }
 
   if (controls) controls.hidden = false;
   stage.classList.add('is-enhanced');
