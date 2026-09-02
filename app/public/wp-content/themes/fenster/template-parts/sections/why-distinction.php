@@ -269,7 +269,7 @@ $fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
                 <?php endforeach; ?>
             </dl>
             <p class="fg-wd-figures__care">
-                <?php esc_html_e('Looking after it is warm water and a soft cloth, and that is genuinely the whole routine. Do not paint one, because it voids the surface warranty, and skip anything abrasive, any solvent and the pressure washer.', 'fenster'); ?>
+                <span><?php esc_html_e('Looking after it is warm water and a soft cloth, and that is genuinely the whole routine. Do not paint one, because it voids the surface warranty, and skip anything abrasive, any solvent and the pressure washer.', 'fenster'); ?></span>
             </p>
         </div>
     </section>

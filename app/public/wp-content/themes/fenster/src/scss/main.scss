@@ -50419,3 +50419,15 @@ html.fg-blinds-reveal-locked {
    have spent the day enforcing this rule on other people's CSS. It sits at the
    ceiling instead of through it. */
 .fg-wd-stat span { font-size: clamp(3rem, 5.4vw, var(--fg-font-size-max, 3.6rem)); }
+
+/* The care line is the band's footer, so its rule runs the band's width. It
+   was capped at a 72ch measure, so the rule stopped two thirds of the way
+   across and read as a row that had failed to finish. The box spans; the text
+   keeps its measure with a max-width on the line itself. */
+.fg-wd-figures__care {
+  max-width: none;
+  border-top: 1px solid rgba(2, 43, 53, 0.18);
+  text-wrap: pretty;
+
+  > span { display: block; max-width: 74ch; }
+}
