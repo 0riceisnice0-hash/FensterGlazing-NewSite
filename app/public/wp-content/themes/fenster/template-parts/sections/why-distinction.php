@@ -229,7 +229,7 @@ $fg_where = trim(implode(', ', array_filter([$fg_street_name, $fg_district])));
        instead of in the bordered box they had. No image, because here the
        number IS the picture. */
     ?>
-    <section class="fg-wd-figure fg-wd-figure--band" aria-labelledby="fg-wd-figure-title">
+    <section class="fg-wd-figure fg-wd-figure--display" aria-labelledby="fg-wd-figure-title">
         <div class="container">
             <div class="fg-wd-figure__grid">
                 <div class="fg-wd-figure__claim">
