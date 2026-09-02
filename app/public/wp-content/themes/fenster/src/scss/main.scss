@@ -49647,3 +49647,55 @@ html.fg-blinds-reveal-locked {
     }
   }
 }
+
+/* ==================================================================
+ * THE QUIZ, AS A TAIL SECTION, 2026-08-27
+ *
+ * Owner: "move the quiz to be a little section at the bottom." It was
+ * the page's third section and a full-bleed dark band 991px tall. It
+ * sits above the enquiry form now, contained rather than full bleed,
+ * because the form under it is already the page's closing dark moment
+ * and two bands in a row is one too many.
+ * ================================================================== */
+
+.generated-page--composite-doors > .fg-cdq {
+  padding-block: clamp(44px, 5vw, 76px);
+  background: none;
+}
+
+.generated-page--composite-doors .fg-cdq > .container {
+  padding: clamp(1.6rem, 3.4vw, 3rem) clamp(1.25rem, 3vw, 2.75rem);
+  border-radius: var(--fg-r-lg);
+  background:
+    radial-gradient(120% 90% at 84% 0%, rgba(46, 172, 102, 0.2), transparent 62%),
+    var(--color-steel, #002d3a);
+}
+
+.generated-page--composite-doors {
+  /* Smaller everywhere, because it is now a closing offer rather than a
+     chapter. The question keeps the chapter size: it is still the thing
+     you are reading while you use it. */
+  .fg-cdq__head { margin-bottom: clamp(1.4rem, 2.6vw, 2rem); }
+
+  .fg-cdq__badge { margin-bottom: 0.7rem; }
+
+  .fg-cdq__standfirst { max-width: 50ch; }
+
+  .fg-cdq__panel { max-width: none; }
+
+  .fg-cdq__progress { margin-bottom: clamp(1.4rem, 2.6vw, 2rem); }
+
+  .fg-cdq__title { margin-bottom: clamp(1.4rem, 2.6vw, 2rem); }
+
+  .fg-cdq__answer-block {
+    padding: clamp(0.75rem, 1.6vw, 1.1rem);
+
+    img { height: clamp(96px, 11vw, 132px); }
+  }
+
+  .fg-cdq__reveal-art img { height: clamp(200px, 26vw, 280px); }
+
+  /* The tool is the hand-off, and at the bottom of the page it does not
+     need to be 760px of iframe before the enquiry form. */
+  .fg-cdq__frame iframe { height: clamp(480px, 56vh, 620px); }
+}

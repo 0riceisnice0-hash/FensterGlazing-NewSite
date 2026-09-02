@@ -67,13 +67,16 @@ $colour_doors_base = (string) ($args['colour_doors_base'] ?? '');
 </section>
 
 <?php
-/* THE QUIZ IS ITS OWN FULL-BLEED DARK BAND, not a second half of the white
-   card above. Owner's verdict on the first pass was that it did not look like
-   a quiz at all, and he is right: a quiz is a change of register, not a
-   subheading. BuzzFeed gets that from an 80px question and a flat saturated
-   block behind every answer. This gets it from the page's second dark moment,
-   a question at the display ceiling and light answer tiles on it. */
-get_template_part('template-parts/components/composite-door-quiz');
+/* THE QUIZ MOVED TO THE TAIL ON 2026-08-27, on the owner's instruction, and it
+   is rendered from `generated-page.php` just above the enquiry form.
+
+   It sat here, directly under the range, because its opening line is that 142
+   doors is too many to choose from cold and that only lands after you have
+   scrolled past 142 doors. That reasoning was right about the sentence and
+   wrong about the page: a five-question game is not what somebody who has just
+   arrived wants, and putting it third made the page's own range look like
+   something to be rescued from. At the bottom it is what it actually is — a
+   shortcut for somebody who has read the lot and still cannot choose. */
 ?>
 
 <?php

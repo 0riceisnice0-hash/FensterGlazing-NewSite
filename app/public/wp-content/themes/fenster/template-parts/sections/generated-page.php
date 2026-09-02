@@ -6485,6 +6485,21 @@ if ($is_commercial_hub) {
         <?php endif; ?>
     <?php endif; ?>
 
+    <?php
+    /* THE COMPOSITE QUIZ, LAST BEFORE THE FORM. Owner instruction 2026-08-27:
+       "move the quiz to be a little section at the bottom." It used to be the
+       page's third section and its own full-bleed dark band. Here it is the
+       last offer before the enquiry: somebody who has read the range, the
+       construction, the guarantee, the finishes and the reviews and still has
+       not picked a door gets five questions and the tool opened on the answer.
+       It is a contained panel rather than a band, because the enquiry form
+       below it is already the page's closing dark moment and two in a row is
+       one too many. */
+    if ($is_composite_doors) {
+        get_template_part('template-parts/components/composite-door-quiz');
+    }
+    ?>
+
     <section id="fenster-enquiry" class="fg-enquiry">
         <div class="container fg-enquiry__grid">
             <div class="fg-enquiry__copy">

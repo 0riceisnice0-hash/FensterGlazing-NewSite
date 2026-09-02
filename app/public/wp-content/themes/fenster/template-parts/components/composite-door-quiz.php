@@ -3,6 +3,14 @@
  * "Which composite door are you?" — a stylised five-question quiz that ends on
  * one door, with the quote tool open on it, in the colour that was picked.
  *
+ * MOVED TO THE TAIL 2026-08-27, on the owner's instruction, and rendered from
+ * `generated-page.php` immediately above the enquiry form. It was the page's
+ * third section and its own full-bleed dark band. Two things changed with the
+ * position: it is a contained panel rather than a band, because the enquiry
+ * form under it is already the closing dark moment, and the standfirst points
+ * at where the reader now is — somebody who has read the lot and still cannot
+ * pick, rather than somebody who has just met the range.
+ *
  * REBUILT 2026-08-27 AFTER THE OWNER'S VERDICT: "this doesn't look like a
  * BuzzFeed quiz at all". It was a white card with a 28.8px heading and small
  * bordered answers, which is a form. A real one was measured rather than
@@ -202,7 +210,7 @@ $fg_total = count($fg_questions);
         <header class="fg-cdq__head">
             <p class="fg-cdq__badge"><?php esc_html_e('Quiz', 'fenster'); ?></p>
             <h2 id="fg-cdq-title"><?php esc_html_e('Which composite door are you?', 'fenster'); ?></h2>
-            <p class="fg-cdq__standfirst"><?php esc_html_e('One hundred and forty two doors is too many to choose from cold. Five questions about your house, and we will point at one and open it in the pricing tool in the colour you picked.', 'fenster'); ?></p>
+            <p class="fg-cdq__standfirst"><?php esc_html_e('Read the lot and still cannot pick one? Answer five questions about your house and we will point at a door, with the reasoning, and open it in the pricing tool in the colour you chose.', 'fenster'); ?></p>
         </header>
 
         <?php /* Ships hidden. Without JavaScript the range above is the answer,
@@ -309,7 +317,7 @@ $fg_total = count($fg_questions);
                             <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php esc_html_e('Open full size', 'fenster'); ?></a>
                             <button type="button" class="fg-cdq__again" data-fg-quiz-reset><?php esc_html_e('Try again', 'fenster'); ?></button>
                         </p>
-                        <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the range above has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
+                        <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the style range higher up the page has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
                     </div>
                 </div>
 
