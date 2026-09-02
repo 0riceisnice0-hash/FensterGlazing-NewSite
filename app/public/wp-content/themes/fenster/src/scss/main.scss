@@ -50306,3 +50306,391 @@ html.fg-blinds-reveal-locked {
     font-size: 0.88rem;
   }
 }
+
+/* ============================================================================
+   `/why-distinction/`, FOURTH PASS, 2026-09-02
+   Owner: "but you have images for the boxes. youve kept the same layout which
+   i dont like."
+
+   Both halves of that are fair, and the first explains the second.
+
+   THE BOXES. The de-boxing described last pass was written and never appended
+   to this stylesheet, so nothing shipped: `.fg-wd-band` still had a 16px
+   radius and a box-shadow, the caveats were still a bordered white card, and
+   the explorer was still a card inside a card inside a card. Everything under
+   a `de-box` note below is that work, actually landing this time.
+
+   THE LAYOUT. Taking borders off does not change a skeleton. Every section was
+   still head-then-text, head-then-text, on the same pale ground, and the
+   composite-distinction gallery folder sat unused. `STYLE.md`: "Avoid two
+   consecutive text-heavy sections when a relevant product, project, detail or
+   finished-room image exists", and "Use one strong image treatment before
+   using several small ones." So the three text-only sections each change
+   shape: the number takes a dark band, the figures get a door beside them,
+   and the two exit routes become pictures of the doors they lead to.
+   ========================================================================= */
+
+/* ---- de-box: the explorer is one frame, not three ---------------- */
+
+.fg-wd-page .fg-cd3-anatomy__explorer {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+/* The media and the layer list sit INSIDE the panel; their own borders were
+   the cards-in-cards `STYLE.md` rules out. */
+.fg-wd-page .fg-cd3-anatomy__media,
+.fg-wd-page .fg-cd3-anatomy__layers {
+  border: 0;
+  border-radius: 10px;
+}
+
+.fg-wd-page .fg-cd3-anatomy__layers {
+  border-radius: 0;
+  border-top: 1px solid rgba(2, 43, 53, 0.12);
+}
+
+.fg-wd-page .fg-cd3-layer + .fg-cd3-layer { border-top: 1px solid rgba(2, 43, 53, 0.09); }
+
+/* ---- THE ONE NUMBER, ON A DARK BAND ------------------------------ */
+
+/* The page ran pale from the hero to the form. This is its second dark moment,
+   and it lands on the one claim worth setting large. The section rule further
+   up gives every section the same padding; a band wants more. */
+.fg-wd-page > .fg-wd-figure--band {
+  padding-block: clamp(56px, 7vw, 96px);
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(0, 45, 58, 0.96), rgba(0, 45, 58, 0.88)),
+    var(--color-steel);
+}
+
+/* The third pass pulled the drawing and the number together as one argument.
+   They are two blocks again now that one of them is dark. */
+.fg-wd-page > .fg-cd3-anatomy { padding-bottom: clamp(44px, 5.5vw, 76px); }
+
+.fg-wd-figure__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.fg-wd-figure--band {
+  .eyebrow { color: #7fe0aa; }
+
+  h2 {
+    margin: 0.55rem 0 0;
+    max-width: 16ch;
+    color: #ffffff;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.014em;
+  }
+
+  p { color: rgba(255, 255, 255, 0.76); }
+}
+
+/* The page's one number, set like one. Nothing else here goes near this size. */
+.fg-wd-figure--band .fg-wd-stat {
+  margin: clamp(1.4rem, 3vw, 2.2rem) 0 1.1rem;
+  color: #7fe0aa;
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: #ffffff;
+    font-size: clamp(4rem, 9vw, 7rem);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    line-height: 0.84;
+    letter-spacing: -0.05em;
+  }
+}
+
+.fg-wd-figure--band .fg-wd-figure__claim p:last-child {
+  max-width: 44ch;
+  font-size: 0.97rem;
+  line-height: 1.62;
+}
+
+/* de-box: the caveats were a bordered white card. On the band they are a ruled
+   list, which is what a list of three qualifications wants. */
+.fg-wd-figure--band .fg-wd-figure__caveats {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+
+  h3 {
+    margin: 0 0 0.2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: block;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  li:last-child { border-bottom: 0; }
+
+  /* The green dash was standing in for a bullet inside a box. Out here the
+     rule separates and the dash is noise. */
+  li::before { display: none; }
+}
+
+/* ---- ONE STRONG IMAGE, NOT SIX TEXT CELLS ------------------------ */
+
+.fg-wd-figures__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
+  gap: clamp(1.75rem, 4vw, 3.25rem);
+  align-items: start;
+}
+
+.fg-wd-figures__media {
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    /* The source is 800x1000. `height` is a presentational hint and would beat
+       `aspect-ratio`, so it is reset here rather than dropped from the markup,
+       where it still does its job against layout shift. */
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+}
+
+.fg-wd-figures__words .fg-chapter-head { margin-bottom: clamp(1.2rem, 2.4vw, 1.8rem); }
+
+/* de-box: six numbers in a bordered grid read as a spec table, which is what
+   they were. Six numbers on the canvas read as a run of facts. Two columns
+   rather than three now that a door has the other third of the row. */
+.fg-wd-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(1.5rem, 3vw, 2.5rem);
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fg-wd-band__cell {
+  gap: 0.45rem;
+  padding: clamp(1rem, 2.2vw, 1.35rem) 0 clamp(1.15rem, 2.4vw, 1.6rem);
+  border: 0;
+  border-top: 1px solid rgba(2, 43, 53, 0.18);
+
+  /* The third pass cut the top border off the first row to fake a table edge.
+     Every cell keeps its rule now. */
+  &:nth-child(-n + 3) { border-top: 1px solid rgba(2, 43, 53, 0.18); }
+  &:nth-child(3n + 1) { border-left: 0; }
+
+  dd { max-width: 36ch; font-size: 0.88rem; }
+}
+
+.fg-wd-band__figure {
+  font-size: clamp(1.75rem, 2.6vw, 2.3rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.fg-wd-band__label { font-size: 0.7rem; letter-spacing: 0.1em; }
+
+.fg-wd-figures__care {
+  max-width: none;
+  margin: 0;
+  padding-top: clamp(1rem, 2vw, 1.35rem);
+  border-top: 1px solid rgba(2, 43, 53, 0.18);
+}
+
+/* ---- THE EXITS, AS THE DOORS THEY LEAD TO ------------------------ */
+
+/* de-box, and then some: two ruled text links were the same skeleton as
+   everything above them. A traditional door beside a modern one says "range"
+   faster than the words under them do. */
+.fg-wd-next__grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.1rem, 2.6vw, 2rem);
+  max-width: 60rem;
+}
+
+.fg-wd-next__grid--two .fg-wd-next__card {
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+
+  strong { margin-top: 0.35rem; font-size: 1.1rem; }
+
+  .fg-wd-next__copy { max-width: 42ch; }
+}
+
+.fg-wd-next__media {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 320ms ease;
+  }
+}
+
+.fg-wd-next__grid--two .fg-wd-next__card:hover,
+.fg-wd-next__grid--two .fg-wd-next__card:focus-visible {
+  border: 0;
+  background: none;
+  box-shadow: none;
+  transform: none;
+
+  .fg-wd-next__media img { transform: scale(1.035); }
+
+  strong { color: var(--fg-green); }
+  strong::after { transform: translateX(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-wd-next__media img { transition: none; }
+  .fg-wd-next__grid--two .fg-wd-next__card:hover .fg-wd-next__media img { transform: none; }
+}
+
+/* ---- rhythm the borders had been faking -------------------------- */
+
+.fg-wd-page .fg-chapter-head { margin-bottom: clamp(1.4rem, 2.8vw, 2.2rem); }
+
+.fg-wd-judgement__words p { color: rgba(2, 43, 53, 0.76); }
+
+.fg-wd-judgement__media img { border-radius: 12px; }
+
+/* ---- mobile ------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .fg-wd-figure__grid { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-wd-figure--band h2 { max-width: 20ch; }
+
+  /* The door leads on a phone: the argument reads better under a picture of
+     the thing being argued about than beside a heading. */
+  .fg-wd-figures__grid { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-wd-figures__media img { aspect-ratio: 1 / 1; object-position: 50% 42%; }
+
+  .fg-wd-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .fg-wd-band__cell {
+    &:nth-child(n) { border-top: 1px solid rgba(2, 43, 53, 0.18); border-left: 0; }
+  }
+
+  .fg-wd-next__grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .fg-wd-next__media img { aspect-ratio: 3 / 4; }
+}
+
+@media (max-width: 560px) {
+  .fg-wd-band { grid-template-columns: minmax(0, 1fr); }
+
+  /* Two door portraits side by side at 320px are two thumbnails. One at a time
+     is a door. */
+  .fg-wd-next__grid--two { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-wd-next__media img { aspect-ratio: 16 / 11; object-position: 50% 40%; }
+}
+
+/* ---- `/why-distinction/`, fourth pass, second look ---------------
+ *
+ * Both new compositions opened a hole on desktop, for the same reason: a
+ * column was sized by the grid and its content stopped well short of it.
+ *
+ * On the band, the claim prose sat under the numeral in a 610px track with a
+ * 44ch cap, so 290px of dark nothing ran down the middle of the section. The
+ * prose has moved into the right column above the caveats, which makes the
+ * left column the number and the right column one continuous argument, and
+ * both columns are now sized to what is in them rather than to a fraction.
+ *
+ * On the figures, the door was 444px tall beside a 900px column, so half the
+ * left side was empty canvas. Stretching it to the row would have cropped a
+ * 4:5 portrait to 0.45 and cut the door's own edges off, so it travels
+ * instead: it is sticky under the header and stays beside whichever figures
+ * are on screen.
+ * ----------------------------------------------------------------- */
+
+.fg-wd-figure--band .fg-wd-figure__grid {
+  /* Both tracks sized to their content rather than to a fraction, which is
+     what closed the hole. The right one is wider than its own measure on
+     purpose: the rules between the caveats run the full column and the text
+     rags inside them, so the band has an edge without a 90-character line. */
+  grid-template-columns: minmax(0, 22rem) minmax(0, 38rem);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* Only while the band is two columns. Stacked, the column is the measure and
+   a cap here left every li rule 200px short of the h3 rule above it. */
+@media (min-width: 861px) {
+  .fg-wd-figure--band .fg-wd-figure__caveats li { max-width: 62ch; }
+}
+
+/* The prose that used to sit under the numeral. It leads the right column, so
+   it is a step up from the caveats under it. */
+.fg-wd-figure__lede {
+  margin: 0 0 clamp(1.6rem, 3vw, 2.4rem);
+  max-width: 60ch;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+/* The numeral no longer shares its column with a paragraph, so it can sit
+   tight under the heading. */
+.fg-wd-figure--band .fg-wd-stat { margin-bottom: 0; }
+
+/* ---- The door travels with the figures --------------------------- */
+
+.fg-wd-figures__media {
+  position: sticky;
+  /* The header is 72px and fixed. */
+  top: 88px;
+  align-self: start;
+}
+
+@media (max-width: 860px) {
+  /* One column: the door is above the figures and has nothing to travel
+     through, and sticky on a phone would pin it over the section head. */
+  .fg-wd-figures__media { position: static; }
+
+  .fg-wd-figure--band .fg-wd-figure__grid { grid-template-columns: minmax(0, 1fr); }
+}
