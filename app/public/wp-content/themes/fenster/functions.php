@@ -40,16 +40,6 @@ $fenster_required_files = [
     'inc/google-ads-conversions.php',
     'inc/generated-pages.php',
     'inc/scan-links.php',
-    /* EXPERIMENTAL, LOCAL ONLY. Registers /fenster-new-home-page/ and nothing
-       else. It is host-gated to local development inside the file, so a deploy
-       cannot put it on test or live; delete this line and the four
-       `experimental` paths to remove the experiment entirely. */
-    'inc/experimental-home.php',
-    /* The window and door showrooms: /window-showroom/ and /door-showroom/.
-       Real, indexable pages built progressive-enhancement first — complete as
-       HTML plus a poster image, with the 3D viewer as an upgrade that loads on
-       intent. Delete this line and the `showroom` paths to remove them. */
-    'inc/showroom.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {
