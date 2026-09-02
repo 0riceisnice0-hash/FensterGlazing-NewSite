@@ -107,11 +107,11 @@ PHP lint example:
 ## Editing Rules
 
 - Edit source files, not compiled assets directly.
-- After SCSS or JS changes, run `npm.cmd run build`.
+- After SCSS or JS changes, run `npm.cmd run build`. **Then grep the built `assets/css/main.css` for a selector you just added.** A pass on 2026-09-02 wrote its whole de-boxing block to a scratch file, never appended it to `main.scss`, and recorded the work as shipped; the owner reviewed a page that still had every box it claimed to have removed. A build that succeeds proves the stylesheet compiles, not that your rules are in it.
 - Lint any changed PHP template or PHP include.
 - **Never push to the Local site. Always push to test.** Owner instruction, 2026-08-11. Local is for editing files; nothing is verified there. It is often not running, and it fails misleadingly: the router returns `502` while `nginx`, `mysqld` and `php-cgi` sit in the process list belonging to a different Local site. Its database drifts from production too, so a route can render locally and 404 on a real server. The local pass is only what needs no site — build, lint, data harness. Everything past that goes to `test.fensterglazing.com` and is verified there. Do not stall waiting for Local, and never call a page verified because it rendered locally. Full procedure in `LIVECHANGES.md`.
 - **Rebase onto `origin/main` immediately before pushing.** The test deploy is `git reset --hard origin/main`, so a commit built on a stale checkout reverts whatever landed while you were working. Shared single-file data sources (`inc/case-studies-data.php`, `inc/site-data.php`) are where this bites.
-- Preserve user changes in the working tree. Do not reset, checkout or delete unrelated work.
+- **Preserve user changes in the working tree, and stage by path.** `git add -u` across the theme is not safe here: another session usually has files open, and on 2026-09-02 it swept `functions.php`, `package.json` and `package-lock.json` into an unrelated commit. That `functions.php` had been changed to `require_once` two `inc/` files that are still untracked, and the require loop has no `file_exists` guard, so the next test deploy would have shipped a theme requiring two files it never sent and fatalled the site. Name the files you changed. Read `git show --stat` before you push, not after.
 - Do not rebuild the site around ACF, Elementor or editable admin fields unless the owner explicitly changes direction.
 - The theme is intentionally code-driven and hardcoded where appropriate.
 - Do not add new one-off helper systems when an existing shared component or data source already owns the behaviour.
