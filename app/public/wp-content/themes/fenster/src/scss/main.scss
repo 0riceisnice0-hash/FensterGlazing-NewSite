@@ -49746,3 +49746,30 @@ html.fg-blinds-reveal-locked {
     gap: clamp(1.5rem, 3vw, 2.75rem);
   }
 }
+
+.generated-page--composite-doors {
+
+  /* The review cards have the same fault the case-study cards had: equal
+     heights, unequal contents, so a short review left a band of white
+     under its link while a long one ran to the floor. */
+  .fg-review-showcase__card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fg-review-showcase__card-link,
+  .fg-review-showcase__card > a:last-child { margin-top: auto; padding-top: 0.7rem; }
+
+  /* THE TAIL WAS FIVE SECTIONS AT 84px TOP AND 84px BOTTOM, so every join
+     between them was 168px of nothing. They are one run of proof and price
+     rather than five chapters, so they meet at one padding instead of two. */
+  > .fg-product-quote-embed,
+  > .fg-review-showcase,
+  > .fg-cs-strip { padding-block: clamp(36px, 4vw, 56px); }
+
+  > .fg-product-faq { padding-bottom: clamp(36px, 4vw, 56px); }
+
+  /* The quiz keeps a full join above it, because it IS a change of
+     register and the reader should feel it arrive. */
+  > .fg-cdq { padding-top: clamp(52px, 6vw, 84px); }
+}
