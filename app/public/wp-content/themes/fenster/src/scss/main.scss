@@ -24650,9 +24650,7 @@ a.fg-cs-card__pill:focus-visible {
     display: block;
     padding: 1.8rem 0 1.45rem;
     overflow: hidden;
-    background:
-      radial-gradient(circle at 8% 12%, rgba(46, 172, 102, 0.14), transparent 36%),
-      linear-gradient(180deg, #f6faf9 0%, #e9f0ee 100%);
+    background: transparent;
     color: var(--color-steel);
   }
 
@@ -31796,9 +31794,12 @@ html.fg-blinds-reveal-locked {
 }
 
 
+/* Transparent: the white card inside carries the contrast, and the solid
+   band that was here drew a hard line above and below it against the page
+   canvas (owner, 2026-09-03). Site-wide background rule in STYLE.md. */
 .fg-sash-gallery-cta {
   padding: clamp(1.4rem, 3vw, 2.2rem) 0;
-  background: #dce9e6;
+  background: transparent;
 }
 
 .fg-sash-gallery-cta__inner {
@@ -32038,14 +32039,16 @@ html.fg-blinds-reveal-locked {
   }
 
 
+  /* Transparent, per the site-wide background rule: the canvas is painted
+     once on body and runs through. This was a dark steel band, then for a
+     few hours a pale gradient band, and both drew two hard lines across the
+     page where they met the canvas (owner, 2026-09-03: "the background isnt
+     continuous. so it has sharp lines when it should be a smooth gradient"). */
   .generated-page--sliding-sash .fg-sash-gallery {
     display: block;
     padding: clamp(2rem, 3.4vw, 3rem) 0;
     overflow: hidden;
-    background:
-      radial-gradient(circle at 12% 18%, rgba(46, 172, 102, 0.14), transparent 32%),
-      radial-gradient(circle at 88% 80%, rgba(76, 123, 134, 0.14), transparent 34%),
-      linear-gradient(180deg, #f6faf9 0%, #e9f0ee 100%);
+    background: transparent;
     color: var(--color-steel);
   }
 
