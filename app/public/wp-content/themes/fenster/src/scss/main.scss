@@ -51055,15 +51055,18 @@ html.fg-blinds-reveal-locked {
     padding: 0.45rem 0.35rem 0.4rem;
   }
 
-  /* The one real saving. The art box was as tall as the drawing wanted to be
-     (113px at this cell width, uncapped by `height: auto`); it is 84px now and
-     the drawing letterboxes inside it. */
-  .generated-page--composite-doors .fg-cds-door__art { height: 76px; }
+  /* THE ONE REAL SAVING, AND IT HAS TO BE `max-height`. The first attempt set
+     `height: 76px` on the art box and `height: 100%` on the drawing, and the
+     drawings rendered 168px tall, straight through the name and into the row
+     below: the art box measured 76px but the image's computed height came back
+     `168.469px`, so the percentage never resolved against it. `max-height` on
+     the same selector provably does apply — it is what took the old 230px cap
+     off — so the cap goes there and the row sizes itself to the result.
+     `object-fit: contain` was already set, so a portrait door letterboxes
+     inside its cell: shorter, never distorted. */
+  .generated-page--composite-doors .fg-cds-door__art { min-height: 0; }
 
-  .generated-page--composite-doors .fg-cds-door__link img {
-    height: 100%;
-    max-height: none;
-  }
+  .generated-page--composite-doors .fg-cds-door__link img { max-height: 76px; }
 
   /* Two reserved lines existed so a wrapping name could not push its row out
      of line. One line and a smaller face fits every name in this range, and
