@@ -50731,7 +50731,10 @@ html.fg-blinds-reveal-locked {
 
 .fg-glass-pick {
   display: grid;
-  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  /* The preview leads. At 0.62fr against 1fr it was the smaller half and the
+     six thumbnails came out 215px wide each, which is six more pictures
+     competing with the big one rather than a row of choices. */
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 3.5vw, 2.75rem);
   align-items: start;
 }
@@ -50770,8 +50773,10 @@ html.fg-blinds-reveal-locked {
 
 .fg-glass-pick__options {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.6rem, 1.6vw, 1rem);
+  /* One filmstrip of six rather than a 3x2 block. A strip reads as a control;
+     a block reads as a second gallery, which is what this section had. */
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.4rem, 1.1vw, 0.7rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -50819,14 +50824,14 @@ html.fg-blinds-reveal-locked {
 
 .fg-glass-pick__name {
   color: var(--fg-ink, #022b35);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .fg-glass-pick__tag {
   color: rgba(2, 43, 53, 0.55);
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   font-weight: 750;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -50879,8 +50884,10 @@ html.fg-blinds-reveal-locked {
   .fg-glass-pick { grid-template-columns: minmax(0, 1fr); }
 
   .fg-glass-pick__preview img { aspect-ratio: 1 / 1; object-position: 50% 38%; }
+
+  .fg-glass-pick__options { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {
-  .fg-glass-pick__options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-glass-pick__options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
