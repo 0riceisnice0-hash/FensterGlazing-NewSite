@@ -39,6 +39,25 @@
  * WHAT IS PICTURED IS WHAT WE HOLD ARTWORK FOR, AND THE COPY SAYS SO. Eleven of
  * the twenty-six decorative designs the quote tool offers.
  *
+ * ---- 2026-09-02, fourth pass: one door at a time ------------------------
+ *
+ * OWNER: "the finishes section sucks." The chapter was 3,408px - twenty-seven
+ * per cent of the page - and held nineteen bordered boxes: six glass cards
+ * with caption boxes, eight handle cards, and all of it inside the chapter's
+ * own white panel. `STYLE.md` asks for one strong image treatment before
+ * several small ones, and forbids cards inside cards.
+ *
+ * THE THREE STEPS ALSO HAD THREE DIFFERENT GRAMMARS. Glass was a 3-up card
+ * grid, colour was a preview plus a swatch wall, handles were an 8-up card
+ * row. Nothing shared a column and the chapter read as three sections of three
+ * different sites.
+ *
+ * THE PICKER ALREADY EXISTED. `[data-fg-door-selector]` in `main.js` drives
+ * the paint range directly below this and reads `data-door-*` off each option
+ * when `data-fg-glass-selector` is set. The six door renders became one large
+ * preview and six names using it, so glass and colour now have the same shape
+ * and NO JavaScript changed.
+ *
  * Expects `$args['items']`, `$args['intro']`, `$args['note']`.
  *
  * @package Fenster
@@ -117,51 +136,90 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
 
         <?php if (! empty($fg_in_door)) : ?>
             <?php
-            /* THE DESIGNS WE CAN SHOW YOU IN A DOOR. This is the treatment the
-               section should always have had: a pattern crop tells you what
-               glass looks like from six inches away, and nobody chooses a front
-               door from six inches away. */
+            /* ONE DOOR AT A TIME, THE SAME WAY THE PAINT RANGE UNDER IT WORKS.
+               This was six 4:5 door renders in six bordered white cards, each
+               with its own caption box, inside the chapter's own white panel:
+               nineteen boxes in one chapter, and `STYLE.md` asks for one strong
+               image treatment before several small ones. Worse, it was a third
+               grammar in a chapter that already had two, so glass, colour and
+               handles each looked like a different section of a different site.
+
+               The picker mechanism already existed. `[data-fg-door-selector]`
+               in `main.js` drives the paint range directly below this, reads
+               `data-door-*` off each option when `data-fg-glass-selector` is
+               present, and needs no new JavaScript at all. So the six designs
+               become one large door and six names, which is the same shape as
+               the colour step, and the chapter reads as one bench. */
+            $fg_first = $fg_in_door[0];
             ?>
-            <ul class="fg-glass-doors" aria-label="<?php esc_attr_e('Decorative glass designs shown in a door', 'fenster'); ?>">
-                <?php foreach ($fg_in_door as $fg_style) : ?>
-                    <li class="fg-glass-door">
-                        <figure>
-                            <img
-                                src="<?php echo esc_url(FENSTER_THEME_URI . $fg_style['stem'] . '480w.webp'); ?>"
-                                srcset="<?php echo esc_attr(implode(', ', [
-                                    FENSTER_THEME_URI . $fg_style['stem'] . '240w.webp 240w',
+            <div class="fg-glass-pick" data-fg-door-selector data-fg-glass-selector>
+                <figure class="fg-glass-pick__preview">
+                    <img
+                        data-fg-choice-image
+                        src="<?php echo esc_url(FENSTER_THEME_URI . $fg_first['stem'] . '480w.webp'); ?>"
+                        srcset="<?php echo esc_attr(implode(', ', [
+                            FENSTER_THEME_URI . $fg_first['stem'] . '480w.webp 480w',
+                            FENSTER_THEME_URI . $fg_first['stem'] . '800w.webp 800w',
+                        ])); ?>"
+                        sizes="(max-width: 860px) 86vw, 34vw"
+                        alt="<?php echo esc_attr(sprintf(
+                            /* translators: %s: glass design name. */
+                            __('A composite door glazed with the %s decorative design', 'fenster'),
+                            (string) $fg_first['name']
+                        )); ?>"
+                        width="800" height="1000" decoding="async">
+                    <figcaption>
+                        <strong data-fg-choice-name><?php echo esc_html((string) $fg_first['name']); ?></strong>
+                        <span data-fg-choice-copy><?php echo esc_html((string) ($fg_first['copy'] ?? '')); ?></span>
+                    </figcaption>
+                </figure>
+
+                <ul class="fg-glass-pick__options" aria-label="<?php esc_attr_e('Decorative glass designs shown in a door', 'fenster'); ?>">
+                    <?php foreach ($fg_in_door as $fg_i => $fg_style) : ?>
+                        <?php
+                        $fg_alt = sprintf(
+                            /* translators: %s: glass design name. */
+                            __('A composite door glazed with the %s decorative design', 'fenster'),
+                            (string) $fg_style['name']
+                        );
+                        ?>
+                        <li>
+                            <button
+                                type="button"
+                                data-fg-choice-option
+                                aria-pressed="<?php echo $fg_i === 0 ? 'true' : 'false'; ?>"
+                                data-door-src="<?php echo esc_url(FENSTER_THEME_URI . $fg_style['stem'] . '480w.webp'); ?>"
+                                data-door-srcset="<?php echo esc_attr(implode(', ', [
                                     FENSTER_THEME_URI . $fg_style['stem'] . '480w.webp 480w',
                                     FENSTER_THEME_URI . $fg_style['stem'] . '800w.webp 800w',
                                 ])); ?>"
-                                sizes="(max-width: 860px) 46vw, 30vw"
-                                alt="<?php echo esc_attr(sprintf(
-                                    /* translators: %s: glass design name. */
-                                    __('A composite door glazed with the %s decorative design', 'fenster'),
-                                    (string) $fg_style['name']
-                                )); ?>"
-                                loading="lazy" decoding="async" width="800" height="1000">
-                        </figure>
-                        <div class="fg-glass-door__body">
-                            <h3>
-                                <?php echo esc_html((string) $fg_style['name']); ?>
+                                data-door-alt="<?php echo esc_attr($fg_alt); ?>"
+                                data-preview-name="<?php echo esc_attr((string) $fg_style['name']); ?>"
+                                data-preview-copy="<?php echo esc_attr((string) ($fg_style['copy'] ?? '')); ?>">
+                                <img
+                                    src="<?php echo esc_url(FENSTER_THEME_URI . $fg_style['stem'] . '240w.webp'); ?>"
+                                    alt="" aria-hidden="true"
+                                    loading="lazy" decoding="async" width="240" height="300">
+                                <span class="fg-glass-pick__name">
+                                    <?php echo esc_html((string) $fg_style['name']); ?>
+                                </span>
                                 <?php if (! empty($fg_style['double'])) : ?>
-                                    <span class="fg-glass-door__tag"><?php esc_html_e('Double glazed', 'fenster'); ?></span>
+                                    <span class="fg-glass-pick__tag"><?php esc_html_e('Double glazed', 'fenster'); ?></span>
                                 <?php endif; ?>
-                            </h3>
-                            <?php if (trim((string) ($fg_style['copy'] ?? '')) !== '') : ?>
-                                <p><?php echo esc_html((string) $fg_style['copy']); ?></p>
-                            <?php endif; ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+                            </button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         <?php endif; ?>
 
         <?php if (! empty($fg_patterns)) : ?>
             <?php
             /* AND THE ONES WE ONLY HOLD THE PATTERN FOR, said plainly. Showing
                a 250px crop at 250px is honest; showing it at 270px in a card
-               that looks like the six above is not. */
+               that looks like a door render is not. They stay out of the picker
+               for the same reason: the preview is 800px tall and these would go
+               into it four times their own size. */
             ?>
             <div class="fg-glass-patterns">
                 <p class="fg-glass-patterns__intro">

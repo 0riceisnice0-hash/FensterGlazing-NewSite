@@ -50663,3 +50663,224 @@ html.fg-blinds-reveal-locked {
 
   .fg-wd-next__media img { aspect-ratio: 16 / 11; object-position: 50% 40%; }
 }
+
+/* ============================================================================
+   THE FINISHES CHAPTER, FOURTH PASS, 2026-09-02
+   Owner: "the finishes section sucks."
+
+   Three faults, and they compound.
+
+   NINETEEN BOXES. Six glass cards with caption boxes, eight handle cards, five
+   pattern tiles, all of it inside the chapter's own white panel with a shadow.
+   `STYLE.md`: "Cards should add structure, not turn every section into a grid
+   of boxes", "Do not put cards inside cards", and "If the page feels busy,
+   reduce local backgrounds before reducing useful content." Every border in
+   here is now a hairline rule or nothing.
+
+   THREE GRAMMARS IN ONE CHAPTER. Glass was a 3-up card grid, colour was a
+   preview plus a swatch wall, handles were an 8-up card row. Nothing shared a
+   column, so the chapter read as three sections of three different sites. All
+   three are now one preview or one row against the same head, and glass uses
+   the paint range's own picker mechanism, so the two big steps behave
+   identically.
+
+   A DEAD COLUMN 3,408px LONG. A 3.25rem gutter held a sticky "01" beside every
+   step. It cost the full height of the chapter to say what the heading beside
+   it already said. The number sits above its own step head now.
+
+   The chapter was twenty-seven per cent of the page.
+   ========================================================================= */
+
+/* ---- The chapter is the page canvas, not a card ------------------- */
+
+/* Scoped to the route, because the rules being undone are written inside
+   `.generated-page--composite-doors { ... }` and compile to two classes. A
+   bare `.fg-finish__surface` here is one class and loses to them silently. */
+.generated-page--composite-doors {
+
+  .fg-finish__surface {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .fg-finish__step {
+    display: block;
+    padding: clamp(1.9rem, 4vw, 3.25rem) 0;
+  }
+
+  .fg-finish__step + .fg-finish__step { border-top: 1px solid rgba(2, 43, 53, 0.16); }
+  .fg-finish__step:first-child { padding-top: 0; }
+  .fg-finish__step:last-child { padding-bottom: 0; }
+
+  /* The number stops being a column and becomes a marker on its own step. */
+  .fg-finish__num {
+    position: static;
+    margin: 0 0 0.6rem;
+    color: var(--fg-green);
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ---- Glass: one door, six names ----------------------------------- */
+
+.fg-glass-pick {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3.5vw, 2.75rem);
+  align-items: start;
+}
+
+.fg-glass-pick__preview {
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #eef2f0;
+  }
+
+  figcaption {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.85rem;
+  }
+
+  strong {
+    color: var(--fg-ink, #022b35);
+    font-size: 1.08rem;
+  }
+
+  span {
+    max-width: 44ch;
+    color: rgba(2, 43, 53, 0.72);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+}
+
+.fg-glass-pick__options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1.6vw, 1rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  button {
+    display: grid;
+    gap: 0.45rem;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eef2f0;
+    /* The selected one is the only one at full strength, so the row reads as a
+       set of choices rather than six more pictures competing with the big one. */
+    opacity: 0.62;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition: opacity 180ms ease, outline-color 180ms ease;
+  }
+
+  button[aria-pressed="true"] img {
+    opacity: 1;
+    outline-color: var(--fg-green);
+  }
+
+  button:hover img,
+  button:focus-visible img { opacity: 1; }
+
+  button:focus-visible { outline: none; }
+  button:focus-visible img { outline-color: var(--fg-green); }
+}
+
+.fg-glass-pick__name {
+  color: var(--fg-ink, #022b35);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.fg-glass-pick__tag {
+  color: rgba(2, 43, 53, 0.55);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---- Glass patterns: a labelled row, not five tiles --------------- */
+
+.fg-glass-patterns {
+  margin-top: clamp(1.6rem, 3.2vw, 2.4rem);
+  padding-top: clamp(1.1rem, 2.2vw, 1.6rem);
+  border-top: 1px solid rgba(2, 43, 53, 0.14);
+}
+
+.fg-glass-patterns ul {
+  gap: clamp(0.6rem, 1.6vw, 1rem);
+}
+
+.fg-glass-patterns li {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fg-glass-patterns img {
+  border-radius: 8px;
+}
+
+/* ---- Handles: eight on a rule, no boxes --------------------------- */
+
+.fg-finish .fg-handle-finishes__grid li {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fg-finish .fg-handle-finishes__grid img {
+  border-radius: 8px;
+  background: #eef2f0;
+}
+
+/* ---- Mobile ------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  /* The door leads, the names follow it. Side by side at 390 the preview is
+     240px wide and the six thumbnails are 60px, which is neither. */
+  .fg-glass-pick { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-glass-pick__preview img { aspect-ratio: 1 / 1; object-position: 50% 38%; }
+}
+
+@media (max-width: 560px) {
+  .fg-glass-pick__options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
