@@ -14,6 +14,48 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-03 — Sliding sash furniture: the guide photographs at native size, and a picture on each style (ON TEST as `5d68383c`, NOT LIVE)
+
+Owner: *"see if you can find on the internet more high res furniture of the
+locks for the sash windows"*, then *"just use the best images for the site"*.
+
+- **Nobody publishes the locks larger than we already hold.** Roseview's
+  furniture page serves the same 800x450 files as ours; the Rose Collection
+  consumer site has 300x300 and 800x450; the one brochure PDF probed carries
+  nothing above about 530px for furniture; the hardware maker is not named
+  anywhere and the graphite and pewter finishes match no supplier catalogue
+  that could be confirmed, so third-party product shots would be a guess.
+- **The best per-finish source was already in the theme.** The Roseview
+  colour guide PDF under `assets/docs` embeds each lock photograph at
+  478x316; the thirteen finish images on the page were 232px crops of a
+  low-resolution render of that same guide. Re-cut from the embedded JPEGs
+  with `pdfimages`, mapped to the thirteen finishes by eye and verified pair
+  by pair, saved as `<finish>-478w.webp` (new filenames, because theme image
+  URLs carry no version). The set is about 260KB and still loads eagerly so
+  the selector stage never empties between picks; only the first is at
+  normal fetch priority.
+- **Two larger images now carry the Globe / Acorn choice.** The style
+  buttons in the furniture selector each show a 3:2 tile: Roseview's
+  1920x1080 render of the gold Globe lock and tilt knob on an Ultimate Rose
+  rail (`Ultimate-Traditional-Globe-Furniture.jpg` on roseview.co.uk,
+  downloaded on the owner's instruction), and the 1536x830 studio photograph
+  of the chrome Acorn lock from the old site's export. Supplier imagery,
+  unattributed per the site rule, decorative inside labelled buttons.
+- **The old site export's other two "lock" files are mislabelled** and were
+  not used: one is a whole window with the locks tiny in frame, the other
+  shows no hardware at all.
+- **True high-resolution per-finish photography has to come from Roseview.**
+  The guide's studio shots were plainly taken large; asking the rep for the
+  originals is the only route past 478px.
+- **Three pushes in a row were rejected as non-fast-forward** because the
+  other session was pushing composite work at the same time, and the first
+  rejection was masked by piping `git push` through `tail`, so the chain
+  went on to deploy the other session's commit to test believing it was
+  this one. Every push now runs under `pipefail` and asserts
+  `HEAD == origin/main` after fetching. Both rebases conflicted only at the
+  tail of `main.scss`, where both sessions append, and in the compiled CSS,
+  which is rebuilt rather than merged.
+
 ## 2026-09-02 — Sliding sash: the Roseview comparison is a stage, not a table (ON TEST as `39c618f7`, NOT LIVE)
 
 Owner: *"the comparisons. they need to be full screen and less spreadsheet.
