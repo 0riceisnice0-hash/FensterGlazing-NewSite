@@ -14,6 +14,46 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-03 — Sliding sash: every section inside one viewport (ON TEST as `857124bd`, NOT LIVE)
+
+Owner: *"every section of this page needs to be contained in one view port.
+every section."* Measured on test with a script that lists every top-level
+section of the page with its height against the viewport less the header
+(827px at 1440x900). Four of twelve overran: the Roseview stage by 107px
+(69px at 1920x1080), the gallery by 83px, the case-study strip by 4px and
+the enquiry section by 122px. After this pass all twelve fit at 1440x900,
+1536x864 and 1920x1080, the tallest section at each being exactly the
+viewport under the header (the stage, which is meant to be).
+
+- **The stage's formula was wrong.** The scene took the viewport less a
+  262px guess for everything around it; the real overhead (padding, head,
+  controls, survey note) is 318px at 1440. And the facts panel set the
+  section's height: 637px of copy beside a 474px stage. The panel is now
+  out of flow (`position: absolute` inside its grid area, `max-height:
+  100%`, scrolls inside itself if it must), so the section is always the
+  stage, its controls and the note, all sized from the viewport. On screens
+  880px and shorter the panel's second explanatory paragraph goes; at 800px
+  and shorter the whole "what the details mean" block goes. Verified in the
+  stage harness at 1440x900, 1920x1080, 1536x864, 1366x768 and 1280x720.
+- **The gallery is light now.** It was a 910px dark steel band, the kind
+  STYLE.md's no-dark rule forbids, with a four-line display heading. Pale
+  gradient ground, steel text, a two-line heading at 2.8vw and half the
+  padding: 740px.
+- **The strip and the enquiry section are shared components**, so their
+  sash-page variants are tightened in a new `SLIDING SASH: ONE VIEWPORT
+  PER SECTION` block in `main.scss` (with the other sash blocks, above the
+  tail): less padding on both, and the enquiry form's four short fields side
+  by side in two columns, as the location heroes lay them out. The same
+  treatment would take about 230px off the enquiry section on every page,
+  but that is a site-wide decision and was not made here.
+- **The enquiry section is still dark**, site-wide and 715px tall here,
+  which is under the half-viewport line the no-dark rule draws only just.
+  Flagged to the owner; not changed.
+- **1366x768 is not covered** for the page as a whole: the stage fits there,
+  but the gallery, lock selector, reviews, strip and form each need more
+  than the 695px that screen leaves. Fitting those would be a density pass
+  on five components.
+
 ## 2026-09-03 — Sliding sash: the shared privacy glass banner, and the lock selector rebuilt around the photographs (ON TEST as `55ea3233`, NOT LIVE)
 
 Owner: *"make the privacy glass one banner like how it is on some other
