@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-03 — Sliding sash furniture: the guide photographs at native size, and a picture on each style (ON TEST as `5d68383c`, NOT LIVE)
+## 2026-09-03 — Sliding sash furniture: the guide photographs at native size, and a picture on each style (ON TEST as `ee05e3db`, NOT LIVE)
 
 Owner: *"see if you can find on the internet more high res furniture of the
 locks for the sash windows"*, then *"just use the best images for the site"*.
@@ -47,6 +47,17 @@ locks for the sash windows"*, then *"just use the best images for the site"*.
 - **True high-resolution per-finish photography has to come from Roseview.**
   The guide's studio shots were plainly taken large; asking the rep for the
   originals is the only route past 478px.
+- **THE STYLE TILES SHIPPED TO TEST AS TALL STRIPS, AND THE OWNER SAW IT BEFORE I DID.**
+  Owner: *"you did that very incorrectly."* The tile rules were appended at the
+  end of `main.scss` in `5d68383c`; the other session's very next commit
+  (`e6d468f1`) carried a `main.scss` without them, so the compiled CSS on test
+  lost the 3:2 crop and the two images filled their buttons top to bottom. My
+  own eval had passed on my commit; it never re-ran after the other session
+  redeployed. Fixed in `ee05e3db`: the block now sits directly after the sash
+  stage block and ABOVE the why-distinction and finishes blocks that session
+  works on at the tail, where a replace-to-end-of-file splice cannot reach it.
+  **Nothing that belongs to the sash page goes at the end of that file any
+  more, and a verification on test is only good until the next deploy.**
 - **Three pushes in a row were rejected as non-fast-forward** because the
   other session was pushing composite work at the same time, and the first
   rejection was masked by piping `git push` through `tail`, so the chain
