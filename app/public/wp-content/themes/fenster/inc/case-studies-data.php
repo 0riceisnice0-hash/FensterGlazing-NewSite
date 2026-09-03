@@ -617,6 +617,91 @@ function fenster_case_studies(): array
                 'meta_description' => 'A Fenster commercial project: twelve period-style uPVC windows fitted to a trading village pub near Woburn, mechanically jointed with astragal bars.',
             ],
         ],
+        /* ST ALBANS SCHOOL. Owner-supplied 2026-09-03. The school context
+           (founded 948, one of the oldest in the country) is public record and
+           is there for weight, not padding; keep it to the clause it occupies.
+
+           THE DATE IS NOT CONFIRMED AND MUST NOT BE PRINTED. Nobody gave a
+           completion date. `2026-06-01` exists ONLY so the archive orders this
+           near the top instead of the bottom, since an empty date sorts last.
+           `date_confirmed => false` keeps it off the page. **Ask the owner and
+           replace it.** Do not treat the 1st of June as a fact.
+
+           SYSTEM NAMED AS THE OWNER GAVE IT. Smart Systems publish the range as
+           "MC 600"; he specified "MC600 Plus" and he fitted it, so his naming
+           stands. The manufacturer's CWCT certification and U-values were read
+           during research and deliberately NOT used, for the same reason AI.md
+           gives on the commercial pages: they are claims nobody here confirmed.
+
+           FOUR OVERVIEW PARAGRAPHS BY DESIGN. Two left the Pincents Kiln study
+           with a copy column shorter than the rail beside it and the owner
+           called out the negative space. Four is the house length. */
+        'st-albans-school' => [
+            'title' => 'Curtain walling to the hall, St Albans School',
+            'location' => 'St Albans',
+            'type' => 'Commercial',
+            'sector' => 'Schools and education',
+            'service' => 'Aluminium curtain walling, a fire exit door and blackout glazing',
+            'sector_url' => home_url('/school-and-education-glazing/'),
+            'service_url' => home_url('/curtain-walling/'),
+            'date' => '2026-06-01',
+            'date_confirmed' => false,
+            'summary' => 'A Smart MC600 Plus curtain wall replacing an outdated timber system in a school hall, with a fire exit door, finger guards and blackout film for a room used as a performance space.',
+            'lead' => 'St Albans School is one of the oldest schools in the country, founded in 948. We replaced the curtain walling to its hall, a full height glazed elevation in a room that doubles as a performance space, and the work ran in term time with exams about to start in that hall.',
+            'products' => [
+                ['label' => 'Curtain walling', 'url' => home_url('/curtain-walling/')],
+                ['label' => 'School and education glazing', 'url' => home_url('/school-and-education-glazing/')],
+                ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'System', 'value' => 'Smart MC600 Plus, stick built'],
+                ['label' => 'Setting', 'value' => 'School hall and performance space'],
+                ['label' => 'Replaced', 'value' => 'Timber wall, 10mm float glass'],
+                ['label' => 'Programme', 'value' => 'Term time, before exams'],
+            ],
+            'overview' => [
+                'The glass in the old system decided how the job ran. It was 10mm float in a timber curtain wall that had been there long enough to be unpredictable, and float glass that thick breaks into long pieces rather than crumbs. We took it out bit by bit rather than by the panel, working across the elevation a piece at a time. It is the slow way to do it and it is the only sensible one.',
+                'The programme was term time, with exams due to start in the hall. That set the sequence more than anything else. The opening was made good and sheeted over at the end of each day so the building was secure and weathertight overnight, and the hall went back to the school in a usable state. The grand pianos were moved clear before anything started and the floor was boarded, because a parquet floor in a hall like this is not something you make good afterwards.',
+                'The replacement is a Smart MC600 Plus curtain wall, stick built, so the mullions and transoms were assembled in the opening rather than lifted in as finished units. That suits a working school, because the components come in through a door rather than over a roof. A fire exit door is built into the screen, and finger guards are fitted to the doors because the building is a school and the doors are used all day by pupils.',
+                'The hall is used for performances, and a wall of clear glass at that height puts daylight straight onto the stage. The top half of the screen carries blackout film and a curtain rail runs the width of the lower half, so the room can be darkened for a performance and opened up again for everything else it is used for.',
+            ],
+            'installed' => [
+                'Smart MC600 Plus aluminium curtain walling, stick built',
+                'Fire exit door within the screen',
+                'Finger guards to the doors',
+                'Blackout film to the upper half of the glazing',
+                'Curtain rail across the width of the lower half',
+                'Removal of the existing timber curtain wall and its 10mm float glass',
+            ],
+            /* NINE IMAGES, WHICH LEAVES EIGHT IN THE GALLERY. The hero takes
+               images[0], so an ODD total is what keeps a two-column gallery
+               even. Five in, four out. Captions written from the frames.
+
+               ORDERED FINISHED FIRST, THEN THE STORY BACKWARDS. The four
+               completed frames lead because that is what a reader wants to see;
+               the removal, the boarded floor and the overnight sheeting follow,
+               because they are what the job was actually about.
+
+               Aspect ratios are mixed: the finished frames are 946x2048 off a
+               phone, the progress ones 1200x1600. The gallery crops to a fixed
+               ratio so it does not matter, but check any layout change. */
+            'images' => [
+                ['src' => $img . 'cs-st-albans-school-elevation.webp', 'caption' => 'The finished screen, its head raking to follow the roof line, with the fire exit doors at the right hand end.'],
+                ['src' => $img . 'cs-st-albans-school-hall-finished.webp', 'caption' => 'The same screen from inside the hall. The blackout film reads as the dark band across the upper half, with clear glazing and the doors below it.'],
+                ['src' => $img . 'cs-st-albans-school-context.webp', 'caption' => 'The hall from the lawn, the glazed gable sitting between the brickwork and the zinc roof.'],
+                ['src' => $img . 'cs-st-albans-school-vents.webp', 'caption' => 'Square on to the elevation, with the opening vents at low level and the film on the glazing above them.'],
+                ['src' => $img . 'cs-st-albans-school-old-wall-removal.webp', 'caption' => 'The timber system coming out. The glass was 10mm float, so it came out a piece at a time rather than by the panel.'],
+                ['src' => $img . 'cs-st-albans-school-opening-stripped.webp', 'caption' => 'The opening stripped back, with towers standing inside the hall and the floor boarded before anything else began.'],
+                ['src' => $img . 'cs-st-albans-school-sheeted.webp', 'caption' => 'Sheeted over at the end of the day, so the hall was secure and weathertight overnight.'],
+                ['src' => $img . 'cs-st-albans-school-hall-interior.webp', 'caption' => 'Mid installation from inside, the parquet under boards and sheets and the lighting rig left where it was.'],
+                ['src' => $img . 'cs-st-albans-school-frame-inside.webp', 'caption' => 'The stick system part way up, mullions and transoms assembled in the opening rather than lifted in as finished units.'],
+            ],
+            'seo' => [
+                'title_tag' => 'St Albans School: Curtain Walling for a School Hall',
+                'meta_description' => 'A Fenster commercial project in St Albans, Hertfordshire: Smart MC600 Plus curtain walling for a school hall and performance space, fitted in term time.',
+            ],
+        ],
         /* PINCENTS KILN, READING. Owner call with Adam, 2026-09-03, and every
            figure here came off that call rather than out of the photographs.
 
