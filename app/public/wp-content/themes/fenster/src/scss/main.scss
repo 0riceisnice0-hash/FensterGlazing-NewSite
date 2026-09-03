@@ -50124,9 +50124,15 @@ html.fg-blinds-reveal-locked {
    SESSION APPENDS, ON PURPOSE. The first version of the tile rules sat at the
    tail of this file and a later commit from that session took it out. Nothing
    that belongs to the sash page goes at the end of this file.
-   ========================================================================== */
+
+   SIZED FOR ONE VIEWPORT. Owner, second review: "its just about all not in
+   1 viewport. so make a bit shorter." The section padding, the tile aspect,
+   the chip height and the gaps between the steps are all set so that head,
+   stage and controls fit under the header on a 1440x900 screen with room
+   to spare, and the stage's height also follows the viewport so a shorter
+   laptop screen still gets the whole thing. */
 .fg-sash-kit {
-  padding: clamp(3rem, 6vw, 5rem) 0;
+  padding: clamp(2.5rem, 4vw, 3.5rem) 0;
 }
 
 .fg-sash-kit__body {
@@ -50134,7 +50140,7 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
   gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: start;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 /* THE STAGE. White at the centre, where the photograph sits, so the
@@ -50148,7 +50154,7 @@ html.fg-blinds-reveal-locked {
   min-width: 0;
   margin: 0;
   aspect-ratio: 5 / 4;
-  max-height: 600px;
+  max-height: clamp(380px, calc(100svh - 330px), 600px);
   overflow: hidden;
   border-radius: 18px;
   background:
@@ -50230,11 +50236,12 @@ html.fg-blinds-reveal-locked {
   white-space: nowrap;
 }
 
-/* THE CONTROLS. Two numbered steps and a note, separated by hairlines. */
+/* THE CONTROLS. Two steps and a note, separated by hairlines. The steps are
+   labelled, not numbered. */
 .fg-sash-kit__controls {
   display: grid;
   min-width: 0;
-  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  gap: 1.15rem;
 }
 
 .fg-sash-kit__step[hidden] {
@@ -50245,17 +50252,12 @@ html.fg-blinds-reveal-locked {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  margin: 0 0 0.9rem;
+  margin: 0 0 0.7rem;
   color: var(--color-muted);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-}
-
-.fg-sash-kit__label span {
-  color: var(--color-accent);
-  font-variant-numeric: tabular-nums;
 }
 
 .fg-sash-kit__label::after {
@@ -50288,8 +50290,8 @@ html.fg-blinds-reveal-locked {
   position: relative;
   display: block;
   overflow: hidden;
-  margin-bottom: 0.65rem;
-  aspect-ratio: 3 / 2;
+  margin-bottom: 0.5rem;
+  aspect-ratio: 8 / 5;
   border-radius: 12px;
   background: #e9f0ee;
   box-shadow:
@@ -50346,14 +50348,14 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-sash-kit__style strong {
-  font-size: 1.05rem;
+  font-size: 1rem;
   letter-spacing: -0.01em;
 }
 
 .fg-sash-kit__style > span {
   color: var(--color-muted);
-  font-size: 0.85rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  line-height: 1.35;
 }
 
 .fg-sash-kit__finishes {
@@ -50365,9 +50367,9 @@ html.fg-blinds-reveal-locked {
 .fg-sash-kit__finish {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  min-height: 44px;
-  padding: 0.35rem 0.95rem 0.35rem 0.4rem;
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.3rem 0.85rem 0.3rem 0.35rem;
   border: 1px solid rgba(0, 45, 58, 0.14);
   border-radius: 999px;
   background: #ffffff;
@@ -50396,8 +50398,8 @@ html.fg-blinds-reveal-locked {
 /* The metal disc: the finish colour with a highlight and a darker rim. */
 .fg-sash-kit__swatch {
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background-color: var(--swatch, #777777);
   background-image:
@@ -50418,15 +50420,15 @@ html.fg-blinds-reveal-locked {
 .fg-sash-kit__swatch--white { --swatch: #f6f6f1; }
 
 .fg-sash-kit__copy {
-  margin: 0.9rem 0 0;
+  margin: 0.75rem 0 0;
   color: var(--color-muted);
-  font-size: 0.92rem;
-  line-height: 1.55;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .fg-sash-kit__note {
   margin: 0;
-  padding-top: 1.1rem;
+  padding-top: 0.9rem;
   border-top: 1px solid rgba(0, 45, 58, 0.12);
   color: var(--color-muted);
   font-size: 0.88rem;

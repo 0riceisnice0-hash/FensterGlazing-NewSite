@@ -5970,6 +5970,12 @@ if ($is_commercial_hub) {
                - THE FINISH, as a row of chips, each with a small metal disc in
                  that finish. Graphite and Pewter are marked new.
 
+               The two steps are labelled Style and Finish, not numbered.
+               Owner, second review: "get rid of the numbers ... nothing needs
+               to be numbered like 1 style 2 finish." And the whole section
+               is sized to sit in one desktop viewport: "it looks amazing but
+               its just about all not in 1 viewport. so make a bit shorter."
+
                All thirteen finish photographs are the colour guide's own
                embedded images at their native 478x316 and load eagerly so the
                stage never empties; only the first is at normal priority. State
@@ -6040,7 +6046,7 @@ if ($is_commercial_hub) {
 
                         <div class="fg-sash-kit__controls">
                             <div class="fg-sash-kit__step">
-                                <p class="fg-sash-kit__label"><span>01</span> <?php esc_html_e('Style', 'fenster'); ?></p>
+                                <p class="fg-sash-kit__label"><?php esc_html_e('Style', 'fenster'); ?></p>
                                 <div class="fg-sash-kit__styles" role="group" aria-label="<?php esc_attr_e('Furniture style', 'fenster'); ?>">
                                     <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
                                         <?php /* Each style tile carries the best image we have of that
@@ -6077,7 +6083,7 @@ if ($is_commercial_hub) {
 
                             <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
                                 <section class="fg-sash-kit__step" data-fg-furniture-panel="<?php echo esc_attr($style_key); ?>" <?php echo $style_key === $sash_furniture_first_style ? '' : 'hidden'; ?>>
-                                    <p class="fg-sash-kit__label"><span>02</span> <?php esc_html_e('Finish', 'fenster'); ?></p>
+                                    <p class="fg-sash-kit__label"><?php esc_html_e('Finish', 'fenster'); ?></p>
                                     <div class="fg-sash-kit__finishes" role="group" aria-label="<?php echo esc_attr($style['name'] . ' finishes'); ?>">
                                         <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
                                             <?php $asset_key = $style_key . '-' . sanitize_title($finish); ?>
