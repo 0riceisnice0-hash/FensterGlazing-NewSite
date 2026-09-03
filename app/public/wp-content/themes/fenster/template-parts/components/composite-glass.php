@@ -134,6 +134,67 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
             </p>
         </header>
 
+        <?php
+        /* THE PATTERNS AND THE NOTE MOVE INTO THE PICKER'S RIGHT COLUMN. The
+           preview is 650px tall and the strip beside it was 161px, so the
+           right of the section was 580px of nothing while these two blocks
+           queued underneath. Captured rather than moved inline, because they
+           still have to render on their own if no door render exists. */
+        ob_start();
+        ?>
+        <?php if (! empty($fg_patterns)) : ?>
+            <?php
+            /* AND THE ONES WE ONLY HOLD THE PATTERN FOR, said plainly. Showing
+               a 250px crop at 250px is honest; showing it at 270px in a card
+               that looks like a door render is not. They stay out of the picker
+               for the same reason: the preview is 800px tall and these would go
+               into it four times their own size. */
+            ?>
+            <div class="fg-glass-patterns">
+                <p class="fg-glass-patterns__intro">
+                    <?php esc_html_e('Five more we hold the pattern for but not a door render. The tool draws any of them into the style you have picked.', 'fenster'); ?>
+                </p>
+                <ul aria-label="<?php esc_attr_e('Further decorative glass patterns', 'fenster'); ?>">
+                    <?php foreach ($fg_patterns as $fg_style) : ?>
+                        <?php $fg_image = trim((string) ($fg_style['image'] ?? '')); ?>
+                        <li>
+                            <?php if ($fg_image !== '') : ?>
+                                <img
+                                    src="<?php echo esc_url(fenster_generated_url($fg_image)); ?>"
+                                    alt="<?php echo esc_attr(sprintf(
+                                        /* translators: %s: glass design name. */
+                                        __('The %s decorative glass pattern', 'fenster'),
+                                        (string) $fg_style['name']
+                                    )); ?>"
+                                    loading="lazy" decoding="async" width="250" height="250">
+                            <?php endif; ?>
+                            <span><?php echo esc_html((string) $fg_style['name']); ?></span>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+        <?php
+        /* ONE NOTE, NOT THREE. This closed with three consecutive blocks in
+           three different treatments: a green-ruled aperture note, a plain
+           range note and a bordered availability box. The owner's verdict on
+           the page was "random boxes of text everywhere", and this was the
+           worst of it. Everything true is still here, in one place. */
+        ?>
+        <div class="fg-composite-glass__foot">
+            <p>
+                <?php esc_html_e('Every design is cut to the shape of the opening, so the same glass reads very differently in a full-length panel, an arched top light and a small diamond. Several of the doors above show one design doing all three at once.', 'fenster'); ?>
+            </p>
+            <p>
+                <?php esc_html_e('Eleven are pictured. The tool carries twenty-six including the plain and privacy options, and draws your chosen design into your chosen door style.', 'fenster'); ?>
+                <?php if ($fg_glass_note !== '') : ?>
+                    <span class="fg-composite-glass__avail"><?php echo esc_html($fg_glass_note); ?></span>
+                <?php endif; ?>
+            </p>
+        </div>
+        <?php $fg_glass_side = trim((string) ob_get_clean()); ?>
+
         <?php if (! empty($fg_in_door)) : ?>
             <?php
             /* ONE DOOR AT A TIME, THE SAME WAY THE PAINT RANGE UNDER IT WORKS.
@@ -220,66 +281,6 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
             <?php echo $fg_glass_side; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- captured markup, escaped at source. ?>
         <?php endif; ?>
 
-        <?php
-        /* THE PATTERNS AND THE NOTE MOVE INTO THE PICKER'S RIGHT COLUMN. The
-           preview is 650px tall and the strip beside it was 161px, so the
-           right of the section was 580px of nothing while these two blocks
-           queued underneath. Captured rather than moved inline, because they
-           still have to render on their own if no door render exists. */
-        ob_start();
-        ?>
-        <?php if (! empty($fg_patterns)) : ?>
-            <?php
-            /* AND THE ONES WE ONLY HOLD THE PATTERN FOR, said plainly. Showing
-               a 250px crop at 250px is honest; showing it at 270px in a card
-               that looks like a door render is not. They stay out of the picker
-               for the same reason: the preview is 800px tall and these would go
-               into it four times their own size. */
-            ?>
-            <div class="fg-glass-patterns">
-                <p class="fg-glass-patterns__intro">
-                    <?php esc_html_e('Five more we hold the pattern for but not a door render. The tool draws any of them into the style you have picked.', 'fenster'); ?>
-                </p>
-                <ul aria-label="<?php esc_attr_e('Further decorative glass patterns', 'fenster'); ?>">
-                    <?php foreach ($fg_patterns as $fg_style) : ?>
-                        <?php $fg_image = trim((string) ($fg_style['image'] ?? '')); ?>
-                        <li>
-                            <?php if ($fg_image !== '') : ?>
-                                <img
-                                    src="<?php echo esc_url(fenster_generated_url($fg_image)); ?>"
-                                    alt="<?php echo esc_attr(sprintf(
-                                        /* translators: %s: glass design name. */
-                                        __('The %s decorative glass pattern', 'fenster'),
-                                        (string) $fg_style['name']
-                                    )); ?>"
-                                    loading="lazy" decoding="async" width="250" height="250">
-                            <?php endif; ?>
-                            <span><?php echo esc_html((string) $fg_style['name']); ?></span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
-
-        <?php
-        /* ONE NOTE, NOT THREE. This closed with three consecutive blocks in
-           three different treatments: a green-ruled aperture note, a plain
-           range note and a bordered availability box. The owner's verdict on
-           the page was "random boxes of text everywhere", and this was the
-           worst of it. Everything true is still here, in one place. */
-        ?>
-        <div class="fg-composite-glass__foot">
-            <p>
-                <?php esc_html_e('Every design is cut to the shape of the opening, so the same glass reads very differently in a full-length panel, an arched top light and a small diamond. Several of the doors above show one design doing all three at once.', 'fenster'); ?>
-            </p>
-            <p>
-                <?php esc_html_e('Eleven are pictured. The tool carries twenty-six including the plain and privacy options, and draws your chosen design into your chosen door style.', 'fenster'); ?>
-                <?php if ($fg_glass_note !== '') : ?>
-                    <span class="fg-composite-glass__avail"><?php echo esc_html($fg_glass_note); ?></span>
-                <?php endif; ?>
-            </p>
-        </div>
-        <?php $fg_glass_side = trim((string) ob_get_clean()); ?>
 
     </div>
 </section>
