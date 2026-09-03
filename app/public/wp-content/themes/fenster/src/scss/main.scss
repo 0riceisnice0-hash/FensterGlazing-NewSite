@@ -50991,7 +50991,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .generated-page--composite-doors > .fg-choose {
-    padding-block: clamp(30px, 3.4vw, 46px);
+    padding-block: clamp(24px, 2.4vw, 34px);
   }
 
   /* ---- The head ---------------------------------------------------- */
@@ -51001,29 +51001,38 @@ html.fg-blinds-reveal-locked {
     margin-bottom: 0;
   }
 
+  /* `max-width: none` is the line that matters. The heading scale caps this
+     h2 at 24ch, which at 32.8px wrapped a 640px string onto two lines inside
+     a 992px box and cost 35px for nothing. */
   .generated-page--composite-doors .fg-cds__head h2 {
-    margin: 0.35rem 0 0.5rem;
+    max-width: none;
+    margin: 0.2rem 0 0.25rem;
     font-size: clamp(1.5rem, 2.5vw, 2.05rem);
     line-height: 1.06;
   }
 
-  .generated-page--composite-doors .fg-cds__head > p {
-    max-width: 92ch;
-    font-size: 0.96rem;
+  .generated-page--composite-doors .fg-cds__head .eyebrow { margin-bottom: 0.35rem; }
+
+  /* Its own 15.36px top and bottom margins, inside a block whose gap already
+     separates it from the switcher. */
+  .generated-page--composite-doors .fg-cds__head > p:not(.eyebrow) {
+    max-width: 96ch;
+    margin: 0;
+    font-size: 0.95rem;
     line-height: 1.5;
   }
 
   /* The blocks inside were spaced for a section with room to spare. */
   .generated-page--composite-doors .fg-cds {
     display: grid;
-    gap: clamp(0.9rem, 1.8vw, 1.3rem);
+    gap: clamp(0.7rem, 1.1vw, 0.85rem);
   }
 
   /* ---- The panel head --------------------------------------------- */
 
   .generated-page--composite-doors .fg-cds__panel-head {
     max-width: 96ch;
-    margin-bottom: clamp(0.7rem, 1.4vw, 1rem);
+    margin-bottom: clamp(0.45rem, 0.9vw, 0.65rem);
   }
 
   .generated-page--composite-doors .fg-cds__panel-title {
@@ -51049,7 +51058,7 @@ html.fg-blinds-reveal-locked {
   /* The one real saving. The art box was as tall as the drawing wanted to be
      (113px at this cell width, uncapped by `height: auto`); it is 84px now and
      the drawing letterboxes inside it. */
-  .generated-page--composite-doors .fg-cds-door__art { height: 84px; }
+  .generated-page--composite-doors .fg-cds-door__art { height: 76px; }
 
   .generated-page--composite-doors .fg-cds-door__link img {
     height: 100%;
@@ -51088,5 +51097,9 @@ html.fg-blinds-reveal-locked {
     margin-top: 0;
     font-size: 0.86rem;
     line-height: 1.5;
+  }
+
+  .generated-page--composite-doors .fg-cds__filters {
+    padding-block: 0.4rem;
   }
 }
