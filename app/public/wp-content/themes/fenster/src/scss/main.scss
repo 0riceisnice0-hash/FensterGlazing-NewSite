@@ -49306,8 +49306,8 @@ html.fg-blinds-reveal-locked {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 0.9rem;
-  min-height: calc(100vh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2));
-  min-height: calc(100svh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2));
+  min-height: calc(100vh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2) - 2px);
+  min-height: calc(100svh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2) - 2px);
 }
 
 .fg-sash-stage__head {
@@ -50585,7 +50585,11 @@ html.fg-blinds-reveal-locked {
    APPENDS. Nothing that belongs to the sash page goes at the end of this file.
    ========================================================================== */
 .generated-page--sliding-sash .fg-cs-strip {
-  padding: 1.75rem 0 2rem;
+  padding: 1.5rem 0 1.75rem;
+}
+
+.generated-page--sliding-sash .fg-cs-strip__head {
+  margin-bottom: 1rem;
 }
 
 .generated-page--sliding-sash .fg-enquiry {
