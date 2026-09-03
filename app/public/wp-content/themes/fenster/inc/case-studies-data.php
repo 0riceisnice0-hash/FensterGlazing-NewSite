@@ -677,6 +677,12 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-pincents-kiln-reading-road-elevation.webp', 'caption' => 'Square on to the flank elevation from the estate road, with one ribbon above the other.'],
                 ['src' => $img . 'cs-pincents-kiln-reading-corner.webp', 'caption' => 'Along the flank, where the cladding line steps down to the brick and the ribbons follow it.'],
                 ['src' => $img . 'cs-pincents-kiln-reading-entrance-door.webp', 'caption' => 'The entrance door, fully glazed and finished in the same RAL as the frames around it.'],
+                /* SIX, NOT FIVE, AND THE COUNT IS LOAD-BEARING. The hero takes
+                   images[0], so five entries left the gallery with an odd
+                   number in a two-column grid and an empty cell on the last
+                   row. Same orphan the curtain walling spec grid produced on
+                   2026-08-30. Keep this list even. */
+                ['src' => $img . 'cs-pincents-kiln-reading-entrance-end.webp', 'caption' => 'The entrance end of the elevation, the ribbon running away to the left and the door set in the brick return.'],
             ],
             'seo' => [
                 'title_tag' => 'Pincents Kiln, Reading: Aluminium Ribbon Windows',
