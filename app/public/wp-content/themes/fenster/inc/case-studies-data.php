@@ -643,7 +643,7 @@ function fenster_case_studies(): array
             'date' => '2026-09-01',
             'date_confirmed' => false,
             'summary' => 'Four aluminium ribbon windows and a commercial entrance door for an industrial unit refurbishment, powder coated to a special colour to match the new cladding.',
-            'lead' => 'An industrial unit on Pincents Kiln Industrial Estate was being refurbished and reclad. Our package was the glazing in the new elevations: four aluminium ribbon windows and a commercial entrance door, all of it finished to match the cladding going on around it.',
+            'lead' => 'An industrial unit on Pincents Kiln Industrial Estate in Reading, Berkshire, was being refurbished and reclad. Our package was the glazing in the new elevations: four aluminium ribbon windows and a commercial entrance door, all of it finished to match the cladding going on around it.',
             'products' => [
                 ['label' => 'Industrial and logistics glazing', 'url' => home_url('/industrial-and-logistics-glazing/')],
                 ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
@@ -665,7 +665,7 @@ function fenster_case_studies(): array
             ],
             'overview' => [
                 'The colour decided this job. The unit was being reclad in bottle green, and the windows had to read as part of that elevation rather than as something fitted into it afterwards. RAL 6007 is not a colour aluminium windows are held in, so every frame, the door and the trims were powder coated to order. That is the part worth getting right: a near miss on a green sitting directly against the cladding is visible from the road, and there is no correcting it once the frames are in.',
-                'The openings are long. One ribbon runs 7.7m in a single line and the other three run 5.5m each, which is 24.2m of glazed opening across the building. Each is a run of fixed lights with mullions between them, set into the cladding line above the brick plinth. The glass is laminated double glazed units throughout, and the entrance door is finished in the same colour as the windows either side of it.',
+                'The openings are long. One ribbon runs 7.7m in a single line and the other three run 5.5m each, which is 24.2m of glazed opening across the building. Each is a single run divided by mullions, set into the cladding line above the brick plinth. The glass is laminated double glazed units throughout, and the entrance door is finished in the same colour as the windows either side of it.',
                 /* THIRD PARAGRAPH ADDED 2026-09-03, owner: "too much negative
                    space here." The cause was length, not layout: every other
                    substantial commercial study runs four overview paragraphs
@@ -683,13 +683,20 @@ function fenster_case_studies(): array
                 'Laminated double glazed units throughout',
                 'Powder coated to a special colour matched to the new cladding',
             ],
-            /* CAPTIONS WRITTEN FROM THE FRAMES, NOT THE FILENAMES. Pane counts
+            /* "A RUN OF FIXED LIGHTS" WAS AN INFERENCE AND IT IS GONE.
+               Nobody confirmed the ribbons are fixed; it was read off the
+               photographs because no handles or vents are visible, which is not
+               the same thing. It now says "a single run divided by mullions",
+               which is what the pictures actually show. If the owner confirms
+               they are fixed, say so; until then do not.
+
+               CAPTIONS WRITTEN FROM THE FRAMES, NOT THE FILENAMES. Pane counts
                are deliberately absent: the runs read as five or six lights
                depending on the angle and nobody has confirmed a number. */
             'images' => [
                 ['src' => $img . 'cs-pincents-kiln-reading-elevation.webp', 'caption' => 'The finished elevation, with one ribbon above the other in the new cladding and the entrance door in the brick return.'],
                 ['src' => $img . 'cs-pincents-kiln-reading-ribbon-and-door.webp', 'caption' => 'The lower ribbon and the door. The frames, the cladding and the door are all the same green.'],
-                ['src' => $img . 'cs-pincents-kiln-reading-ribbon-run.webp', 'caption' => 'Looking along the lower ribbon, a run of fixed lights with mullions between them, sitting on the brick plinth.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-ribbon-run.webp', 'caption' => 'Looking along the lower ribbon, a single run divided by mullions, sitting on the brick plinth.'],
                 ['src' => $img . 'cs-pincents-kiln-reading-road-elevation.webp', 'caption' => 'Square on to the flank elevation from the estate road, with one ribbon above the other.'],
                 ['src' => $img . 'cs-pincents-kiln-reading-corner.webp', 'caption' => 'Along the flank, where the cladding line steps down to the brick and the ribbons follow it.'],
                 ['src' => $img . 'cs-pincents-kiln-reading-entrance-door.webp', 'caption' => 'The entrance door, fully glazed and finished in the same RAL as the frames around it.'],
@@ -701,8 +708,12 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-pincents-kiln-reading-entrance-end.webp', 'caption' => 'The entrance end of the elevation, the ribbon running away to the left and the door set in the brick return.'],
             ],
             'seo' => [
-                'title_tag' => 'Pincents Kiln, Reading: Aluminium Ribbon Windows',
-                'meta_description' => 'A Fenster commercial project: four aluminium ribbon windows and an entrance door for an industrial unit refurbishment in Reading, powder coated to match new cladding.',
+                /* The estate name is dead weight in a title on its own, since
+                   nobody searches it. The house pattern of <name, place>:
+                   <service> is kept, but the service half now carries the terms
+                   this page can realistically be found on. */
+                'title_tag' => 'Pincents Kiln, Reading: Commercial Aluminium Ribbon Windows',
+                'meta_description' => 'A Fenster commercial project in Reading, Berkshire: four aluminium ribbon windows and an entrance door for an industrial unit, powder coated to match cladding.',
             ],
         ],
         'roka-dental-woburn-sands' => [
