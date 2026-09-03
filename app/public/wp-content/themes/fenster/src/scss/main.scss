@@ -24651,9 +24651,9 @@ a.fg-cs-card__pill:focus-visible {
     padding: 1.8rem 0 1.45rem;
     overflow: hidden;
     background:
-      radial-gradient(circle at 8% 12%, rgba(46, 172, 102, 0.22), transparent 34%),
-      var(--color-steel);
-    color: #ffffff;
+      radial-gradient(circle at 8% 12%, rgba(46, 172, 102, 0.14), transparent 36%),
+      linear-gradient(180deg, #f6faf9 0%, #e9f0ee 100%);
+    color: var(--color-steel);
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__copy--mobile {
@@ -24674,20 +24674,20 @@ a.fg-cs-card__pill:focus-visible {
 
   .generated-page--sliding-sash .fg-sash-gallery__head .eyebrow {
     margin-bottom: 0.4rem;
-    color: #72dc98;
+    color: var(--color-accent-dark);
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head h2 {
     max-width: 15ch;
     margin: 0;
-    color: #ffffff;
+    color: var(--color-steel);
     font-size: clamp(1.55rem, 7vw, 2rem);
     line-height: 1.05;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head > p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--color-muted);
     font-size: 0.88rem;
     line-height: 1.45;
   }
@@ -24715,7 +24715,7 @@ a.fg-cs-card__pill:focus-visible {
     overflow: hidden;
     aspect-ratio: 4 / 3;
     border-radius: 8px;
-    background: #123f49;
+    background: #dfe8e5;
     scroll-snap-align: start;
   }
 
@@ -24755,7 +24755,7 @@ a.fg-cs-card__pill:focus-visible {
     display: flex;
     justify-content: space-between;
     margin: 0.45rem 0 0;
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--color-muted);
     font-size: var(--fg-text-2xs);
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -32040,13 +32040,13 @@ html.fg-blinds-reveal-locked {
 
   .generated-page--sliding-sash .fg-sash-gallery {
     display: block;
-    padding: clamp(3.8rem, 6vw, 5.6rem) 0;
+    padding: clamp(2rem, 3.4vw, 3rem) 0;
     overflow: hidden;
     background:
-      radial-gradient(circle at 12% 18%, rgba(46, 172, 102, 0.22), transparent 30%),
-      radial-gradient(circle at 88% 80%, rgba(76, 123, 134, 0.24), transparent 32%),
-      var(--color-steel);
-    color: #ffffff;
+      radial-gradient(circle at 12% 18%, rgba(46, 172, 102, 0.14), transparent 32%),
+      radial-gradient(circle at 88% 80%, rgba(76, 123, 134, 0.14), transparent 34%),
+      linear-gradient(180deg, #f6faf9 0%, #e9f0ee 100%);
+    color: var(--color-steel);
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head {
@@ -32054,28 +32054,28 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: minmax(0, 0.82fr) minmax(360px, 0.55fr);
     gap: clamp(3rem, 8vw, 8rem);
     align-items: end;
-    margin-bottom: 1.65rem;
+    margin-bottom: 1.25rem;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head .eyebrow {
     margin-bottom: 0.55rem;
-    color: #72dc98;
+    color: var(--color-accent-dark);
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head h2 {
-    max-width: 13ch;
+    max-width: 18ch;
     margin: 0;
-    color: #ffffff;
-    font-size: clamp(2.4rem, 4vw, 4rem);
-    line-height: 0.98;
+    color: var(--color-steel);
+    font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+    line-height: 1.02;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head > p {
     max-width: 52ch;
     margin: 0 0 0.25rem;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 1.03rem;
-    line-height: 1.6;
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.55;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__rail {
@@ -32091,7 +32091,7 @@ html.fg-blinds-reveal-locked {
     margin: 0;
     overflow: hidden;
     border-radius: 8px;
-    background: #123f49;
+    background: #dfe8e5;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__rail figure:nth-child(1) {
@@ -49281,7 +49281,7 @@ html.fg-blinds-reveal-locked {
    ========================================================================== */
 .fg-sash-stage {
   --fg-sash-stage-floor: 87%;
-  --fg-sash-stage-pad: clamp(1.75rem, 3.2vw, 2.75rem);
+  --fg-sash-stage-pad: clamp(1.25rem, 2vw, 1.75rem);
   --fg-sash-glow: rgba(46, 172, 102, 0.26);
   --fg-sash-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
@@ -49305,7 +49305,7 @@ html.fg-blinds-reveal-locked {
 .fg-sash-stage__inner {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
+  gap: 0.9rem;
   min-height: calc(100vh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2));
   min-height: calc(100svh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2));
 }
@@ -49324,7 +49324,7 @@ html.fg-blinds-reveal-locked {
   max-width: 30ch;
   margin: 0;
   color: var(--color-steel);
-  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+  font-size: clamp(1.6rem, 2.3vw, 2.2rem);
   line-height: 1.06;
 }
 
@@ -49373,17 +49373,22 @@ html.fg-blinds-reveal-locked {
 }
 
 /* The stage takes the viewport height below the header less the room the
-   head, the controls and the section padding need, between 420px and 720px,
-   so the stage AND its controls land inside the first screen at 1440x900 and
-   on a 720px laptop, while a tall monitor gets a taller stage. The facts
+   head, the controls, the survey note and the section padding need, between
+   360px and 720px, so the whole section lands inside the first screen at
+   1440x900 and on a 720px laptop, while a tall monitor gets a taller stage.
+   The 318px is that overhead measured at 1440 (padding 56, head 96, gap 14,
+   controls 72, gap 14, note 41) plus 25px to spare; it was 262px before, which
+   was less than the real overhead, so the section overran by 107px at 1440x900
+   and by 69px at 1920x1080 (owner, 2026-09-03: "every section of this page
+   needs to be contained in one view port"). The facts
    panel beside it may run longer than that; its copy is what scrolls. The
    perspective is what angles the side windows in towards the middle. The
    surface is a pale wall running down into a slightly deeper floor, with no
    hard edge, so it reads as a place rather than a box. */
 .fg-sash-stage__scene {
   position: relative;
-  height: clamp(420px, calc(100vh - var(--site-header-main-height) - 262px), 720px);
-  height: clamp(420px, calc(100svh - var(--site-header-main-height) - 262px), 720px);
+  height: clamp(360px, calc(100vh - var(--site-header-main-height) - 318px), 720px);
+  height: clamp(360px, calc(100svh - var(--site-header-main-height) - 318px), 720px);
   overflow: hidden;
   border-radius: 16px;
   background:
@@ -49757,9 +49762,11 @@ html.fg-blinds-reveal-locked {
    swap and back in over 320ms, and nothing moves: that is the whole change
    animation, after the owner called the staggered re-entrance flashy. */
 .fg-sash-stage__panels {
+  position: relative;
   display: grid;
   align-content: start;
   min-width: 0;
+  min-height: 0;
   transition: opacity 0.32s ease;
 }
 
@@ -49770,8 +49777,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-sash-stage__panel {
   display: grid;
-  gap: 1rem;
-  padding: clamp(1.15rem, 2vw, 1.6rem);
+  gap: 0.7rem;
+  padding: clamp(1rem, 1.6vw, 1.3rem);
   border: 1px solid rgba(0, 45, 58, 0.08);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.92);
@@ -49782,9 +49789,29 @@ html.fg-blinds-reveal-locked {
   display: none !important;
 }
 
+/* THE PANEL FILLS THE SPACE BESIDE THE STAGE; IT DOES NOT SET IT. Taken out
+   of flow, so the section's height is the stage, its controls and the note,
+   all sized from the viewport, and never the panel's copy. The card is as
+   tall as its copy up to the height of that space; on a screen where the
+   copy would be taller, the panel scrolls inside itself, and the two
+   short-screen rules further down take the explanatory copy out first so
+   that is rare. Before this the panel set the body height: 637px of copy
+   beside a 474px stage pushed the section 22px past a 1536x864 screen.
+   Owner, 2026-09-03: "every section of this page needs to be contained in
+   one view port." */
+.fg-sash-stage.is-enhanced .fg-sash-stage__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 .fg-sash-stage__panel-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 96px;
+  grid-template-columns: minmax(0, 1fr) 76px;
   gap: 1rem;
   align-items: start;
 }
@@ -49812,8 +49839,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-sash-stage__rail-photo img {
   display: block;
-  width: 96px;
-  height: 72px;
+  width: 76px;
+  height: 52px;
   border: 1px solid rgba(0, 45, 58, 0.1);
   border-radius: 8px;
   object-fit: cover;
@@ -49831,7 +49858,7 @@ html.fg-blinds-reveal-locked {
 .fg-sash-stage__best {
   margin: 0;
   color: var(--color-muted);
-  line-height: 1.55;
+  line-height: 1.45;
 }
 
 .fg-sash-stage__best strong {
@@ -49853,7 +49880,7 @@ html.fg-blinds-reveal-locked {
   display: grid;
   gap: 0.12rem;
   min-width: 0;
-  padding: 0.6rem 0;
+  padding: 0.38rem 0;
   border-bottom: 1px solid rgba(0, 45, 58, 0.1);
 }
 
@@ -49880,7 +49907,7 @@ html.fg-blinds-reveal-locked {
 /* The written bit under the facts: what those figures mean on the house. */
 .fg-sash-stage__meaning {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
 .fg-sash-stage__meaning strong {
@@ -49894,8 +49921,8 @@ html.fg-blinds-reveal-locked {
 .fg-sash-stage__meaning p {
   margin: 0;
   color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.85rem;
+  line-height: 1.45;
 }
 
 .fg-sash-stage__note {
@@ -49966,7 +49993,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sash-stage__facts > div {
-    padding: 0.45rem 0;
+    padding: 0.35rem 0;
   }
 }
 
@@ -50044,6 +50071,12 @@ html.fg-blinds-reveal-locked {
     align-self: auto;
   }
 
+  .fg-sash-stage.is-enhanced .fg-sash-stage__panel {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
   .fg-sash-stage__scene {
     height: min(54vh, 480px);
     height: min(54svh, 480px);
@@ -50109,6 +50142,23 @@ html.fg-blinds-reveal-locked {
 
   .fg-sash-stage__facts dd {
     font-size: 0.88rem;
+  }
+}
+
+/* Short screens: the explanatory copy in the panel is what gives first. At
+   880px and under the second paragraph goes; at 800px and under the whole
+   "what the details mean" block goes, and the facts and the survey note
+   remain. Without these the panel would scroll inside itself beside a stage
+   that fits, on a 1536x864 or 1366x768 laptop. */
+@media (min-width: 861px) and (max-height: 880px) {
+  .fg-sash-stage__meaning p + p {
+    display: none;
+  }
+}
+
+@media (min-width: 861px) and (max-height: 800px) {
+  .fg-sash-stage__meaning {
+    display: none;
   }
 }
 
@@ -50516,6 +50566,55 @@ html.fg-blinds-reveal-locked {
   .fg-sash-kit__style-image::after,
   .fg-sash-kit__finish {
     transition: none;
+  }
+}
+
+/* ============================================================================
+   SLIDING SASH: ONE VIEWPORT PER SECTION, 2026-09-03. Owner: "every section
+   of this page needs to be contained in one view port. every section."
+   Measured on test at 1440x900, which leaves 827px under the header: the
+   Roseview stage was over by 107px, the gallery by 83px, the case-study strip
+   by 4px and the enquiry section by 122px. The stage and the gallery are
+   fixed in their own rules; the strip and the enquiry section are shared
+   components carried by many routes, so this block tightens their sash-page
+   variants only: less padding on both, and the four short fields of the
+   enquiry form side by side in two columns, the way the location heroes
+   already lay them out, instead of one under another.
+
+   PLACED HERE, WITH THE OTHER SASH BLOCKS, ABOVE THE BLOCKS THE OTHER SESSION
+   APPENDS. Nothing that belongs to the sash page goes at the end of this file.
+   ========================================================================== */
+.generated-page--sliding-sash .fg-cs-strip {
+  padding: 1.75rem 0 2rem;
+}
+
+.generated-page--sliding-sash .fg-enquiry {
+  padding: 2.5rem 0;
+}
+
+.generated-page--sliding-sash .fg-enquiry__copy,
+.generated-page--sliding-sash .fg-enquiry .fg-form {
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+.generated-page--sliding-sash .fg-enquiry-form__compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 0.9rem;
+}
+
+.generated-page--sliding-sash .fg-enquiry-form__compact-wide {
+  grid-column: 1 / -1;
+}
+
+.generated-page--sliding-sash .fg-enquiry-form__message textarea {
+  height: 108px;
+  min-height: 108px;
+}
+
+@media (max-width: 860px) {
+  .generated-page--sliding-sash .fg-enquiry-form__compact-grid {
+    grid-template-columns: 1fr;
   }
 }
 
