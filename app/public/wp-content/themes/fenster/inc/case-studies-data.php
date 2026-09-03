@@ -621,11 +621,11 @@ function fenster_case_studies(): array
            (founded 948, one of the oldest in the country) is public record and
            is there for weight, not padding; keep it to the clause it occupies.
 
-           THE DATE IS NOT CONFIRMED AND MUST NOT BE PRINTED. Nobody gave a
-           completion date. `2026-06-01` exists ONLY so the archive orders this
-           near the top instead of the bottom, since an empty date sorts last.
-           `date_confirmed => false` keeps it off the page. **Ask the owner and
-           replace it.** Do not treat the 1st of June as a fact.
+           COMPLETED AUGUST 2026, owner-confirmed 2026-09-03, but to the MONTH
+           only. `date_confirmed` therefore stays false so the printed date
+           stays off, and the month is stated in the `Completed` spec row the
+           way every other commercial study states it. The 1st in the date field
+           orders the archive and is not a completion date.
 
            SYSTEM NAMED AS THE OWNER GAVE IT. Smart Systems publish the range as
            "MC 600"; he specified "MC600 Plus" and he fitted it, so his naming
@@ -644,7 +644,15 @@ function fenster_case_studies(): array
             'service' => 'Aluminium curtain walling, a fire exit door and blackout glazing',
             'sector_url' => home_url('/school-and-education-glazing/'),
             'service_url' => home_url('/curtain-walling/'),
-            'date' => '2026-06-01',
+            /* ALL TWELVE PHOTOGRAPHS OF THIS JOB ARE PORTRAIT, which is what
+               `gallery_shape => 'tall'` exists for: it swaps the gallery cell
+               from 1:1 to 3:4 on this study alone. Every image here was then
+               cut to exactly 3:4 as well, so the grid crops nothing at all.
+               The progress frames were already 1200x1600; the finished ones
+               came off a phone at 946x2048 and were centre cropped to 946x1261.
+               If you add an image, match 3:4 or it will be cropped to fit. */
+            'gallery_shape' => 'tall',
+            'date' => '2026-08-01',
             'date_confirmed' => false,
             'summary' => 'A Smart MC600 Plus curtain wall replacing an outdated timber system in a school hall, with a fire exit door, finger guards and blackout film for a room used as a performance space.',
             'lead' => 'St Albans School, in Hertfordshire, is one of the oldest schools in the country, founded in 948. We replaced the curtain walling to its hall, a full height glazed elevation in a room that doubles as a performance space, and the work ran in term time with exams about to start in that hall.',
@@ -656,7 +664,11 @@ function fenster_case_studies(): array
             ],
             'specs' => [
                 ['label' => 'System', 'value' => 'Smart MC600 Plus, stick built'],
-                ['label' => 'Setting', 'value' => 'School hall and performance space'],
+                /* The strip holds four everywhere on the site. "Setting" made
+                   way for the completion month: the hall and the performance
+                   use are already in the title, the summary and the copy, and
+                   a date is the one thing a reader cannot infer. */
+                ['label' => 'Completed', 'value' => 'August 2026'],
                 ['label' => 'Replaced', 'value' => 'Timber wall, 10mm float glass'],
                 ['label' => 'Programme', 'value' => 'Term time, before exams'],
             ],
