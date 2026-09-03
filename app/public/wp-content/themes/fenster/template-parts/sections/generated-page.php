@@ -5940,12 +5940,14 @@ if ($is_commercial_hub) {
                 'globe' => [
                     'name' => 'Globe furniture',
                     'models' => 'Ultimate Rose',
+                    'image' => 'globe-on-rail',
                     'copy' => 'The curved Globe lock is the standard traditional furniture style for Ultimate Rose.',
                     'finishes' => ['Bronze', 'Gold', 'Chrome', 'Antique Black', 'Graphite', 'Pewter'],
                 ],
                 'acorn' => [
                     'name' => 'Acorn furniture',
                     'models' => 'Ultimate, Heritage and Charisma Rose',
+                    'image' => 'acorn-on-rail',
                     'copy' => 'The Acorn lock is standard on Heritage and Charisma Rose and is also available on suitable Ultimate Rose specifications.',
                     'finishes' => ['Bronze', 'Gold', 'Chrome', 'Antique Black', 'Graphite', 'Pewter', 'White'],
                 ],
@@ -5966,10 +5968,20 @@ if ($is_commercial_hub) {
                             <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
                                 <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
                                     <?php $asset_key = $style_key . '-' . sanitize_title($finish); ?>
+                                    <?php /* The -478w set is the guide's own embedded photograph at its native
+                                             478x316, re-cut 2026-09-03 on the owner's instruction ("just use the best
+                                             images"); the first cut was 232px crops of a low-resolution render of the
+                                             same guide. New filenames because theme image URLs carry no version.
+                                             All thirteen still load eagerly so the stage never empties between picks
+                                             (about 300KB in all), but only the first is at normal priority. */ ?>
                                     <img
-                                        src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $asset_key . '.webp')); ?>"
+                                        src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $asset_key . '-478w.webp')); ?>"
+                                        width="478"
+                                        height="316"
                                         alt="<?php echo esc_attr($style['name'] . ' in ' . $finish); ?>"
                                         loading="eager"
+                                        decoding="async"
+                                        <?php echo $style_key === 'globe' && $finish_index === 0 ? '' : 'fetchpriority="low"'; ?>
                                         data-fg-furniture-image="<?php echo esc_attr($asset_key); ?>"
                                         <?php echo $style_key === 'globe' && $finish_index === 0 ? '' : 'hidden'; ?>
                                     >
@@ -5980,7 +5992,26 @@ if ($is_commercial_hub) {
                         <div class="fg-sash-furniture-selector__controls">
                             <div class="fg-sash-furniture-selector__styles" role="group" aria-label="<?php esc_attr_e('Furniture style', 'fenster'); ?>">
                                 <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
+                                    <?php /* Each style button carries the best image we have of that
+                                             furniture on a rail: Roseview's render of the gold Globe set for
+                                             Ultimate Rose, and the studio photograph of the chrome Acorn lock
+                                             (1536px, from the old site's export). Added 2026-09-03 on the
+                                             owner's instruction to use the best images; both are supplier
+                                             imagery and unattributed, per the site rule. Decorative inside a
+                                             labelled button, so alt is empty. */ ?>
                                     <button type="button" data-fg-furniture-style="<?php echo esc_attr($style_key); ?>" aria-pressed="<?php echo $style_key === 'globe' ? 'true' : 'false'; ?>">
+                                        <?php if (! empty($style['image'])) : ?>
+                                            <img
+                                                src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $style['image'] . '-600w.webp')); ?>"
+                                                srcset="<?php echo esc_attr(fenster_generated_url($sash_furniture_base . $style['image'] . '-600w.webp') . ' 600w, ' . fenster_generated_url($sash_furniture_base . $style['image'] . '-1200w.webp') . ' 1200w'); ?>"
+                                                sizes="(max-width: 860px) 44vw, 280px"
+                                                width="1200"
+                                                height="800"
+                                                alt=""
+                                                loading="lazy"
+                                                decoding="async"
+                                            >
+                                        <?php endif; ?>
                                         <strong><?php echo esc_html($style['name']); ?></strong>
                                         <span><?php echo esc_html($style['models']); ?></span>
                                     </button>
