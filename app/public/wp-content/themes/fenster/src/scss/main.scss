@@ -8266,9 +8266,6 @@ html.fg-gallery-lightbox-open body {
   content: none;
 }
 
-.fg-product-choice-map--sash {
-  max-width: 520px;
-}
 
 .fg-product-option-card {
   position: relative;
@@ -24805,9 +24802,6 @@ a.fg-cs-card__pill:focus-visible {
     scroll-snap-align: start;
   }
 
-  .generated-page--sliding-sash .fg-product-choice-map--sash .fg-product-option-card {
-    flex-basis: 100%;
-  }
 
   .generated-page--sliding-sash .fg-product-option-card::before {
     transform: scale(0.72);
@@ -31841,156 +31835,6 @@ html.fg-blinds-reveal-locked {
   padding: clamp(3rem, 6vw, 5rem) 0;
 }
 
-.fg-sash-furniture-selector {
-  display: grid;
-  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
-  gap: var(--fg-space-4);
-  margin-top: 1.5rem;
-}
-
-.fg-sash-furniture-selector__visual {
-  display: grid;
-  min-width: 0;
-  height: 500px;
-  place-items: center;
-  padding: clamp(1rem, 3vw, 2rem);
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.09);
-}
-
-.fg-sash-furniture-selector__visual img {
-  display: block;
-  width: min(100%, 520px);
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.fg-sash-furniture-selector__visual img[hidden] {
-  display: none;
-}
-
-.fg-sash-furniture-selector__controls {
-  display: grid;
-  min-width: 0;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
-  gap: var(--fg-space-4);
-  padding: clamp(1rem, 2.5vw, 1.6rem);
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.88);
-}
-
-.fg-sash-furniture-selector__styles {
-  display: grid;
-  min-width: 0;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
-}
-
-.fg-sash-furniture-selector__styles button {
-  display: grid;
-  gap: var(--fg-space-1);
-  min-height: 92px;
-  padding: 0.9rem;
-  border: 1px solid rgba(0, 45, 58, 0.13);
-  border-radius: 8px;
-  background: #ffffff;
-  color: var(--color-steel);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.fg-sash-furniture-selector__styles button[aria-pressed="true"] {
-  border-color: var(--color-accent);
-  background: rgba(46, 172, 102, 0.08);
-  box-shadow: inset 0 0 0 1px var(--color-accent);
-}
-
-.fg-sash-furniture-selector__styles span,
-.fg-sash-furniture-selector__controls section > p,
-.fg-sash-furniture-selector__note p {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-
-.fg-sash-furniture-selector__controls section[hidden] {
-  display: none;
-}
-
-.fg-sash-furniture-selector__finishes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-  margin-top: 0.85rem;
-}
-
-.fg-sash-furniture-selector__finishes button {
-  position: relative;
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 0.45rem;
-  align-items: center;
-  min-height: 48px;
-  padding: 0.55rem;
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
-  background: #ffffff;
-  color: var(--color-steel);
-  font: inherit;
-  font-size: var(--fg-text-xs);
-  font-weight: 800;
-  text-align: left;
-  cursor: pointer;
-}
-
-.fg-sash-furniture-selector__finishes button[aria-pressed="true"] {
-  border-color: var(--color-accent);
-  box-shadow: inset 0 0 0 1px var(--color-accent);
-}
-
-.fg-sash-furniture-selector__finishes small {
-  position: absolute;
-  top: -0.35rem;
-  right: 0.35rem;
-  padding: 0.08rem 0.25rem;
-  border-radius: 2px;
-  background: var(--color-accent);
-  color: #ffffff;
-  font-size: 0.55rem;
-  text-transform: uppercase;
-}
-
-.fg-sash-furniture-selector__swatch {
-  width: 24px;
-  height: 24px;
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  border-radius: 999px;
-  background: #777;
-}
-
-.fg-sash-furniture-selector__swatch--bronze { background: #715347; }
-.fg-sash-furniture-selector__swatch--gold { background: linear-gradient(135deg, #8c6725, #f2d684, #a67624); }
-.fg-sash-furniture-selector__swatch--chrome { background: linear-gradient(135deg, #777, #f5f7f7, #8e9799); }
-.fg-sash-furniture-selector__swatch--antique-black { background: #252827; }
-.fg-sash-furniture-selector__swatch--graphite { background: #38413e; }
-.fg-sash-furniture-selector__swatch--pewter { background: #747872; }
-.fg-sash-furniture-selector__swatch--white { background: #f5f5f0; }
-
-.fg-sash-furniture-selector__note {
-  padding: 0.9rem;
-  border-radius: 8px;
-  background: rgba(220, 233, 230, 0.7);
-}
-
-.fg-sash-furniture-selector__note p {
-  margin: 0.3rem 0 0;
-}
 
 .fg-product-quote-embed__sash-mobile-action {
   display: none;
@@ -32080,8 +31924,7 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
 
 
-  .fg-sash-gallery-cta__inner,
-  .fg-sash-furniture-selector {
+  .fg-sash-gallery-cta__inner {
     grid-template-columns: 1fr;
   }
 
@@ -32093,21 +31936,11 @@ html.fg-blinds-reveal-locked {
     width: 100%;
   }
 
-  .fg-sash-furniture-selector__visual {
-    height: 300px;
-  }
 
   .generated-page--sliding-sash .fg-hero__image {
     object-position: 50% 50%;
   }
 
-  .fg-sash-furniture-selector__visual img {
-    width: min(100%, 420px);
-  }
-
-  .fg-sash-furniture-selector__finishes {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
   .generated-page--sliding-sash .fg-product-quote-embed {
     padding: 2rem 0;
@@ -32129,37 +31962,6 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 560px) {
 
-
-  .fg-sash-furniture-selector__styles button {
-    min-height: 76px;
-  }
-
-  .fg-sash-furniture-selector__visual {
-    height: 260px;
-    padding: 0.75rem;
-  }
-
-  .fg-sash-furniture-selector__controls {
-    padding: 0.8rem;
-  }
-
-  .fg-sash-furniture-selector__finishes {
-    display: flex;
-    gap: var(--fg-space-2);
-    overflow-x: auto;
-    padding: 0.15rem 0 0.45rem;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .fg-sash-furniture-selector__finishes::-webkit-scrollbar {
-    display: none;
-  }
-
-  .fg-sash-furniture-selector__finishes button {
-    flex: 0 0 118px;
-    scroll-snap-align: start;
-  }
 
   .site-footer__trust {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -50311,35 +50113,408 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ============================================================================
-   SASH FURNITURE STYLE TILES. The Globe / Acorn buttons in the furniture
-   selector carry a 3:2 image of that furniture on a rail (added 2026-09-03,
-   owner: "just use the best images for the site"). The image sits above the
-   label inside the existing button; nothing else about the selector moved.
+   SLIDING SASH: THE LOCK SELECTOR, 2026-09-03. Owner: "now that we have high
+   res images, make the lock style selector look better too." A pale lit stage
+   with the lock photograph blended onto it (multiply, so the photograph's
+   white ground vanishes), a caption bar under it, two picture tiles for the
+   style and a row of swatch chips for the finish. Everything sits on the page
+   canvas; there are no cards inside cards. Light throughout, per STYLE.md.
 
-   PLACED HERE, ABOVE THE BLOCKS THE OTHER SESSION APPENDS, ON PURPOSE. It was
-   first appended at the end of the file and a later commit from that session
-   took it out along with everything after its own marker; the tiles then
-   rendered as tall strips on test. Nothing that belongs to the sash page goes
-   at the tail of this file any more.
+   PLACED HERE, DIRECTLY AFTER THE STAGE BLOCK AND ABOVE THE BLOCKS THE OTHER
+   SESSION APPENDS, ON PURPOSE. The first version of the tile rules sat at the
+   tail of this file and a later commit from that session took it out. Nothing
+   that belongs to the sash page goes at the end of this file.
    ========================================================================== */
-.fg-sash-furniture-selector__styles button {
-  padding: 0.55rem 0.55rem 0.8rem;
-  gap: 0.15rem;
+.fg-sash-kit {
+  padding: clamp(3rem, 6vw, 5rem) 0;
 }
 
-.fg-sash-furniture-selector__styles button img {
+.fg-sash-kit__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+/* THE STAGE. White at the centre, where the photograph sits, so the
+   photograph's own white ground and the surface are the same colour and no
+   rectangle shows; cooler and a touch darker towards the edges and the
+   floor. */
+.fg-sash-kit__stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  margin: 0;
+  aspect-ratio: 5 / 4;
+  max-height: 600px;
+  overflow: hidden;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse 72% 58% at 50% 42%, #ffffff 0%, #ffffff 38%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(180deg, #f7fbfa 0%, #edf3f1 58%, #dbe6e2 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 45, 58, 0.06),
+    0 30px 60px -30px rgba(0, 45, 58, 0.28);
+}
+
+.fg-sash-kit__lock {
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  min-height: 0;
+  padding: clamp(1.25rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3.5rem) clamp(1rem, 3vw, 2rem);
+}
+
+/* The shadow the lock throws on the surface. */
+.fg-sash-kit__lock::after {
+  content: "";
+  position: absolute;
+  right: 20%;
+  bottom: 4%;
+  left: 20%;
+  height: 10%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 45, 58, 0.16), rgba(0, 45, 58, 0) 70%);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+/* All thirteen photographs share one grid cell; the active one is visible.
+   The outgoing image fades first and the incoming one follows, so two locks
+   never multiply over each other and darken mid-fade. */
+.fg-sash-kit__image {
+  grid-area: 1 / 1;
+  display: block;
+  width: min(100%, 520px);
+  max-height: 100%;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.16s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+.fg-sash-kit__image.is-active {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.38s ease 0.14s, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.14s;
+}
+
+.fg-sash-kit__caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem clamp(1rem, 3vw, 1.6rem) 1rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.08);
+  color: var(--color-steel);
+}
+
+.fg-sash-kit__caption-style {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.fg-sash-kit__caption-finish {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* THE CONTROLS. Two numbered steps and a note, separated by hairlines. */
+.fg-sash-kit__controls {
+  display: grid;
+  min-width: 0;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.fg-sash-kit__step[hidden] {
+  display: none;
+}
+
+.fg-sash-kit__label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 0.9rem;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fg-sash-kit__label span {
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-sash-kit__label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 45, 58, 0.12);
+}
+
+.fg-sash-kit__styles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fg-sash-kit__style {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-steel);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fg-sash-kit__style-image {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 0.65rem;
+  aspect-ratio: 3 / 2;
+  border-radius: 12px;
+  background: #e9f0ee;
+  box-shadow:
+    0 0 0 1px rgba(0, 45, 58, 0.1),
+    0 14px 30px -18px rgba(0, 45, 58, 0.35);
+  transition: box-shadow 0.3s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.fg-sash-kit__style-image img {
   display: block;
   width: 100%;
-  height: auto;
-  margin-bottom: 0.45rem;
-  aspect-ratio: 3 / 2;
-  border-radius: 6px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease;
 }
 
-.fg-sash-furniture-selector__styles button strong,
-.fg-sash-furniture-selector__styles button span {
-  padding: 0 0.25rem;
+/* The tick on the chosen tile. */
+.fg-sash-kit__style-image::after {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  box-shadow: 0 4px 10px rgba(0, 45, 58, 0.22);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.fg-sash-kit__style[aria-pressed="true"] .fg-sash-kit__style-image {
+  box-shadow:
+    0 0 0 2px var(--color-accent),
+    0 18px 34px -16px rgba(0, 45, 58, 0.4);
+}
+
+.fg-sash-kit__style[aria-pressed="true"] .fg-sash-kit__style-image::after {
+  opacity: 1;
+  transform: none;
+}
+
+.fg-sash-kit__style[aria-pressed="false"] .fg-sash-kit__style-image img {
+  filter: saturate(0.82);
+}
+
+.fg-sash-kit__style:focus-visible {
+  outline: 0;
+}
+
+.fg-sash-kit__style:focus-visible .fg-sash-kit__style-image {
+  box-shadow: 0 0 0 3px var(--color-accent);
+}
+
+.fg-sash-kit__style strong {
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.fg-sash-kit__style > span {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.fg-sash-kit__finishes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fg-sash-kit__finish {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.35rem 0.95rem 0.35rem 0.4rem;
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-steel);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.fg-sash-kit__finish[aria-pressed="true"] {
+  border-color: var(--color-steel);
+  box-shadow: inset 0 0 0 1px var(--color-steel);
+}
+
+.fg-sash-kit__finish small {
+  margin-left: 0.1rem;
+  color: var(--color-accent);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* The metal disc: the finish colour with a highlight and a darker rim. */
+.fg-sash-kit__swatch {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--swatch, #777777);
+  background-image:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 46%),
+    var(--swatch-image, none);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.12),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+    inset 0 3px 5px rgba(255, 255, 255, 0.3);
+}
+
+.fg-sash-kit__swatch--bronze { --swatch: #6b4b3e; }
+.fg-sash-kit__swatch--gold { --swatch: #c9a24a; --swatch-image: linear-gradient(145deg, #8f6a26, #f1d685 55%, #a7782a); }
+.fg-sash-kit__swatch--chrome { --swatch: #c4cbcc; --swatch-image: linear-gradient(145deg, #7d868a, #f4f7f7 52%, #8f9a9d); }
+.fg-sash-kit__swatch--antique-black { --swatch: #23272a; }
+.fg-sash-kit__swatch--graphite { --swatch: #3a4341; }
+.fg-sash-kit__swatch--pewter { --swatch: #767a75; }
+.fg-sash-kit__swatch--white { --swatch: #f6f6f1; }
+
+.fg-sash-kit__copy {
+  margin: 0.9rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.fg-sash-kit__note {
+  margin: 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.12);
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.fg-sash-kit__note strong {
+  color: var(--color-steel);
+}
+
+@media (hover: hover) {
+  .fg-sash-kit__style:hover .fg-sash-kit__style-image {
+    transform: translateY(-3px);
+  }
+
+  .fg-sash-kit__style:hover .fg-sash-kit__style-image img {
+    transform: scale(1.04);
+    filter: none;
+  }
+
+  .fg-sash-kit__finish:hover {
+    border-color: rgba(0, 45, 58, 0.38);
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-sash-kit__body {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .fg-sash-kit__stage {
+    aspect-ratio: 4 / 3;
+    max-height: none;
+    border-radius: 14px;
+  }
+
+  .fg-sash-kit__lock {
+    padding: 1.25rem 1.25rem 0.9rem;
+  }
+
+  .fg-sash-kit__caption {
+    padding: 0.75rem 1rem 0.8rem;
+  }
+
+  .fg-sash-kit__caption-style {
+    font-size: 0.98rem;
+  }
+
+  .fg-sash-kit__styles {
+    gap: 0.75rem;
+  }
+
+  .fg-sash-kit__style-image {
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+  }
+
+  .fg-sash-kit__style strong {
+    font-size: 0.98rem;
+  }
+
+  .fg-sash-kit__style > span {
+    font-size: 0.8rem;
+  }
+
+  .fg-sash-kit__finish {
+    min-height: 40px;
+    padding: 0.3rem 0.8rem 0.3rem 0.35rem;
+    font-size: 0.82rem;
+  }
+
+  .fg-sash-kit__swatch {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-sash-kit__image,
+  .fg-sash-kit__style-image,
+  .fg-sash-kit__style-image img,
+  .fg-sash-kit__style-image::after,
+  .fg-sash-kit__finish {
+    transition: none;
+  }
 }
 
 /* ============================================================================

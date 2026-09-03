@@ -5658,7 +5658,18 @@ if ($is_commercial_hub) {
                  CHECK WHAT A REMOVAL LEAVES, again: the middle carries the
                  colour answer and the privacy-glass link sits in the closed
                  section, so gating this band leaves no heading over nothing. */ ?>
-        <?php if (! $is_upvc_doors_bespoke && ! $is_roofline && ! $is_slide_fold_bespoke) : ?>
+        <?php /* AND GATED OFF FOR SLIDING SASH, 2026-09-03. Owner: "make the
+                 privacy glass one banner like how it is on some other pages".
+                 On that route this band had exactly one card left, privacy
+                 glass, sitting small in a map of its own with the colour and
+                 handle cards suppressed around it. The shared component below
+                 renders the same full-width panelled card /casement-windows/
+                 and /upvc-doors/ carry, with sash wording.
+
+                 CHECK WHAT A REMOVAL LEAVES: the component carries its own
+                 eyebrow, heading and intro, so nothing is left headless, and
+                 the furniture selector follows it as before. */ ?>
+        <?php if (! $is_upvc_doors_bespoke && ! $is_roofline && ! $is_slide_fold_bespoke && $slug !== 'sliding-sash-windows') : ?>
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -5670,8 +5681,8 @@ if ($is_commercial_hub) {
                        belongs to whichever window or door the unit goes into,
                        and there is no hardware on the room side at all. */
                     ?>
-                    <h2><?php echo esc_html($slug === 'roofline' ? 'Roofline colours, chosen to match what is below.' : ($is_integral_blinds ? 'Choose the glass around the blind.' : ($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.'))); ?></h2>
-                    <p><?php echo esc_html($slug === 'roofline' ? 'Roofline is chosen to sit with the windows and doors below it, so the colour is the decision worth making early.' : ($is_integral_blinds ? 'The slat colours are further down this page. The other choice on a blind unit is the glass itself: clear, or obscured where the room needs privacy even with the blind open.' : ($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.'))); ?></p>
+                    <h2><?php echo esc_html($slug === 'roofline' ? 'Roofline colours, chosen to match what is below.' : ($is_integral_blinds ? 'Choose the glass around the blind.' : 'Finish the design with your colours, glass and hardware.')); ?></h2>
+                    <p><?php echo esc_html($slug === 'roofline' ? 'Roofline is chosen to sit with the windows and doors below it, so the colour is the decision worth making early.' : ($is_integral_blinds ? 'The slat colours are further down this page. The other choice on a blind unit is the glass itself: clear, or obscured where the room needs privacy even with the blind open.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.')); ?></p>
                 </div>
                 <?php
                 /* Built as a list before rendering so the count is known. The
@@ -5724,7 +5735,7 @@ if ($is_commercial_hub) {
                     ];
                 } elseif ($is_integral_blinds) {
                     // No colour card.
-                } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
+                } elseif (! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
                     /* The six dots on this card were six hexes invented in the
                        stylesheet. Four happened to land on real finishes and
                        two, a sage green and a navy, matched nothing that can be
@@ -5754,9 +5765,7 @@ if ($is_commercial_hub) {
                         'url' => home_url('/colour-options/'),
                         'title' => __('Frame colours', 'fenster'),
                         'dots' => count($frame_dots) === 6 ? $frame_dots : [],
-                        'copy' => $slug === 'sliding-sash-windows'
-                            ? __('Compare Roseview foils, woodgrain finishes, dual colours and special colour options.', 'fenster')
-                            : __('Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.', 'fenster'),
+                        'copy' => __('Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.', 'fenster'),
                         'cta' => __('Open colour hub', 'fenster'),
                     ];
                 }
@@ -5836,7 +5845,7 @@ if ($is_commercial_hub) {
                    other route resolves to one. */
                 $paired_cards = count($option_cards) === 2;
                 ?>
-                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? ($paired_cards ? 'fg-product-choice-map--pair' : '') : 'fg-product-choice-map--single'); ?>">
+                <div class="fg-product-choice-map <?php echo esc_attr($number_cards ? ($paired_cards ? 'fg-product-choice-map--pair' : '') : 'fg-product-choice-map--single'); ?>">
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>
@@ -5879,6 +5888,14 @@ if ($is_commercial_hub) {
             </div>
         </section>
         <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if ($slug === 'sliding-sash-windows') : ?>
+            <?php get_template_part('template-parts/components/privacy-glass-card', null, [
+                'eyebrow' => __('Specification choices', 'fenster'),
+                'heading' => __('Privacy where the room needs it.', 'fenster'),
+                'copy' => __('Bathrooms, landings, a side return or anything overlooked. Obscured glass goes into the same sealed unit as clear glass, so the sash slides, seals and performs exactly the same.', 'fenster'),
+            ]); ?>
         <?php endif; ?>
 
         <?php if (isset($upvc_foil_routes[$slug]) && ! $is_configuration_page) : ?>
@@ -5935,10 +5952,35 @@ if ($is_commercial_hub) {
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
             <?php
+            /* THE LOCK SELECTOR, REBUILT 2026-09-03. Owner: "now that we have
+               high res images, make the lock style selector look better too."
+               The earlier selector was a white box with a small render in it
+               and a card of buttons beside it, cards inside a card. This one is
+               three things laid on the page canvas, in the same light register
+               as the Roseview stage above:
+
+               - THE STAGE. A pale lit surface with the lock photograph blended
+                 onto it (`mix-blend-mode: multiply`, so the photograph's white
+                 ground disappears and the lock appears to sit on the surface),
+                 a soft shadow beneath, and a caption bar naming the style and
+                 finish on show. Finishes cross-fade rather than swap.
+               - THE STYLE, as two picture tiles: Roseview's render of the Globe
+                 set on an Ultimate Rose rail, and the studio photograph of the
+                 Acorn lock. The chosen tile wears a green ring and a tick.
+               - THE FINISH, as a row of chips, each with a small metal disc in
+                 that finish. Graphite and Pewter are marked new.
+
+               All thirteen finish photographs are the colour guide's own
+               embedded images at their native 478x316 and load eagerly so the
+               stage never empties; only the first is at normal priority. State
+               lives in `src/js/main.js` (`[data-fg-sash-furniture]`); without
+               JavaScript the first finish of the first style shows and the
+               second style's finishes stay hidden. */
             $sash_furniture_base = '/wp-content/themes/fenster/assets/images/products/sash-roseview/furniture-guide/';
             $sash_furniture_options = [
                 'globe' => [
                     'name' => 'Globe furniture',
+                    'short' => 'Globe',
                     'models' => 'Ultimate Rose',
                     'image' => 'globe-on-rail',
                     'copy' => 'The curved Globe lock is the standard traditional furniture style for Ultimate Rose.',
@@ -5946,14 +5988,18 @@ if ($is_commercial_hub) {
                 ],
                 'acorn' => [
                     'name' => 'Acorn furniture',
+                    'short' => 'Acorn',
                     'models' => 'Ultimate, Heritage and Charisma Rose',
                     'image' => 'acorn-on-rail',
                     'copy' => 'The Acorn lock is standard on Heritage and Charisma Rose and is also available on suitable Ultimate Rose specifications.',
                     'finishes' => ['Bronze', 'Gold', 'Chrome', 'Antique Black', 'Graphite', 'Pewter', 'White'],
                 ],
             ];
+            $sash_furniture_new = ['Graphite', 'Pewter'];
+            $sash_furniture_first_style = array_key_first($sash_furniture_options);
+            $sash_furniture_first_finish = (string) $sash_furniture_options[$sash_furniture_first_style]['finishes'][0];
             ?>
-            <section id="fenster-sash-furniture" class="fg-sash-furniture fg-sash-furniture--selector" data-fg-sash-furniture>
+            <section id="fenster-sash-furniture" class="fg-sash-furniture fg-sash-kit" data-fg-sash-furniture>
                 <div class="container">
                     <div class="fg-sash-furniture__head">
                         <div>
@@ -5963,81 +6009,96 @@ if ($is_commercial_hub) {
                         <p><?php esc_html_e('Globe and Acorn furniture are supplied as coordinated sets with matching sash lifts, pole eyes and tilt knobs. Compatibility depends on the Roseview model.', 'fenster'); ?></p>
                     </div>
 
-                    <div class="fg-sash-furniture-selector">
-                        <div class="fg-sash-furniture-selector__visual" aria-live="polite">
-                            <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
-                                <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
-                                    <?php $asset_key = $style_key . '-' . sanitize_title($finish); ?>
-                                    <?php /* The -478w set is the guide's own embedded photograph at its native
-                                             478x316, re-cut 2026-09-03 on the owner's instruction ("just use the best
-                                             images"); the first cut was 232px crops of a low-resolution render of the
-                                             same guide. New filenames because theme image URLs carry no version.
-                                             All thirteen still load eagerly so the stage never empties between picks
-                                             (about 300KB in all), but only the first is at normal priority. */ ?>
-                                    <img
-                                        src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $asset_key . '-478w.webp')); ?>"
-                                        width="478"
-                                        height="316"
-                                        alt="<?php echo esc_attr($style['name'] . ' in ' . $finish); ?>"
-                                        loading="eager"
-                                        decoding="async"
-                                        <?php echo $style_key === 'globe' && $finish_index === 0 ? '' : 'fetchpriority="low"'; ?>
-                                        data-fg-furniture-image="<?php echo esc_attr($asset_key); ?>"
-                                        <?php echo $style_key === 'globe' && $finish_index === 0 ? '' : 'hidden'; ?>
-                                    >
-                                <?php endforeach; ?>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <div class="fg-sash-furniture-selector__controls">
-                            <div class="fg-sash-furniture-selector__styles" role="group" aria-label="<?php esc_attr_e('Furniture style', 'fenster'); ?>">
+                    <div class="fg-sash-kit__body">
+                        <figure class="fg-sash-kit__stage">
+                            <div class="fg-sash-kit__lock">
                                 <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
-                                    <?php /* Each style button carries the best image we have of that
-                                             furniture on a rail: Roseview's render of the gold Globe set for
-                                             Ultimate Rose, and the studio photograph of the chrome Acorn lock
-                                             (1536px, from the old site's export). Added 2026-09-03 on the
-                                             owner's instruction to use the best images; both are supplier
-                                             imagery and unattributed, per the site rule. Decorative inside a
-                                             labelled button, so alt is empty. */ ?>
-                                    <button type="button" data-fg-furniture-style="<?php echo esc_attr($style_key); ?>" aria-pressed="<?php echo $style_key === 'globe' ? 'true' : 'false'; ?>">
-                                        <?php if (! empty($style['image'])) : ?>
-                                            <img
-                                                src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $style['image'] . '-600w.webp')); ?>"
-                                                srcset="<?php echo esc_attr(fenster_generated_url($sash_furniture_base . $style['image'] . '-600w.webp') . ' 600w, ' . fenster_generated_url($sash_furniture_base . $style['image'] . '-1200w.webp') . ' 1200w'); ?>"
-                                                sizes="(max-width: 860px) 44vw, 280px"
-                                                width="1200"
-                                                height="800"
-                                                alt=""
-                                                loading="lazy"
-                                                decoding="async"
-                                            >
-                                        <?php endif; ?>
-                                        <strong><?php echo esc_html($style['name']); ?></strong>
-                                        <span><?php echo esc_html($style['models']); ?></span>
-                                    </button>
+                                    <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
+                                        <?php
+                                        $asset_key = $style_key . '-' . sanitize_title($finish);
+                                        $is_first_image = $style_key === $sash_furniture_first_style && $finish_index === 0;
+                                        ?>
+                                        <img
+                                            class="fg-sash-kit__image<?php echo $is_first_image ? ' is-active' : ''; ?>"
+                                            src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $asset_key . '-478w.webp')); ?>"
+                                            width="478"
+                                            height="316"
+                                            alt="<?php echo esc_attr($style['name'] . ' in ' . $finish); ?>"
+                                            loading="eager"
+                                            decoding="async"
+                                            <?php echo $is_first_image ? '' : 'fetchpriority="low" aria-hidden="true"'; ?>
+                                            data-fg-furniture-image="<?php echo esc_attr($asset_key); ?>"
+                                        >
+                                    <?php endforeach; ?>
                                 <?php endforeach; ?>
+                            </div>
+                            <figcaption class="fg-sash-kit__caption" aria-live="polite">
+                                <span class="fg-sash-kit__caption-style" data-fg-kit-caption-style><?php echo esc_html($sash_furniture_options[$sash_furniture_first_style]['name']); ?></span>
+                                <span class="fg-sash-kit__caption-finish" data-fg-kit-caption-finish><?php echo esc_html($sash_furniture_first_finish); ?></span>
+                            </figcaption>
+                        </figure>
+
+                        <div class="fg-sash-kit__controls">
+                            <div class="fg-sash-kit__step">
+                                <p class="fg-sash-kit__label"><span>01</span> <?php esc_html_e('Style', 'fenster'); ?></p>
+                                <div class="fg-sash-kit__styles" role="group" aria-label="<?php esc_attr_e('Furniture style', 'fenster'); ?>">
+                                    <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
+                                        <?php /* Each style tile carries the best image we have of that
+                                                 furniture on a rail: Roseview's render of the gold Globe set
+                                                 for Ultimate Rose, and the studio photograph of the chrome
+                                                 Acorn lock (1536px, from the old site's export). Supplier
+                                                 imagery, unattributed per the site rule; decorative inside a
+                                                 labelled button, so alt is empty. */ ?>
+                                        <button
+                                            type="button"
+                                            class="fg-sash-kit__style"
+                                            data-fg-furniture-style="<?php echo esc_attr($style_key); ?>"
+                                            data-fg-style-name="<?php echo esc_attr($style['name']); ?>"
+                                            aria-pressed="<?php echo $style_key === $sash_furniture_first_style ? 'true' : 'false'; ?>"
+                                        >
+                                            <span class="fg-sash-kit__style-image">
+                                                <img
+                                                    src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $style['image'] . '-600w.webp')); ?>"
+                                                    srcset="<?php echo esc_attr(fenster_generated_url($sash_furniture_base . $style['image'] . '-600w.webp') . ' 600w, ' . fenster_generated_url($sash_furniture_base . $style['image'] . '-1200w.webp') . ' 1200w'); ?>"
+                                                    sizes="(max-width: 860px) 44vw, 260px"
+                                                    width="1200"
+                                                    height="800"
+                                                    alt=""
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                >
+                                            </span>
+                                            <strong><?php echo esc_html($style['short']); ?></strong>
+                                            <span><?php echo esc_html($style['models']); ?></span>
+                                        </button>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
 
                             <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
-                                <section data-fg-furniture-panel="<?php echo esc_attr($style_key); ?>" <?php echo $style_key === 'globe' ? '' : 'hidden'; ?>>
-                                    <p><?php echo esc_html($style['copy']); ?></p>
-                                    <div class="fg-sash-furniture-selector__finishes" role="group" aria-label="<?php echo esc_attr($style['name'] . ' finishes'); ?>">
+                                <section class="fg-sash-kit__step" data-fg-furniture-panel="<?php echo esc_attr($style_key); ?>" <?php echo $style_key === $sash_furniture_first_style ? '' : 'hidden'; ?>>
+                                    <p class="fg-sash-kit__label"><span>02</span> <?php esc_html_e('Finish', 'fenster'); ?></p>
+                                    <div class="fg-sash-kit__finishes" role="group" aria-label="<?php echo esc_attr($style['name'] . ' finishes'); ?>">
                                         <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
                                             <?php $asset_key = $style_key . '-' . sanitize_title($finish); ?>
-                                            <button type="button" data-fg-furniture-finish="<?php echo esc_attr($asset_key); ?>" aria-pressed="<?php echo $finish_index === 0 ? 'true' : 'false'; ?>">
-                                                <i class="fg-sash-furniture-selector__swatch fg-sash-furniture-selector__swatch--<?php echo esc_attr(sanitize_title($finish)); ?>" aria-hidden="true"></i>
+                                            <button
+                                                type="button"
+                                                class="fg-sash-kit__finish"
+                                                data-fg-furniture-finish="<?php echo esc_attr($asset_key); ?>"
+                                                data-fg-finish-name="<?php echo esc_attr($finish); ?>"
+                                                aria-pressed="<?php echo $finish_index === 0 ? 'true' : 'false'; ?>"
+                                            >
+                                                <i class="fg-sash-kit__swatch fg-sash-kit__swatch--<?php echo esc_attr(sanitize_title($finish)); ?>" aria-hidden="true"></i>
                                                 <span><?php echo esc_html($finish); ?></span>
-                                                <?php if (in_array($finish, ['Graphite', 'Pewter'], true)) : ?><small><?php esc_html_e('New', 'fenster'); ?></small><?php endif; ?>
+                                                <?php if (in_array($finish, $sash_furniture_new, true)) : ?><small><?php esc_html_e('New', 'fenster'); ?></small><?php endif; ?>
                                             </button>
                                         <?php endforeach; ?>
                                     </div>
+                                    <p class="fg-sash-kit__copy"><?php echo esc_html($style['copy']); ?></p>
                                 </section>
                             <?php endforeach; ?>
 
-                            <div class="fg-sash-furniture-selector__note">
-                                <strong><?php esc_html_e('Supplied as a matching set', 'fenster'); ?></strong>
-                                <p><?php esc_html_e('The number of locks, lifts and pole eyes depends on the finished sash width and is confirmed during survey.', 'fenster'); ?></p>
-                            </div>
+                            <p class="fg-sash-kit__note"><strong><?php esc_html_e('Supplied as a matching set.', 'fenster'); ?></strong> <?php esc_html_e('The number of locks, lifts and pole eyes depends on the finished sash width and is confirmed during survey.', 'fenster'); ?></p>
                         </div>
                     </div>
                 </div>

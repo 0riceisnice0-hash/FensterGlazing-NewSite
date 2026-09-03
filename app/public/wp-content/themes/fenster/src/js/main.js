@@ -1624,17 +1624,34 @@ document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   updatePreview();
 });
 
+/* THE SASH LOCK SELECTOR on /sliding-sash-windows/. Two style tiles, a row of
+   finish chips per style, thirteen photographs sharing one stage. Picking a
+   style shows that style's finishes and its first finish; picking a finish
+   cross-fades the stage to that photograph and updates the caption. */
 document.querySelectorAll('[data-fg-sash-furniture]').forEach((selector) => {
   const styleButtons = [...selector.querySelectorAll('[data-fg-furniture-style]')];
   const panels = [...selector.querySelectorAll('[data-fg-furniture-panel]')];
   const images = [...selector.querySelectorAll('[data-fg-furniture-image]')];
+  const finishButtons = [...selector.querySelectorAll('[data-fg-furniture-finish]')];
+  const captionStyle = selector.querySelector('[data-fg-kit-caption-style]');
+  const captionFinish = selector.querySelector('[data-fg-kit-caption-finish]');
 
   const showFinish = (assetKey) => {
     images.forEach((image) => {
-      image.hidden = image.dataset.fgFurnitureImage !== assetKey;
+      const active = image.dataset.fgFurnitureImage === assetKey;
+      image.classList.toggle('is-active', active);
+      if (active) {
+        image.removeAttribute('aria-hidden');
+      } else {
+        image.setAttribute('aria-hidden', 'true');
+      }
     });
-    selector.querySelectorAll('[data-fg-furniture-finish]').forEach((button) => {
-      button.setAttribute('aria-pressed', button.dataset.fgFurnitureFinish === assetKey ? 'true' : 'false');
+    finishButtons.forEach((button) => {
+      const active = button.dataset.fgFurnitureFinish === assetKey;
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      if (active && captionFinish) {
+        captionFinish.textContent = button.dataset.fgFinishName || '';
+      }
     });
   };
 
@@ -1645,12 +1662,13 @@ document.querySelectorAll('[data-fg-sash-furniture]').forEach((selector) => {
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.fgFurniturePanel !== style;
       });
+      if (captionStyle) captionStyle.textContent = button.dataset.fgStyleName || '';
       const firstFinish = selector.querySelector(`[data-fg-furniture-panel="${style}"] [data-fg-furniture-finish]`);
       if (firstFinish) showFinish(firstFinish.dataset.fgFurnitureFinish);
     });
   });
 
-  selector.querySelectorAll('[data-fg-furniture-finish]').forEach((button) => {
+  finishButtons.forEach((button) => {
     button.addEventListener('click', () => showFinish(button.dataset.fgFurnitureFinish));
   });
 });
