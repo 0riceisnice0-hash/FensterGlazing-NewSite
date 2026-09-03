@@ -617,6 +617,72 @@ function fenster_case_studies(): array
                 'meta_description' => 'A Fenster commercial project: twelve period-style uPVC windows fitted to a trading village pub near Woburn, mechanically jointed with astragal bars.',
             ],
         ],
+        /* PINCENTS KILN, READING. Owner call with Adam, 2026-09-03, and every
+           figure here came off that call rather than out of the photographs.
+
+           THREE THINGS HE ASKED FOR EXPLICITLY AND THEY ARE NOT NEGOTIABLE:
+           the door brand is NOT named, only the window system is; nothing says
+           how long we were on site; and the colour is the story rather than a
+           detail. Do not add a duration to this study later "for completeness".
+
+           `date_confirmed => false` because September 2026 is known to the
+           month only. The 1st in the date field is an ordering device, not a
+           completion date, and the flag stops it printing.
+
+           Reading is the point geographically: it is the furthest commercial
+           job on the site and the sector page it feeds had no proof at all
+           before this. */
+        'pincents-kiln-reading' => [
+            'title' => 'Ribbon windows and an entrance door, Pincents Kiln, Reading',
+            'location' => 'Reading',
+            'type' => 'Commercial',
+            'sector' => 'Industrial and logistics',
+            'service' => 'Aluminium ribbon windows and a commercial entrance door',
+            'sector_url' => home_url('/industrial-and-logistics-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'date' => '2026-09-01',
+            'date_confirmed' => false,
+            'summary' => 'Four aluminium ribbon windows and a commercial entrance door for an industrial unit refurbishment, powder coated to a special colour to match the new cladding.',
+            'lead' => 'An industrial unit on Pincents Kiln Industrial Estate was being refurbished and reclad. Our package was the glazing in the new elevations: four aluminium ribbon windows and a commercial entrance door, all of it finished to match the cladding going on around it.',
+            'products' => [
+                ['label' => 'Industrial and logistics glazing', 'url' => home_url('/industrial-and-logistics-glazing/')],
+                ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+            ],
+            'specs' => [
+                ['label' => 'Ribbon windows', 'value' => '4 aluminium, RAL 6007'],
+                ['label' => 'Longest run', 'value' => '7.7m in one ribbon'],
+                ['label' => 'Glazed opening', 'value' => '24.2m across four runs'],
+                ['label' => 'Entrance door', 'value' => '1 commercial aluminium'],
+            ],
+            'overview' => [
+                'The colour decided this job. The unit was being reclad in bottle green, and the windows had to read as part of that elevation rather than as something fitted into it afterwards. RAL 6007 is not a colour aluminium windows are held in, so every frame, the door and the trims were powder coated to order. That is the part worth getting right: a near miss on a green sitting directly against the cladding is visible from the road, and there is no correcting it once the frames are in.',
+                'The openings are long. One ribbon runs 7.7m in a single line and the other three run 5.5m each, which is 24.2m of glazed opening across the building. Each is a run of fixed lights with mullions between them, set into the cladding line above the brick plinth. The glass is laminated double glazed units throughout, and the entrance door is finished in the same colour as the windows either side of it.',
+            ],
+            'installed' => [
+                '4 Cortizo aluminium ribbon windows, RAL 6007 bottle green',
+                '1 run at 7.7m and 3 at 5.5m, 24.2m of glazed opening in total',
+                '1 commercial aluminium entrance door, finished to match',
+                'Laminated double glazed units throughout',
+                'Powder coated to a special colour matched to the new cladding',
+            ],
+            /* CAPTIONS WRITTEN FROM THE FRAMES, NOT THE FILENAMES. Pane counts
+               are deliberately absent: the runs read as five or six lights
+               depending on the angle and nobody has confirmed a number. */
+            'images' => [
+                ['src' => $img . 'cs-pincents-kiln-reading-elevation.webp', 'caption' => 'The finished elevation, with one ribbon above the other in the new cladding and the entrance door in the brick return.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-ribbon-and-door.webp', 'caption' => 'The lower ribbon and the door. The frames, the cladding and the door are all the same green.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-ribbon-run.webp', 'caption' => 'Looking along the lower ribbon, a run of fixed lights with mullions between them, sitting on the brick plinth.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-road-elevation.webp', 'caption' => 'Square on to the flank elevation from the estate road, with one ribbon above the other.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-corner.webp', 'caption' => 'Along the flank, where the cladding line steps down to the brick and the ribbons follow it.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-entrance-door.webp', 'caption' => 'The entrance door, fully glazed and finished in the same RAL as the frames around it.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Pincents Kiln, Reading: Aluminium Ribbon Windows',
+                'meta_description' => 'A Fenster commercial project: four aluminium ribbon windows and an entrance door for an industrial unit refurbishment in Reading, powder coated to match new cladding.',
+            ],
+        ],
         'roka-dental-woburn-sands' => [
             'title' => 'Entrance doors, Roka Dental, Woburn Sands',
             'location' => 'Woburn Sands',
