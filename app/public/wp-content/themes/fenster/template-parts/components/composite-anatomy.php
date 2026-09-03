@@ -78,7 +78,18 @@ $fg_chips = [
 ];
 
 $fg_face  = '/wp-content/themes/fenster/assets/images/products/composite-distinction/styles/esp01-flush-600w.webp';
-$fg_glass = '/wp-content/themes/fenster/assets/images/products/composite-distinction/glass/lunna-720w.webp';
+/* STRAIGHT GLASS. Owner: "the glass on the demo is wonky. straighen it."
+   The leadwork in this drawing is DRAWN — `.fg-cd3-slab__lead` puts three
+   vertical cames at 25/50/75% and a diamond, square, at the centre. Lunna's
+   photograph carries its own leadwork, and that crop is an off-axis section of
+   a curved design, so its lead lines fanned across the square at about forty
+   degrees while the drawn ones ran straight down it. Two sets of leadwork at
+   odds is what read as wonky; nothing was actually rotated. Andorra has the
+   same fault a different way — its bevel is upright but sits offset from the
+   drawn diamond, so you see two diamonds. Chatsworth is a plain frosted pane,
+   which is what this drawing wants underneath: the photograph supplies glass,
+   the drawing supplies the leadwork, and the two stop arguing. */
+$fg_glass = '/wp-content/themes/fenster/assets/images/products/composite-distinction/glass/chatsworth-720w.webp';
 ?>
 <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title" data-fg-anatomy data-active-layer="0">
     <div class="container">
@@ -172,7 +183,7 @@ $fg_glass = '/wp-content/themes/fenster/assets/images/products/composite-distinc
                             <div class="fg-cd3-slab__glass-clip">
                                 <div class="fg-cd3-slab__cassette">
                                     <div class="fg-cd3-slab__glass-base"></div>
-                                    <img class="fg-cd3-slab__glass-face" src="<?php echo esc_url(fenster_generated_url($fg_glass)); ?>" alt="" loading="lazy" decoding="async" width="720" height="720">
+                                    <img class="fg-cd3-slab__glass-face" src="<?php echo esc_url(fenster_generated_url($fg_glass)); ?>" alt="" loading="lazy" decoding="async" width="458" height="464">
                                     <div class="fg-cd3-slab__lead" aria-hidden="true">
                                         <i></i><i></i><i></i><b></b>
                                     </div>

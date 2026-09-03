@@ -46251,7 +46251,10 @@ html.fg-blinds-reveal-locked {
   background-image: linear-gradient(160deg, #e4edf0, #b9c9d3 58%, #d9e3e8);
 }
 
-.fg-cd3-slab__glass-face { position: absolute; inset: 0; }
+/* `inset: 0` with no fit means `object-fit: fill`, which squashed a 458x464
+   source into a square box. It was 307x307 and square before, so this never
+   showed; it would have the moment anyone swapped the file. */
+.fg-cd3-slab__glass-face { position: absolute; inset: 0; object-fit: cover; }
 
 .fg-cd3-slab__lead {
   position: absolute;
