@@ -617,6 +617,105 @@ function fenster_case_studies(): array
                 'meta_description' => 'A Fenster commercial project: twelve period-style uPVC windows fitted to a trading village pub near Woburn, mechanically jointed with astragal bars.',
             ],
         ],
+        /* PINCENTS KILN, READING. Owner call with Adam, 2026-09-03, and every
+           figure here came off that call rather than out of the photographs.
+
+           THREE THINGS HE ASKED FOR EXPLICITLY AND THEY ARE NOT NEGOTIABLE:
+           the door brand is NOT named, only the window system is; nothing says
+           how long we were on site; and the colour is the story rather than a
+           detail. Do not add a duration to this study later "for completeness".
+
+           `date_confirmed => false` because September 2026 is known to the
+           month only. The 1st in the date field is an ordering device, not a
+           completion date, and the flag stops it printing.
+
+           Reading is the point geographically: it is the furthest commercial
+           job on the site and the sector page it feeds had no proof at all
+           before this. */
+        'pincents-kiln-reading' => [
+            'title' => 'Ribbon windows and an entrance door, Pincents Kiln, Reading',
+            'location' => 'Reading',
+            'type' => 'Commercial',
+            'sector' => 'Industrial and logistics',
+            'service' => 'Aluminium ribbon windows and a commercial entrance door',
+            'sector_url' => home_url('/industrial-and-logistics-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'date' => '2026-09-01',
+            'date_confirmed' => false,
+            'summary' => 'Four aluminium ribbon windows and a commercial entrance door for an industrial unit refurbishment, powder coated to a special colour to match the new cladding.',
+            'lead' => 'An industrial unit on Pincents Kiln Industrial Estate in Reading, Berkshire, was being refurbished and reclad. Our package was the glazing in the new elevations: four aluminium ribbon windows and a commercial entrance door, all of it finished to match the cladding going on around it.',
+            'products' => [
+                ['label' => 'Industrial and logistics glazing', 'url' => home_url('/industrial-and-logistics-glazing/')],
+                ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+            ],
+            'specs' => [
+                ['label' => 'Ribbon windows', 'value' => '4 aluminium, RAL 6007'],
+                ['label' => 'Longest run', 'value' => '7.7m in one ribbon'],
+                ['label' => 'Glazed opening', 'value' => '24.2m across four runs'],
+                /* COMPLETION GOES HERE, NOT IN THE DATE FIELD. Owner confirmed
+                   "completed september 2026" but to the month, so
+                   `date_confirmed` stays false and the printed date stays off.
+                   This row is how every other commercial study states it, and
+                   it says the month without inventing a day. The entrance door
+                   row it replaces is already in "What we fitted"; the strip
+                   holds four everywhere on the site. */
+                ['label' => 'Completed', 'value' => 'September 2026'],
+            ],
+            'overview' => [
+                'The colour decided this job. The unit was being reclad in bottle green, and the windows had to read as part of that elevation rather than as something fitted into it afterwards. RAL 6007 is not a colour aluminium windows are held in, so every frame, the door and the trims were powder coated to order. That is the part worth getting right: a near miss on a green sitting directly against the cladding is visible from the road, and there is no correcting it once the frames are in.',
+                'The openings are long. One ribbon runs 7.7m in a single line and the other three run 5.5m each, which is 24.2m of glazed opening across the building. Each is a single run divided by mullions, set into the cladding line above the brick plinth. The glass is laminated double glazed units throughout, and the entrance door is finished in the same colour as the windows either side of it.',
+                /* THIRD PARAGRAPH ADDED 2026-09-03, owner: "too much negative
+                   space here." The cause was length, not layout: every other
+                   substantial commercial study runs four overview paragraphs
+                   and this one ran two, so the copy column ended while the
+                   rail beside it kept going. Written from the photographs
+                   only, so it describes how the glazing sits and claims
+                   nothing about how it was made or fitted. A fourth is still
+                   wanted and needs the owner, not the pictures. */
+                'The glazing reads as a band rather than as separate openings. Each run is a line of lights divided by mullions, the lower ones sitting above the brick plinth and the upper ones set into the cladding, so the elevation carries two horizontal lines of glass rather than a row of punched holes. The door is the only opening in the run, set into the brick return at the end of it.',
+            ],
+            'installed' => [
+                '4 Cortizo aluminium ribbon windows, RAL 6007 bottle green',
+                '1 run at 7.7m and 3 at 5.5m, 24.2m of glazed opening in total',
+                '1 commercial aluminium entrance door, finished to match',
+                'Laminated double glazed units throughout',
+                'Powder coated to a special colour matched to the new cladding',
+            ],
+            /* "A RUN OF FIXED LIGHTS" WAS AN INFERENCE AND IT IS GONE.
+               Nobody confirmed the ribbons are fixed; it was read off the
+               photographs because no handles or vents are visible, which is not
+               the same thing. It now says "a single run divided by mullions",
+               which is what the pictures actually show. If the owner confirms
+               they are fixed, say so; until then do not.
+
+               CAPTIONS WRITTEN FROM THE FRAMES, NOT THE FILENAMES. Pane counts
+               are deliberately absent: the runs read as five or six lights
+               depending on the angle and nobody has confirmed a number. */
+            'images' => [
+                ['src' => $img . 'cs-pincents-kiln-reading-elevation.webp', 'caption' => 'The finished elevation, with one ribbon above the other in the new cladding and the entrance door in the brick return.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-ribbon-and-door.webp', 'caption' => 'The lower ribbon and the door. The frames, the cladding and the door are all the same green.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-ribbon-run.webp', 'caption' => 'Looking along the lower ribbon, a single run divided by mullions, sitting on the brick plinth.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-road-elevation.webp', 'caption' => 'Square on to the flank elevation from the estate road, with one ribbon above the other.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-corner.webp', 'caption' => 'Along the flank, where the cladding line steps down to the brick and the ribbons follow it.'],
+                ['src' => $img . 'cs-pincents-kiln-reading-entrance-door.webp', 'caption' => 'The entrance door, fully glazed and finished in the same RAL as the frames around it.'],
+                /* SIX, NOT FIVE, AND THE COUNT IS LOAD-BEARING. The hero takes
+                   images[0], so five entries left the gallery with an odd
+                   number in a two-column grid and an empty cell on the last
+                   row. Same orphan the curtain walling spec grid produced on
+                   2026-08-30. Keep this list even. */
+                ['src' => $img . 'cs-pincents-kiln-reading-entrance-end.webp', 'caption' => 'The entrance end of the elevation, the ribbon running away to the left and the door set in the brick return.'],
+            ],
+            'seo' => [
+                /* The estate name is dead weight in a title on its own, since
+                   nobody searches it. The house pattern of <name, place>:
+                   <service> is kept, but the service half now carries the terms
+                   this page can realistically be found on. */
+                'title_tag' => 'Pincents Kiln, Reading: Commercial Aluminium Ribbon Windows',
+                'meta_description' => 'A Fenster commercial project in Reading, Berkshire: four aluminium ribbon windows and an entrance door for an industrial unit, powder coated to match cladding.',
+            ],
+        ],
         'roka-dental-woburn-sands' => [
             'title' => 'Entrance doors, Roka Dental, Woburn Sands',
             'location' => 'Woburn Sands',
