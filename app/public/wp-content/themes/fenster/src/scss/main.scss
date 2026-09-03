@@ -50945,3 +50945,148 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 560px) {
   .fg-glass-pick__options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* ============================================================================
+   THE STYLE RANGE IN ONE VIEWPORT, 2026-09-02
+   Owner: "make the style range smaller. in one viewport."
+
+   It was 1,234px against an 827px usable viewport at 1440x900 — the section
+   plus a sticky 73px header — so a third of it was always below the fold and
+   the switcher scrolled away from the doors it switches.
+
+   WHAT THE HEIGHT WAS SPENT ON, measured with Esprit open (the largest
+   collection at 43): 249px of section and card chrome, a 179px head, a 533px
+   panel, and about 100px of gaps between blocks. Every one of those is cut
+   here and nothing is removed from the page.
+
+   THE COLUMN COUNT IS NOT TOUCHED, AND MUST NOT BE. `FIRST_LOOK` in `main.js`
+   is 20, and ten columns is the only count that makes twenty doors exactly two
+   full rows. Fifteen columns would show one row of fifteen and five orphans
+   beside ten empty cells. It is pinned at `repeat(10, ...)` above 1200px so
+   `auto-fill` cannot drift off that number and break the arithmetic.
+
+   THE DRAWINGS GET SHORTER, NOT NARROWER. They are `object-fit: contain` in
+   their cell, so capping the art height letterboxes a portrait door rather
+   than distorting it: the same drawing, smaller, still 102px of cell to sit
+   in. That is the whole saving on the panel.
+
+   Desktop only. A phone has never had this section in one viewport and the
+   instruction is a desktop one; the rails and the two-column grid below 861px
+   are left exactly as they are.
+   ========================================================================= */
+
+@media (min-width: 861px) {
+
+  /* ---- The card was chrome the section did not need --------------- */
+
+  /* The quiz moved to the tail of the page, so this surface has held nothing
+     but the contact sheet since. A border and 88px of padding around a
+     section that is already the only thing in its own `<section>`. */
+  .generated-page--composite-doors .fg-choose__surface {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .generated-page--composite-doors > .fg-choose {
+    padding-block: clamp(30px, 3.4vw, 46px);
+  }
+
+  /* ---- The head ---------------------------------------------------- */
+
+  .generated-page--composite-doors .fg-cds__head {
+    max-width: 62rem;
+    margin-bottom: 0;
+  }
+
+  .generated-page--composite-doors .fg-cds__head h2 {
+    margin: 0.35rem 0 0.5rem;
+    font-size: clamp(1.5rem, 2.5vw, 2.05rem);
+    line-height: 1.06;
+  }
+
+  .generated-page--composite-doors .fg-cds__head > p {
+    max-width: 92ch;
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+  /* The blocks inside were spaced for a section with room to spare. */
+  .generated-page--composite-doors .fg-cds {
+    display: grid;
+    gap: clamp(0.9rem, 1.8vw, 1.3rem);
+  }
+
+  /* ---- The panel head --------------------------------------------- */
+
+  .generated-page--composite-doors .fg-cds__panel-head {
+    max-width: 96ch;
+    margin-bottom: clamp(0.7rem, 1.4vw, 1rem);
+  }
+
+  .generated-page--composite-doors .fg-cds__panel-title {
+    margin-bottom: 0.2rem;
+    font-size: 1.02rem;
+  }
+
+  .generated-page--composite-doors .fg-cds__panel-intro { font-size: 0.9rem; }
+
+  /* ---- The doors --------------------------------------------------- */
+
+  /* Ten, always. See the note above: twenty is two rows only at ten. */
+  .generated-page--composite-doors .fg-cds__grid {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .generated-page--composite-doors .fg-cds-door__link {
+    gap: 0.25rem;
+    padding: 0.45rem 0.35rem 0.4rem;
+  }
+
+  /* The one real saving. The art box was as tall as the drawing wanted to be
+     (113px at this cell width, uncapped by `height: auto`); it is 84px now and
+     the drawing letterboxes inside it. */
+  .generated-page--composite-doors .fg-cds-door__art { height: 84px; }
+
+  .generated-page--composite-doors .fg-cds-door__link img {
+    height: 100%;
+    max-height: none;
+  }
+
+  /* Two reserved lines existed so a wrapping name could not push its row out
+     of line. One line and a smaller face fits every name in this range, and
+     the reservation stays — it is just a shorter one. */
+  .generated-page--composite-doors .fg-cds-door__name {
+    min-height: 1.3em;
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  /* THE CUE RESERVED A ROW IT ONLY USED ON HOVER. Eighteen px per tile, on
+     every tile, to say nothing until the pointer arrives. It overlays the name
+     on hover instead, which is the same affordance for no height. */
+  .generated-page--composite-doors .fg-cds-door__link {
+    position: relative;
+  }
+
+  .generated-page--composite-doors .fg-cds-door__cue {
+    position: absolute;
+    right: 0.35rem;
+    bottom: 0.4rem;
+    left: 0.35rem;
+    font-size: 0.6rem;
+    background: rgba(247, 249, 248, 0.94);
+  }
+
+  /* ---- The note ---------------------------------------------------- */
+
+  .generated-page--composite-doors .fg-cds__note {
+    max-width: 100ch;
+    margin-top: 0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+}
