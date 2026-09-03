@@ -51066,7 +51066,7 @@ html.fg-blinds-reveal-locked {
      inside its cell: shorter, never distorted. */
   .generated-page--composite-doors .fg-cds-door__art { min-height: 0; }
 
-  .generated-page--composite-doors .fg-cds-door__link img { max-height: 76px; }
+  .generated-page--composite-doors .fg-cds-door__link img { max-height: 72px; }
 
   /* Two reserved lines existed so a wrapping name could not push its row out
      of line. One line and a smaller face fits every name in this range, and
@@ -51095,8 +51095,12 @@ html.fg-blinds-reveal-locked {
 
   /* ---- The note ---------------------------------------------------- */
 
+  /* Two lines at 100ch, one at the container's own width, and it is the last
+     20px between the big collections and a single viewport. Capping the
+     measure here was costing more than it bought: this is one closing
+     sentence under a grid, not a column of body copy. */
   .generated-page--composite-doors .fg-cds__note {
-    max-width: 100ch;
+    max-width: none;
     margin-top: 0;
     font-size: 0.86rem;
     line-height: 1.5;
