@@ -647,7 +647,7 @@ function fenster_case_studies(): array
             'date' => '2026-06-01',
             'date_confirmed' => false,
             'summary' => 'A Smart MC600 Plus curtain wall replacing an outdated timber system in a school hall, with a fire exit door, finger guards and blackout film for a room used as a performance space.',
-            'lead' => 'St Albans School is one of the oldest schools in the country, founded in 948. We replaced the curtain walling to its hall, a full height glazed elevation in a room that doubles as a performance space, and the work ran in term time with exams about to start in that hall.',
+            'lead' => 'St Albans School, in Hertfordshire, is one of the oldest schools in the country, founded in 948. We replaced the curtain walling to its hall, a full height glazed elevation in a room that doubles as a performance space, and the work ran in term time with exams about to start in that hall.',
             'products' => [
                 ['label' => 'Curtain walling', 'url' => home_url('/curtain-walling/')],
                 ['label' => 'School and education glazing', 'url' => home_url('/school-and-education-glazing/')],
