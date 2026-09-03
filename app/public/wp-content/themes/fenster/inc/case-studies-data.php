@@ -654,11 +654,27 @@ function fenster_case_studies(): array
                 ['label' => 'Ribbon windows', 'value' => '4 aluminium, RAL 6007'],
                 ['label' => 'Longest run', 'value' => '7.7m in one ribbon'],
                 ['label' => 'Glazed opening', 'value' => '24.2m across four runs'],
-                ['label' => 'Entrance door', 'value' => '1 commercial aluminium'],
+                /* COMPLETION GOES HERE, NOT IN THE DATE FIELD. Owner confirmed
+                   "completed september 2026" but to the month, so
+                   `date_confirmed` stays false and the printed date stays off.
+                   This row is how every other commercial study states it, and
+                   it says the month without inventing a day. The entrance door
+                   row it replaces is already in "What we fitted"; the strip
+                   holds four everywhere on the site. */
+                ['label' => 'Completed', 'value' => 'September 2026'],
             ],
             'overview' => [
                 'The colour decided this job. The unit was being reclad in bottle green, and the windows had to read as part of that elevation rather than as something fitted into it afterwards. RAL 6007 is not a colour aluminium windows are held in, so every frame, the door and the trims were powder coated to order. That is the part worth getting right: a near miss on a green sitting directly against the cladding is visible from the road, and there is no correcting it once the frames are in.',
                 'The openings are long. One ribbon runs 7.7m in a single line and the other three run 5.5m each, which is 24.2m of glazed opening across the building. Each is a run of fixed lights with mullions between them, set into the cladding line above the brick plinth. The glass is laminated double glazed units throughout, and the entrance door is finished in the same colour as the windows either side of it.',
+                /* THIRD PARAGRAPH ADDED 2026-09-03, owner: "too much negative
+                   space here." The cause was length, not layout: every other
+                   substantial commercial study runs four overview paragraphs
+                   and this one ran two, so the copy column ended while the
+                   rail beside it kept going. Written from the photographs
+                   only, so it describes how the glazing sits and claims
+                   nothing about how it was made or fitted. A fourth is still
+                   wanted and needs the owner, not the pictures. */
+                'The glazing reads as a band rather than as separate openings. Each run is a line of lights divided by mullions, the lower ones sitting above the brick plinth and the upper ones set into the cladding, so the elevation carries two horizontal lines of glass rather than a row of punched holes. The door is the only opening in the run, set into the brick return at the end of it.',
             ],
             'installed' => [
                 '4 Cortizo aluminium ribbon windows, RAL 6007 bottle green',
