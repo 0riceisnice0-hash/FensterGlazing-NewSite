@@ -50772,6 +50772,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-glass-pick__options {
+  min-width: 0;
   display: grid;
   /* One filmstrip of six rather than a 3x2 block. A strip reads as a control;
      a block reads as a second gallery, which is what this section had. */
@@ -50781,10 +50782,13 @@ html.fg-blinds-reveal-locked {
   padding: 0;
   list-style: none;
 
+  li { min-width: 0; }
+
   button {
     display: grid;
     gap: 0.45rem;
     width: 100%;
+    min-width: 0;
     padding: 0;
     border: 0;
     background: none;
@@ -50824,6 +50828,13 @@ html.fg-blinds-reveal-locked {
 
 .fg-glass-pick__side {
   display: grid;
+  /* `minmax(0, 1fr)`, not the implicit `auto`. A grid item's automatic minimum
+     is its min-content size, and the strip's min-content is six option names
+     plus two DOUBLE GLAZED tags: it came out 1,034px inside a 614px column and
+     put Scotia and Kara Zinc off the right of the page. `horizontalOverflow`
+     stayed false the whole time because an ancestor clipped it, which is the
+     third time this trap has been laid on this route. */
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: clamp(1.1rem, 2.4vw, 1.75rem);
 }
