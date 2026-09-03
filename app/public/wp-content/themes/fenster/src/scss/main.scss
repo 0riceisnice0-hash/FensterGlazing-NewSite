@@ -50311,6 +50311,38 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ============================================================================
+   SASH FURNITURE STYLE TILES. The Globe / Acorn buttons in the furniture
+   selector carry a 3:2 image of that furniture on a rail (added 2026-09-03,
+   owner: "just use the best images for the site"). The image sits above the
+   label inside the existing button; nothing else about the selector moved.
+
+   PLACED HERE, ABOVE THE BLOCKS THE OTHER SESSION APPENDS, ON PURPOSE. It was
+   first appended at the end of the file and a later commit from that session
+   took it out along with everything after its own marker; the tiles then
+   rendered as tall strips on test. Nothing that belongs to the sash page goes
+   at the tail of this file any more.
+   ========================================================================== */
+.fg-sash-furniture-selector__styles button {
+  padding: 0.55rem 0.55rem 0.8rem;
+  gap: 0.15rem;
+}
+
+.fg-sash-furniture-selector__styles button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.45rem;
+  aspect-ratio: 3 / 2;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.fg-sash-furniture-selector__styles button strong,
+.fg-sash-furniture-selector__styles button span {
+  padding: 0 0.25rem;
+}
+
+/* ============================================================================
    `/why-distinction/`, FOURTH PASS, 2026-09-02
 
    Owner: "but you have images for the boxes. youve kept the same layout which
