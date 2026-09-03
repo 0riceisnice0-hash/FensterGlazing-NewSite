@@ -50822,6 +50822,17 @@ html.fg-blinds-reveal-locked {
   button:focus-visible img { outline-color: var(--fg-green); }
 }
 
+.fg-glass-pick__side {
+  display: grid;
+  align-content: start;
+  gap: clamp(1.1rem, 2.4vw, 1.75rem);
+}
+
+/* In the column it no longer needs to separate itself from what is above. */
+.fg-glass-pick__side .fg-glass-patterns { margin-top: 0; }
+
+.fg-glass-pick__side .fg-composite-glass__foot { margin-top: 0; }
+
 .fg-glass-pick__name {
   color: var(--fg-ink, #022b35);
   font-size: 0.78rem;
@@ -50890,30 +50901,4 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 560px) {
   .fg-glass-pick__options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-/* ============================================================================
-   SASH FURNITURE STYLE TILES. The Globe / Acorn buttons in the furniture
-   selector carry a 3:2 image of that furniture on a rail (added 2026-09-03,
-   owner: "just use the best images for the site"). The image sits above the
-   label inside the existing button; nothing else about the selector moved.
-   ========================================================================== */
-.fg-sash-furniture-selector__styles button {
-  padding: 0.55rem 0.55rem 0.8rem;
-  gap: 0.15rem;
-}
-
-.fg-sash-furniture-selector__styles button img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-bottom: 0.45rem;
-  aspect-ratio: 3 / 2;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-.fg-sash-furniture-selector__styles button strong,
-.fg-sash-furniture-selector__styles button span {
-  padding: 0 0.25rem;
 }

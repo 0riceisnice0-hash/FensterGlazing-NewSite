@@ -174,7 +174,8 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
                     </figcaption>
                 </figure>
 
-                <ul class="fg-glass-pick__options" aria-label="<?php esc_attr_e('Decorative glass designs shown in a door', 'fenster'); ?>">
+                <div class="fg-glass-pick__side">
+                    <ul class="fg-glass-pick__options" aria-label="<?php esc_attr_e('Decorative glass designs shown in a door', 'fenster'); ?>">
                     <?php foreach ($fg_in_door as $fg_i => $fg_style) : ?>
                         <?php
                         $fg_alt = sprintf(
@@ -209,10 +210,24 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
                             </button>
                         </li>
                     <?php endforeach; ?>
-                </ul>
+                    </ul>
+                    <?php echo $fg_glass_side; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- captured markup, escaped at source. ?>
+                </div>
             </div>
         <?php endif; ?>
 
+        <?php if (empty($fg_in_door)) : ?>
+            <?php echo $fg_glass_side; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- captured markup, escaped at source. ?>
+        <?php endif; ?>
+
+        <?php
+        /* THE PATTERNS AND THE NOTE MOVE INTO THE PICKER'S RIGHT COLUMN. The
+           preview is 650px tall and the strip beside it was 161px, so the
+           right of the section was 580px of nothing while these two blocks
+           queued underneath. Captured rather than moved inline, because they
+           still have to render on their own if no door render exists. */
+        ob_start();
+        ?>
         <?php if (! empty($fg_patterns)) : ?>
             <?php
             /* AND THE ONES WE ONLY HOLD THE PATTERN FOR, said plainly. Showing
@@ -264,5 +279,7 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
                 <?php endif; ?>
             </p>
         </div>
+        <?php $fg_glass_side = trim((string) ob_get_clean()); ?>
+
     </div>
 </section>
