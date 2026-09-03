@@ -14,6 +14,38 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-03 — Sliding sash: the shared privacy glass banner, and the lock selector rebuilt around the photographs (ON TEST as `55ea3233`, NOT LIVE)
+
+Owner: *"make the privacy glass one banner like how it is on some other
+pages. and now that we have high res images, make the lock style selector
+look better too."*
+
+- **Privacy glass is the shared component now.** The sash route no longer
+  renders the generic specification-choices band, where it had one card
+  left in a narrow map of its own; it calls
+  `template-parts/components/privacy-glass-card.php` with sash wording, the
+  same full-width card panelled with the real pattern photographs that
+  /casement-windows/ and /upvc-doors/ carry. The sash-only branches inside
+  the band (heading, intro, the colour-card exclusion, the Roseview colour
+  copy, the `--sash` map class and its two rules) went with it, so the band
+  no longer names the route anywhere except the gate.
+- **The lock selector is `.fg-sash-kit`.** A pale stage with the lock
+  photograph blended onto it by `mix-blend-mode: multiply`, so the guide
+  photograph's white ground disappears and the lock sits on the surface
+  with its own shadow; a caption bar naming the style and finish on show;
+  two picture tiles for Globe and Acorn with a green ring and a tick on the
+  chosen one; and finish chips with small metal discs, Graphite and Pewter
+  marked new. Finishes cross-fade, outgoing first, so two locks never
+  multiply over each other and darken mid-fade. Everything sits on the page
+  canvas, no cards inside cards, light throughout. The old selector's
+  thirty-eight rules are gone; the one it shared with the gallery CTA keeps
+  its other selector. Verified on test at 1440 and 390: the photograph
+  renders at its native 478x316 on desktop, tiles are 3:2, the caption
+  follows every pick.
+- **The multiply blend is a constraint on the photographs.** Any
+  replacement set must be shot on pure white; on a grey or cream ground the
+  stage shows the rectangle.
+
 ## 2026-09-03 — Sliding sash furniture: the guide photographs at native size, and a picture on each style (ON TEST as `ee05e3db`, NOT LIVE)
 
 Owner: *"see if you can find on the internet more high res furniture of the
