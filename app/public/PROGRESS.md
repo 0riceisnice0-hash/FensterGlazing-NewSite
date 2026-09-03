@@ -45,6 +45,15 @@ look better too."*
 - **The multiply blend is a constraint on the photographs.** Any
   replacement set must be shot on pure white; on a grey or cream ground the
   stage shows the rectangle.
+- **Second review, same day (test `fb1ac468`).** Owner: *"love it. get rid of
+  the numbers, that rule i think is in style.md nothing needs to be numbered
+  like 1 style 2 finish. also it looks amazing but its just about all not in
+  1 viewport. so make a bit shorter."* The step labels are Style and Finish,
+  plain, and the rule is now written into STYLE.md (it was not there before;
+  the owner remembered it as a rule and it is one now). The section is
+  717px tall at 1440 wide, from 831: tighter section padding, an 8:5 tile
+  instead of 3:2, 40px chips, smaller gaps between the steps, and the stage
+  height follows the viewport with a 380px floor.
 
 ## 2026-09-03 — Sliding sash furniture: the guide photographs at native size, and a picture on each style (ON TEST as `ee05e3db`, NOT LIVE)
 
