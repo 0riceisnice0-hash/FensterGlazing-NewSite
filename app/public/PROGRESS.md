@@ -35,10 +35,16 @@ viewport under the header (the stage, which is meant to be).
   880px and shorter the panel's second explanatory paragraph goes; at 800px
   and shorter the whole "what the details mean" block goes. Verified in the
   stage harness at 1440x900, 1920x1080, 1536x864, 1366x768 and 1280x720.
-- **The gallery is light now.** It was a 910px dark steel band, the kind
-  STYLE.md's no-dark rule forbids, with a four-line display heading. Pale
-  gradient ground, steel text, a two-line heading at 2.8vw and half the
-  padding: 740px.
+- **The gallery is transparent now.** It was a 910px dark steel band, the
+  kind STYLE.md's no-dark rule forbids, with a four-line display heading.
+  First pass made it a pale gradient band, which the owner caught within
+  the hour (*"the background isnt continuous. so it has sharp lines when it
+  should be a smooth gradient"*): any band of its own, dark or pale, draws
+  two hard lines against the canvas painted once on `body`. So it is
+  transparent, as is the solid CTA band under it (test `60d3b98d`); the
+  photographs and the white CTA card carry their own contrast. Steel text,
+  a two-line heading at 2.8vw and half the padding: 740px. Every section
+  between the hero and the enquiry form now paints no background at all.
 - **The strip and the enquiry section are shared components**, so their
   sash-page variants are tightened in a new `SLIDING SASH: ONE VIEWPORT
   PER SECTION` block in `main.scss` (with the other sash blocks, above the
