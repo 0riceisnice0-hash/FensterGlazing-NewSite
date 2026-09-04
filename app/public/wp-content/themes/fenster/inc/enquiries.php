@@ -419,14 +419,96 @@ function fenster_process_enquiry_uploads(int $enquiry_id): array
 // The uploads travel with this email as real attachments, so the row states how
 // many to expect rather than listing filenames the mail client already shows. It
 // always renders: "nothing attached" is information, and a missing row is not.
-function fenster_enquiry_attachment_summary(array $attachments): string
+/*
+ * Attachments ride on the office email and on nothing else, and that email is
+ * the only thing that tells a salesperson a lead exists. On 2026-08-29 an
+ * enquiry arrived with five phone photographs totalling 16.85MB; base64 adds
+ * about a third on top, the relay refused the message, `wp_mail()` returned
+ * false and the office was never told. The customer's own confirmation carries
+ * no files, so it sent normally and nothing looked wrong from outside: the only
+ * trace was `_fenster_email_sent` reading 0 and the Email column in the
+ * Enquiries list saying "Saved only". It was the one office email out of 48 that
+ * has ever failed, and it was the largest attachment payload the form has ever
+ * produced.
+ *
+ * THE PER-FILE GUARD IN `fenster_process_enquiry_uploads()` WAS NEVER THE
+ * PROBLEM. All five of those files passed it comfortably at 8MB each. Five times
+ * eight is forty, so there was no total at all. This is that total.
+ *
+ * 8MB of files encodes to roughly 10.7MB on the wire. The largest message that
+ * has gone through this relay successfully carried 12.07MB of files and took 49
+ * seconds against a 5-25 second norm, so the budget sits below the slowest thing
+ * observed working rather than beside the thing observed failing.
+ *
+ * WHAT DOES NOT FIT IS LINKED, NOT DROPPED. The upload URLs are public and are
+ * already stored on the enquiry, so a salesperson with no WordPress login can
+ * still open every file, which is the rule the whole office email is built to.
+ */
+function fenster_enquiry_partition_attachments(array $attachments): array
+{
+    $attach = [];
+    $link = [];
+    $budget = 8 * MB_IN_BYTES;
+
+    foreach ($attachments as $attachment) {
+        $path = (string) ($attachment['path'] ?? '');
+        $size = $path !== '' && is_readable($path) ? (int) filesize($path) : 0;
+
+        // A file that cannot be measured is linked rather than attached.
+        // Assuming a missing size is small is how 16.85MB got onto a message.
+        if ($size > 0 && $size <= $budget) {
+            $budget -= $size;
+            $attach[] = $attachment;
+            continue;
+        }
+
+        $link[] = $attachment;
+    }
+
+    return [$attach, $link];
+}
+
+function fenster_enquiry_attachment_summary(array $attachments, array $linked = []): string
 {
     $count = count($attachments);
     if ($count === 0) {
         return 'No images or files attached';
     }
 
-    return $count === 1 ? '1 attachment' : $count . ' attachments';
+    $summary = $count === 1 ? '1 attachment' : $count . ' attachments';
+    $linked_count = count($linked);
+    if ($linked_count > 0) {
+        $summary .= sprintf(' (%d too large to attach, linked below)', $linked_count);
+    }
+
+    return $summary;
+}
+
+/*
+ * The Enquiries list has carried an Ad attribution column since the tracking
+ * work went in, but the email the office actually reads carried none of it, so
+ * whoever picked a lead up had no way of knowing Google had been paid for it.
+ * Same values as the column. Both are cleared when marketing consent is refused,
+ * so this row appears only where the visitor allowed it and hides itself
+ * otherwise through the empty-value rule in `fenster_enquiry_email_row()`.
+ */
+function fenster_enquiry_ad_attribution_summary(array $data): string
+{
+    $click_type = (string) ($data['ad_click_type'] ?? '');
+    $tracker = (string) ($data['ad_tracker'] ?? '');
+    if ($click_type === '' && $tracker === '') {
+        return '';
+    }
+
+    $parts = ['Google Ads'];
+    if ($click_type !== '') {
+        $parts[] = $click_type;
+    }
+    if ($tracker !== '') {
+        $parts[] = 'ads ' . $tracker;
+    }
+
+    return implode(' · ', $parts);
 }
 
 // Same reasoning as the attachment summary above: the free text box is optional
@@ -439,7 +521,7 @@ function fenster_enquiry_message_summary(string $message): string
 
 // This goes to office sales staff, who have no WordPress logins, so it must not
 // link into wp-admin. Everything needed to act on the lead is in the email.
-function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attachments = []): string
+function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attachments = [], array $linked = []): string
 {
     $logo = FENSTER_THEME_URI . '/assets/brand/18931%20Fenster%20Glazing%20Logo%20-%20White%20Background.png';
     $phone_href = $data['phone'] !== '' ? 'tel:' . preg_replace('/[^0-9+]/', '', $data['phone']) : '';
@@ -453,8 +535,29 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
         fenster_enquiry_email_row('Preferred consultation', $data['appointment_display'] ?? ''),
         fenster_enquiry_email_row('Timescale', $data['timescale'] !== '' ? $data['timescale'] : 'Not specified'),
         fenster_enquiry_email_row('Source', $data['source']),
-        fenster_enquiry_email_row('Attachments', fenster_enquiry_attachment_summary($attachments)),
+        fenster_enquiry_email_row('Ad attribution', fenster_enquiry_ad_attribution_summary($data)),
+        fenster_enquiry_email_row('Attachments', fenster_enquiry_attachment_summary($attachments, $linked)),
     ]);
+
+    /*
+     * Amber rather than the page green, because this panel is the one thing in
+     * the email that asks the reader to go and do something instead of telling
+     * them what they already have. It only renders when a file could not travel
+     * with the message.
+     */
+    $linked_panel = '';
+    $linked_items = '';
+    foreach ($linked as $file) {
+        $url = (string) ($file['url'] ?? '');
+        $name = (string) ($file['name'] ?? '');
+        if ($url === '' || $name === '') {
+            continue;
+        }
+        $linked_items .= '<li style="margin:0 0 6px;"><a href="' . esc_url($url) . '" style="color:#087943;text-decoration:none;font-weight:700;">' . esc_html($name) . '</a></li>';
+    }
+    if ($linked_items !== '') {
+        $linked_panel = '<tr><td style="padding:0 28px 24px;"><div style="padding:22px;border-radius:12px;background:#fff6e8;border-left:4px solid #d98324;"><div style="margin-bottom:8px;color:#8a5210;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Files too large to attach</div><p style="margin:0 0 12px;color:#60727a;font-size:14px;line-height:1.6;">The customer sent these with the enquiry. They are on the website and open in a browser without a login.</p><ul style="margin:0;padding-left:18px;color:#06212a;font-size:15px;line-height:1.6;">' . $linked_items . '</ul></div></td></tr>';
+    }
 
     return '<!doctype html>
 <html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"></head>
@@ -465,6 +568,7 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
 <tr><td style="padding:30px 28px 12px;"><div style="display:inline-block;padding:7px 10px;border-radius:999px;background:#e6f6ed;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">' . esc_html($data['project_type']) . '</div><h1 style="margin:16px 0 8px;color:#06212a;font-size:28px;line-height:1.12;">' . esc_html($data['name']) . (! empty($data['appointment_display']) ? ' has requested a consultation.' : ' has started a project.') . '</h1><p style="margin:0;color:#60727a;font-size:15px;line-height:1.6;">Reply directly to this email to contact the customer, or use the details below.</p></td></tr>
 <tr><td style="padding:10px 28px 4px;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0">' . $rows . '</table></td></tr>
 <tr><td style="padding:24px 28px;"><div style="padding:22px;border-radius:12px;background:#f3f8f7;border-left:4px solid #2eac66;"><div style="margin-bottom:8px;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Project details</div><div style="color:#06212a;font-size:16px;line-height:1.65;">' . nl2br(esc_html(fenster_enquiry_message_summary($data['message']))) . '</div></div></td></tr>
+' . $linked_panel . '
 <tr><td style="padding:0 28px 30px;"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="border-radius:8px;background:#2eac66;"><a href="mailto:' . esc_attr($data['email']) . '" style="display:inline-block;padding:14px 20px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Reply to ' . esc_html($data['name']) . '</a></td></tr></table></td></tr>
 <tr><td style="padding:18px 28px;background:#f3f8f7;color:#60727a;font-size:12px;line-height:1.5;">Submitted from <a href="' . esc_url($data['page_url']) . '" style="color:#087943;">' . esc_html($data['page_url']) . '</a><br>The enquiry was saved privately in WordPress before this email was sent.</td></tr>
 </table></td></tr></table></body></html>';
@@ -731,6 +835,15 @@ function fenster_process_enquiry(): array|WP_Error
     if (! empty($attachments)) {
         update_post_meta($enquiry_id, '_fenster_attachments', wp_json_encode($attachments));
     }
+    [$mail_attachments, $linked_attachments] = fenster_enquiry_partition_attachments($attachments);
+    if (! empty($linked_attachments)) {
+        error_log(sprintf(
+            'Fenster enquiry %d: %d of %d attachments linked rather than attached to keep the office email inside the relay limit.',
+            (int) $enquiry_id,
+            count($linked_attachments),
+            count($attachments)
+        ));
+    }
 
     $recipient = fenster_enquiry_recipient();
     $office_headers = [
@@ -740,12 +853,25 @@ function fenster_process_enquiry(): array|WP_Error
     $office_sent = wp_mail(
         $recipient,
         fenster_enquiry_office_subject($data),
-        fenster_enquiry_office_email($data, (int) $enquiry_id, $attachments),
+        fenster_enquiry_office_email($data, (int) $enquiry_id, $attachments, $linked_attachments),
         $office_headers,
-        array_values(array_filter(array_column($attachments, 'path')))
+        array_values(array_filter(array_column($mail_attachments, 'path')))
     );
     update_post_meta($enquiry_id, '_fenster_email_sent', $office_sent ? '1' : '0');
     update_post_meta($enquiry_id, '_fenster_email_recipient', $recipient);
+    /*
+     * A failed office notification used to leave no trace anywhere except a 0 in
+     * this meta and the word "Saved only" in a column nobody watches, so the one
+     * time it happened it went unnoticed for six days. The enquiry is safe either
+     * way; what was missing was any way to find out.
+     */
+    if (! $office_sent) {
+        error_log(sprintf(
+            'Fenster enquiry %d: office notification to %s was NOT accepted by the mail relay.',
+            (int) $enquiry_id,
+            $recipient
+        ));
+    }
 
     $confirmation_sent = false;
     if (fenster_smtp_is_configured()) {
