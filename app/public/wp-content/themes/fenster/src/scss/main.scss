@@ -50515,8 +50515,28 @@ html.fg-blinds-reveal-locked {
   margin-bottom: 1rem;
 }
 
+/* THE LAST THREE SECTIONS, MEASURED AGAINST A SHORTER WINDOW. 2026-09-03:
+   the owner called Real homes too tall for one viewport when it measured
+   740px against an 827px budget at 1440x900, which says his window is
+   nearer 780px tall than 900. At that height the reviews, the case studies
+   and the enquiry form were over by 2px, 71px and 8px. All three are shared
+   components, so this is scoped to the route: less padding on the reviews
+   and the form, and a shorter photograph on the case-study cards. */
+.generated-page--sliding-sash .fg-review-showcase {
+  padding: clamp(2.5rem, 4vw, 4rem) 0;
+}
+
+.generated-page--sliding-sash .fg-cs-strip__head {
+  margin-bottom: 0.8rem;
+}
+
+.generated-page--sliding-sash .fg-cs-card__media {
+  aspect-ratio: auto;
+  height: 180px;
+}
+
 .generated-page--sliding-sash .fg-enquiry {
-  padding: 2.5rem 0;
+  padding: 2rem 0;
 }
 
 .generated-page--sliding-sash .fg-enquiry__copy,
