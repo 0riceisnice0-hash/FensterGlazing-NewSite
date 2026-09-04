@@ -51745,3 +51745,54 @@ html.fg-blinds-reveal-locked {
 
   .fg-cdq__head { margin-bottom: clamp(0.8rem, 1.6vw, 1.1rem); }
 }
+
+/* ---- Looking at it, not measuring it -------------------------------
+ * Four things the screenshots showed that the numbers could not.
+ * ------------------------------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  /* 1. The long-version band was still a WHITE CARD sitting under a dark
+        card - a box under a box, which is the fault this page has been
+        cleared of twice - and its rule ran full-bleed across the viewport
+        so it read as a section divider rather than a footer to the panel
+        above it. Both gone: it is a plain band, and the rule is inside the
+        container so it lines up with the panel. */
+  .fg-wd-cta {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .fg-wd-cta__inner {
+    margin-top: clamp(1.5rem, 2.8vw, 2.2rem);
+    padding: clamp(1.4rem, 2.6vw, 1.9rem) 0 0;
+    border: 0;
+    border-top: 1px solid rgba(2, 43, 53, 0.16);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  /* 2. The chapter head was capped to a reading measure it does not need -
+        it is two words and a sentence, and at 46rem the sentence wrapped to
+        two lines and cost the glass screen 45px it did not have. */
+  .fg-chapter-head--chapter { max-width: none; }
+
+  /* 3. Same fault on the case studies head, same fix. */
+  .fg-cs-strip__head { max-width: none; }
+
+  .fg-cs-strip__head h2 { max-width: none; }
+
+  /* 4. The glass screen was clipping its own closing note. The five pattern
+        crops are the least load-bearing thing on it - they are a footnote to
+        a picker that already shows six doors at full size. */
+  .fg-glass-patterns img { max-height: 92px; }
+
+  .fg-glass-patterns ul { gap: clamp(0.5rem, 1.2vw, 0.8rem); }
+
+  /* The last two were 7px and 2px. */
+  .fg-cdq { padding-block: clamp(1.4rem, 2.1vw, 1.6rem); }
+
+  .fg-enquiry { padding-block: clamp(1.8rem, 2.7vw, 2rem); }
+}
