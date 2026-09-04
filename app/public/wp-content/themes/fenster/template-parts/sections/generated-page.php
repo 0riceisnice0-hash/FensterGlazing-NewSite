@@ -4723,19 +4723,7 @@ if ($is_commercial_hub) {
             ['Best U-value', '1.2 W/m²K option', '1.2 W/m²K option', '1.4 W/m²K option'],
             ['Furniture', 'Globe standard', 'Acorn standard', 'Acorn standard'],
         ];
-        /* The scale runs 30mm to 65mm so all three ticks sit inside the track
-           with room for their labels; a tick's position is its rail width
-           read off that range. */
-        $sash_rail_scale_min = 30;
-        $sash_rail_scale_max = 65;
         $sash_stage_positions = ['centre', 'right', 'left'];
-        $sash_tick_left = static function (array $model) use ($sash_rail_scale_min, $sash_rail_scale_max): string {
-            $mm = (float) ($model['rail_mm'] ?? 0);
-            return number_format(($mm - $sash_rail_scale_min) / ($sash_rail_scale_max - $sash_rail_scale_min) * 100, 1, '.', '');
-        };
-        $sash_tick_label = static function (array $model): string {
-            return rtrim(rtrim(number_format((float) ($model['rail_mm'] ?? 0), 1, '.', ''), '0'), '.') . 'mm';
-        };
         ?>
         <section class="fg-sash-stage" aria-labelledby="fg-sash-stage-title" data-fg-sash-stage data-fg-active="0">
             <div class="container fg-sash-stage__inner">
@@ -4795,34 +4783,17 @@ if ($is_commercial_hub) {
                             <?php endforeach; ?>
                         </div>
 
-                        <?php /* The rail scale is the switch: three stops on one track, the
-                                 marker glides to whichever model is in the middle, and the
-                                 arrows step along it. One control, and it is the product's own
-                                 key dimension. */ ?>
+                        <?php /* Two arrows over the scene, one each side, and nothing else. The
+                                 meeting rail scale that ran under the windows, and the survey
+                                 note under that, went on 2026-09-03 (owner: "get rid of the
+                                 meeting rail and the disclaimer bits at the bottom. make the
+                                 windows as big as you can in the one view port"), and the
+                                 127px they took went to the windows. The side windows are
+                                 still clickable and the scene still swipes. */ ?>
                         <div class="fg-sash-stage__controls" data-fg-stage-controls hidden>
                             <button type="button" class="fg-sash-stage__arrow" data-fg-stage-prev aria-label="<?php esc_attr_e('Previous sash model', 'fenster'); ?>">
                                 <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
-                            <div class="fg-sash-stage__dial" role="group" aria-label="<?php esc_attr_e('Choose a sash window model by meeting rail width', 'fenster'); ?>">
-                                <span class="fg-sash-stage__dial-title" aria-hidden="true"><?php esc_html_e('Meeting rail', 'fenster'); ?></span>
-                                <span class="fg-sash-stage__dial-track" aria-hidden="true"></span>
-                                <span class="fg-sash-stage__dial-marker" data-fg-dial-marker style="left: <?php echo esc_attr($sash_tick_left($sash_roseview_models[0])); ?>%;" aria-hidden="true"></span>
-                                <?php foreach ($sash_roseview_models as $index => $model) : ?>
-                                    <button
-                                        type="button"
-                                        class="fg-sash-stage__tick"
-                                        style="left: <?php echo esc_attr($sash_tick_left($model)); ?>%;"
-                                        data-fg-stage-select="<?php echo esc_attr((string) $index); ?>"
-                                        data-fg-tick-left="<?php echo esc_attr($sash_tick_left($model)); ?>"
-                                        aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                                        aria-label="<?php echo esc_attr(sprintf(__('%1$s, %2$s meeting rail', 'fenster'), (string) $model['name'], $sash_tick_label($model))); ?>"
-                                    >
-                                        <i aria-hidden="true"></i>
-                                        <strong aria-hidden="true"><?php echo esc_html($sash_tick_label($model)); ?></strong>
-                                        <small aria-hidden="true"><?php echo esc_html(str_replace(' Rose', '', (string) $model['name'])); ?></small>
-                                    </button>
-                                <?php endforeach; ?>
-                            </div>
                             <button type="button" class="fg-sash-stage__arrow" data-fg-stage-next aria-label="<?php esc_attr_e('Next sash model', 'fenster'); ?>">
                                 <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </button>
@@ -4880,11 +4851,6 @@ if ($is_commercial_hub) {
                             </div>
                         <?php endforeach; ?>
                     </div>
-
-                    <?php /* A direct child of the body grid on purpose: it sits under the
-                             stage on desktop and after the facts on a phone, and CSS grid
-                             only places direct children. */ ?>
-                    <p class="fg-sash-stage__note"><?php esc_html_e('We confirm the final model, colour, bar layout, horn detail, ventilation option and hardware before order so the sash suits the property rather than just the brochure.', 'fenster'); ?></p>
                 </div>
             </div>
         </section>

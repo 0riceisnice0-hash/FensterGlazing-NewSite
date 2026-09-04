@@ -49277,7 +49277,7 @@ html.fg-blinds-reveal-locked {
    SECTION. Add to it rather than writing a media query further up.
    ========================================================================== */
 .fg-sash-stage {
-  --fg-sash-stage-floor: 87%;
+  --fg-sash-stage-floor: 89%;
   --fg-sash-stage-pad: clamp(1.25rem, 2vw, 1.75rem);
   --fg-sash-glow: rgba(46, 172, 102, 0.26);
   --fg-sash-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -49345,7 +49345,7 @@ html.fg-blinds-reveal-locked {
    the header, and the heading is the first thing that decides whether it
    does. Art-directed H2 scale per STYLE.md, capped at 2.5rem. */
 .fg-sash-stage__head h2 {
-  max-width: 30ch;
+  max-width: 64ch;
   margin: 0;
   color: var(--color-steel);
   font-size: clamp(1.6rem, 2.3vw, 2.2rem);
@@ -49363,8 +49363,12 @@ html.fg-blinds-reveal-locked {
    runs; whichever column is taller sets the section. */
 .fg-sash-stage__body {
   display: grid;
-  grid-template-columns: minmax(240px, 350px) minmax(0, 1fr) minmax(240px, 350px);
-  grid-template-rows: auto minmax(0, 1fr);
+  /* 260px text columns: the three-window composition is about 1.55 times the
+     middle window's width, so the middle column has to be at least that or
+     the side windows clip at its edges. At 1440 that is 752px for a 447px
+     window. */
+  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 260px);
+  grid-template-rows: minmax(0, 1fr);
   gap: 0.9rem clamp(1.5rem, 3vw, 3.5rem);
   align-items: stretch;
   min-height: 0;
@@ -49377,48 +49381,42 @@ html.fg-blinds-reveal-locked {
 
 .fg-sash-stage__panels--story {
   grid-column: 1;
-  grid-row: 1 / 3;
+  grid-row: 1;
 }
 
 .fg-sash-stage__panels--facts {
   grid-column: 3;
-  grid-row: 1 / 3;
+  grid-row: 1;
 }
 
-.fg-sash-stage__note {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: start;
-  justify-self: center;
-  max-width: 64ch;
-  text-align: center;
-}
 
 .fg-sash-stage__scene-wrap {
+  position: relative;
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto;
   align-content: start;
-  gap: 0.6rem;
   min-width: 0;
 }
 
 /* The stage takes the viewport height below the header less the room the
-   head, the controls, the survey note and the section padding need, between
-   360px and 720px, so the whole section lands inside the first screen at
-   1440x900 and on a 720px laptop, while a tall monitor gets a taller stage.
-   The 318px is that overhead measured at 1440 (padding 56, head 96, gap 14,
-   controls 72, gap 14, note 41) plus 25px to spare; it was 262px before, which
-   was less than the real overhead, so the section overran by 107px at 1440x900
-   and by 69px at 1920x1080 (owner, 2026-09-03: "every section of this page
-   needs to be contained in one view port"). The facts
+   head and the section padding need, between 360px and 960px, so the whole
+   section lands inside the first screen at 1440x900 and on a 720px laptop,
+   while a tall monitor gets a taller stage. The 150px is that overhead
+   measured at 1440 (padding 56, head 61 with the heading on one line, gap 14)
+   plus 19px to spare. It was 318px while the rail scale and the survey note
+   sat under the windows; both went on 2026-09-03 (owner: "get rid of the
+   meeting rail and the disclaimer bits at the bottom. make the windows as big
+   as you can in the one view port") and their 127px went to the windows. And
+   it was 262px before that, a guess below the real overhead, which is why the
+   section once overran by 107px at 1440x900. The facts
    panel beside it may run longer than that; its copy is what scrolls. The
    perspective is what angles the side windows in towards the middle. The
    surface is a pale wall running down into a slightly deeper floor, with no
    hard edge, so it reads as a place rather than a box. */
 .fg-sash-stage__scene {
   position: relative;
-  height: clamp(360px, calc(100vh - var(--site-header-main-height) - 318px), 720px);
-  height: clamp(360px, calc(100svh - var(--site-header-main-height) - 318px), 720px);
+  height: clamp(360px, calc(100vh - var(--site-header-main-height) - 150px), 960px);
+  height: clamp(360px, calc(100svh - var(--site-header-main-height) - 150px), 960px);
   overflow: hidden;
   /* No box: no radius, no fill, no inset line. The section is the surface. */
   perspective: 1600px;
@@ -49464,7 +49462,7 @@ html.fg-blinds-reveal-locked {
   position: absolute;
   bottom: calc(100% - var(--fg-sash-stage-floor));
   left: 50%;
-  height: calc(var(--fg-sash-stage-floor) - 4%);
+  height: calc(var(--fg-sash-stage-floor) - 3%);
   max-width: 64%;
   aspect-ratio: 800 / 1038;
   margin: 0;
@@ -49627,12 +49625,19 @@ html.fg-blinds-reveal-locked {
 
 /* The controls: an arrow at each end of the rail scale. The arrows are
    centred on the track line, which sits 1.25rem into the dial. */
+/* The two arrows sit over the scene at its sides, level with the middle of
+   the windows, and take no height of their own. */
 .fg-sash-stage__controls {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
-  gap: 1rem;
-  align-items: start;
-  padding: 0 0.25rem;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .fg-sash-stage__controls[hidden] {
@@ -49643,8 +49648,9 @@ html.fg-blinds-reveal-locked {
   display: grid;
   width: 48px;
   height: 48px;
-  margin-top: calc(1.25rem - 23px);
+  margin: 0;
   padding: 0;
+  pointer-events: auto;
   place-items: center;
   border: 1px solid rgba(0, 45, 58, 0.16);
   border-radius: 999px;
@@ -49661,8 +49667,7 @@ html.fg-blinds-reveal-locked {
   color: #ffffff;
 }
 
-.fg-sash-stage__arrow:focus-visible,
-.fg-sash-stage__tick:focus-visible {
+.fg-sash-stage__arrow:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
 }
@@ -49670,108 +49675,7 @@ html.fg-blinds-reveal-locked {
 /* The dial. One 2px track, three stops, and a glowing marker that glides to
    the model in the middle. The stops are the tap targets; their own dots hide
    under the marker when selected so there is never a double dot. */
-.fg-sash-stage__dial {
-  position: relative;
-  padding: 1.25rem 0 2.5rem;
-}
 
-.fg-sash-stage__dial-title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: var(--color-muted);
-  font-size: 0.64rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.fg-sash-stage__dial-track {
-  display: block;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(0, 45, 58, 0.12), rgba(0, 45, 58, 0.3) 50%, rgba(0, 45, 58, 0.12));
-}
-
-.fg-sash-stage__dial-marker {
-  position: absolute;
-  z-index: 2;
-  top: calc(1.25rem + 1px);
-  left: 0;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #ffffff;
-  border-radius: 999px;
-  background: var(--color-accent);
-  box-shadow: 0 0 0 6px rgba(46, 172, 102, 0.16), 0 6px 18px rgba(46, 172, 102, 0.45);
-  transform: translate(-50%, -50%);
-  transition: left 0.85s var(--fg-sash-ease);
-  pointer-events: none;
-}
-
-.fg-sash-stage__tick {
-  position: absolute;
-  z-index: 1;
-  top: calc(1.25rem - 5px);
-  left: 0;
-  display: grid;
-  width: 64px;
-  min-height: 44px;
-  padding: 0;
-  justify-items: center;
-  align-content: start;
-  gap: 0.1rem;
-  border: 0;
-  background: transparent;
-  color: var(--color-steel);
-  font: inherit;
-  transform: translateX(-50%);
-  cursor: pointer;
-}
-
-.fg-sash-stage__tick i {
-  display: block;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #ffffff;
-  border-radius: 999px;
-  background: rgba(0, 45, 58, 0.3);
-  box-shadow: 0 0 0 1px rgba(0, 45, 58, 0.14);
-  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
-}
-
-.fg-sash-stage__tick strong {
-  margin-top: 0.55rem;
-  color: var(--color-steel);
-  font-size: 0.8rem;
-  line-height: 1.1;
-  transition: color 0.35s ease;
-}
-
-.fg-sash-stage__tick small {
-  color: var(--color-muted);
-  font-size: 0.66rem;
-  font-weight: 700;
-  line-height: 1.1;
-  transition: color 0.35s ease;
-}
-
-.fg-sash-stage__tick:hover i {
-  background: rgba(0, 45, 58, 0.55);
-  transform: scale(1.15);
-}
-
-.fg-sash-stage__tick[aria-pressed="true"] i {
-  opacity: 0;
-}
-
-.fg-sash-stage__tick[aria-pressed="true"] strong {
-  color: var(--color-accent-dark);
-}
-
-.fg-sash-stage__tick[aria-pressed="true"] small {
-  color: var(--color-steel);
-}
 
 /* Hidden the screen-reader way: the live region still announces the model. */
 .fg-sash-stage__sr {
@@ -49819,24 +49723,20 @@ html.fg-blinds-reveal-locked {
   display: none !important;
 }
 
-/* THE PANEL FILLS THE SPACE BESIDE THE STAGE; IT DOES NOT SET IT. Taken out
-   of flow, so the section's height is the stage, its controls and the note,
-   all sized from the viewport, and never the panel's copy. The card is as
-   tall as its copy up to the height of that space; on a screen where the
-   copy would be taller, the panel scrolls inside itself, and the two
-   short-screen rules further down take the explanatory copy out first so
-   that is rare. Before this the panel set the body height: 637px of copy
-   beside a 474px stage pushed the section 22px past a 1536x864 screen.
-   Owner, 2026-09-03: "every section of this page needs to be contained in
-   one view port." */
+/* THE HALVES STAND BESIDE THE STAGE; THEY DO NOT SET ITS HEIGHT. Taken out
+   of flow, so the section's height is the stage, sized from the viewport,
+   and never the copy. Each half is as tall as its copy and never scrolls
+   inside itself (owner, 2026-09-03: "get rid of the scroll bar of the right
+   text"); the facts half is about 470px and the stage beside it is at least
+   500px on any screen 720px and taller. Before this the single panel set the
+   body height: 637px of copy beside a 474px stage pushed the section 22px
+   past a 1536x864 screen (owner: "every section of this page needs to be
+   contained in one view port"). */
 .fg-sash-stage.is-enhanced .fg-sash-stage__panel {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  max-height: 100%;
-  overflow-y: auto;
-  overscroll-behavior: contain;
 }
 
 .fg-sash-stage__panel-head {
@@ -49952,13 +49852,6 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
-.fg-sash-stage__note {
-  margin: 0;
-  padding: 0 0.25rem;
-  color: var(--color-muted);
-  font-size: var(--fg-text-sm);
-  line-height: 1.5;
-}
 
 /* No JavaScript: three renders in a row, named, nothing to click, no
    reflections. */
@@ -50030,8 +49923,6 @@ html.fg-blinds-reveal-locked {
   .fg-sash-stage__reflection,
   .fg-sash-stage__slide-label,
   .fg-sash-stage__glow,
-  .fg-sash-stage__dial-marker,
-  .fg-sash-stage__tick i,
   .fg-sash-stage__arrow,
   .fg-sash-stage__panels {
     transition: none;
@@ -50094,8 +49985,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sash-stage__scene-wrap,
-  .fg-sash-stage__panels,
-  .fg-sash-stage__note {
+  .fg-sash-stage__panels {
     grid-column: auto;
     grid-row: auto;
     align-self: auto;
@@ -50111,8 +50001,6 @@ html.fg-blinds-reveal-locked {
 
   .fg-sash-stage.is-enhanced .fg-sash-stage__panel {
     position: static;
-    max-height: none;
-    overflow: visible;
   }
 
   .fg-sash-stage__scene {
@@ -50144,20 +50032,14 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sash-stage__controls {
-    grid-template-columns: 44px minmax(0, 1fr) 44px;
-    gap: 0.6rem;
-    padding: 0;
+    padding: 0 0.25rem;
   }
 
   .fg-sash-stage__arrow {
     width: 44px;
     height: 44px;
-    margin-top: calc(1.25rem - 21px);
   }
 
-  .fg-sash-stage__tick {
-    width: 60px;
-  }
 
   .fg-sash-stage__panel {
     gap: 0.85rem;
