@@ -49461,7 +49461,11 @@ html.fg-blinds-reveal-locked {
   position: absolute;
   bottom: calc(100% - var(--fg-sash-stage-floor));
   left: 50%;
-  height: calc(100% - 58px);
+  /* 68px, not 58px: the windows stand on the floor, so 10px off the height
+     drops their heads 10px and leaves the sill where it is. Owner,
+     2026-09-03: "move the sashes down a touch, like 10px. like not at
+     all." */
+  height: calc(100% - 68px);
   max-width: 63%;
   aspect-ratio: 800 / 1038;
   margin: 0;
@@ -49733,7 +49737,11 @@ html.fg-blinds-reveal-locked {
    contained in one view port"). */
 .fg-sash-stage.is-enhanced .fg-sash-stage__panel {
   position: absolute;
-  top: 0;
+  /* 10px above the top of the scene, so the model name sits a little higher
+     than the windows beside it rather than level with them (owner: "move the
+     text on the right up a bit"). It clears the heading above by 12px at
+     1280x720, which is the tightest screen this runs on. */
+  top: -10px;
   right: 0;
   left: 0;
 }
