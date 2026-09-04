@@ -49277,8 +49277,8 @@ html.fg-blinds-reveal-locked {
    SECTION. Add to it rather than writing a media query further up.
    ========================================================================== */
 .fg-sash-stage {
-  --fg-sash-stage-floor: 89%;
-  --fg-sash-stage-pad: clamp(1.25rem, 2vw, 1.75rem);
+  --fg-sash-stage-floor: calc(100% - 52px);
+  --fg-sash-stage-pad: clamp(1rem, 1.5vw, 1.5rem);
   --fg-sash-glow: rgba(46, 172, 102, 0.26);
   --fg-sash-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
@@ -49326,7 +49326,7 @@ html.fg-blinds-reveal-locked {
   display: grid;
   width: min(100% - clamp(3rem, 8vw, 9rem), 1640px);
   grid-template-rows: auto minmax(0, 1fr);
-  gap: 0.9rem;
+  gap: 0.5rem;
   min-height: calc(100vh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2) - 2px);
   min-height: calc(100svh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2) - 2px);
 }
@@ -49367,9 +49367,9 @@ html.fg-blinds-reveal-locked {
      middle window's width, so the middle column has to be at least that or
      the side windows clip at its edges. At 1440 that is 752px for a 447px
      window. */
-  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(220px, 260px);
+  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) minmax(210px, 250px);
   grid-template-rows: minmax(0, 1fr);
-  gap: 0.9rem clamp(1.5rem, 3vw, 3.5rem);
+  gap: 0.9rem clamp(1.25rem, 2vw, 2.5rem);
   align-items: stretch;
   min-height: 0;
 }
@@ -49399,11 +49399,14 @@ html.fg-blinds-reveal-locked {
 }
 
 /* The stage takes the viewport height below the header less the room the
-   head and the section padding need, between 360px and 960px, so the whole
+   head and the section padding need, between 360px and 1100px, so the whole
    section lands inside the first screen at 1440x900 and on a 720px laptop,
-   while a tall monitor gets a taller stage. The 150px is that overhead
-   measured at 1440 (padding 56, head 61 with the heading on one line, gap 14)
-   plus 19px to spare. It was 318px while the rail scale and the survey note
+   while a tall monitor gets a taller stage. The 127px is that overhead
+   measured at 1440 (padding 44, head 67 on one line, gap 8, and the 2px the
+   live header takes over the header variable); it was 150px until the
+   padding and the gap were tightened on 2026-09-03 (owner, of a stage that
+   still had white above and below the windows: "there is space for it to be
+   bigger"). It was 318px while the rail scale and the survey note
    sat under the windows; both went on 2026-09-03 (owner: "get rid of the
    meeting rail and the disclaimer bits at the bottom. make the windows as big
    as you can in the one view port") and their 127px went to the windows. And
@@ -49415,8 +49418,8 @@ html.fg-blinds-reveal-locked {
    hard edge, so it reads as a place rather than a box. */
 .fg-sash-stage__scene {
   position: relative;
-  height: clamp(360px, calc(100vh - var(--site-header-main-height) - 150px), 960px);
-  height: clamp(360px, calc(100svh - var(--site-header-main-height) - 150px), 960px);
+  height: clamp(360px, calc(100vh - var(--site-header-main-height) - 127px), 1100px);
+  height: clamp(360px, calc(100svh - var(--site-header-main-height) - 127px), 1100px);
   overflow: hidden;
   /* No box: no radius, no fill, no inset line. The section is the surface. */
   perspective: 1600px;
@@ -49462,8 +49465,8 @@ html.fg-blinds-reveal-locked {
   position: absolute;
   bottom: calc(100% - var(--fg-sash-stage-floor));
   left: 50%;
-  height: calc(var(--fg-sash-stage-floor) - 3%);
-  max-width: 64%;
+  height: calc(100% - 58px);
+  max-width: 63%;
   aspect-ratio: 800 / 1038;
   margin: 0;
   padding: 0;
@@ -50012,7 +50015,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sash-stage__slide {
-    height: calc(var(--fg-sash-stage-floor) - 8%);
+    height: calc(100% - 66px);
     max-width: 64%;
   }
 
