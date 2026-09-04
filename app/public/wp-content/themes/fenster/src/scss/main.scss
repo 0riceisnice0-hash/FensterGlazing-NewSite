@@ -50555,10 +50555,36 @@ html.fg-blinds-reveal-locked {
     height: min(56svh, 340px);
   }
 
+  /* THE SHAPES TAKE MORE OF THE WIDTH, because the frame is squarer on a
+     phone than the design's landscape artboard: at the desktop percentages
+     the window came out a narrow slot. Same composition, wider. */
+  .fg-sash-thermal__reveal,
+  .fg-sash-thermal__sill {
+    left: 17%;
+    width: 66%;
+  }
+
+  .fg-sash-thermal__glazing {
+    left: 20.5%;
+    width: 59%;
+  }
+
+  .fg-sash-thermal__pool {
+    left: 10%;
+    width: 80%;
+  }
+
   .fg-sash-thermal__spill {
     width: 40px;
     height: 40px;
   }
+
+  .fg-sash-thermal__spill:nth-of-type(1) { left: 22% !important; }
+  .fg-sash-thermal__spill:nth-of-type(2) { left: 29% !important; }
+  .fg-sash-thermal__spill:nth-of-type(3) { left: 36% !important; }
+  .fg-sash-thermal__spill:nth-of-type(4) { left: 43% !important; }
+  .fg-sash-thermal__spill:nth-of-type(5) { left: 50% !important; }
+  .fg-sash-thermal__spill:nth-of-type(6) { left: 57% !important; }
 
   .fg-sash-thermal__scale i {
     width: 74px;
