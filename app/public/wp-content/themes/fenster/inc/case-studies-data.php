@@ -677,15 +677,26 @@ function fenster_case_studies(): array
                 'Arctic obscure glass to the changing room',
                 'Replacing failed Crittall steel windows',
             ],
-            /* SIX IMAGES: the hero plus five, ONE OF WHICH IS `wide`. A wide
-               shot spans both columns, so five in the gallery lays out as two
-               rows of two under a full width band rather than leaving an orphan
-               cell. All six sources were natively 3:4, so the four standard
-               cells crop nothing; the wide one was cut to 16:9 from high in the
-               frame so the run of windows fills it rather than the flat roof. */
+            /* `wide` AND `gallery_shape => 'tall'` DO NOT COMBINE, and the
+               render is how that was found. A 16:9 band was marked `wide` here
+               and came out as an enormous, heavily cropped full width block,
+               because the two CSS rules collide on specificity:
+
+                 .fg-cs-gallery__masonry--tall .fg-cs-shot img {aspect-ratio:3/4}
+                 .fg-cs-shot--wide img               {aspect-ratio:auto}
+
+               The tall selector is (0,3,1) against the wide selector's (0,1,1),
+               so `tall` wins and forces the wide cell into 3:4 across the full
+               column width. **Pick one or the other.** Tall was kept because
+               all six photographs are natively 3:4 and crop to nothing in it.
+
+               That leaves FIVE images: the hero plus four, which is two clean
+               rows and no orphan. The wide band was cut from a second run shot
+               near enough identical to the hero, so nothing was lost by it
+               going; the two changing room frames are the near duplicates worth
+               watching if another has to come out. */
             'images' => [
                 ['src' => $img . 'cs-merchant-taylors-window-run.webp', 'caption' => 'The new run from the flat roof, each window sitting in its original brick opening.'],
-                ['src' => $img . 'cs-merchant-taylors-elevation-wide.webp', 'wide' => true, 'caption' => 'Along the elevation, the horizontal bars carrying the line of the steel windows they replaced.'],
                 ['src' => $img . 'cs-merchant-taylors-window-brick.webp', 'caption' => 'One window square on, three lights divided by flat bars in an opening that was not altered to take it.'],
                 ['src' => $img . 'cs-merchant-taylors-obscure-glass.webp', 'caption' => 'The Arctic obscure glass close up, laminated, with the white frame and bars around it.'],
                 ['src' => $img . 'cs-merchant-taylors-changing-room.webp', 'caption' => 'The changing room from inside. The obscure glass takes daylight in without a sightline either way.'],
