@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-08-30
+Last updated: 2026-09-04
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -165,6 +165,11 @@ PHP lint example:
 - Do not reintroduce Three.js, a WebGL hero or a canvas product scene unless the owner explicitly asks for that feature.
 - If 3D is deliberately reintroduced, add the dependency/import/enqueue intentionally, provide mobile and reduced-motion fallbacks, and verify the canvas is nonblank in desktop and mobile browser QA.
 - **The blind visualiser on `/integral-blinds/` is a deliberate exception and does not breach this.** It is 2D canvas, no library and no new dependency. It is 2D because the owner asked for the unit face on and fully straight, and with no perspective a slat projects to a plain rectangle of height `slat * |sin phi| + thickness * |cos phi|`, which is exact rather than approximated. WebGL would buy no accuracy there. Do not "upgrade" it to Three.js.
+
+## Homepage 3.0 Rule
+
+- **Two homepages exist and a host gate decides which renders.** `fenster_h30_enabled()` in `inc/home-30.php` allow-lists the local sites and `test.fensterglazing.com`; anywhere else `generated-page.php` renders the classic `home-experience.php`. Adding `fensterglazing.com` to that list is the whole go-live change: make it in its own commit, name it in the message, and record it in `LIVECHANGES.md`. Never inside another change.
+- **The strand is self-contained and stays that way.** Namespace `fg-h30-`, its own `src/home30/` → `assets/home30/` bundle built by `build:home30` and tested by `test:home30`, one filterable line in `generated-page.php` and one `require` in `functions.php`. Do not fold its CSS into `main.scss` or its script into `main.js`, and do not edit the classic homepage to make room for it. Reference: `HOMEPAGE-30.md`.
 
 ## Notan Integral Blind Rule
 

@@ -1,6 +1,6 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-09-02
+Last updated: 2026-09-04
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
@@ -13,6 +13,12 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **TEST IS `9d2b73d4`, LEVEL WITH `main`, AND IT CARRIES HOMEPAGE 3.0 — HOST GATED, NOT LIVE, 2026-09-04.** The Rightmove-UX homepage from the `fenster-glazing-30` sandbox, ported as one commit on top of `72e43765`. The branch `feat/homepage-3-0` was current, not stale: byte-identical to the sandbox across the whole strand and rebased on that day's `main`. **46 theme files: 43 added, three modified (`functions.php`, `package.json`, `generated-page.php`), none deleted.** Runbook deploy, dry run 51 lines and every one expected, residual **0**, both test caches purged, `inc/home-30.php` on disk hashing to the repo's blob. **Live is untouched at `b389183d`.** Reference: `HOMEPAGE-30.md`.
+  - **THE GATE IS `fenster_h30_enabled()` IN `inc/home-30.php`**, an allow-list: the two local sites, `test.fensterglazing.com`, `localhost`, `127.0.0.1`. `fensterglazing.com` is deliberately absent, so a release cut from `main` that carries this strand still renders the classic `home-experience.php` on live. **Adding live to that list is the change that ships the new homepage. It is the owner's decision, made in its own commit, named in the message and recorded here.**
+  - **WINDOWCAD IS LICENSED FOR `test.fensterglazing.com`.** The commit called this unproven; the frame on test loads the retail interface, not a licence notice. Live's domain is still unproven until tried there.
+  - **Verified on test:** `/` renders `.fg-h30-hero` with the same title, description and canonical as the classic page; 75 internal links all `200`; Leaflet from cdnjs on OpenStreetMap tiles, 17 markers; zero console errors and zero failed requests of its own in headless Chrome at 1440x780, 768x1024 and 390x844; no horizontal overflow at 1440, 768, 390 or 320; hero under the fixed header at each; nothing above 32px. Routes from the parallel sessions still `200` after the deploy: `/sliding-sash-windows/`, `/composite-doors/`, `/why-distinction/`, `/case-studies/`, `/double-glazing-milton-keynes/` with its head-term marker, both sitemaps.
+  - **BEFORE LIVE: the map's OpenStreetMap tiles are outside OSM's usage policy for a commercial site.** Set `FENSTER_GOOGLE_MAPS_KEY` and the same code renders Google Maps. No Safari or real device has seen the page, and Lighthouse has not been run.
+  - **PRE-EXISTING, NOT THIS STRAND: every page that loads Clarity requests eight fonts at `/fonts/Gibson-*` and gets `404`.** `inlineStylesheetForClarity()` in `inc/consent.php` fetches `main.css` and inlines it as a `<style>`, so its `../fonts/` URLs resolve against the page URL instead of `assets/css/`. Nothing visible breaks because the linked stylesheet has already loaded the fonts; it is eight wasted requests and eight console errors a page view.
 - **LIVE IS `b389183d`, TAG `live-casestudy-2026-09-04`, STILL NOT ON `main`, 2026-09-04.** Sixteenth isolated release, cut from `3aa1e851`. One data file and five images, **purely additive**: one hunk, 94 insertions, zero deletions. Nine guards, dry run **six lines** and every one expected, backup proven, residual **0**, socket purge `msg:OK`.
 - **MERCHANT TAYLORS' SCHOOL, NORTHWOOD.** Eleven heritage aluminium windows replacing failed Crittall steel on one elevation, Sheerline in HIPCA white, laminated throughout with Arctic obscure to the changing room, fitted in term time in a couple of days.
 - **THE MAIN CONTRACTOR IS NOT NAMED AND NEVER IS TO BE.** Owner: *"dont ever name the contractor."* He is identifiable from the OneDrive folder the photographs came out of, so the instruction is written into the data file rather than left to memory, and the deploy asserted **zero** occurrences of his name in the diff and on the served page. **The school itself CAN be named**; that distinction was confirmed explicitly.
@@ -825,6 +831,7 @@ ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2
 
 ## What Not To Touch
 
+- Do not add `fensterglazing.com` to the allow-list in `fenster_h30_enabled()` (`inc/home-30.php`) inside any other change. That one edit replaces the live homepage with Homepage 3.0. It is the owner's decision, made in its own commit and recorded in Current Truth.
 - Do not use SiteGround clone/staging tools. They previously caused URL/database confusion.
 - Do not run database search-replace on live.
 - Do not edit live files directly except for a genuine emergency.

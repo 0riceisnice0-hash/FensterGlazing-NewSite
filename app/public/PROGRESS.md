@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-09-02
+Last updated: 2026-09-04
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -13,6 +13,51 @@ sequence rather than ten competing starting points.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## 2026-09-04 — Homepage 3.0: the Rightmove-UX homepage on test, host gated (ON TEST as `9d2b73d4`, NOT LIVE)
+
+Owner: *"ive made a new homepage, read all docs, and see how you can put this
+new homepage on the test site with all the other changes ive been making.
+homepage is the rightmove style thing on a outdated branch i think."*
+
+- **The branch was not outdated.** `feat/homepage-3-0` (worktree `C:/fgh30`)
+  was one commit, `9d2b73d4`, on top of `origin/main` at `72e43765`, made at
+  15:51 the same day, and its eleven strand files were byte-identical to the
+  `fenster-glazing-30` sandbox. So "with all the other changes" was already
+  true: the sash thermal comparison, the three commercial case studies and
+  everything else on `main` sit underneath it. The sandbox's own
+  `HOME30-TEST-DEPLOY.md` planned a hand-applied patch; the commit was that
+  patch, already made.
+- **Checked before pushing:** PHP lint on the four changed files, the four
+  finder tests, all ten theme helpers the strand borrows present on `main`,
+  and the committed `assets/home30/` bundle rebuilt from source and
+  byte-identical (sass 1.100.0, esbuild 0.25.12).
+- Pushed `HEAD:main` under `pipefail`, fetched and asserted
+  `HEAD == origin/main`, then deployed with the runbook command: dry run 51
+  lines (46 files, five new directories, zero deletions), residual 0,
+  `wp cache flush` and `wp sg purge` both succeeded on test, and
+  `inc/home-30.php` on disk hashes to the repo's blob.
+- **Verified on test** at 1440x780, 768x1024, 390x844 and 320x700: renders,
+  same head as the classic page, 75 internal links all `200`, no overflow,
+  hero under the header, nothing above 32px, zero console errors or failed
+  requests of its own. **WindowCAD loads the real tool on test**, which the
+  commit had listed as unproven. Leaflet on OpenStreetMap renders with 17
+  markers. Routes from the parallel sessions re-checked `200` afterwards:
+  sash, composite doors, why-distinction, case studies, the head-term page
+  with its marker, both sitemaps.
+- **Trap worth knowing: the in-app Browser pane is hidden most of the time,
+  and then screenshots come back blank and `window.scrollTo` is snapped back
+  by Lenis.** Wheel events through `computer.scroll` do drive Lenis and do
+  fire `IntersectionObserver`, so the WindowCAD frame and the map could be
+  proven in the pane; the pictures came from `scripts/shot.mjs` with a
+  `--pre` that dismisses the cookie dialog, makes every lazy image eager and
+  defines `window.__fensterSeek` on top of `lenis.scrollTo(y, {immediate:
+  true})`.
+- Found in passing, not fixed: eight font `404`s per page from the inline
+  Clarity replay stylesheet, site-wide and older than this work. Recorded in
+  `LIVECHANGES.md`.
+- Live untouched at `b389183d`. Docs: `HOMEPAGE-30.md` added; `LIVECHANGES.md`,
+  `HANDOVER.md` and `AI.md` updated.
 
 ## 2026-09-04 — Sliding sash: the thermal camera comparison (ON TEST as `08c44a33`, NOT LIVE)
 

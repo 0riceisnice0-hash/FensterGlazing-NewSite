@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-## Current state, 2026-08-31 — read this before touching either environment
+## Current state, 2026-09-04 — read this before touching either environment
 
 **Read in this order if you are picking this up cold:** this section, then the
 Current Truth section of `LIVECHANGES.md` (the only authority on what is live
@@ -15,13 +15,14 @@ checksum rather than copied from a document. **It is NOT an ancestor of `main`.*
 | | SHA | theme tree |
 | --- | --- | --- |
 | live | `b389183d` (tag `live-casestudy-2026-09-04`) | `76d5b4a5` |
-| test | `7e660422` | `e8fb9154` |
-| `main` | `7e660422` (docs commit above it) | `e8fb9154` |
+| test | `9d2b73d4` | `945e29c3` |
+| `main` | `9d2b73d4` | `945e29c3` |
 
-Test and `main` are theme-identical. Live is a **separate line** and 246 theme
-files differ from `main` — one fewer than before this release, because it
-spliced `inc/commercial-product-data.php` across, so the two lines now agree
-on that one file.
+Test and `main` are theme-identical. Live is a **separate line** and 308 theme
+files differ from `main`; 45 of those are the Homepage 3.0 strand added on
+2026-09-04, which is host-gated so live keeps the classic homepage even if a
+release carries it (see `HOMEPAGE-30.md`). The rest is everything `main` has
+accumulated since the lines split on 2026-08-30, none of it approved for live.
 
 ### Why live is not on `main`, and what that means for you
 
@@ -2194,6 +2195,15 @@ SMTP constants supported in `wp-config.php`:
 - optional `FENSTER_SMTP_SECURE`
 
 ## Homepage
+
+**There are two homepages in the theme as of 2026-09-04, and a host gate decides
+which one renders.** Homepage 3.0, the Rightmove-UX homepage, is
+`inc/home-30.php`, `template-parts/sections/home-30.php`, `src/home30/` and
+`assets/home30/`, on `main` as `9d2b73d4` and on test. `fenster_h30_enabled()`
+allow-lists the local sites and `test.fensterglazing.com` only, so live renders
+the classic homepage described below until `fensterglazing.com` is added to
+that list deliberately. Read `HOMEPAGE-30.md` for that strand. Everything from
+here down describes the classic homepage, which is what live serves.
 
 Dedicated homepage source of truth:
 
