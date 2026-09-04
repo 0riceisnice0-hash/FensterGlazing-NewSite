@@ -174,7 +174,7 @@ $fg_has_glass = ! empty($fg_glass['items']);
 $fg_has_colour = ! empty($colour_wall);
 ?>
 <?php if ($fg_has_glass || $fg_has_colour) : ?>
-<section class="fg-finish" aria-labelledby="fg-finish-title">
+<div class="fg-finish">
     <?php
     /* THE INDEX WENT, AND SO DID THE VIEWPORT IT COST. It listed Glass,
        Colour and Handles with a fact each, immediately above Glass, Colour
@@ -189,6 +189,7 @@ $fg_has_colour = ! empty($colour_wall);
        so the sequence is the structure rather than something the copy has to
        assert. */
     ?>
+    <section class="fg-finish__intro" aria-labelledby="fg-finish-title">
     <div class="container">
         <header class="fg-chapter-head">
             <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
@@ -196,12 +197,10 @@ $fg_has_colour = ! empty($colour_wall);
             <p><?php esc_html_e('In the order of how much each one changes the door. All three are chosen in the quote tool against the style you picked, and the price moves as you change them.', 'fenster'); ?></p>
         </header>
     </div>
-
-    <div class="container">
-        <div class="fg-finish__surface">
+    </section>
             <?php if ($fg_has_glass) : ?>
-                <div class="fg-finish__step">
-                    <p class="fg-finish__num" aria-hidden="true">01</p>
+                <section class="fg-finish__step">
+                    <div class="container"><p class="fg-finish__num" aria-hidden="true">01</p></div>
                     <div class="fg-finish__body">
                         <?php
                         get_template_part('template-parts/components/composite-glass', null, [
@@ -211,7 +210,7 @@ $fg_has_colour = ! empty($colour_wall);
                         ]);
                         ?>
                     </div>
-                </div>
+                </section>
             <?php endif; ?>
 
             <?php if ($fg_has_colour) : ?>
@@ -255,8 +254,8 @@ $fg_has_colour = ! empty($colour_wall);
            this page. It sits on the shared canvas now and the preview panel
            supplies the local contrast. */
         ?>
-        <div class="fg-finish__step">
-            <p class="fg-finish__num" aria-hidden="true">02</p>
+        <section class="fg-finish__step">
+            <div class="container"><p class="fg-finish__num" aria-hidden="true">02</p></div>
             <div class="fg-finish__body">
         <section class="fg-cd3-colour" aria-labelledby="fg-cd3-colour-title">
             <div class="container">
@@ -321,7 +320,7 @@ $fg_has_colour = ! empty($colour_wall);
             </div>
         </section>
             </div>
-        </div>
+        </section>
     <?php endif; ?>
 
             <?php
@@ -333,14 +332,12 @@ $fg_has_colour = ! empty($colour_wall);
                component. */
             if (function_exists('fenster_door_handle_grid_args')) :
                 ?>
-                <div class="fg-finish__step">
-                    <p class="fg-finish__num" aria-hidden="true">03</p>
+                <section class="fg-finish__step">
+                    <div class="container"><p class="fg-finish__num" aria-hidden="true">03</p></div>
                     <div class="fg-finish__body">
                         <?php get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args()); ?>
                     </div>
-                </div>
+                </section>
             <?php endif; ?>
-        </div>
-    </div>
-</section>
+</div>
 <?php endif; ?>

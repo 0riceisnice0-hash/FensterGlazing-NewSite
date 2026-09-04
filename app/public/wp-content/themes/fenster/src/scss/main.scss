@@ -48629,12 +48629,6 @@ html.fg-blinds-reveal-locked {
     background: transparent;
   }
 
-  .fg-finish__body .container {
-    width: 100%;
-    max-width: none;
-    padding-inline: 0;
-  }
-
   /* One head shape across all three steps, so they read as steps rather
      than as three sections that happen to be adjacent. */
   .fg-finish__body .fg-finish__step-head,
@@ -51416,4 +51410,39 @@ html.fg-blinds-reveal-locked {
   .generated-page--composite-doors .fg-cds__filters {
     padding-block: 0.4rem;
   }
+}
+
+/* ============================================================================
+   ONE VIEWPORT PER SECTION: `/composite-doors/`, 2026-09-03
+   Owner: "can we make everything one viewport tall".
+
+   Measured at 1536x864 under the 73px sticky header, so the budget is 791px
+   and 1px over counts, the same way the sash page is measured. Five sections
+   were over: the finishes chapter by 1,926px, the cutaway by 310, the enquiry
+   panel by 166, the quiz by 135 and the case study strip by 105.
+
+   THE FINISHES CHAPTER COULD NOT BE TRIMMED INTO BUDGET, ONLY SPLIT. It was
+   three separate decisions - glass, colour, handles - inside one `<section>`,
+   so no amount of padding work would have got 2,717px under 791. The wrapper
+   is a `<div>` now and each step is its own section, which is what it always
+   read as. The chapter head takes a short section of its own rather than
+   riding on step 01, where it would have put glass 180px over before the
+   pictures started.
+   ========================================================================= */
+
+.generated-page--composite-doors {
+
+  .fg-finish { display: block; }
+
+  /* The head is its own stop now. Short is fine: the rule is a ceiling. */
+  .fg-finish__intro { padding-block: clamp(2.2rem, 4.5vw, 3.4rem) 0; }
+  .fg-finish__intro .fg-chapter-head { margin-bottom: 0; }
+
+  .fg-finish__step { padding-block: clamp(1.5rem, 3vw, 2.3rem); }
+  .fg-finish__step + .fg-finish__step { border-top: 1px solid rgba(2, 43, 53, 0.16); }
+  .fg-finish__step:last-child { padding-bottom: clamp(2.2rem, 4.5vw, 3.4rem); }
+
+  /* The steps are top-level sections now, so the shared section padding rule
+     would double up with the one above. */
+  .fg-finish__step > .container { padding-block: 0; }
 }
