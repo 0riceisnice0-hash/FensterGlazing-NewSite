@@ -51634,3 +51634,38 @@ html.fg-blinds-reveal-locked {
 
   .fg-cd3-anatomy__media { max-height: 352px; }
 }
+
+/* ---- One viewport per section, fourth pass -------------------------
+ * The last two, and both had been missed for the same reason as the case
+ * study card: the cut was landing somewhere that did not own the height.
+ *
+ * THE ENQUIRY PANEL was not the section padding, which had already come down
+ * twice. Both grid columns carry 40px of their own top and bottom padding -
+ * 80px each - and the form column is the taller of the two, so that 80px was
+ * the whole overrun.
+ *
+ * THE TEXTAREA ignored `min-height: 58px` and stayed 110px, because it has
+ * `rows="4"` and the intrinsic row height wins. `height` is what binds.
+ * -------------------------------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  .fg-enquiry__copy,
+  .fg-enquiry .fg-form { padding-block: clamp(1rem, 2vw, 1.3rem); }
+
+  .fg-enquiry .fg-form textarea {
+    height: 76px;
+    min-height: 0;
+  }
+
+  /* glass step 819 around a section of 729: the wrapper's own padding and
+     step marker were the 90px difference, and the step head's lede is the
+     tallest thing in a head that only needs to name the decision. */
+  .fg-finish__step { padding-block: clamp(0.8rem, 1.6vw, 1.1rem); }
+
+  .fg-composite-glass .fg-finish__step-head p {
+    max-width: 70ch;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+}
