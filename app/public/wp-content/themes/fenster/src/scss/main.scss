@@ -51841,3 +51841,22 @@ html.fg-blinds-reveal-locked {
 
   .fg-cdq__panel { padding-top: 0; }
 }
+
+/* ---- The last 51px, and three nudges under 10 ---------------------- */
+
+.generated-page--composite-doors {
+
+  /* The cutaway is the only one still over at the tighter viewport, and it
+     is over at both, so the drawing takes the last of it. 425px is still
+     well clear of the 352 that read as broken, and the layer list beside it
+     sets the same height, so there is no void either way. */
+  .fg-cd3-anatomy__media { max-height: 425px; }
+
+  .fg-cd3-anatomy__footnote { font-size: 0.8rem; }
+
+  .fg-finish__step-head { margin-bottom: clamp(0.6rem, 1.3vw, 0.95rem); }
+
+  .fg-cs-strip__grid { gap: clamp(0.8rem, 1.6vw, 1.2rem); }
+
+  .fg-cdq__progress { margin-bottom: 0.6rem; }
+}
