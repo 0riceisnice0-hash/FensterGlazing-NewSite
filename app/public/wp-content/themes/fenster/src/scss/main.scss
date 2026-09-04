@@ -51680,3 +51680,68 @@ html.fg-blinds-reveal-locked {
     min-height: calc(100svh - 73px);
   }
 }
+
+/* ---- Screens that earn themselves ---------------------------------
+ * Giving EVERY section a screen was the wrong reading of the rule. Two of
+ * them were connective tissue, and a full viewport each turned them into
+ * padding: the chapter head was a heading and three lines stranded in 600px
+ * of nothing, and the long-version link was a 190px card alone on a screen.
+ * Both are now part of the section whose argument they finish, which also
+ * fills the guarantee screen - a 390px panel that was floating in 791px.
+ * ------------------------------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  /* The link band, now the closing line of the guarantee rather than a stop
+     of its own. Ruled off so it reads as a footer to the panel above it. */
+  .fg-wd-cta {
+    margin-top: clamp(1.6rem, 3vw, 2.4rem);
+    padding-top: clamp(1.4rem, 2.6vw, 2rem);
+    border-top: 1px solid rgba(2, 43, 53, 0.16);
+  }
+
+  .fg-wd-cta h2 { font-size: clamp(1.35rem, 2.1vw, 1.7rem); }
+
+  .fg-cd3-security__inner { width: min(100% - 2rem, var(--container)); }
+
+  /* The chapter head rides on the first decision now. Two heads stacked is
+     a lot, so this one is compact and the step's own head does the detail. */
+  .fg-chapter-head--chapter {
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    padding-bottom: clamp(0.7rem, 1.4vw, 1rem);
+    border-bottom: 1px solid rgba(2, 43, 53, 0.14);
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+    }
+  }
+
+  /* ---- The drawing, sized to its screen rather than capped blind ----
+     Uncapped it is ~626px and the section runs to 1052. This holds it well
+     above the 352px that looked broken while leaving the head, the four
+     figures and the footnote their room. */
+  .fg-cd3-anatomy__media { max-height: 512px; }
+
+  .fg-cd3-anatomy__explorer { padding: clamp(1rem, 1.8vw, 1.35rem); }
+
+  .fg-cd3-anatomy__head { margin-bottom: clamp(0.8rem, 1.6vw, 1.1rem); }
+
+  .fg-cd3-anatomy__stats > div { padding-block: clamp(0.45rem, 0.9vw, 0.65rem); }
+
+  /* ---- The remaining few, all small ------------------------------- */
+
+  /* glass step now carries the chapter head as well; its closing small print
+     is the least valuable thing on the screen. */
+  .fg-composite-glass__foot {
+    padding-top: clamp(0.8rem, 1.6vw, 1.15rem);
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .fg-cs-card__body { padding-block: clamp(0.75rem, 1.5vw, 1.05rem); }
+
+  .fg-cs-strip__head { margin-bottom: clamp(0.9rem, 1.8vw, 1.3rem); }
+
+  .fg-cdq__head { margin-bottom: clamp(0.8rem, 1.6vw, 1.1rem); }
+}

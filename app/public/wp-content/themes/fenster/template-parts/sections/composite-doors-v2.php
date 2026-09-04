@@ -132,33 +132,23 @@ $colour_doors_base = (string) ($args['colour_doors_base'] ?? '');
                 <?php endforeach; ?>
             </ul>
         </div>
+        <div class="fg-wd-cta">
+            <div class="container">
+                <div class="fg-wd-cta__inner">
+                    <div>
+                        <p class="eyebrow"><?php esc_html_e('The long version', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('Why we fit Distinction and not something else.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('Where the thermal figure comes from and what it does not cover, the accreditation, the warranty, and the part that is a judgement rather than a measurement.', 'fenster'); ?></p>
+                    </div>
+                    <p class="fg-wd-cta__action">
+                        <a class="button" href="<?php echo esc_url(home_url('/why-distinction/')); ?>"><?php esc_html_e('Read why we fit them', 'fenster'); ?></a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
 <?php endif; ?>
 
-<?php
-/* THE CHAPTER'S FOOTER, NOT A STRANDED BAND. It used to sit alone with
-   about 135px of dead canvas above it, copy left and a button floating
-   at the far right. It reads as "you have seen it, here is why we chose
-   it", which only works directly under the cutaway and the guarantee.
-
-   It is also NO LONGER GATED ON `$colour_wall`. This block and the glass
-   section below both sat inside `if (! empty($colour_wall))`, so unrelated
-   data could have taken the site's only link to `/why-distinction/` down. */
-?>
-<section class="fg-wd-cta">
-    <div class="container">
-        <div class="fg-wd-cta__inner">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('The long version', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Why we fit Distinction and not something else.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Where the thermal figure comes from and what it does not cover, the accreditation, the warranty, and the part that is a judgement rather than a measurement.', 'fenster'); ?></p>
-            </div>
-            <p class="fg-wd-cta__action">
-                <a class="button" href="<?php echo esc_url(home_url('/why-distinction/')); ?>"><?php esc_html_e('Read why we fit them', 'fenster'); ?></a>
-            </p>
-        </div>
-    </div>
-</section>
 
 <?php
 /* ==================================================================
@@ -189,18 +179,15 @@ $fg_has_colour = ! empty($colour_wall);
        so the sequence is the structure rather than something the copy has to
        assert. */
     ?>
-    <section class="fg-finish__intro" aria-labelledby="fg-finish-title">
-    <div class="container">
-        <header class="fg-chapter-head">
-            <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
-            <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('In the order of how much each one changes the door. All three are chosen in the quote tool against the style you picked, and the price moves as you change them.', 'fenster'); ?></p>
-        </header>
-    </div>
-    </section>
             <?php if ($fg_has_glass) : ?>
-                <section class="fg-finish__step">
-                    <div class="container"><p class="fg-finish__num" aria-hidden="true">01</p></div>
+                <section class="fg-finish__step fg-finish__step--first">
+                    <div class="container">
+                        <header class="fg-chapter-head fg-chapter-head--chapter">
+                            <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
+                            <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
+                        </header>
+                        <p class="fg-finish__num" aria-hidden="true">01</p>
+                    </div>
                     <div class="fg-finish__body">
                         <?php
                         get_template_part('template-parts/components/composite-glass', null, [
