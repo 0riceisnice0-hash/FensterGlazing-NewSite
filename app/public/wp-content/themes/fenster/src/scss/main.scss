@@ -51446,3 +51446,91 @@ html.fg-blinds-reveal-locked {
      would double up with the one above. */
   .fg-finish__step > .container { padding-block: 0; }
 }
+
+/* ============================================================================
+   ONE VIEWPORT PER SECTION: the six that were still over, 2026-09-03
+
+   Budget 791px at 1536x864 under the 73px header. Each cut below is sized
+   from a measured breakdown of that section, not from taste: the section
+   height, its own padding, and the height of every child over 12px.
+
+   The pattern across all six was the same - generous section padding on a
+   page that has fifteen sections, so 84px top and bottom is 168px of the
+   budget before any content. That comes down everywhere here; where padding
+   alone was not enough the largest single child is cut as well, and nothing
+   loses content.
+   ========================================================================= */
+
+.generated-page--composite-doors {
+
+  /* ---- The cutaway: 1101, over by 310 ----------------------------
+     padding 124, head 125, explorer 685, stats 96. The explorer is the only
+     child big enough to matter, and the drawing inside it is what sets it. */
+  .fg-cd3-anatomy {
+    padding-block: clamp(2.2rem, 3.4vw, 3rem) clamp(1.6rem, 2.6vw, 2.2rem);
+  }
+
+  .fg-cd3-anatomy__head {
+    margin-bottom: clamp(0.9rem, 1.8vw, 1.3rem);
+
+    h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+    p  { font-size: 0.97rem; }
+  }
+
+  .fg-cd3-anatomy__media { max-height: 460px; }
+
+  .fg-cd3-anatomy__stats { margin-top: clamp(0.8rem, 1.6vw, 1.15rem); }
+
+  /* ---- The enquiry panel: 957, over by 166 -----------------------
+     168 of it was padding. Scoped to this route: `.fg-enquiry` is the shared
+     closing panel on every product page and this rule is this page's. */
+  .fg-enquiry {
+    padding-block: clamp(2.2rem, 3.4vw, 2.9rem);
+  }
+
+  .fg-enquiry .fg-form label { margin-bottom: 0.35rem; }
+
+  .fg-enquiry .fg-form textarea { min-height: 96px; }
+
+  /* ---- The quiz: 926, over by 135 --------------------------------
+     160 padding, 174 head. The head carried a badge, a title and a
+     three-line standfirst above a panel that repeats the question anyway. */
+  .fg-cdq {
+    padding-block: clamp(2rem, 3.2vw, 2.7rem);
+  }
+
+  .fg-cdq__head {
+    margin-bottom: clamp(0.9rem, 1.8vw, 1.3rem);
+
+    h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+  }
+
+  .fg-cdq__standfirst { max-width: 60ch; font-size: 0.95rem; }
+
+  /* ---- The case study strip: 896, over by 105 --------------------
+     112 padding and a 584px grid of three cards, which is a 4:3 photograph
+     plus a title and two lines. The photograph carries the trim. */
+  .fg-cs-strip {
+    padding-block: clamp(1.9rem, 3vw, 2.4rem);
+  }
+
+  .fg-cs-strip__grid img { aspect-ratio: 3 / 2; }
+
+  /* ---- Glass: the step was 894, over by 103 ----------------------
+     The preview at 4:5 was 25% taller than the column beside it needed, and
+     that column - strip, patterns, note - already sets a floor of ~620px. A
+     square preview sits inside that floor and costs the section nothing. */
+  .fg-glass-pick__preview img { aspect-ratio: 1 / 1; }
+
+  .fg-composite-glass .fg-finish__step-head { margin-bottom: clamp(0.7rem, 1.5vw, 1.1rem); }
+
+  /* ---- Colour: the step was 837, over by 46 ----------------------
+     The closing note was 108px of caveat under a 571px picker. */
+  .fg-cd3-colour__note {
+    margin-top: clamp(0.7rem, 1.5vw, 1rem);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .fg-cd3-colour .fg-finish__step-head { margin-bottom: clamp(0.7rem, 1.5vw, 1.1rem); }
+}
