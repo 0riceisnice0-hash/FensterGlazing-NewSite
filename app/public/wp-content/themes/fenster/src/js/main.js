@@ -1628,8 +1628,8 @@ document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
    the picture drives one custom property, `--fg-thermal-split`, which both the
    warm view's clip and the divider read; the three model buttons rewrite the
    figures beside it from their own data attributes. PHP has already rendered
-   the first model's figures, so without JavaScript the section still reads
-   correctly, it just does not switch. */
+   the first model's figures and holds the units, so without JavaScript the
+   section still reads correctly, it just does not switch. */
 document.querySelectorAll('[data-fg-sash-thermal]').forEach((section) => {
   const range = section.querySelector('[data-fg-thermal-range]');
   const models = [...section.querySelectorAll('[data-fg-thermal-model]')];
@@ -1644,21 +1644,27 @@ document.querySelectorAll('[data-fg-sash-thermal]').forEach((section) => {
 
   if (!models.length) return;
 
-  /* Every element that shows a figure, so a model change writes them all. The
-     glass temperature appears twice, in the stats and on the picture's tag. */
-  const write = (attribute, value) => {
-    section.querySelectorAll(`[data-fg-thermal-${attribute}]`).forEach((slot) => {
-      slot.textContent = value;
-    });
-  };
+  /* Each slot is a data attribute on the button and a matching attribute on
+     every element that shows it. The glass temperature appears twice, bare on
+     the picture's tag and as a phrase in the figures. */
+  const slots = [
+    ['name', 'name'],
+    ['glass', 'glass'],
+    ['glassFull', 'glass-full'],
+    ['wattsFull', 'watts-full'],
+    ['costFull', 'cost-full'],
+  ];
 
   models.forEach((button) => {
     button.addEventListener('click', () => {
       models.forEach((item) => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
-      write('name', button.dataset.name || '');
-      write('glass', button.dataset.glass || '');
-      write('watts', button.dataset.watts || '');
-      write('cost', button.dataset.cost || '');
+      slots.forEach(([key, attribute]) => {
+        const value = button.dataset[key];
+        if (value === undefined) return;
+        section.querySelectorAll(`[data-fg-thermal-${attribute}]`).forEach((slot) => {
+          slot.textContent = value;
+        });
+      });
     });
   });
 });
