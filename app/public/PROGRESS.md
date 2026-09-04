@@ -48,6 +48,34 @@ put it under the main 3 models, but before real homes."* The design is
   figure and not one of our tests, and what the room, area, tariff and
   surface resistance are. It is the only number on that section we do not
   own, and it is the reason the section is honest.
+- **Then rebuilt to the page's own language, the same day (test `740e2808`).**
+  Owner: *"make it way better. fit it in one vp etc. styalise. make uniform."*
+  It fitted the viewport but sat well short of it, 585px in a 707px budget,
+  and it had brought its own furniture onto a page that had settled on a
+  language. It is built like the Roseview stage now: head across the top,
+  picture on the left, a 400px detail column on the right, the same viewport
+  arithmetic, so it is exactly one screen under the header at 1280x720,
+  1440x780, 1440x900 and 1920x1080.
+- **What the furniture became.** The four dark chips and the dark key bar,
+  the only dark furniture left on a light page, are the white hairline pills
+  the windows on the stage wear. The drop-shadowed rectangle, the only hard
+  box, is a soft radius and an inset hairline. The divider handle is the
+  stage's arrow button. The figures are the stage's hairline fact rows with
+  a small-caps label above them. The model switch is the lock selector's
+  chip. The arrow between the two figures is drawn rather than typed, so it
+  holds its baseline at any size. The detail column spreads through the
+  picture's height rather than bunching at the top.
+- **Two bugs the rebuild found.** The units were being pasted together in
+  JavaScript, which put text outside the translation functions; they are
+  data attributes on the model buttons now. And the mobile block reset the
+  section's inner width to auto, which killed the container's margins and
+  ran the picture edge to edge; the desktop formula already resolves to the
+  page margin at phone widths, exactly as the stage's does.
+- **One inconsistency left, and it is the stage's.** On a phone this section
+  and the Roseview stage are inset 24px while the gallery and the rest are
+  inset 12px, because both use that wider frame formula. They match each
+  other, which is what uniform meant here; nothing was changed in the stage
+  to close the gap with the others.
 - **The design MCP could not authorise from this session** (`/design-login`
   needs an interactive terminal), so the project was read through the
   owner's logged-in browser instead. See the memory note; nothing about the
