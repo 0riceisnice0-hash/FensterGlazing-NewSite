@@ -4747,7 +4747,6 @@ if ($is_commercial_hub) {
                             <span class="fg-sash-stage__title--mobile"><?php esc_html_e('Choose your Roseview sash.', 'fenster'); ?></span>
                         </h2>
                     </div>
-                    <p><?php esc_html_e('Ultimate, Heritage and Charisma Rose all give a vertical sliding sash format. The important differences are the meeting rail, corner construction, horns, cills, glazing depth and how closely the window needs to reproduce timber.', 'fenster'); ?></p>
                 </div>
 
                 <div class="fg-sash-stage__body">
@@ -4831,33 +4830,25 @@ if ($is_commercial_hub) {
                         <p class="fg-sash-stage__sr" aria-live="polite" data-fg-stage-live></p>
                     </div>
 
-                    <div class="fg-sash-stage__panels" data-fg-stage-panels>
+                    <?php /* THE DETAILS STAND EITHER SIDE OF THE WINDOWS. Owner, 2026-09-03,
+                             after the stage became one surface: "as in centre it. has the
+                             detail on both sides." Each model has two halves: the story on
+                             the left (what it is called, what it is for, what the details
+                             mean) and the facts on the right (the meeting rail photograph
+                             and the seven rows). Both halves carry the model's index and
+                             the script shows the pair together. */ ?>
+                    <div class="fg-sash-stage__panels fg-sash-stage__panels--story" data-fg-stage-panels>
                         <?php foreach ($sash_roseview_models as $index => $model) : ?>
-                            <article class="fg-sash-stage__panel" data-fg-stage-panel aria-label="<?php echo esc_attr((string) $model['name'] . ' specifications'); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
+                            <article class="fg-sash-stage__panel" data-fg-stage-panel="<?php echo esc_attr((string) $index); ?>" aria-label="<?php echo esc_attr((string) $model['name']); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
                                 <header class="fg-sash-stage__panel-head">
-                                    <div>
-                                        <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
-                                        <h3><?php echo esc_html((string) $model['name']); ?></h3>
-                                    </div>
-                                    <figure class="fg-sash-stage__rail-photo">
-                                        <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="96" height="72">
-                                        <figcaption><?php echo esc_html((string) $model['rail_label']); ?></figcaption>
-                                    </figure>
+                                    <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
+                                    <h3><?php echo esc_html((string) $model['name']); ?></h3>
                                 </header>
                                 <p class="fg-sash-stage__best"><strong><?php esc_html_e('Best for', 'fenster'); ?></strong> <?php echo esc_html(lcfirst((string) $model['best_for'])); ?></p>
-                                <dl class="fg-sash-stage__facts">
-                                    <?php foreach ($sash_comparison_rows as $row) : ?>
-                                        <?php if ($row[0] === 'Meeting rail') { continue; } ?>
-                                        <div>
-                                            <dt><?php echo esc_html((string) $row[0]); ?></dt>
-                                            <dd><?php echo esc_html((string) ($row[$index + 1] ?? '')); ?></dd>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </dl>
                                 <?php /* Owner, 2026-09-02, after the first pass: "need something in
                                          the empty box looking space. like just a written bit about
                                          that window. what it all means etc." Two paragraphs per
-                                         model, written from the figures above them. */ ?>
+                                         model, written from the figures beside them. */ ?>
                                 <?php if (! empty($model['meaning']) && is_array($model['meaning'])) : ?>
                                     <div class="fg-sash-stage__meaning">
                                         <strong><?php esc_html_e('What the details mean', 'fenster'); ?></strong>
@@ -4867,6 +4858,26 @@ if ($is_commercial_hub) {
                                     </div>
                                 <?php endif; ?>
                             </article>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="fg-sash-stage__panels fg-sash-stage__panels--facts" data-fg-stage-panels>
+                        <?php foreach ($sash_roseview_models as $index => $model) : ?>
+                            <div class="fg-sash-stage__panel" data-fg-stage-panel="<?php echo esc_attr((string) $index); ?>" role="group" aria-label="<?php echo esc_attr((string) $model['name'] . ' specifications'); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
+                                <figure class="fg-sash-stage__rail-photo">
+                                    <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="120" height="90">
+                                    <figcaption><?php echo esc_html((string) $model['rail_label']); ?></figcaption>
+                                </figure>
+                                <dl class="fg-sash-stage__facts">
+                                    <?php foreach ($sash_comparison_rows as $row) : ?>
+                                        <?php if ($row[0] === 'Meeting rail') { continue; } ?>
+                                        <div>
+                                            <dt><?php echo esc_html((string) $row[0]); ?></dt>
+                                            <dd><?php echo esc_html((string) ($row[$index + 1] ?? '')); ?></dd>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </dl>
+                            </div>
                         <?php endforeach; ?>
                     </div>
 

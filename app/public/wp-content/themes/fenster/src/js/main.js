@@ -7680,8 +7680,12 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
 document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
   const scene = stage.querySelector('[data-fg-stage-scene]');
   const slides = [...stage.querySelectorAll('[data-fg-stage-slide]')];
-  const panelsWrap = stage.querySelector('[data-fg-stage-panels]');
+  /* Two containers since 2026-09-03: the story on the left of the windows and
+     the facts on the right. Every panel carries its model's index, so a model
+     is shown by matching that, not by position in the list. */
+  const panelsWraps = [...stage.querySelectorAll('[data-fg-stage-panels]')];
   const panels = [...stage.querySelectorAll('[data-fg-stage-panel]')];
+  const panelIndex = (panel) => Number(panel.dataset.fgStagePanel);
   const selectors = [...stage.querySelectorAll('[data-fg-stage-select]')];
   const marker = stage.querySelector('[data-fg-dial-marker]');
   const controls = stage.querySelector('[data-fg-stage-controls]');
@@ -7699,7 +7703,7 @@ document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
   let dragging = false;
   let switchTimer = 0;
 
-  const modelName = (index) => panels[index]?.querySelector('h3')?.textContent?.trim() || '';
+  const modelName = (index) => panels.find((panel) => panelIndex(panel) === index && panel.querySelector('h3'))?.querySelector('h3')?.textContent?.trim() || '';
 
   const positionFor = (index) => {
     const offset = (index - active + count) % count;
@@ -7708,8 +7712,8 @@ document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
   };
 
   const applyPanels = () => {
-    panels.forEach((panel, index) => {
-      panel.hidden = index !== active;
+    panels.forEach((panel) => {
+      panel.hidden = panelIndex(panel) !== active;
     });
   };
 
@@ -7730,14 +7734,14 @@ document.querySelectorAll('[data-fg-sash-stage]').forEach((stage) => {
       }
     });
 
-    if (!announce || reduced.matches || !panelsWrap) {
+    if (!announce || reduced.matches || !panelsWraps.length) {
       applyPanels();
     } else {
-      panelsWrap.classList.add('is-switching');
+      panelsWraps.forEach((wrap) => wrap.classList.add('is-switching'));
       clearTimeout(switchTimer);
       switchTimer = setTimeout(() => {
         applyPanels();
-        panelsWrap.classList.remove('is-switching');
+        panelsWraps.forEach((wrap) => wrap.classList.remove('is-switching'));
       }, 150);
     }
 
