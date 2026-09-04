@@ -51534,3 +51534,57 @@ html.fg-blinds-reveal-locked {
 
   .fg-cd3-colour .fg-finish__step-head { margin-bottom: clamp(0.7rem, 1.5vw, 1.1rem); }
 }
+
+/* ---- One viewport per section, second pass ------------------------
+ * Five still over after the first cuts, and the breakdown said why in each
+ * case. Numbers below are the measured child heights at 1536x864.
+ * ------------------------------------------------------------------ */
+
+.generated-page--composite-doors {
+
+  /* enquiry 918: 93 padding, and a form column of 825 driven by a 743px
+     field grid. The padding was already cut; this is the grid itself. */
+  .fg-enquiry { padding-block: clamp(1.9rem, 2.9vw, 2.1rem); }
+
+  .fg-enquiry-form__compact-grid { gap: 0.6rem 0.85rem; }
+
+  .fg-enquiry .fg-form input,
+  .fg-enquiry .fg-form select { padding-block: 0.55rem; }
+
+  .fg-enquiry .fg-form textarea { min-height: 74px; }
+
+  .fg-enquiry .fg-form label { margin-bottom: 0.25rem; font-size: 0.82rem; }
+
+  /* anatomy 891: head 125, explorer 518 (media and layers both 460), stats
+     96. The 460 cap landed; it just needs to be lower. */
+  .fg-cd3-anatomy__media { max-height: 370px; }
+
+  .fg-cd3-anatomy__stats {
+    margin-top: clamp(0.6rem, 1.2vw, 0.9rem);
+
+    > div { padding-block: clamp(0.5rem, 1vw, 0.7rem); }
+  }
+
+  .fg-cd3-anatomy__lede { font-size: 0.95rem; }
+
+  /* case studies 860: three 584px cards. `aspect-ratio` did not bind on the
+     card image - it carries its own height - so cap it instead. */
+  .fg-cs-strip__grid img {
+    max-height: 188px;
+    object-fit: cover;
+  }
+
+  .fg-cs-strip__head h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+
+  /* quiz 829: 86 padding and a 163px head above a panel that asks the
+     question again. */
+  .fg-cdq { padding-block: clamp(1.7rem, 2.6vw, 1.9rem); }
+
+  .fg-cdq__standfirst { font-size: 0.92rem; line-height: 1.5; }
+
+  /* The glass section itself is 753 and fits; the step wrapper around it was
+     adding 69 of padding and marker on top. */
+  .fg-finish__step { padding-block: clamp(1.2rem, 2.2vw, 1.5rem); }
+
+  .fg-finish__num { margin-bottom: 0.4rem; }
+}
