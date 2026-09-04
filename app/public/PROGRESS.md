@@ -14,6 +14,44 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-03 — Sliding sash: the running order, and a shorter window than I was measuring (ON TEST as `f7dd41e1`, NOT LIVE)
+
+Owner: *"real homes isnt in one viewport its a bit too tall. get rid of
+'your project'. make the order after real homes go, sash window furniture,
+privacy glass, instant quote, trust bar, case studies, FAQ."*
+
+- **The order is now hero, key specs, the Roseview stage, Real homes, the
+  furniture selector, privacy glass, the instant quote, the reviews, the
+  case studies, the FAQs, the enquiry form.** Two moves did it: the privacy
+  glass card now follows the furniture selector, and the FAQs move to after
+  the case studies.
+- **The FAQs are deferred with an output buffer, not moved.** They are built
+  inside the product-journey block and the sections they now follow are
+  outside it, so `generated-page.php` captures the markup where it is built
+  and echoes it at the later point. The schema goes with it and is still
+  emitted once (checked on test: one `fg-product-faq` section, one
+  `FAQPage`). The buffer only opens on this slug, so no other route changes;
+  `/tilt-turn-windows/` and `/french-doors/` were checked for their FAQ and
+  schema after the deploy. The echo sits after the case-study strip's own
+  conditional, deliberately, so the questions cannot disappear on a page
+  with no case studies.
+- **The "Your project / Ready to price your sash windows?" band is gone.**
+  It had two buttons, one of which jumped to the instant quote section
+  further down the same page; that section, the enquiry form and the header
+  all carry the same two actions. It rendered only on this route.
+- **THE OWNER'S WINDOW IS ABOUT 780px TALL, NOT 900.** Real homes measured
+  740px against an 827px budget at 1440x900 and 742px against 1007px at
+  1920x1080, so by the ruler it fitted and by his eye it did not. Re-measured
+  at 1440x780 (a 707px budget) the reviews were over by 2px, the case-study
+  strip by 71px and the enquiry form by 8px. Real homes is trimmed to 613px
+  (shorter rail rows, less padding, tighter head) and the other three are
+  trimmed in route-scoped rules: less padding on the reviews and the form, a
+  tighter case-study head and a 180px photograph on its cards. All eleven
+  sections now fit at 1440x780, 1920x866 and 1440x900. **Measure this page
+  at 780px tall from now on, not 900.**
+- Still not covered: a 720px-tall window. The furniture selector, the quote
+  embed, the FAQs and the form each need more than the 648px that leaves.
+
 ## 2026-09-03 — Sliding sash: the Roseview stage is one surface, full width (ON TEST as `e8b7b36e`, NOT LIVE)
 
 Owner, with a screenshot of the scene box, the facts card and the control
