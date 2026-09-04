@@ -617,6 +617,85 @@ function fenster_case_studies(): array
                 'meta_description' => 'A Fenster commercial project: twelve period-style uPVC windows fitted to a trading village pub near Woburn, mechanically jointed with astragal bars.',
             ],
         ],
+        /* MERCHANT TAYLORS' SCHOOL, NORTHWOOD. Owner-supplied 2026-09-03.
+
+           THE MAIN CONTRACTOR IS NOT NAMED AND NEVER WILL BE. Owner: "dont
+           ever name the contractor." He is identifiable from the folder the
+           photographs came out of, which is exactly why this note is here:
+           keep him out of the copy, the captions, the file names and the
+           commit messages. The school itself CAN be named; he confirmed it.
+
+           DATE FLAGGED, NOT INVENTED. The owner said November 2025 and that is
+           what the Completed row states. The photographs are dated February
+           2025 and the job carried several order acknowledgements from late
+           2024 onward, so it plainly ran in phases. `date_confirmed => false`
+           keeps the printed date off. If the month turns out to be wrong it is
+           one row and one field.
+
+           HIPCA WHITE IS RAL 9910, established by research rather than assumed:
+           a Sheerline stocked colour. The acronym on its own means nothing to a
+           reader, so the RAL number carries it.
+
+           "ALL BESPOKE" IS NOT WORTH A LINE. Owner: "dumb question - always
+           bespoke." Do not add a sentence saying the windows were made to size;
+           it is the baseline, not a feature. */
+        'merchant-taylors-school' => [
+            'title' => 'Heritage aluminium windows, Merchant Taylors\' School',
+            'location' => 'Northwood',
+            'type' => 'Commercial',
+            'sector' => 'Schools and education',
+            'service' => 'Heritage aluminium windows',
+            'sector_url' => home_url('/school-and-education-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'gallery_shape' => 'tall',
+            'date' => '2025-11-01',
+            'date_confirmed' => false,
+            'summary' => 'Eleven heritage aluminium windows replacing failed Crittall steel on a school elevation, matched to the look of the original windows and fitted in term time.',
+            'lead' => 'Merchant Taylors\' School was founded in 1561 and has been on its Northwood site since 1933. We replaced eleven windows on one elevation, taking out Crittall steel that had reached the end of its life and putting back heritage aluminium that reads the same way from the ground.',
+            'products' => [
+                ['label' => 'School and education glazing', 'url' => home_url('/school-and-education-glazing/')],
+                ['label' => 'Heritage windows', 'url' => home_url('/heritage-windows/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'Windows', 'value' => '11 heritage aluminium'],
+                ['label' => 'Finish', 'value' => 'HIPCA white, RAL 9910'],
+                ['label' => 'Replaced', 'value' => 'Failed Crittall steel'],
+                ['label' => 'Completed', 'value' => 'November 2025'],
+            ],
+            'overview' => [
+                'The windows that came out were Crittall and they were in poor condition. Steel windows of that age tend to go the same way: the sections corrode, the frame distorts as they do, and a point arrives where there is nothing left to repair. These had reached it, so the run came out rather than being patched again.',
+                'The school dates from 1561, which decided what went back. The brief was to keep the look of the elevation rather than modernise it, and heritage aluminium is what answers that: slim sightlines and horizontal bars that read like the steel windows they replace, in a material that will not corrode the same way. Each opening keeps its own proportions, so the run still reads as it did from the ground.',
+                'The windows are Sheerline, finished in HIPCA white, RAL 9910. The glass is laminated throughout, and in the changing room it is Arctic obscure, so the room takes daylight without giving anything away from outside.',
+                'It ran in term time and the fitting took a couple of days. That is what a straight replacement into existing openings buys you: the brickwork is untouched, the reveals stay as they are, and the disruption to a working school is measured in days rather than weeks.',
+            ],
+            'installed' => [
+                '11 heritage aluminium windows',
+                'Sheerline profile, HIPCA white RAL 9910',
+                'Laminated glass throughout',
+                'Arctic obscure glass to the changing room',
+                'Replacing failed Crittall steel windows',
+            ],
+            /* SIX IMAGES: the hero plus five, ONE OF WHICH IS `wide`. A wide
+               shot spans both columns, so five in the gallery lays out as two
+               rows of two under a full width band rather than leaving an orphan
+               cell. All six sources were natively 3:4, so the four standard
+               cells crop nothing; the wide one was cut to 16:9 from high in the
+               frame so the run of windows fills it rather than the flat roof. */
+            'images' => [
+                ['src' => $img . 'cs-merchant-taylors-window-run.webp', 'caption' => 'The new run from the flat roof, each window sitting in its original brick opening.'],
+                ['src' => $img . 'cs-merchant-taylors-elevation-wide.webp', 'wide' => true, 'caption' => 'Along the elevation, the horizontal bars carrying the line of the steel windows they replaced.'],
+                ['src' => $img . 'cs-merchant-taylors-window-brick.webp', 'caption' => 'One window square on, three lights divided by flat bars in an opening that was not altered to take it.'],
+                ['src' => $img . 'cs-merchant-taylors-obscure-glass.webp', 'caption' => 'The Arctic obscure glass close up, laminated, with the white frame and bars around it.'],
+                ['src' => $img . 'cs-merchant-taylors-changing-room.webp', 'caption' => 'The changing room from inside. The obscure glass takes daylight in without a sightline either way.'],
+                ['src' => $img . 'cs-merchant-taylors-changing-room-benches.webp', 'caption' => 'The same room along its length, the windows sitting above the benching under the painted trusses.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Merchant Taylors\' School: Heritage Aluminium Windows',
+                'meta_description' => 'A Fenster commercial project at Merchant Taylors\' School, Northwood: eleven heritage aluminium windows replacing failed Crittall steel, fitted in term time.',
+            ],
+        ],
         /* ST ALBANS SCHOOL. Owner-supplied 2026-09-03. The school context
            (founded 948, one of the oldest in the country) is public record and
            is there for weight, not padding; keep it to the clause it occupies.
