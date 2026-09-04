@@ -217,7 +217,7 @@ function fenster_h30_search_groups(): array
     return [
         'windows' => [
             'label' => 'Windows',
-            'placeholder' => 'Try "sash", "bay window" or "misted glass"',
+            'placeholder' => 'Try "sash" or "bay window"',
             /* Hand-picked. Black bay windows against white render under a blue
                sky is the strongest window contrast we own, and the neighbouring
                pebbledash with its old white frames makes the point without a
@@ -246,7 +246,7 @@ function fenster_h30_search_groups(): array
         ],
         'doors' => [
             'label' => 'Doors',
-            'placeholder' => 'Try "front door", "bifold" or "sliding patio"',
+            'placeholder' => 'Try "front door" or "bifold"',
             /* A WHOLE HOUSE, NOT A DOOR. The banner is scenery behind a
                search box, so it wants an elevation with depth in it, the same
                as the other two tabs. A door photographed close enough to show
@@ -285,7 +285,7 @@ function fenster_h30_search_groups(): array
         ],
         'whole-home' => [
             'label' => 'Whole house',
-            'placeholder' => 'Try "whole house", "roof lantern" or "repairs"',
+            'placeholder' => 'Try "whole house" or "repairs"',
             'image' => 'cs-little-horwood-flush-frontage.jpg',
             'width' => 1600,
             'height' => 1200,

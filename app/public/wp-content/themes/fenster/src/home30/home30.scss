@@ -473,6 +473,22 @@
   .fg-h30-finder__clear { width: 30px; }
   .fg-h30-finder__search { padding: .5rem; font-size: .875rem; }
   .fg-h30-finder__search span { display: none; }
+
+  /* THE PLACEHOLDER GETS ITS OWN SIZE, AND THE INPUT DOES NOT. Anything under
+     16px on the input makes iOS zoom the page on focus, which is why the rule
+     above pins it at 1rem. The placeholder is free of that, so it shrinks on
+     its own. Measured at 375px: the row is 335px, the button takes 82 and the
+     gap 8, and the input's own padding another 66, leaving 179px of text room.
+     At 13px the two-example placeholders measure 147-167px and fit. */
+  .fg-h30-finder input::placeholder { font-size: .8125rem; }
+
+  /* THE MAP PANEL IS THE TITLE AND NOTHING ELSE ON A PHONE. Owner, 2026-09-04:
+     "on mobile the map is covered by the massive wall of text, so on mobile
+     just have the title." Two paragraphs, the key and the areas link add up to
+     a card that covers the thing it is captioning. Hidden rather than removed,
+     so the desktop panel is untouched and a screen reader on a phone still has
+     the heading the section is labelled by. */
+  .fg-h30-areas__panel > :not(h2) { display: none; }
   .fg-h30-finder__results { margin: 12px -12px -12px; padding: 0 8px 6px; border-radius: 0 0 14px 14px; }
   .fg-h30-finder__options { grid-template-columns: minmax(0,1fr); gap: 0; }
   .fg-h30-finder.is-enhanced .fg-h30-finder__options { max-height: 268px; }
