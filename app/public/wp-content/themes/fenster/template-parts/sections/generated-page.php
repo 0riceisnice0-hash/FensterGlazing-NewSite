@@ -4891,19 +4891,13 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <section class="fg-sash-gallery-cta" aria-label="<?php esc_attr_e('Sliding sash window quote options', 'fenster'); ?>">
-            <div class="container fg-sash-gallery-cta__inner">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Your project', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Ready to price your sash windows?', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Start an instant estimate or book a free consultation to compare the Roseview options for your property.', 'fenster'); ?></p>
-                </div>
-                <div class="fg-sash-gallery-cta__actions">
-                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get a sash window quote', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
-                </div>
-            </div>
-        </section>
+        <?php /* THE "YOUR PROJECT" QUOTE BAND IS GONE, 2026-09-03, on the owner's
+                 instruction ("get rid of \"your project\""). It sat between the
+                 gallery and the specification choices with two buttons, one of
+                 which jumped to the instant quote section further down the same
+                 page. That section, the enquiry form and the header both carry
+                 the same two actions, so the band was a third telling. It lived
+                 only on this route. */ ?>
 
         <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors) : ?>
         <section class="fg-sash-detail-run">
@@ -5861,14 +5855,6 @@ if ($is_commercial_hub) {
         <?php endif; ?>
         <?php endif; ?>
 
-        <?php if ($slug === 'sliding-sash-windows') : ?>
-            <?php get_template_part('template-parts/components/privacy-glass-card', null, [
-                'eyebrow' => __('Specification choices', 'fenster'),
-                'heading' => __('Privacy where the room needs it.', 'fenster'),
-                'copy' => __('Bathrooms, landings, a side return or anything overlooked. Obscured glass goes into the same sealed unit as clear glass, so the sash slides, seals and performs exactly the same.', 'fenster'),
-            ]); ?>
-        <?php endif; ?>
-
         <?php if (isset($upvc_foil_routes[$slug]) && ! $is_configuration_page) : ?>
             <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_foil_routes[$slug]]); ?>
         <?php endif; ?>
@@ -6082,6 +6068,18 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <?php /* THE PRIVACY GLASS CARD FOLLOWS THE FURNITURE SELECTOR, not the
+                 specification-choices band it replaced. Owner, 2026-09-03, giving
+                 the running order for this page: furniture, then privacy glass,
+                 then the instant quote. */ ?>
+        <?php if ($slug === 'sliding-sash-windows') : ?>
+            <?php get_template_part('template-parts/components/privacy-glass-card', null, [
+                'eyebrow' => __('Specification choices', 'fenster'),
+                'heading' => __('Privacy where the room needs it.', 'fenster'),
+                'copy' => __('Bathrooms, landings, a side return or anything overlooked. Obscured glass goes into the same sealed unit as clear glass, so the sash slides, seals and performs exactly the same.', 'fenster'),
+            ]); ?>
+        <?php endif; ?>
+
         <?php if ($show_window_handles && ! empty($window_handle_finishes)) : ?>
             <section id="fenster-window-handles" class="fg-window-handles" data-fg-window-handles>
                 <div class="container">
@@ -6172,6 +6170,18 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
 
+        <?php
+        /* THE FAQs COME LAST ON THIS ROUTE, after the case studies. Owner,
+           2026-09-03, giving the running order for the sash page. They are
+           built here, inside the product-journey block, and the sections they
+           now follow are outside it, so the markup is captured and echoed at
+           the later point rather than moved. Nothing changes for any other
+           route: without the flag the buffer never opens. */
+        $sash_defers_faq = ($slug === 'sliding-sash-windows');
+        if ($sash_defers_faq) {
+            ob_start();
+        }
+        ?>
         <?php if (! empty($product_faqs)) : ?>
             <?php
             /* Composite doors carries six: the price question was added in front of
@@ -6262,6 +6272,11 @@ if ($is_commercial_hub) {
                 </div>
             </section>
         <?php endif; ?>
+        <?php
+        if ($sash_defers_faq) {
+            $sash_deferred_faq = ob_get_clean();
+        }
+        ?>
 
         <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && $slug !== 'aluminium-sliding-doors' && ! $is_repairs) : ?>
         <?php
@@ -6608,6 +6623,18 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
     <?php endif; ?>
+
+    <?php
+    /* AND HERE THEY LAND: the FAQs captured above, after the case studies and
+       before the form. Echoed rather than re-rendered, so the schema emitted
+       with them is still emitted exactly once. It is markup this template
+       escaped as it built it. Unconditional on purpose: the case-study strip
+       above may not render, and the questions must not disappear with it. */
+    if (! empty($sash_deferred_faq)) {
+        echo $sash_deferred_faq; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- captured markup, escaped where it was built
+        $sash_deferred_faq = '';
+    }
+    ?>
 
     <?php
     /* THE COMPOSITE QUIZ, LAST BEFORE THE FORM. Owner instruction 2026-08-27:

@@ -32046,7 +32046,11 @@ html.fg-blinds-reveal-locked {
      continuous. so it has sharp lines when it should be a smooth gradient"). */
   .generated-page--sliding-sash .fg-sash-gallery {
     display: block;
-    padding: clamp(2rem, 3.4vw, 3rem) 0;
+    /* 1.5rem to 2.25rem, and the rail rows below are shorter: the owner
+       called this section too tall for one viewport on 2026-09-03 even
+       though it measured 740px against an 827px budget at 1440x900, so it
+       is trimmed to about 645px rather than argued with. */
+    padding: clamp(1.5rem, 2.5vw, 2.25rem) 0;
     overflow: hidden;
     background: transparent;
     color: var(--color-steel);
@@ -32057,7 +32061,7 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: minmax(0, 0.82fr) minmax(360px, 0.55fr);
     gap: clamp(3rem, 8vw, 8rem);
     align-items: end;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__head .eyebrow {
@@ -32084,8 +32088,8 @@ html.fg-blinds-reveal-locked {
   .generated-page--sliding-sash .fg-sash-gallery__rail {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: repeat(2, clamp(205px, 18vw, 250px));
-    gap: 0.8rem;
+    grid-template-rows: repeat(2, clamp(175px, 14vw, 215px));
+    gap: 0.7rem;
   }
 
   .generated-page--sliding-sash .fg-sash-gallery__rail figure {
