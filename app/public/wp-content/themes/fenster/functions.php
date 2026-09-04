@@ -40,6 +40,12 @@ $fenster_required_files = [
     'inc/google-ads-conversions.php',
     'inc/generated-pages.php',
     'inc/scan-links.php',
+    /* HOMEPAGE 3.0, the Rightmove-UX homepage. Self-contained: this file,
+       its template part, `src/home30/` and `assets/home30/`. It is host
+       gated inside the file and live is deliberately not on the list, so a
+       theme deploy cannot put it on production. Delete this line and those
+       paths to remove it; the classic homepage comes back on its own. */
+    'inc/home-30.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {

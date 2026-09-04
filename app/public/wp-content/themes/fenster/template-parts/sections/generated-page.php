@@ -2391,7 +2391,10 @@ if (count($related_links) < 6) {
 }
 
 if ($is_home) {
-    get_template_part('template-parts/sections/home-experience', null, [
+    /* The homepage is filterable so Homepage 3.0 can take it over where its
+       host gate allows. THE DEFAULT STAYS THE CLASSIC HOMEPAGE: if that file
+       is absent, or its gate says no, this line changes nothing. */
+    get_template_part(apply_filters('fenster_home_template', 'template-parts/sections/home-experience'), null, [
         'asset_base' => $asset_base,
         'brand' => $brand,
         'hero_intro' => $hero_intro,

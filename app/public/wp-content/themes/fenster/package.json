@@ -10,7 +10,14 @@
     "encode:product-videos": "node scripts/encode-product-scroll-videos.cjs",
     "watch": "npm-run-all --parallel watch:css watch:js",
     "watch:css": "sass src/scss/main.scss assets/css/main.css --style=expanded --watch",
-    "watch:js": "esbuild src/js/main.js --bundle --sourcemap --outfile=assets/js/main.js --watch"
+    "watch:js": "esbuild src/js/main.js --bundle --sourcemap --outfile=assets/js/main.js --watch",
+    "build:home30": "npm run build:home30:css && npm run build:home30:js",
+    "build:home30:css": "sass src/home30/home30.scss assets/home30/home30.css --style=compressed --no-source-map",
+    "build:home30:js": "esbuild src/home30/home30.js --bundle --format=iife --target=es2019 --minify --outfile=assets/home30/home30.js",
+    "watch:home30": "npm-run-all --parallel watch:home30:css watch:home30:js",
+    "watch:home30:css": "sass src/home30/home30.scss assets/home30/home30.css --style=expanded --watch",
+    "watch:home30:js": "esbuild src/home30/home30.js --bundle --format=iife --target=es2019 --sourcemap --outfile=assets/home30/home30.js --watch",
+    "test:home30": "node --test \"src/home30/**/*.test.mjs\""
   },
   "devDependencies": {
     "esbuild": "^0.25.5",
