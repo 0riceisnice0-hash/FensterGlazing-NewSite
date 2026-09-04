@@ -457,7 +457,7 @@ $h30_case_url = static function (string $slug): string {
 
             <div class="fg-h30-areas__panel" data-h30-map-panel>
                 <p class="fg-h30-kicker">Where we work</p>
-                <h2 id="fg-h30-areas-title">Everything inside the red line is home turf.</h2>
+                <h2 id="fg-h30-areas-title">Recent installs, pinned across the area we cover.</h2>
                 <p class="fg-h30-areas__note">
                     Milton Keynes and everything around it: up to Northampton and Wellingborough, across to
                     Bedford and Sandy, down through Stevenage and St Albans to Berkhamsted and Aylesbury, and
