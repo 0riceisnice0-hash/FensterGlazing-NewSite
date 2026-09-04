@@ -215,9 +215,28 @@ function fenster_windowcad_request_allowed(WP_REST_Request $request): bool|WP_Er
      * `infoProperties` values, a few hundred bytes of it. From 31 July 2026 that
      * cap returned 413 to every submission, and the office received no WindowCAD
      * leads at all until 3 August. Size is now noted, not judged.
+     *
+     * IT HAPPENED A SECOND TIME AND THE RAISED CAP WAS THE CAUSE, 2026-09-04.
+     * 5000000 was still inside the real distribution: accepted quotes routinely
+     * reach 3.75MB, so the margin was less than one factor of two. Five genuine
+     * leads were 413'd between 13 August and 4 September — 5.94MB, 6.65MB,
+     * 8.64MB, 5.77MB and 10.37MB, five of the 140 submissions in that window —
+     * and because the rejection happens in the permission callback, none of them
+     * created an enquiry or reached AdminBase. They were invisible in WordPress:
+     * an absence in the Enquiries list is the only trace a dropped webhook
+     * leaves, which is why three weeks passed before anyone noticed.
+     *
+     * THE CHECK CANNOT DO THE JOB THE FIRST PARAGRAPH CLAIMS FOR IT. PHP has
+     * already read and buffered the entire body by the time `get_body()` returns
+     * it, so the memory is spent before the comparison runs; live sits at
+     * `post_max_size=256M` and `memory_limit=768M`, and the real ceiling is
+     * those, not this line. It is kept only as a bound on something absurd, and
+     * is set far enough above any plausible quote that it cannot cost a lead
+     * again. If a genuine submission ever approaches 64MB, raise it — do not
+     * treat the rejection as protecting anything.
      */
     $body_length = strlen((string) $request->get_body());
-    if ($body_length > 5000000) {
+    if ($body_length > 64000000) {
         fenster_windowcad_log('payload rejected as abusively large', ['bytes' => $body_length]);
 
         return new WP_Error(
