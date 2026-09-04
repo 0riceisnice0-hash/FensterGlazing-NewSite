@@ -97,6 +97,36 @@ connected and living together as opposed to a bunch of boxes."*
   than the scene. The image is bottom-aligned inside the box, so nothing was
   clipped, but the box was reverted to the floor-relative height and mobile
   renders exactly as it did before.
+- **Then the windows on the left and one lighter column on the right (test
+  `534bb9e9`).** Owner: *"have the sash slider on the left, as big as it is.
+  and the text on the right. dont be so text heavy tho."* The two halves are
+  one panel again, in a 300-400px column: the model's name, one line on what
+  it is for, the meeting rail photograph beside the name, and the seven rows
+  of differences. **The two "what the details mean" paragraphs are no longer
+  rendered.** They were added on 2026-09-02 when the panel was mostly empty
+  and had become most of the text on the page; they stay in the model data,
+  unrendered, because they are written product copy and this content has been
+  asked for and dropped once already.
+- **The windows kept their size and gained room around them.** They are sized
+  from the height, so the wider left column does not grow them; it lets the
+  three-window composition stand clear of the scene edges. Side clearance
+  went from 9px at 1440 to 56px, and the middle window is 496x643 there
+  rather than 483x643, because the width cap no longer binds anywhere.
+- **The heading is left-aligned again.** It was centred while the detail
+  stood either side of the windows; over a left-weighted composition a
+  centred line read as detached from it. Flagged to the owner as a judgement
+  call.
+- **A short-screen rule keeps the column inside the scene.** The column is
+  out of flow, so one taller than the scene hangs over the gallery below
+  rather than pushing the section down: at 1280x720 it was 559px against a
+  521px scene. At heights of 820px and under the rail photograph and the fact
+  rows give up 47px.
+- **Then a 10px nudge each way.** Owner: *"move the sashes down a touch, like
+  10px. like not at all. and move the text on the right up a bit."* The
+  windows stand on the floor, so 10px off their height drops their heads and
+  leaves the sill where it is: 16px of air above them rather than 6px. The
+  detail column starts 10px above the top of the scene. The heading is in the
+  left column and the panel in the right, so the two never meet.
 
 ## 2026-09-03 — Sliding sash: every section inside one viewport (ON TEST as `857124bd`, NOT LIVE)
 
