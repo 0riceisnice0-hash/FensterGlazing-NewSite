@@ -467,7 +467,12 @@
   .fg-h30-finder__tab svg { display: none; }
   .fg-h30-finder__body { padding: 12px; }
   .fg-h30-finder__filter label { font-size: .8125rem; }
-  .fg-h30-finder__search-row { grid-template-columns: minmax(0,1fr) 82px; gap: 8px; }
+  /* 82px was sized for a button with a word in it. The word is hidden below
+     this width (see `__search span` further down), so the column was holding
+     44px of nothing while the placeholder beside it ran out of room. 56px
+     still clears the 44px tap target. Measured: it gives the input 229px
+     instead of 203, and 163px of text room instead of 137. */
+  .fg-h30-finder__search-row { grid-template-columns: minmax(0,1fr) 56px; gap: 8px; }
   .fg-h30-finder input[type="search"] { padding-left: 34px; padding-right: 32px; font-size: 1rem; }
   .fg-h30-finder__input-wrap > svg { left: 10px; width: 18px; }
   .fg-h30-finder__clear { width: 30px; }
