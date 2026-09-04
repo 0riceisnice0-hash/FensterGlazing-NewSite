@@ -484,8 +484,9 @@
      above pins it at 1rem. The placeholder is free of that, so it shrinks on
      its own. Measured at 375px: the row is 335px, the button takes 82 and the
      gap 8, and the input's own padding another 66, leaving 179px of text room.
-     At 13px the two-example placeholders measure 147-167px and fit. */
-  .fg-h30-finder input::placeholder { font-size: .8125rem; }
+     At 12px the three placeholders measure 136-154px and all fit; 13px was
+     tried first and left the longest of them 4px over. */
+  .fg-h30-finder input::placeholder { font-size: .75rem; }
 
   /* THE MAP PANEL IS THE TITLE AND NOTHING ELSE ON A PHONE. Owner, 2026-09-04:
      "on mobile the map is covered by the massive wall of text, so on mobile
