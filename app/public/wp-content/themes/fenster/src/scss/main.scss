@@ -51597,3 +51597,86 @@ html.fg-blinds-reveal-locked {
     line-height: 1.5;
   }
 }
+
+/* ============================================================================
+   `/composite-doors/`: SECTIONS THAT ACTUALLY LAND, 2026-09-03
+   Owner: "they arnt in one viewport they overlap. and you made other stuff
+   look shit."
+
+   BOTH TRUE, AND THE FIRST CAUSED THE SECOND.
+
+   I had been proving "one viewport" by measuring section HEIGHT against the
+   budget. Every section passed. But heights ranged 202px to 791px against a
+   791px screen, so the slack ranged 0 to 589 - nothing aligned to anything,
+   and every scroll stop showed the bottom of one section and the top of the
+   next. Height under budget was never going to produce one-section-per-screen.
+   Only alignment does.
+
+   And because I was chasing a number, the cuts went wherever they were
+   cheapest rather than wherever they were right: the slab drawing - the whole
+   point of its section - was capped to 352px and left sitting in a void, and
+   the case study photographs were cropped to 2:1, which beheads a door.
+
+   Every one of those cuts is reverted here. The constraint is met by aligning
+   sections to the viewport instead of shaving content out of them.
+   ========================================================================= */
+
+/* ---- Undo the damage ---------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  /* The drawing is the section. It was capped at 352px inside a media box
+     whose own ratio is 341/480, so it shrank away from its column and left
+     113px of white under it. */
+  .fg-cd3-anatomy__media { max-height: none; }
+
+  /* 16/10 is what a house and a door both survive. 2:1 cut the tops off two
+     of the three photographs. */
+  .fg-cs-card__media { aspect-ratio: 16 / 10; }
+  .fg-cs-strip__grid img { max-height: none; }
+
+  .fg-glass-patterns img { max-height: none; }
+
+  /* `rows="4"` is the designed height of that field. */
+  .fg-enquiry .fg-form textarea { height: auto; min-height: 96px; }
+
+  /* Type that was shrunk to buy pixels, back to the scale it was drawn at. */
+  .fg-cd3-anatomy__lede { font-size: 1.02rem; }
+  .fg-cdq__standfirst { font-size: 1rem; line-height: 1.6; }
+  .fg-cs-card__summary { font-size: 0.92rem; line-height: 1.55; }
+}
+
+/* ---- One section, one screen -------------------------------------- */
+
+/* Desktop and a tall enough window only. On a phone a forced screen per
+   section is fifteen screens of scrolling for content that reads fine in
+   flow, and `100svh` there is a moving target as the browser chrome hides. */
+@media (min-width: 1024px) and (min-height: 700px) {
+
+  /* `proximity`, not `mandatory`. Mandatory traps a reader on any section
+     that ever grows past the viewport - a longer FAQ answer, a wrapped
+     heading at an odd width - with no way to reach the rest of it. Proximity
+     settles the scroll onto a section boundary when it is near one, which is
+     the behaviour that was actually missing, and costs nothing when it is
+     not. */
+  html:has(.generated-page--composite-doors) { scroll-snap-type: y proximity; }
+
+  .generated-page--composite-doors > section,
+  .generated-page--composite-doors .fg-finish > section {
+    min-height: calc(100svh - 73px);
+    scroll-snap-align: start;
+    /* The header is sticky and 73px, so a section aligned to the top of the
+       scrollport would start underneath it. */
+    scroll-margin-top: 73px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* The hero sizes itself and paints its own full-bleed media; centring its
+     children would fight the absolute positioning it already uses. */
+  .generated-page--composite-doors > .fg-cd3-hero {
+    display: grid;
+    min-height: calc(100svh - 73px);
+  }
+}
