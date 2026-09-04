@@ -73,6 +73,30 @@ connected and living together as opposed to a bunch of boxes."*
   had let the old single panel scroll inside itself are gone; the facts half
   is about 470px and the stage beside it is at least 500px on any screen
   720px and taller.
+- **Then the windows take the space that was going spare (test `55289fca`).**
+  Owner, of a stage that still had white above and below them: *"there is
+  space for it to be bigger."* Measured at 1920x1080, the middle window was
+  738px inside an 858px scene with 26px of dead air above it and 94px below,
+  and the section left 9px of slack nothing used. **The floor now reserves a
+  fixed 52px strip for the selected window's name tag instead of 11% of the
+  scene**, which had been 94px on a 1920 screen and 55px on a 1280 one, and
+  the windows stand from 6px under the top of the scene down to it. The
+  section padding and the gap under the heading were cut, so the scene
+  formula subtracts 127px rather than 150px, and the column gap and text
+  columns gave the middle column 49px more at 1440.
+
+  | Screen | Middle window before | After |
+  | --- | --- | --- |
+  | 1920x1080 | 738x569 | 823x634 |
+  | 1536x864 | 552x426 | 607x468 |
+  | 1440x900 | 583x449 | 643x483 |
+  | 1280x720 | 428x330 | 463x357 |
+
+- **Mobile kept its own floor.** The phone layout overrides the floor to 84%,
+  so sizing its window from the desktop's fixed strip made the box 7px taller
+  than the scene. The image is bottom-aligned inside the box, so nothing was
+  clipped, but the box was reverted to the floor-relative height and mobile
+  renders exactly as it did before.
 
 ## 2026-09-03 — Sliding sash: every section inside one viewport (ON TEST as `857124bd`, NOT LIVE)
 
