@@ -4849,6 +4849,185 @@ if ($is_commercial_hub) {
             </div>
         </section>
 
+        <?php if ($slug === 'sliding-sash-windows' && ! empty($sash_roseview_models)) : ?>
+            <?php
+            /* THE THERMAL CAMERA COMPARISON. Built from the owner's Claude
+               Design file "Sash Heat Transfer v3.dc.html" on 2026-09-04, and
+               rebuilt in the theme's own markup rather than pasted, so it takes
+               the page's fonts, tokens, canvas rule and one-viewport rule.
+
+               WHAT IT IS: the same window opening twice, as a thermal camera
+               would see it from inside the room on a January night. The left of
+               the divider is a single-glazed timber sash, its glass at 8°C with
+               cold air falling off the sill; the right is a Roseview sash in the
+               same opening, close to the wall temperature. Both are drawn in CSS
+               gradients, not photographs, which is why the note under it says so.
+
+               THE FIGURES ARE DERIVED, NOT MEASURED, and the note says that too.
+               Each model's own published best U-value drives them, the same
+               1.2 / 1.2 / 1.4 the comparison above quotes:
+                 heat loss  = U x 1.4m² x 20K temperature difference
+                 glass temp = 21°C - U x 0.13 x 20K   (0.13 m²K/W is the standard
+                              inside surface resistance)
+                 cost       = that loss for 24 hours at 25p a unit
+               The single-glazed side uses 5.0 W/m²K, a typical published figure
+               for an old single-glazed window and not one of our tests, which is
+               the one number on this page we do not own. Computed in PHP so the
+               page is right before JavaScript runs; the script only switches
+               which model's figures show. */
+            $sash_thermal_room = 21.0;   // room temperature, °C
+            $sash_thermal_delta = 20.0;  // room minus outside, K
+            $sash_thermal_area = 1.4;    // window area, m²
+            $sash_thermal_rsi = 0.13;    // inside surface resistance, m²K/W
+            $sash_thermal_unit = 0.25;   // electricity, £ a unit
+            $sash_thermal_single_u = 5.0;
+            $sash_thermal_figures = static function (float $u) use ($sash_thermal_room, $sash_thermal_delta, $sash_thermal_area, $sash_thermal_rsi, $sash_thermal_unit): array {
+                $watts = $u * $sash_thermal_area * $sash_thermal_delta;
+                $cost = $watts / 1000 * 24 * $sash_thermal_unit;
+                return [
+                    'watts' => (string) round($watts),
+                    'glass' => (string) round($sash_thermal_room - ($u * $sash_thermal_rsi * $sash_thermal_delta)),
+                    'cost' => $cost >= 1 ? '£' . number_format($cost, 2) : round($cost * 100) . 'p',
+                ];
+            };
+            $sash_thermal_single = $sash_thermal_figures($sash_thermal_single_u);
+            $sash_thermal_models = [];
+            foreach ([['Ultimate', 1.2], ['Heritage', 1.2], ['Charisma', 1.4]] as $sash_thermal_row) {
+                [$sash_thermal_name, $sash_thermal_u] = $sash_thermal_row;
+                $sash_thermal_models[] = array_merge(
+                    ['name' => $sash_thermal_name, 'u' => number_format($sash_thermal_u, 1)],
+                    $sash_thermal_figures((float) $sash_thermal_u)
+                );
+            }
+            $sash_thermal_first = $sash_thermal_models[0];
+            ?>
+            <section class="fg-sash-thermal" aria-labelledby="fg-sash-thermal-title" data-fg-sash-thermal>
+                <div class="container fg-sash-thermal__inner">
+                    <div class="fg-sash-thermal__copy">
+                        <p class="eyebrow"><?php esc_html_e('Heat transfer', 'fenster'); ?></p>
+                        <h2 id="fg-sash-thermal-title"><?php esc_html_e('Your old sash, through a thermal camera.', 'fenster'); ?></h2>
+                        <p class="fg-sash-thermal__intro"><?php esc_html_e('Stood in the room on a January night, pointed at the window. Blue is cold surface, orange is a wall at room temperature. Drag the slider to put a Roseview sash in the same opening.', 'fenster'); ?></p>
+
+                        <div class="fg-sash-thermal__models">
+                            <span class="fg-sash-thermal__models-label"><?php esc_html_e('Model', 'fenster'); ?></span>
+                            <div role="group" aria-label="<?php esc_attr_e('Roseview model', 'fenster'); ?>">
+                                <?php foreach ($sash_thermal_models as $sash_thermal_index => $sash_thermal_model) : ?>
+                                    <button
+                                        type="button"
+                                        class="fg-sash-thermal__model"
+                                        data-fg-thermal-model="<?php echo esc_attr((string) $sash_thermal_index); ?>"
+                                        data-name="<?php echo esc_attr((string) $sash_thermal_model['name']); ?>"
+                                        data-glass="<?php echo esc_attr((string) $sash_thermal_model['glass']); ?>"
+                                        data-watts="<?php echo esc_attr((string) $sash_thermal_model['watts']); ?>"
+                                        data-cost="<?php echo esc_attr((string) $sash_thermal_model['cost']); ?>"
+                                        aria-pressed="<?php echo $sash_thermal_index === 0 ? 'true' : 'false'; ?>"
+                                    ><?php echo esc_html((string) $sash_thermal_model['name']); ?></button>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <dl class="fg-sash-thermal__stats">
+                            <div>
+                                <dt><?php esc_html_e('The glass you touch', 'fenster'); ?></dt>
+                                <dd>
+                                    <span class="fg-sash-thermal__was"><?php echo esc_html($sash_thermal_single['glass']); ?>&deg;C, wet</span>
+                                    <span class="fg-sash-thermal__arrow" aria-hidden="true">&rarr;</span>
+                                    <span class="fg-sash-thermal__now"><span data-fg-thermal-glass><?php echo esc_html($sash_thermal_first['glass']); ?></span>&deg;C, dry</span>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt><?php esc_html_e('Heat leaving through the window', 'fenster'); ?></dt>
+                                <dd>
+                                    <span class="fg-sash-thermal__was"><?php echo esc_html($sash_thermal_single['watts']); ?> W</span>
+                                    <span class="fg-sash-thermal__arrow" aria-hidden="true">&rarr;</span>
+                                    <span class="fg-sash-thermal__now"><span data-fg-thermal-watts><?php echo esc_html($sash_thermal_first['watts']); ?></span> W</span>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt><?php esc_html_e('Wasted on a cold day', 'fenster'); ?></dt>
+                                <dd>
+                                    <span class="fg-sash-thermal__was"><?php echo esc_html($sash_thermal_single['cost']); ?></span>
+                                    <span class="fg-sash-thermal__arrow" aria-hidden="true">&rarr;</span>
+                                    <span class="fg-sash-thermal__now" data-fg-thermal-cost><?php echo esc_html($sash_thermal_first['cost']); ?></span>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div class="fg-sash-thermal__visual">
+                        <?php /* The two thermal views, one over the other, the top one
+                                 clipped at the divider. Both are the same shapes: room,
+                                 sill, frame, two panes and the meeting rail between them.
+                                 Decorative, so the whole frame is hidden from assistive
+                                 technology and the figures beside it carry the meaning. */ ?>
+                        <figure class="fg-sash-thermal__frame" data-fg-thermal-frame>
+                            <div class="fg-sash-thermal__view fg-sash-thermal__view--cold" aria-hidden="true">
+                                <span class="fg-sash-thermal__floor"></span>
+                                <span class="fg-sash-thermal__reveal"></span>
+                                <span class="fg-sash-thermal__glazing">
+                                    <span class="fg-sash-thermal__pane fg-sash-thermal__pane--upper"></span>
+                                    <span class="fg-sash-thermal__pane fg-sash-thermal__pane--lower"></span>
+                                    <span class="fg-sash-thermal__rail"></span>
+                                </span>
+                                <span class="fg-sash-thermal__sill"></span>
+                                <span class="fg-sash-thermal__pool"></span>
+                                <?php /* The cold air falling off the sill, which is the thing
+                                         a single-glazed sash actually does in a room. */ ?>
+                                <?php for ($sash_thermal_spill = 0; $sash_thermal_spill < 6; $sash_thermal_spill++) : ?>
+                                    <span class="fg-sash-thermal__spill" style="<?php echo esc_attr(sprintf('left:%.2f%%;animation-delay:%.2fs', 28.89 + ($sash_thermal_spill * 6.94), $sash_thermal_spill * 0.6)); ?>"></span>
+                                <?php endfor; ?>
+                            </div>
+
+                            <div class="fg-sash-thermal__view fg-sash-thermal__view--warm" aria-hidden="true">
+                                <span class="fg-sash-thermal__floor"></span>
+                                <span class="fg-sash-thermal__reveal"></span>
+                                <span class="fg-sash-thermal__glazing">
+                                    <span class="fg-sash-thermal__pane fg-sash-thermal__pane--upper"></span>
+                                    <span class="fg-sash-thermal__pane fg-sash-thermal__pane--lower"></span>
+                                    <span class="fg-sash-thermal__rail"></span>
+                                </span>
+                                <span class="fg-sash-thermal__sill"></span>
+                            </div>
+
+                            <span class="fg-sash-thermal__divider" aria-hidden="true"></span>
+
+                            <span class="fg-sash-thermal__tag fg-sash-thermal__tag--cold" aria-hidden="true">
+                                <strong><?php esc_html_e('Single-glazed timber', 'fenster'); ?></strong>
+                                <small><?php printf(esc_html__('Glass %s°C, cold air off the sill', 'fenster'), esc_html($sash_thermal_single['glass'])); ?></small>
+                            </span>
+                            <span class="fg-sash-thermal__tag fg-sash-thermal__tag--warm" aria-hidden="true">
+                                <strong><?php esc_html_e('Roseview', 'fenster'); ?> <span data-fg-thermal-name><?php echo esc_html((string) $sash_thermal_first['name']); ?></span></strong>
+                                <small><?php esc_html_e('Glass', 'fenster'); ?> <span data-fg-thermal-glass><?php echo esc_html($sash_thermal_first['glass']); ?></span><?php esc_html_e('°C, close to the wall', 'fenster'); ?></small>
+                            </span>
+
+                            <span class="fg-sash-thermal__scale" aria-hidden="true">
+                                <span><?php esc_html_e('Cold glass', 'fenster'); ?></span>
+                                <i></i>
+                                <span><?php esc_html_e('Room temperature', 'fenster'); ?></span>
+                            </span>
+                            <span class="fg-sash-thermal__hint" aria-hidden="true"><?php esc_html_e('Drag to compare', 'fenster'); ?></span>
+
+                            <?php /* The control is a real range input over the whole frame,
+                                     invisible but focusable, so it drags with a mouse, a
+                                     finger and the arrow keys without any of that being
+                                     written by hand. */ ?>
+                            <input
+                                class="fg-sash-thermal__range"
+                                type="range"
+                                min="0"
+                                max="100"
+                                step="0.1"
+                                value="50"
+                                data-fg-thermal-range
+                                aria-label="<?php esc_attr_e('Compare single glazing with a Roseview sash', 'fenster'); ?>"
+                            >
+                        </figure>
+                        <p class="fg-sash-thermal__note"><?php esc_html_e('A thermal illustration, not a photograph. Windows are surveyed from inside because glass reflects the cold sky from outside. Figures are for a 1.4m² window with the room at 21°C and the outside at 1°C, at 25p a unit. The single-glazed U-value of 5.0 W/m²K is a typical published figure for an old single-glazed window rather than one of our test results, and Roseview figures are the best available option for each model. Glass temperature uses the standard 0.13 m²K/W inside surface resistance, and wet means colder than the dew point of a room at 21°C and 55% humidity.', 'fenster'); ?></p>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+
         <?php if (! empty($sash_roseview_gallery)) : ?>
             <section class="fg-sash-gallery" aria-labelledby="fg-sash-gallery-title">
                 <div class="container">
