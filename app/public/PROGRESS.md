@@ -14,6 +14,30 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-03 — Sliding sash: the Roseview stage is one surface, full width (ON TEST as `e8b7b36e`, NOT LIVE)
+
+Owner, with a screenshot of the scene box, the facts card and the control
+strip: *"can we full screen the sashview, make it so everything is like
+connected and living together as opposed to a bunch of boxes."*
+
+- **The section is the room.** A pale wall running into a slightly deeper
+  floor, across the whole viewport, with the windows, the facts, the rail
+  scale and the survey note all standing on it. The scene has no radius,
+  fill or inset line any more; the facts have no card, only their hairline
+  rows; the floor under the windows fades out sideways instead of stopping
+  at a column edge; the arrows are lighter.
+- **The surface fades into the canvas at both ends**, so it draws no line
+  against the page, which is the one way a section may carry a fill of its
+  own under the rule recorded earlier today. Checked on test at 1440x900 and
+  1920x1080: the key-specs card above and the gallery below meet it with no
+  edge.
+- **The frame opens out.** The section's inner width is
+  `min(100% - clamp(3rem, 8vw, 9rem), 1640px)` instead of the 1180px
+  container, the facts column is capped at 500px and the scene takes the
+  rest, so on a 1920px screen the windows stand in a 1640px room.
+- Still exactly one viewport under the header at 1440x900, 1536x864 and
+  1920x1080, and every other section on the page unchanged.
+
 ## 2026-09-03 — Sliding sash: every section inside one viewport (ON TEST as `857124bd`, NOT LIVE)
 
 Owner: *"every section of this page needs to be contained in one view port.
