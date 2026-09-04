@@ -625,12 +625,16 @@ function fenster_case_studies(): array
            keep him out of the copy, the captions, the file names and the
            commit messages. The school itself CAN be named; he confirmed it.
 
-           DATE FLAGGED, NOT INVENTED. The owner said November 2025 and that is
-           what the Completed row states. The photographs are dated February
-           2025 and the job carried several order acknowledgements from late
-           2024 onward, so it plainly ran in phases. `date_confirmed => false`
-           keeps the printed date off. If the month turns out to be wrong it is
-           one row and one field.
+           FEBRUARY 2025, AND THE PHOTOGRAPHS ARE WHY IT IS RIGHT. The owner
+           first said November 2025. The images are dated 6 and 18 February 2025
+           and the folder carried order acknowledgements from November 2024
+           onward, so the dates were put to him and February was confirmed. A
+           stated completion month that contradicts the photograph dates is
+           worth querying rather than publishing.
+
+           SCOPE ANY DATE EDIT HERE TO THIS BLOCK. `'date' => '2025-11-01'` was
+           also the-green-man-eversholt's date, so an unscoped replace would
+           have silently moved that study as well. An assertion caught it.
 
            HIPCA WHITE IS RAL 9910, established by research rather than assumed:
            a Sheerline stocked colour. The acronym on its own means nothing to a
@@ -648,7 +652,7 @@ function fenster_case_studies(): array
             'sector_url' => home_url('/school-and-education-glazing/'),
             'service_url' => home_url('/commercial-windows-and-doors/'),
             'gallery_shape' => 'tall',
-            'date' => '2025-11-01',
+            'date' => '2025-02-01',
             'date_confirmed' => false,
             'summary' => 'Eleven heritage aluminium windows replacing failed Crittall steel on a school elevation, matched to the look of the original windows and fitted in term time.',
             'lead' => 'Merchant Taylors\' School was founded in 1561 and has been on its Northwood site since 1933. We replaced eleven windows on one elevation, taking out Crittall steel that had reached the end of its life and putting back heritage aluminium that reads the same way from the ground.',
@@ -662,7 +666,7 @@ function fenster_case_studies(): array
                 ['label' => 'Windows', 'value' => '11 heritage aluminium'],
                 ['label' => 'Finish', 'value' => 'HIPCA white, RAL 9910'],
                 ['label' => 'Replaced', 'value' => 'Failed Crittall steel'],
-                ['label' => 'Completed', 'value' => 'November 2025'],
+                ['label' => 'Completed', 'value' => 'February 2025'],
             ],
             'overview' => [
                 'The windows that came out were Crittall and they were in poor condition. Steel windows of that age tend to go the same way: the sections corrode, the frame distorts as they do, and a point arrives where there is nothing left to repair. These had reached it, so the run came out rather than being patched again.',
