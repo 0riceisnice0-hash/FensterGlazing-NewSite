@@ -50014,8 +50014,12 @@ html.fg-blinds-reveal-locked {
     perspective: 1100px;
   }
 
+  /* Mobile keeps its own floor at 84%, so the window is sized from that
+     rather than from the desktop 52px strip: a fixed strip here made the box
+     7px taller than the scene. The image is bottom-aligned inside the box,
+     so nothing was clipped, but the box had no business overflowing. */
   .fg-sash-stage__slide {
-    height: calc(100% - 66px);
+    height: calc(var(--fg-sash-stage-floor) - 8%);
     max-width: 64%;
   }
 
