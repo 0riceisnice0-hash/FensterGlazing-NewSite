@@ -37,6 +37,21 @@ connected and living together as opposed to a bunch of boxes."*
   rest, so on a 1920px screen the windows stand in a 1640px room.
 - Still exactly one viewport under the header at 1440x900, 1536x864 and
   1920x1080, and every other section on the page unchanged.
+- **Then the details stand either side of the windows (test `e460ec02`).**
+  Owner: *"as in centre it. has the detail on both sides. remove the top
+  paragraph ... aswell."* The body is three columns: the model's story on
+  the left (tagline, name, best for, what the details mean), the windows
+  and the rail scale in the middle, the facts on the right (a larger
+  meeting-rail photograph and the seven rows in one column). Each model's
+  two halves carry its index (`data-fg-stage-panel="0|1|2"`) and the
+  script shows the pair together and cross-fades both containers. The
+  heading is centred over the windows and the intro paragraph is gone. The
+  short-screen rules that thinned the old single panel went too; neither
+  half is tall enough to need them. On a phone the halves stack under the
+  windows with the facts back in two columns. Two mobile rules had to
+  follow: Chrome honours `justify-items` on a block's children, so the
+  centred head needed `justify-items: start` at phone widths, and the old
+  two-column panel head lost its photograph column.
 
 ## 2026-09-03 — Sliding sash: every section inside one viewport (ON TEST as `857124bd`, NOT LIVE)
 
