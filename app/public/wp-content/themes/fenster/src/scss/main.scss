@@ -50594,8 +50594,10 @@ html.fg-blinds-reveal-locked {
     padding: 1.5rem 0;
   }
 
+  /* The width formula above holds on a phone, the way the stage's does:
+     it resolves to the page margin there. Resetting it to auto let the
+     picture run edge to edge while every other section kept its margins. */
   .fg-sash-thermal__inner {
-    width: auto;
     min-height: 0;
     gap: 0.9rem;
   }
