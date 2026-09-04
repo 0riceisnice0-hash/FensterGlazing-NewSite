@@ -642,13 +642,47 @@ if ($is_composite_doors) {
     // deliberately NOT Distinction's Signature/Contemporary split. Within a
     // collection the slab is fixed and the glass varies, which is the useful
     // thing to tell a customer. If WindowCAD's groups change, change these.
-    /* THE COLLECTIONS ARRAY WENT WITH THE CAROUSEL ON 2026-08-27. Its six
-       cards were the six tabs of the style range below them, and its images
-       forced tall door renders into a column about 105px wide so the doors
-       were cut off. The unique content — a slab line and a description per
-       collection — moved into `fenster_composite_door_collections()`, which is
-       also where the styles come from, so the range and its descriptions can no
-       longer drift apart. */
+    /* RESTORED FROM LIVE FOR THIS RELEASE ONLY, 2026-09-04. The composite
+       redesign that removed this array is held back, so the template that
+       consumes it is the live one. Release line only, never `main`. */
+    $composite_collections = [
+        [
+            'name' => 'Traditional',
+            'slug' => 'esteem',
+            'slab' => 'Panelled slab, glass cut into it',
+            'copy' => 'A moulded slab with raised detail and the glazed section cut into it. Much the biggest group, and where most period and estate frontages end up.',
+        ],
+        [
+            'name' => 'Esprit',
+            'slug' => 'esprit-esc19',
+            'slab' => 'One flat woodgrain slab',
+            'copy' => 'A single flat face with no moulded detail at all, so the glass shape does the work. Clean without feeling cold.',
+        ],
+        [
+            'name' => 'Rustic Renown',
+            'slug' => 'rustic-renown-rr03',
+            'slab' => 'Shiplap boards inside a border',
+            'copy' => 'Tongue and groove boards framed by a plain border. It reads like a cottage door on a cottage and like a design choice on a new build.',
+        ],
+        [
+            'name' => 'Renown',
+            'slug' => 'renown',
+            'slab' => 'Full shiplap, no border',
+            'copy' => 'The same boards running edge to edge with nothing framing them. The most flexible door we fit: it suits a Victorian terrace and a new build equally.',
+        ],
+        [
+            'name' => 'Infinity',
+            'slug' => 'infinity-gd01',
+            'slab' => 'Long horizontal grooves',
+            'copy' => 'The most modern end of the range. Wide grooves, bold glass shapes and long bar handles rather than a lever.',
+        ],
+        [
+            'name' => 'Stable Doors',
+            'slug' => 'stable-half-glazed',
+            'slab' => 'Split across the middle',
+            'copy' => 'The top half opens on its own while the bottom stays shut and locked. Kitchens, utility rooms and anyone with a dog or small children.',
+        ],
+    ];
     // Construction facts sourced from the Distinction technical material and
     // rewritten in the Fenster voice (see TONEOFVOICE.md). Do not invent specs.
     $composite_anatomy = [
@@ -4023,81 +4057,43 @@ if ($is_commercial_hub) {
     </section>
     <?php elseif ($is_composite_doors) : ?>
     <?php
-    /*
-     * CHAPTER ONE, AND IT IS A HERO RATHER THAN A BOXED PHOTOGRAPH.
-     * Rebuilt twice on 2026-08-27. The first pass put a portrait install shot
-     * in the shared 6/5 media box beside the copy, and the owner's verdict was
-     * that it is not a hero: "it shouldn't be in that little box."
-     *
-     * IT IS FULL BLEED, AND THE IMAGE IS AN EXTERIOR. Two were rejected before
-     * this one: a portrait install shot in the old boxed media, and a studio
-     * interior render. The interior was the wrong subject for a page about a
-     * FRONT door — it showed a hallway, and the thing a customer is buying is
-     * what the street sees. This is `gallery/chatsworth-double-lite`, the only
-     * exterior in the theme at usable resolution: a whole house, the door under
-     * its canopy, bay window, drive and planting, warm light. The copy sits on
-     * a scrim weighted to the foot, because the top two thirds are the house
-     * and that is what somebody should be looking at.
-     *
-     * OUR OWN INSTALL PHOTOGRAPHY IS STILL THE RIGHT CHOICE FURTHER DOWN, where
-     * proof is the job. A hero's job is the first impression.
-     *
-     * THE TWO STRIPS THAT USED TO FOLLOW ARE INSIDE IT: the four-fact box and
-     * the approved-installer band. Three bordered strips inside the first 900px
-     * was why the fold read as stacked bands rather than as a door.
-     */
-    $composite_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/chatsworth-double-lite-';
+    // Composite doors follows the light, boxed-image hero used by
+    // /roof-lanterns/ and /heritage-aluminium-doors/ rather than the shared
+    // dark photo hero. Styling is shared with those routes in main.scss.
+    // Chosen by rendering every candidate at the real 6/5 hero crop: this is the
+    // only one where a whole door sits centred and uncut in frame.
+    $composite_hero_img = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/black-lunna-entrance-800w.webp';
     $composite_phone = (string) ($brand['phone'] ?? '01908 429200');
-    $composite_hero_facts = [
-        ['44.5mm', __('Insulated GRP slab, against 28mm for a uPVC door panel', 'fenster')],
-        ['£5,000', __('Break-in guarantee, terms confirmed before you order', 'fenster')],
-        ['142', __('Door styles we can price for you online', 'fenster')],
-        ['10 years', __('Insurance-backed installation guarantee', 'fenster')],
-    ];
     ?>
     <section class="fg-cd3-hero">
-        <div class="fg-cd3-hero__media" aria-hidden="true">
-            <img
-                src="<?php echo esc_url(fenster_generated_url($composite_hero_stem . '1400w.webp')); ?>"
-                srcset="<?php echo esc_attr(implode(', ', [
-                    fenster_generated_url($composite_hero_stem . '480w.webp') . ' 480w',
-                    fenster_generated_url($composite_hero_stem . '800w.webp') . ' 800w',
-                    fenster_generated_url($composite_hero_stem . '1400w.webp') . ' 1400w',
-                ])); ?>"
-                sizes="100vw"
-                alt=""
-                loading="eager" fetchpriority="high" width="1400" height="1094">
-            <span class="fg-cd3-hero__scrim"></span>
-        </div>
-
-        <div class="container fg-cd3-hero__inner">
+        <div class="container fg-cd3-hero__grid">
             <div class="fg-cd3-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Distinction composite doors', 'fenster'); ?></h1>
                 <p class="fg-cd3-hero__lead"><?php esc_html_e('A 44.5mm insulated slab under a tough GRP skin, fitted across Milton Keynes by our own installers. It holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
                 <div class="fg-cd3-hero__actions">
                     <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
+                    <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
                 </div>
-                <p class="fg-cd3-hero__credential">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
-                    <span><?php esc_html_e('Approved installer. One in four front doors fitted in Britain is a Distinction, and we survey, supply and hang yours ourselves.', 'fenster'); ?></span>
-                </p>
             </div>
+            <figure class="fg-cd3-hero__media">
+                <img <?php echo fenster_image_attr_string($composite_hero_img, [
+                    'alt' => 'A black composite front door with arched decorative glass, set between white pillars on a brick frontage',
+                    'loading' => 'eager',
+                    'fetchpriority' => 'high',
+                ]); ?>>
+                <figcaption><?php esc_html_e('Distinction composite door', 'fenster'); ?></figcaption>
+            </figure>
         </div>
+    </section>
 
-        <?php /* The facts ride on the hero's own foot rather than in a strip
-                 under it, so the fold is one composition. */ ?>
-        <div class="fg-cd3-hero__facts-band">
-            <div class="container">
-                <dl class="fg-cd3-hero__facts">
-                    <?php foreach ($composite_hero_facts as $composite_fact) : ?>
-                        <div>
-                            <dt><?php echo esc_html($composite_fact[0]); ?></dt>
-                            <dd><?php echo esc_html($composite_fact[1]); ?></dd>
-                        </div>
-                    <?php endforeach; ?>
-                </dl>
+    <section class="fg-cd3-brief" aria-label="<?php esc_attr_e('Composite door specification summary', 'fenster'); ?>">
+        <div class="container">
+            <div class="fg-cd3-brief__grid">
+                <p><strong><?php esc_html_e('44.5mm slab', 'fenster'); ?></strong><span><?php esc_html_e('Insulated GRP, against 28mm for a uPVC door panel', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('£5,000', 'fenster'); ?></strong><span><?php esc_html_e('Break-in guarantee, terms confirmed before you order', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('Six collections', 'fenster'); ?></strong><span><?php esc_html_e('The same six you meet in our quote tool', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('10 years', 'fenster'); ?></strong><span><?php esc_html_e('Insurance-backed installation guarantee', 'fenster'); ?></span></p>
             </div>
         </div>
     </section>
@@ -4400,6 +4396,19 @@ if ($is_commercial_hub) {
        other route uses them and they are the record of what this was. */
     ?>
 
+    <?php if ($is_composite_doors) : ?>
+        <section class="fg-composite-approved" aria-label="<?php esc_attr_e('Approved Distinction Doors installer', 'fenster'); ?>">
+            <div class="container fg-composite-approved__inner">
+                <img class="fg-composite-approved__logo" src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
+                <div class="fg-composite-approved__copy">
+                    <strong><?php esc_html_e('Approved Distinction Doors installer', 'fenster'); ?></strong>
+                    <p><?php esc_html_e('One in four front doors fitted in Britain is a Distinction. We survey, supply and hang yours ourselves, with our own fitters rather than subcontractors.', 'fenster'); ?></p>
+                </div>
+                <a class="button button--steel fg-composite-approved__call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), (string) ($brand['phone'] ?? '01908 429200'))); ?></a>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <?php /* Repairs has no key specifications, because a repair is not a
              product with a specification. Owner, 2026-08-06: "repairs dont have
              spec so having a box for it makes no sense." The bespoke section
@@ -4478,12 +4487,16 @@ if ($is_commercial_hub) {
     <?php if ($is_composite_doors) : ?>
         <?php
         get_template_part('template-parts/sections/composite-doors-v2', null, [
+            'collections' => $composite_collections,
             'security' => $composite_security,
             'anatomy' => $composite_anatomy,
+            'styles' => $composite_door_styles,
+            'styles_base' => $composite_styles_base,
             'colour_wall' => $composite_colour_wall,
             'palette_base' => $composite_palette_base,
             'colours_base' => $composite_asset_base . 'colours/',
             'colour_doors_base' => $composite_asset_base . 'colour-doors/',
+            'asset_base' => $composite_asset_base,
         ]);
         ?>
     <?php endif; ?>
@@ -6090,7 +6103,7 @@ if ($is_commercial_hub) {
                  /casement-windows/. Composite doors joined them on 2026-08-27
                  for the same reason: glass, colour and handles are one chapter
                  there. Left here for every other door route. */ ?>
-        <?php if ($show_door_handles && ! $is_upvc_doors_bespoke && ! $is_composite_doors) : ?>
+        <?php if ($show_door_handles && ! $is_upvc_doors_bespoke) : ?>
             <?php get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args()); ?>
         <?php endif; ?>
 
@@ -6841,9 +6854,7 @@ if ($is_commercial_hub) {
        It is a contained panel rather than a band, because the enquiry form
        below it is already the page's closing dark moment and two in a row is
        one too many. */
-    if ($is_composite_doors) {
-        get_template_part('template-parts/components/composite-door-quiz');
-    }
+    /* The composite door quiz belongs to the held-back redesign, 2026-09-04. */
     ?>
 
     <section id="fenster-enquiry" class="fg-enquiry">
