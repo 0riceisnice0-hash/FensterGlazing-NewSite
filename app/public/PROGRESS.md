@@ -71,11 +71,17 @@ put it under the main 3 models, but before real homes."* The design is
   section's inner width to auto, which killed the container's margins and
   ran the picture edge to edge; the desktop formula already resolves to the
   page margin at phone widths, exactly as the stage's does.
-- **One inconsistency left, and it is the stage's.** On a phone this section
-  and the Roseview stage are inset 24px while the gallery and the rest are
-  inset 12px, because both use that wider frame formula. They match each
-  other, which is what uniform meant here; nothing was changed in the stage
-  to close the gap with the others.
+- **Then smaller again, on "its a bit in your face, could do with a smaller
+  section".** Filling the viewport had put two hero sections back to back,
+  and at 1920x1080 the picture was 1184x881. It keeps the layout and the
+  furniture and gives up the scale: the page's ordinary container instead of
+  the stage's 1640px frame, and a height set by its own copy rather than by
+  the screen, about 500px whatever the viewport. The section is 617px at
+  1440x780 and 628px at 1920x1080, against the stage's 706px and 1006px, and
+  sits with the gallery at 613px rather than competing with the stage.
+- **That also closed the mobile inset.** On the ordinary container it now
+  shares the 12px page margin with the gallery and the rest; only the stage
+  keeps the wider frame.
 - **The design MCP could not authorise from this session** (`/design-login`
   needs an interactive terminal), so the project was read through the
   owner's logged-in browser instead. See the memory note; nothing about the
