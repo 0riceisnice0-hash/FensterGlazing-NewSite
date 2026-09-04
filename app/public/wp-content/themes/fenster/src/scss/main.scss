@@ -51669,3 +51669,33 @@ html.fg-blinds-reveal-locked {
     line-height: 1.5;
   }
 }
+
+/* ---- One viewport per section, fifth and last pass ------------------
+ * TWO CORRECTIONS TO THE PASSES ABOVE, both worth keeping.
+ *
+ * The step I had been cutting was the wrong one. Step 1 is glass and it
+ * fits at 738; step 2 is COLOUR and it is the 819. Reading a measurement
+ * list by position rather than by name cost three passes of cuts aimed at a
+ * section that was already inside budget.
+ *
+ * And every `.fg-finish__step { padding-block }` rule above is dead. Once
+ * the steps became sections they became direct children of `.fg-finish`,
+ * where `.fg-finish > section { padding-block: 0 !important }` has been
+ * zeroing them all along. The steps carry no padding; their separation is
+ * the hairline rule and the components' own margins, which is why they look
+ * right despite the cuts never landing. Left in place rather than removed,
+ * because deleting them would change nothing and this note is the point.
+ *
+ * The colour step's own closing note was capped to a narrow measure, so 330
+ * characters wrapped to five lines in a section that had the full container
+ * width available.
+ * -------------------------------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  .fg-cd3-colour__note {
+    max-width: none;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+}
