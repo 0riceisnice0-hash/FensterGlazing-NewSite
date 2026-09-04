@@ -52,6 +52,27 @@ connected and living together as opposed to a bunch of boxes."*
   follow: Chrome honours `justify-items` on a block's children, so the
   centred head needed `justify-items: start` at phone widths, and the old
   two-column panel head lost its photograph column.
+- **Then the windows take the whole viewport (test `42c3077b`).** Owner:
+  *"get rid of the meeting rail and the disclaimer bits at the bottom. make
+  the windows as big as you can in the one view port. get rid of the scroll
+  bar of the right text."* The rail scale and the survey note are gone from
+  the markup, the stylesheet and the PHP that computed the tick positions;
+  the two arrows moved into an overlay over the scene, level with the middle
+  of the windows, taking no height. The scene formula subtracts 150px now
+  rather than 318px (the heading is held to one line and nothing else sits
+  under the windows) and caps at 960px, the floor sits 2% lower and the
+  windows stand taller on it. The middle window is 449x583 at 1440x900,
+  against 365x474 this morning, and 569x738 at 1920x1080.
+- **The text columns are 260px because of the composition, not the copy.**
+  The three-window arrangement is about 1.55 times the middle window's
+  width, so the middle column has to be at least that or the side windows
+  clip at its edges; 300px columns clipped them at 1440. Widening the
+  windows past 64% of the scene has the same effect, which is why they are
+  taller rather than wider.
+- **Neither half scrolls.** The `max-height` and `overflow-y: auto` that
+  had let the old single panel scroll inside itself are gone; the facts half
+  is about 470px and the stage beside it is at least 500px on any screen
+  720px and taller.
 
 ## 2026-09-03 — Sliding sash: every section inside one viewport (ON TEST as `857124bd`, NOT LIVE)
 
