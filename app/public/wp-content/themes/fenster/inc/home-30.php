@@ -75,10 +75,12 @@ function fenster_h30_option_thumb(string $src): string
  * ship it to live the next time the theme goes out. An unknown host gets the
  * classic homepage.
  *
- * Live is deliberately absent. Add `fensterglazing.com` and its `www.` form
- * here when the owner says the new homepage goes live, and say so in the
- * commit message: `AI.md` records a gate being opened silently inside an
- * unrelated commit, which is the failure this comment exists to prevent.
+ * LIVE WAS ADDED ON 2026-09-04, ON THE OWNER'S EXPLICIT INSTRUCTION: "just make
+ * sure the homepage gets replaced with the new home page. it's a redesign so."
+ * It is its own commit and it is recorded in `AI.md` and `LIVECHANGES.md`,
+ * which is what the paragraph above asks of whoever does this. The gate is
+ * kept rather than deleted: it is what lets the local experiment and test run
+ * ahead of production again, and removing it would take the safety with it.
  */
 function fenster_h30_enabled(): bool
 {
@@ -92,6 +94,8 @@ function fenster_h30_enabled(): bool
         'fenster-glazing-30.local',   // this experiment
         'fenster-glazing.local',      // the working local site
         'test.fensterglazing.com',    // the password-protected test site
+        'fensterglazing.com',         // live, opened 2026-09-04
+        'www.fensterglazing.com',     // live, opened 2026-09-04
         'localhost',
         '127.0.0.1',
     ], true);
