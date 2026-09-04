@@ -51588,3 +51588,49 @@ html.fg-blinds-reveal-locked {
 
   .fg-finish__num { margin-bottom: 0.4rem; }
 }
+
+/* ---- One viewport per section, third pass --------------------------
+ * Four were within 6px and one had not moved at all across two attempts.
+ *
+ * THE CASE STUDY CARD WAS THE INSTRUCTIVE ONE. Both earlier cuts landed on
+ * the `<img>` - `aspect-ratio: 3/2` and `max-height: 188px` were both in the
+ * computed style, and the image really was 188px tall - but the card did not
+ * change, because `.fg-cs-card__media` around it carries its own
+ * `aspect-ratio: 16/10` and sets the height. Shrinking a child inside a
+ * fixed-ratio parent buys nothing. Check which element owns the height
+ * before cutting the one that looks like it should.
+ * -------------------------------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  /* card 584 = media 235 + body 347. The media owns its height, so it takes
+     the cut; the body gives up padding rather than any of its five lines. */
+  .fg-cs-card__media { aspect-ratio: 2 / 1; }
+
+  .fg-cs-card__body { padding-block: clamp(0.7rem, 1.4vw, 1rem); }
+
+  .fg-cs-card__summary { font-size: 0.88rem; line-height: 1.5; }
+
+  /* enquiry 831: 67 padding, 764 container. The form is still the driver. */
+  .fg-enquiry .fg-form textarea { min-height: 58px; }
+
+  .fg-enquiry-form__compact-grid { gap: 0.45rem 0.85rem; }
+
+  /* glass step 819: the section is 753 and the side column sets its floor -
+     strip, then five pattern crops, then the note. The crops carry it. */
+  .fg-glass-pick__side { gap: clamp(0.8rem, 1.6vw, 1.15rem); }
+
+  .fg-glass-patterns {
+    margin-top: 0;
+    padding-top: clamp(0.7rem, 1.4vw, 1rem);
+  }
+
+  .fg-glass-patterns img { max-height: 96px; }
+
+  .fg-glass-patterns__intro { margin-bottom: 0.6rem; font-size: 0.86rem; }
+
+  /* the last two were 6px and 4px over */
+  .fg-cdq { padding-block: clamp(1.5rem, 2.3vw, 1.7rem); }
+
+  .fg-cd3-anatomy__media { max-height: 352px; }
+}
