@@ -14,6 +14,45 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-04 — Sliding sash: the thermal camera comparison (ON TEST as `08c44a33`, NOT LIVE)
+
+Owner: *"i did this thing with claude design. make it good on the website.
+put it under the main 3 models, but before real homes."* The design is
+`Sash Heat Transfer v3.dc.html` in his Claude Design project
+`ae020cb9-868e-4973-bf7c-7173538134e8`.
+
+- **What it is.** The same window opening twice, as a thermal camera would
+  see it from inside on a January night: a single-glazed timber sash with
+  its glass at 8°C and cold air falling off the sill, against a Roseview
+  sash in the same opening. A divider drags between them. Three figures
+  beside it change with the model: the glass you touch, the heat leaving,
+  and what that wastes on a cold day. It sits between the Roseview stage
+  and Real homes, and is 585px tall at 1440x780 and 655px at 1920x1080, so
+  all twelve sections still fit one viewport.
+- **Rebuilt, not pasted, and four things changed on purpose.** No background
+  of its own, because this page's canvas is painted once on `body` and a
+  section fill draws a line against it. Sized from the viewport rather than
+  the design's fixed 496px frame. Every shape a percentage of the frame
+  rather than fixed pixels, so it holds at any width and stacks on a phone
+  (where the shapes take more of the width, because the frame is squarer
+  there than the design's landscape artboard). And the figures are computed
+  in PHP from each model's own published U-value.
+- **Computing the figures found a rounding error in the design.** Heat loss
+  is U x 1.4m² x 20K, glass temperature is 21°C minus U x 0.13 x 20K, and
+  cost is that loss for 24 hours at 25p a unit. A single-glazed window at
+  5.0 W/m²K wastes 84p, not the 85p the design showed. Everything else
+  matched. Driving them from the same 1.2 / 1.2 / 1.4 the specification
+  rows quote means the two cannot drift apart.
+- **The note under it stays.** It says the picture is an illustration rather
+  than a photograph, that the single-glazed 5.0 W/m²K is a typical published
+  figure and not one of our tests, and what the room, area, tariff and
+  surface resistance are. It is the only number on that section we do not
+  own, and it is the reason the section is honest.
+- **The design MCP could not authorise from this session** (`/design-login`
+  needs an interactive terminal), so the project was read through the
+  owner's logged-in browser instead. See the memory note; nothing about the
+  site changed because of it.
+
 ## 2026-09-03 — Sliding sash: the running order, and a shorter window than I was measuring (ON TEST as `f7dd41e1`, NOT LIVE)
 
 Owner: *"real homes isnt in one viewport its a bit too tall. get rid of
