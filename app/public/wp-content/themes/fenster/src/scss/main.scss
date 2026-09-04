@@ -49331,14 +49331,14 @@ html.fg-blinds-reveal-locked {
   min-height: calc(100svh - var(--site-header-main-height) - (var(--fg-sash-stage-pad) * 2) - 2px);
 }
 
-/* Centred over the windows, now that the details stand either side of
-   them (owner, 2026-09-03: "centre it. has the detail on both sides"). The
-   intro paragraph that used to sit beside the heading went at the same
-   time, on the same instruction. */
+/* Left, over the windows. It was centred while the details stood either
+   side of them; the windows moved to the left on 2026-09-03 ("have the sash
+   slider on the left ... and the text on the right") and a centred line over
+   a left-weighted composition read as detached from it. The intro paragraph
+   that used to sit beside this heading is gone, on the owner's instruction. */
 .fg-sash-stage__head {
   display: grid;
-  justify-items: center;
-  text-align: center;
+  justify-items: start;
 }
 
 /* Two lines at 1440, not three: the section has to fit the viewport below
@@ -49363,29 +49363,25 @@ html.fg-blinds-reveal-locked {
    runs; whichever column is taller sets the section. */
 .fg-sash-stage__body {
   display: grid;
-  /* 260px text columns: the three-window composition is about 1.55 times the
-     middle window's width, so the middle column has to be at least that or
-     the side windows clip at its edges. At 1440 that is 752px for a 447px
-     window. */
-  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr) minmax(210px, 250px);
+  /* The windows take the left and everything they need; the detail column
+     is 300px to 400px on the right. The windows are sized from the height,
+     so a wider left column does not make them bigger, it gives the three-
+     window composition (about 1.55 times the middle window) room to stand
+     clear of the scene edges, which is what used to bind at 1440. */
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
   grid-template-rows: minmax(0, 1fr);
-  gap: 0.9rem clamp(1.25rem, 2vw, 2.5rem);
+  gap: 0.9rem clamp(1.5rem, 3vw, 3.5rem);
   align-items: stretch;
   min-height: 0;
 }
 
 .fg-sash-stage__scene-wrap {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.fg-sash-stage__panels--story {
   grid-column: 1;
   grid-row: 1;
 }
 
-.fg-sash-stage__panels--facts {
-  grid-column: 3;
+.fg-sash-stage__panels {
+  grid-column: 2;
   grid-row: 1;
 }
 
@@ -49742,9 +49738,13 @@ html.fg-blinds-reveal-locked {
   left: 0;
 }
 
+/* The rail photograph sits beside the name rather than under it, so the
+   panel starts with one block rather than two. */
 .fg-sash-stage__panel-head {
   display: grid;
-  gap: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
 }
 
 .fg-sash-stage__tagline {
@@ -49802,7 +49802,7 @@ html.fg-blinds-reveal-locked {
 .fg-sash-stage__facts {
   display: grid;
   grid-template-columns: 1fr;
-  margin: 0.85rem 0 0;
+  margin: 0.15rem 0 0;
   border-top: 1px solid rgba(0, 45, 58, 0.14);
 }
 
@@ -49835,25 +49835,6 @@ html.fg-blinds-reveal-locked {
 }
 
 /* The written bit under the facts: what those figures mean on the house. */
-.fg-sash-stage__meaning {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.fg-sash-stage__meaning strong {
-  color: var(--color-muted);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.fg-sash-stage__meaning p {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
 
 
 /* No JavaScript: three renders in a row, named, nothing to click, no
@@ -50069,6 +50050,26 @@ html.fg-blinds-reveal-locked {
 
   .fg-sash-stage__facts dd {
     font-size: 0.88rem;
+  }
+}
+
+/* Short screens: the detail column has to fit inside the scene beside it,
+   because the section is one viewport and the column is out of flow, so a
+   taller column would hang over the gallery below rather than push the
+   section down. At 1280x720 it was 559px against a 521px scene. The rail
+   photograph and the fact rows give up the 47px. */
+@media (min-width: 861px) and (max-height: 820px) {
+  .fg-sash-stage__rail-photo img {
+    width: 96px;
+    height: 72px;
+  }
+
+  .fg-sash-stage__facts > div {
+    padding: 0.25rem 0;
+  }
+
+  .fg-sash-stage__best {
+    font-size: 0.95rem;
   }
 }
 

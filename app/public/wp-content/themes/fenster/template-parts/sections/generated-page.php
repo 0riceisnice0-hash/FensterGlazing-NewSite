@@ -507,6 +507,9 @@ $sash_roseview_feature_cards = [];
 $sash_roseview_gallery = [];
 if ($slug === 'sliding-sash-windows') {
     $sash_asset_base = '/wp-content/themes/fenster/assets/images/products/sash-roseview/';
+    /* `meaning` is not rendered on the stage since 2026-09-03 (owner: "dont be
+       so text heavy"); kept because it is written product copy and this content
+       has been asked for and then dropped once already. */
     $sash_roseview_models = [
         [
             'name' => 'Ultimate Rose',
@@ -4801,44 +4804,36 @@ if ($is_commercial_hub) {
                         <p class="fg-sash-stage__sr" aria-live="polite" data-fg-stage-live></p>
                     </div>
 
-                    <?php /* THE DETAILS STAND EITHER SIDE OF THE WINDOWS. Owner, 2026-09-03,
-                             after the stage became one surface: "as in centre it. has the
-                             detail on both sides." Each model has two halves: the story on
-                             the left (what it is called, what it is for, what the details
-                             mean) and the facts on the right (the meeting rail photograph
-                             and the seven rows). Both halves carry the model's index and
-                             the script shows the pair together. */ ?>
-                    <div class="fg-sash-stage__panels fg-sash-stage__panels--story" data-fg-stage-panels>
+                    <?php /* THE WINDOWS ON THE LEFT, ONE DETAIL COLUMN ON THE RIGHT. Owner,
+                             2026-09-03: "have the sash slider on the left, as big as it is.
+                             and the text on the right. dont be so text heavy tho." So the
+                             two halves that had stood either side of the windows are one
+                             panel again, in the right column: what the model is called,
+                             what it is for in a line, the meeting rail photograph and the
+                             seven rows of differences.
+
+                             THE TWO "WHAT THE DETAILS MEAN" PARAGRAPHS ARE NOT RENDERED any
+                             more, on the same instruction. They were added on 2026-09-02
+                             ("need something in the empty box looking space"), when the
+                             panel was mostly empty; the panel is not empty now and they
+                             were most of the text on the page. They are still in the model
+                             data above, unrendered, because they are written product copy
+                             and the owner has changed his mind about this content once
+                             already. */ ?>
+                    <div class="fg-sash-stage__panels" data-fg-stage-panels>
                         <?php foreach ($sash_roseview_models as $index => $model) : ?>
                             <article class="fg-sash-stage__panel" data-fg-stage-panel="<?php echo esc_attr((string) $index); ?>" aria-label="<?php echo esc_attr((string) $model['name']); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
                                 <header class="fg-sash-stage__panel-head">
-                                    <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
-                                    <h3><?php echo esc_html((string) $model['name']); ?></h3>
+                                    <div>
+                                        <p class="fg-sash-stage__tagline"><?php echo esc_html((string) $model['tagline']); ?></p>
+                                        <h3><?php echo esc_html((string) $model['name']); ?></h3>
+                                    </div>
+                                    <figure class="fg-sash-stage__rail-photo">
+                                        <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="120" height="90">
+                                        <figcaption><?php echo esc_html((string) $model['rail_label']); ?></figcaption>
+                                    </figure>
                                 </header>
                                 <p class="fg-sash-stage__best"><strong><?php esc_html_e('Best for', 'fenster'); ?></strong> <?php echo esc_html(lcfirst((string) $model['best_for'])); ?></p>
-                                <?php /* Owner, 2026-09-02, after the first pass: "need something in
-                                         the empty box looking space. like just a written bit about
-                                         that window. what it all means etc." Two paragraphs per
-                                         model, written from the figures beside them. */ ?>
-                                <?php if (! empty($model['meaning']) && is_array($model['meaning'])) : ?>
-                                    <div class="fg-sash-stage__meaning">
-                                        <strong><?php esc_html_e('What the details mean', 'fenster'); ?></strong>
-                                        <?php foreach ($model['meaning'] as $meaning_paragraph) : ?>
-                                            <p><?php echo esc_html((string) $meaning_paragraph); ?></p>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
-
-                    <div class="fg-sash-stage__panels fg-sash-stage__panels--facts" data-fg-stage-panels>
-                        <?php foreach ($sash_roseview_models as $index => $model) : ?>
-                            <div class="fg-sash-stage__panel" data-fg-stage-panel="<?php echo esc_attr((string) $index); ?>" role="group" aria-label="<?php echo esc_attr((string) $model['name'] . ' specifications'); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
-                                <figure class="fg-sash-stage__rail-photo">
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy" decoding="async" width="120" height="90">
-                                    <figcaption><?php echo esc_html((string) $model['rail_label']); ?></figcaption>
-                                </figure>
                                 <dl class="fg-sash-stage__facts">
                                     <?php foreach ($sash_comparison_rows as $row) : ?>
                                         <?php if ($row[0] === 'Meeting rail') { continue; } ?>
@@ -4848,9 +4843,8 @@ if ($is_commercial_hub) {
                                         </div>
                                     <?php endforeach; ?>
                                 </dl>
-                            </div>
+                            </article>
                         <?php endforeach; ?>
-                    </div>
                 </div>
             </div>
         </section>
