@@ -182,10 +182,16 @@ $fg_has_colour = ! empty($colour_wall);
             <?php if ($fg_has_glass) : ?>
                 <section class="fg-finish__step fg-finish__step--first">
                     <div class="container">
-                        <header class="fg-chapter-head fg-chapter-head--chapter">
-                            <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
-                            <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
-                        </header>
+                        <?php
+                        /* ONE LINE, NOT A SECOND TITLE. As a full chapter head
+                           this was 113px of heading sitting directly above the
+                           step's own eyebrow and heading - 165px of titling
+                           before a single picture, and the screen was clipping
+                           its own closing note as a result. The step below
+                           already says what it is; the chapter only needs to
+                           say that three of them are coming. */
+                        ?>
+                        <p class="fg-finish__chapter"><?php esc_html_e('The finishes — the three things that make it yours', 'fenster'); ?></p>
                         <p class="fg-finish__num" aria-hidden="true">01</p>
                     </div>
                     <div class="fg-finish__body">

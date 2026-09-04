@@ -51796,3 +51796,48 @@ html.fg-blinds-reveal-locked {
 
   .fg-enquiry { padding-block: clamp(1.8rem, 2.7vw, 2rem); }
 }
+
+/* ---- The last two, found by probing rather than guessing ------------
+ * `max-width: none` on `.fg-chapter-head--chapter` did nothing, because the
+ * cap is on the h2 inside it (24ch, 432px), so the sentence still wrapped.
+ * That is the fourth time on this page that a cut landed on an element that
+ * did not own the dimension - always confirm which one does.
+ * ------------------------------------------------------------------- */
+
+.generated-page--composite-doors {
+
+  /* The chapter is a single ruled line above 01 now. */
+  .fg-finish__chapter {
+    margin: 0 0 clamp(0.9rem, 1.8vw, 1.3rem);
+    padding-bottom: clamp(0.6rem, 1.2vw, 0.85rem);
+    border-bottom: 1px solid rgba(2, 43, 53, 0.14);
+    color: rgba(2, 43, 53, 0.6);
+    font-size: 0.78rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ---- The cutaway, the last 128px -------------------------------
+     head 125 (a two-line lede in a 704px cap), explorer 557, stats 93 (four
+     cells of two-line copy), footnote 19. Spread across all three rather
+     than taken out of the drawing again. */
+  .fg-cd3-anatomy__head { max-width: none; }
+
+  .fg-cd3-anatomy__lede { max-width: none; }
+
+  .fg-cd3-anatomy__media { max-height: 470px; }
+
+  .fg-cd3-anatomy__explorer { padding: clamp(0.85rem, 1.5vw, 1.15rem); }
+
+  .fg-cd3-anatomy__stats > div {
+    padding-block: clamp(0.35rem, 0.7vw, 0.5rem);
+
+    dd { font-size: 0.84rem; line-height: 1.45; }
+  }
+
+  /* 12px and 4px. */
+  .fg-cs-card__body { padding-block: clamp(0.6rem, 1.2vw, 0.9rem); }
+
+  .fg-cdq__panel { padding-top: 0; }
+}
