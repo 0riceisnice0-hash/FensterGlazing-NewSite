@@ -8928,6 +8928,12 @@ const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--
 const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
 const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
 const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chapters]');
+/* The panel that climbs is whichever one FOLLOWS the opening, found by
+   position rather than by name. Naming it `--energy` here is what made the old
+   build silently wrong when the owner reordered the chapters. */
+const casTurnCoverPanel = casTurnTrack
+  && casTurnTrack.closest('.fg-cas-stack__panel')
+  && casTurnTrack.closest('.fg-cas-stack__panel').nextElementSibling;
 
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
@@ -8949,8 +8955,15 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
   const readMetrics = () => {
     headerOffset = parseFloat(getComputedStyle(document.documentElement)
       .getPropertyValue('--site-header-main-height')) || 0;
-    coverPx = casTurnStack
-      ? parseFloat(getComputedStyle(casTurnStack).getPropertyValue('--fg-cas-cover')) || 0
+    /* MEASURED OFF THE RESOLVED MARGIN, NOT OFF `--fg-cas-cover`. A custom
+       property is substitution-only: getPropertyValue hands back the token it
+       was written as, "62vh", and parseFloat turns that into 62. That silently
+       made the cover a tenth of its real size and let the chapter climb over a
+       three-quarters-turned sentence. `margin-top` is a real property and comes
+       back resolved, in pixels, and it is the very thing that creates the
+       overlap, so it cannot disagree with it either. */
+    coverPx = casTurnCoverPanel
+      ? Math.max(0, -parseFloat(getComputedStyle(casTurnCoverPanel).marginTop) || 0)
       : 0;
   };
 
@@ -8980,11 +8993,23 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
       if (range <= 0) return 0;
       const travelled = headerOffset - rect.top;
       const raw = clamp(travelled / range, 0, 1);
-      /* The sentence must be finished BEFORE the cover starts, or the energy
-         chapter slides up over a half-turned statement. Derived, not guessed:
-         it is exactly the share of the pin the cover occupies. */
-      const settleOut = clamp(coverPx / range, 0.05, 0.6);
-      return clamp((raw - SETTLE_IN) / Math.max(0.01, 1 - SETTLE_IN - settleOut), 0, 1);
+      /* THE TURN MUST BE FINISHED BEFORE THE NEXT CHAPTER IS VISIBLE, or it
+         climbs over a half-turned sentence. The first version of this took the
+         end point as `1 - cover / range`, which is wrong and measured wrong:
+         the chapter does not become visible when its top reaches the pin
+         offset, it becomes visible a whole VIEWPORT earlier, when its top
+         crosses the bottom of the screen. That left the turn at 0.74 with the
+         chapter already climbing.
+
+         So the end point is the raw progress at which the chapter's top first
+         crosses the fold, worked out from the same geometry the CSS uses:
+         the track's height, less the cover it gained, less a viewport, plus
+         the header offset the pin sits at. Times 0.94, so the sentence is
+         settled with a little in hand rather than landing on the exact frame
+         the chapter arrives. */
+      const appears = (rect.height - coverPx - window.innerHeight + headerOffset) / range;
+      const end = clamp(appears * 0.94, SETTLE_IN + 0.05, 1);
+      return clamp((raw - SETTLE_IN) / (end - SETTLE_IN), 0, 1);
     }
 
     /* Not pinned: scrub on the approach instead. Worse, because the turn is

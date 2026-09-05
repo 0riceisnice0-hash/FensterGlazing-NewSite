@@ -39406,15 +39406,15 @@ html.fg-blinds-reveal-locked {
 
    The document is no longer than before: the track gains exactly what the
    energy panel is pulled up by. */
-.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned {
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
   --fg-cas-cover: 62vh;
 }
 
-.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
   min-height: calc(100svh + 85vh + var(--fg-cas-cover));
 }
 
-.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
   position: sticky;
   top: var(--site-header-main-height);
 }
@@ -39422,7 +39422,7 @@ html.fg-blinds-reveal-locked {
 /* The climb. Relative and above, so it rides over the pinned opening rather
    than under it, and its own opaque panel ground is what makes the edge read.
    Pulled up by exactly the cover distance the track gained. */
-.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy {
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy {
   position: relative;
   z-index: 2;
   margin-top: calc(var(--fg-cas-cover) * -1);
@@ -39431,8 +39431,8 @@ html.fg-blinds-reveal-locked {
 /* Everything after energy rides above it in turn, so no later chapter can be
    painted under the one it follows. Nothing here is sticky, so this is paint
    order only: it costs no scroll and traps nothing. */
-.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--security,
-.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--versatility {
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--security,
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--versatility {
   position: relative;
   z-index: 3;
 }
@@ -39441,25 +39441,25 @@ html.fg-blinds-reveal-locked {
    viewport of the page apparently refusing to move, and a thumb covers less
    ground per gesture than a wheel. */
 @media (max-width: 760px) {
-  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
     --fg-cas-cover: 42vh;
   }
 
-  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
     min-height: calc(100svh + 55vh + var(--fg-cas-cover));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
     --fg-cas-cover: 0px;
   }
 
-  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
     min-height: 0;
   }
 
-  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
     position: relative;
     top: auto;
   }
