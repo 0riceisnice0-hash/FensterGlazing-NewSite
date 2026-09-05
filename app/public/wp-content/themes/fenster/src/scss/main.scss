@@ -39435,12 +39435,34 @@ html.fg-blinds-reveal-locked {
 }
 
 /* The chapter waits underneath, pulled up so it is already in place behind the
-   opening, and padded at the foot by exactly the distance it must hold for. */
+   opening. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy {
   position: relative;
   z-index: 1;
   margin-top: calc(var(--fg-cas-reveal) * -1);
-  padding-bottom: var(--fg-cas-reveal);
+}
+
+/* A SPACER, NOT PADDING, AND THIS IS THE WHOLE REASON THE FIRST ATTEMPT AT
+   THIS DID NOTHING. `padding-bottom: var(--fg-cas-reveal)` on the panel looks
+   like it should give the sticky child room to travel, and it does not: a
+   sticky element is constrained by its containing block's CONTENT box, so
+   padding is invisible to it and the range came out as zero. The element
+   computed `position: sticky` with `top: 72px` and slid the whole way down
+   anyway, which is a maddening thing to look at, because nothing about the
+   computed styles is wrong.
+
+   Measured, on this markup: with padding-bottom the wrapper tracked the scroll
+   one to one; with an explicit panel height, or with a real in-flow box after
+   it, it held at 72px exactly. This is that box. A pseudo-element keeps it out
+   of the markup, and `.fg-cas-under` stays the panel's only real child so
+   `> *:last-child` rules elsewhere are unaffected.
+
+   It is not a visible gap: the chapter is held for precisely this distance, so
+   the spacer is consumed by the pin rather than shown. */
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy::after {
+  content: "";
+  display: block;
+  height: var(--fg-cas-reveal);
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-under {
