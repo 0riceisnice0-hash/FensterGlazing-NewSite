@@ -8927,6 +8927,7 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--overture');
 const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
 const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
+const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chapters]');
 
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
@@ -8934,16 +8935,23 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
      the lead-in the turn starts on the same gesture that brings it to rest,
      which is the "over by the time you get there" problem in miniature. */
   const SETTLE_IN = 0.12;
-  const SETTLE_OUT = 0.14;
+  /* The tail of the pin is no longer a pause, it is the cover: the energy
+     chapter climbs over the still-pinned opening. Its length is read from
+     `--fg-cas-cover` so the CSS that sets the negative margin and the JS that
+     decides when the turn must be finished cannot drift apart. Falls back to a
+     plain settle if the property is missing. */
+  let coverPx = 0;
 
   let headerOffset = 0;
   let pinning = false;
   let queued = false;
 
-  const readHeaderOffset = () => {
-    const raw = getComputedStyle(document.documentElement)
-      .getPropertyValue('--site-header-main-height');
-    headerOffset = parseFloat(raw) || 0;
+  const readMetrics = () => {
+    headerOffset = parseFloat(getComputedStyle(document.documentElement)
+      .getPropertyValue('--site-header-main-height')) || 0;
+    coverPx = casTurnStack
+      ? parseFloat(getComputedStyle(casTurnStack).getPropertyValue('--fg-cas-cover')) || 0
+      : 0;
   };
 
   /* THE GUARD. A section pinned in less room than it needs can never show its
@@ -8953,10 +8961,12 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
      so it is measured rather than assumed. No fit, no pin: the track loses its
      extra height, nothing is sticky and the fallback band below takes over. */
   const measureFit = () => {
-    if (!casTurnTrack) return false;
+    if (!casTurnTrack || !casTurnStack) return false;
     const available = window.innerHeight - headerOffset;
     pinning = casTurnSection.offsetHeight <= available + 1;
-    casTurnTrack.classList.toggle('is-pinning', pinning);
+    /* On the STACK, not the track, because the cover distance has to reach the
+       energy panel too and custom properties inherit down, not sideways. */
+    casTurnStack.classList.toggle('is-turn-pinned', pinning);
     return pinning;
   };
 
@@ -8970,7 +8980,11 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
       if (range <= 0) return 0;
       const travelled = headerOffset - rect.top;
       const raw = clamp(travelled / range, 0, 1);
-      return clamp((raw - SETTLE_IN) / Math.max(0.01, 1 - SETTLE_IN - SETTLE_OUT), 0, 1);
+      /* The sentence must be finished BEFORE the cover starts, or the energy
+         chapter slides up over a half-turned statement. Derived, not guessed:
+         it is exactly the share of the pin the cover occupies. */
+      const settleOut = clamp(coverPx / range, 0.05, 0.6);
+      return clamp((raw - SETTLE_IN) / Math.max(0.01, 1 - SETTLE_IN - settleOut), 0, 1);
     }
 
     /* Not pinned: scrub on the approach instead. Worse, because the turn is
@@ -9020,8 +9034,11 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
   };
 
   const remeasureCasTurn = () => {
-    readHeaderOffset();
+    readMetrics();
     measureFit();
+    /* Read again: `is-turn-pinned` is what puts `--fg-cas-cover` on the stack,
+       so the first read above sees nothing on a cold start. */
+    readMetrics();
     updateCasTurn();
   };
 

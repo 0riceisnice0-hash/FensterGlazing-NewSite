@@ -568,9 +568,20 @@ $faqs = [
                     alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
                     loading="lazy" width="1100" height="733">
             </figure>
-            <dl class="fg-cas-stats">
-                <?php foreach ($energy_stats as $stat) : ?>
-                    <div>
+            <?php /* The figures arrive one after another as the chapter is
+                     reached, rather than being there already. Owner, 2026-09-05:
+                     "then maybe bring the rh figures in on a scroll motion too".
+
+                     Entry-triggered off the shared observer with a per-item
+                     stagger, NOT scrubbed by scroll like the opening sentence.
+                     Two reasons: this chapter is not pinned, so a scrubbed
+                     figure would jitter with every wheel notch instead of
+                     settling, and a second scrubbed element on the same page is
+                     the "toom uch overlapping" the owner pulled the old build
+                     up on. It runs once and stops. */ ?>
+            <dl class="fg-cas-stats" data-fg-cas-reveal>
+                <?php foreach ($energy_stats as $i => $stat) : ?>
+                    <div style="--fg-stat-index: <?php echo (int) $i; ?>">
                         <dt><span><?php echo esc_html($stat['figure']); ?></span><?php echo esc_html($stat['unit']); ?></dt>
                         <dd><?php echo esc_html($stat['note']); ?></dd>
                     </div>

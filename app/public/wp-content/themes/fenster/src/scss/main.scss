@@ -39374,65 +39374,92 @@ html.fg-blinds-reveal-locked {
   letter-spacing: -0.025em;
 }
 
-/* ---- the pin ---------------------------------------------------------------
+/* ---- the pin, and the chapter that climbs over it --------------------------
    Owner: "needs to be 2 events. scroll, then the words animate, because
-   otherwise its over by the tiem you get there."
+   otherwise its over by the tiem you get there." And then: "can we do the
+   stack thing now so the energy efficiency section appears from underneath."
 
-   Exactly right, and it was the flaw in the first scroll-linked version: the
-   turn was scrubbed by the section's APPROACH, so it had finished by the time
-   the section was framed and you never watched it happen. Two events now: you
-   scroll and the statement arrives and holds, then scrolling turns it while it
-   sits still in front of you.
+   Three beats on one pin. The opening arrives and holds; the sentence turns
+   while it sits still; then the energy chapter climbs up over it and takes the
+   screen. The track is scroll length and nothing else.
 
-   The track is scroll length and nothing else. The section pins inside it, and
-   the pin range is the track's height less the section's, which is where the
-   turn happens.
+   WHY THE STACK IS SAFE THIS TIME, because a version of it was taken off this
+   page earlier today for hiding half a chapter. The fault was never the
+   overlap, it was WHAT WAS PINNED. That build pinned the ENERGY chapter, which
+   is 1678px in a 900px viewport, so its own foot could never be reached. Here
+   the pinned thing is the OPENING, which is shorter than the viewport by
+   construction, and the energy chapter is never pinned at all: it is an
+   ordinary block in flow, pulled up by a margin, that scrolls past completely
+   under its own power. Nothing can be trapped in a block that never stops
+   scrolling.
 
-   THIS IS THE ONE STICKY THE PARKED NOTE ABOVE ALLOWS, and it meets both of
-   its conditions:
-     - `top: var(--site-header-main-height)`, never 0, so nothing is pinned
-       underneath the site header.
-     - Shorter than the viewport, and here that is guaranteed by construction
-       rather than hoped for: the section's min-height is
-       `min(46rem, calc(100svh - var(--site-header-main-height)))`, so it can
-       never ask for more room than there is below the header.
-   The one case the formula cannot promise is content OVERFLOWING that
-   min-height, at large zoom or a raised minimum font size. main.js measures
-   for exactly that and withholds `is-pinning` when it does not fit, which
-   drops everything here and leaves an ordinary block in flow.
+   The two conditions in the parked note both still hold: `top` is the header
+   height and never 0, and the pinned section is shorter than the viewport,
+   with main.js withholding the pin outright if content ever overflows its
+   min-height.
 
-   Gated on `.js .fg-cas-motion-ready` as well, so no-JS and reduced-motion
-   readers get no pin, no extra scroll length and the finished sentence. */
-.js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
-  /* Section height plus the scroll the turn is worth. The turn itself gets the
-     middle of that; main.js holds a short settle at each end so the statement
-     arrives before it moves and rests before it releases. */
-  min-height: calc(100svh + 85vh);
+   `--fg-cas-cover` IS THE SINGLE SOURCE OF TRUTH for the climb. The negative
+   margin below and the point at which main.js must have finished the sentence
+   are both derived from it, so they cannot drift apart. It lives on the stack
+   rather than the track because it has to reach the energy panel, and custom
+   properties inherit down, not sideways.
+
+   The document is no longer than before: the track gains exactly what the
+   energy panel is pulled up by. */
+.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned {
+  --fg-cas-cover: 62vh;
 }
 
-.js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning .fg-cas-overture--onimage {
+.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
+  min-height: calc(100svh + 85vh + var(--fg-cas-cover));
+}
+
+.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
   position: sticky;
   top: var(--site-header-main-height);
 }
 
-/* Shorter pin on a phone. The same 85vh leaves about 1017px of pinned
-   scrolling on a 844px screen, which is more than a full viewport of the page
-   apparently refusing to move, and a thumb covers less ground per gesture than
-   a wheel does. Measured after this change: 764px of pin, 565px of it turning.
-   The section is also shorter here (544px against 736px), so the same number
-   of gestures shows proportionally more of the movement. */
+/* The climb. Relative and above, so it rides over the pinned opening rather
+   than under it, and its own opaque panel ground is what makes the edge read.
+   Pulled up by exactly the cover distance the track gained. */
+.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(var(--fg-cas-cover) * -1);
+}
+
+/* Everything after energy rides above it in turn, so no later chapter can be
+   painted under the one it follows. Nothing here is sticky, so this is paint
+   order only: it costs no scroll and traps nothing. */
+.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--security,
+.js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--versatility {
+  position: relative;
+  z-index: 3;
+}
+
+/* Shorter climb and shorter pin on a phone. The same 85vh leaves over a full
+   viewport of the page apparently refusing to move, and a thumb covers less
+   ground per gesture than a wheel. */
 @media (max-width: 760px) {
-  .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
-    min-height: calc(100svh + 55vh);
+  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned {
+    --fg-cas-cover: 42vh;
+  }
+
+  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
+    min-height: calc(100svh + 55vh + var(--fg-cas-cover));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
+  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned {
+    --fg-cas-cover: 0px;
+  }
+
+  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
     min-height: 0;
   }
 
-  .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning .fg-cas-overture--onimage {
+  .js .fg-cas-motion-ready .fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
     position: relative;
     top: auto;
   }
@@ -39500,6 +39527,33 @@ html.fg-blinds-reveal-locked {
   .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* The three figures in the energy chapter, arriving in order as the chapter is
+   reached. 90ms apart, which is enough to read as three separate arrivals and
+   short enough that the last one is not still coming when the eye gets to it.
+   The rise is small on purpose: these sit beside a static photograph, and a
+   large travel next to a fixed object reads as the object drifting. */
+.js .fg-cas-motion-ready .fg-cas-stats > div {
+  opacity: 0;
+  transform: translate3d(0, 0.5rem, 0);
+  transition:
+    opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--fg-stat-index, 0) * 90ms),
+    transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--fg-stat-index, 0) * 90ms);
+}
+
+.js .fg-cas-motion-ready .fg-cas-stats.is-visible > div {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .fg-cas-motion-ready .fg-cas-stats > div {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
   }
 }
 
