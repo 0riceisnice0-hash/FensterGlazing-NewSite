@@ -39374,6 +39374,58 @@ html.fg-blinds-reveal-locked {
   letter-spacing: -0.025em;
 }
 
+/* ---- the pin ---------------------------------------------------------------
+   Owner: "needs to be 2 events. scroll, then the words animate, because
+   otherwise its over by the tiem you get there."
+
+   Exactly right, and it was the flaw in the first scroll-linked version: the
+   turn was scrubbed by the section's APPROACH, so it had finished by the time
+   the section was framed and you never watched it happen. Two events now: you
+   scroll and the statement arrives and holds, then scrolling turns it while it
+   sits still in front of you.
+
+   The track is scroll length and nothing else. The section pins inside it, and
+   the pin range is the track's height less the section's, which is where the
+   turn happens.
+
+   THIS IS THE ONE STICKY THE PARKED NOTE ABOVE ALLOWS, and it meets both of
+   its conditions:
+     - `top: var(--site-header-main-height)`, never 0, so nothing is pinned
+       underneath the site header.
+     - Shorter than the viewport, and here that is guaranteed by construction
+       rather than hoped for: the section's min-height is
+       `min(46rem, calc(100svh - var(--site-header-main-height)))`, so it can
+       never ask for more room than there is below the header.
+   The one case the formula cannot promise is content OVERFLOWING that
+   min-height, at large zoom or a raised minimum font size. main.js measures
+   for exactly that and withholds `is-pinning` when it does not fit, which
+   drops everything here and leaves an ordinary block in flow.
+
+   Gated on `.js .fg-cas-motion-ready` as well, so no-JS and reduced-motion
+   readers get no pin, no extra scroll length and the finished sentence. */
+.js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
+  /* Section height plus the scroll the turn is worth. The turn itself gets the
+     middle of that; main.js holds a short settle at each end so the statement
+     arrives before it moves and rests before it releases. */
+  min-height: calc(100svh + 85vh);
+}
+
+.js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning .fg-cas-overture--onimage {
+  position: sticky;
+  top: var(--site-header-main-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
+    min-height: 0;
+  }
+
+  .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning .fg-cas-overture--onimage {
+    position: relative;
+    top: auto;
+  }
+}
+
 /* ---- motion: the turn is scrubbed by scroll --------------------------------
    Owner: "it moves too quick, look at it from a human perspective, it should
    link to the scroll."

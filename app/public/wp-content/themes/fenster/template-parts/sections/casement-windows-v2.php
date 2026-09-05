@@ -383,6 +383,21 @@ $faqs = [
 
              The photograph keeps its alt: it is the product on a real elevation,
              not decoration, even though it is now behind the words. */ ?>
+    <?php /* THE TRACK IS SCROLL LENGTH, NOTHING ELSE. The section pins inside it
+             while the sentence turns, so the reader arrives at the statement
+             first and then turns it, rather than the turn being spent on the
+             approach. Owner, 2026-09-05: "needs to be 2 events. scroll, then
+             the words animate, because otherwise its over by the tiem you get
+             there."
+
+             The pin only exists when JavaScript is running, motion is allowed
+             AND the section actually fits below the header, which main.js
+             checks and re-checks on resize. With any of those false the track
+             has no extra height, nothing is sticky, and the section is an
+             ordinary block. That guard is not optional: pinning something
+             taller than the space it is pinned in is precisely the bug removed
+             from this page earlier today. */ ?>
+    <div class="fg-cas-overture-track" data-fg-cas-turn-track>
     <section class="fg-cas-overture fg-cas-overture--onimage" data-fg-cas-reveal aria-labelledby="fg-cas-overture-title">
         <figure class="fg-cas-overture__media">
             <img src="<?php echo esc_url(fenster_generated_url($base . 'gallery/casement-stone-elevation.webp')); ?>"
@@ -466,6 +481,7 @@ $faqs = [
                 </div>
         </div>
     </section>
+    </div><?php /* end the overture track */ ?>
 
     <?php
     /* The film band. Owner instruction, 2026-08-05: the placeholder comes off the

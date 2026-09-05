@@ -8903,34 +8903,95 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
    `scrollY` drifts away from what is on screen. `getBoundingClientRect()` is
    whatever is actually painted.
 
-   THE BAND. Nothing happens until the section has risen past 72% of the
-   viewport, and the sentence is finished by the time its top is 5% down, which
-   is also the moment the whole section is first framed on screen. At 900px
-   that is about 600px of scrolling: two or three unhurried gestures, and the
-   turn is complete exactly when the reader arrives rather than before.
+   TWO EVENTS, NOT ONE. The first scrubbed version scrubbed on the APPROACH:
+   the turn ran while the section rose up the screen and was finished by the
+   time it settled, so the reader never watched it happen. The owner again:
+   "needs to be 2 events. scroll, then the words animate, because otherwise its
+   over by the tiem you get there."
 
-   `from` is deliberately BELOW where the section sits at page load, so the
-   progress clamps to nought until the reader actually scrolls. Landing on the
-   page and reading it must not consume the animation. */
+   So the section pins. Event one is arriving: the statement rises, settles
+   below the header and stops, reading "It's not just a uPVC window." Event two
+   is the turn, scrubbed while it sits still in front of you, and only then
+   does the section release and the page carry on.
+
+   The measure is the TRACK, not the section: once pinned the section stops
+   moving and can say nothing about how far through we are, while the track
+   keeps travelling. The pin lasts the track's height less the section's, and
+   `SETTLE_IN` / `SETTLE_OUT` hold the two ends still so the statement arrives
+   before it moves and rests finished before it goes.
+
+   `measureFit` is the safety rail, and it is not decoration: a section pinned
+   in less room than it needs can never show its own foot, which is exactly the
+   bug taken off this page earlier today. It withholds the pin instead, and the
+   approach band survives below as the fallback. */
 const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--overture');
 const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
+const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
 
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  /* Held still at each end of the pin: the statement arrives and sits before a
+     single word moves, and rests finished before the section releases. Without
+     the lead-in the turn starts on the same gesture that brings it to rest,
+     which is the "over by the time you get there" problem in miniature. */
+  const SETTLE_IN = 0.12;
+  const SETTLE_OUT = 0.14;
+
+  let headerOffset = 0;
+  let pinning = false;
   let queued = false;
 
-  const updateCasTurn = () => {
-    queued = false;
+  const readHeaderOffset = () => {
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue('--site-header-main-height');
+    headerOffset = parseFloat(raw) || 0;
+  };
 
+  /* THE GUARD. A section pinned in less room than it needs can never show its
+     own foot, which is the bug taken off this page earlier today. The
+     min-height formula makes that impossible by construction, but content can
+     still overflow a min-height at large zoom or a raised minimum font size,
+     so it is measured rather than assumed. No fit, no pin: the track loses its
+     extra height, nothing is sticky and the fallback band below takes over. */
+  const measureFit = () => {
+    if (!casTurnTrack) return false;
+    const available = window.innerHeight - headerOffset;
+    pinning = casTurnSection.offsetHeight <= available + 1;
+    casTurnTrack.classList.toggle('is-pinning', pinning);
+    return pinning;
+  };
+
+  const progress = () => {
+    if (pinning) {
+      /* Pinned: the section stops moving, so it can say nothing about how far
+         through we are. The TRACK is what still travels, and the pin lasts for
+         its height less the section's. */
+      const rect = casTurnTrack.getBoundingClientRect();
+      const range = rect.height - casTurnSection.offsetHeight;
+      if (range <= 0) return 0;
+      const travelled = headerOffset - rect.top;
+      const raw = clamp(travelled / range, 0, 1);
+      return clamp((raw - SETTLE_IN) / Math.max(0.01, 1 - SETTLE_IN - SETTLE_OUT), 0, 1);
+    }
+
+    /* Not pinned: scrub on the approach instead. Worse, because the turn is
+       spent before the section settles, but it is the honest fallback when the
+       section does not fit and it is better than no movement at all. */
     const rect = casTurnSection.getBoundingClientRect();
     const viewport = Math.max(1, window.innerHeight);
     const from = viewport * 0.72;
     const to = viewport * 0.05;
-    const progress = clamp((from - rect.top) / Math.max(1, from - to), 0, 1);
+    return clamp((from - rect.top) / Math.max(1, from - to), 0, 1);
+  };
+
+  const updateCasTurn = () => {
+    queued = false;
+
     /* Smoothstep, not the cubic ease-out the lock uses. An ease-out front-loads
-       the movement, which is the opposite of what was asked for here: this has
-       to feel tied to the wheel, so both ends are softened and the middle
-       tracks the scroll almost one to one. */
-    const eased = progress * progress * (3 - 2 * progress);
+       the movement, which is the opposite of what is wanted here: this has to
+       feel tied to the wheel, so both ends are softened and the middle tracks
+       the scroll almost one to one. */
+    const p = progress();
+    const eased = p * p * (3 - 2 * p);
 
     /* SQUARE ROOTS, AND THEY ARE NOT DECORATION. A flexible track whose flex
        factor is below 1 takes only that fraction of the LEFTOVER space, and in
@@ -8939,31 +9000,34 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
        factor 0.3925 painted 15.4% of full, 0.7517 painted 56.5%, 0.9834 painted
        96.7% -- p squared to three decimals every time.
 
-       Left uncompensated that is the owner's complaint made geometric: the
-       squeeze collapses as (1-p) squared, so " not just" is 63% gone a third of
-       the way through the scroll while the terms have opened 15%. Feeding the
-       roots in cancels the square exactly, so both halves track the wheel one
-       to one and the gap closes at the same rate it opens.
-
-       If a browser ever sizes these linearly instead, this becomes a gentler
-       ease rather than a fault: nothing breaks, the pacing just softens. */
+       Left uncompensated the squeeze collapses as (1-p) squared, so " not just"
+       is 63% gone a third of the way through while the terms have opened 15%.
+       The roots cancel the square exactly, so both halves track the wheel one
+       to one and the gap closes at the same rate it opens. If a browser ever
+       sizes these linearly this becomes a gentler ease, not a fault. */
     casTurnSection.style.setProperty('--fg-turn', eased.toFixed(4));
     casTurnSection.style.setProperty('--fg-turn-cols', `${Math.sqrt(1 - eased).toFixed(4)}fr`);
     casTurnSection.style.setProperty('--fg-turn-rows', `${Math.sqrt(eased).toFixed(4)}fr`);
   };
 
   /* Throttled to a frame, unlike the lock. That one writes a transform, which
-     the compositor absorbs; these write grid tracks, which cost a layout, and
-     a raw scroll handler can fire several times per frame. */
+     the compositor absorbs; these write grid tracks, which cost a layout, and a
+     raw scroll handler can fire several times per frame. */
   const queueCasTurn = () => {
     if (queued) return;
     queued = true;
     window.requestAnimationFrame(updateCasTurn);
   };
 
+  const remeasureCasTurn = () => {
+    readHeaderOffset();
+    measureFit();
+    updateCasTurn();
+  };
+
   window.addEventListener('scroll', queueCasTurn, { passive: true });
-  window.addEventListener('resize', queueCasTurn);
-  updateCasTurn();
+  window.addEventListener('resize', remeasureCasTurn);
+  remeasureCasTurn();
 }
 
 /* ---------- Casement chapters --------------------------------------------
