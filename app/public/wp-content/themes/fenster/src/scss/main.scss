@@ -39374,48 +39374,70 @@ html.fg-blinds-reveal-locked {
   letter-spacing: -0.025em;
 }
 
-/* ---- motion ---------------------------------------------------------------
-   Armed only by `.js .fg-cas-motion-ready`, triggered only by `.is-visible`,
-   which the existing observer already writes on this section. No new
-   JavaScript, no new observer target, nothing scroll-linked.
+/* ---- motion: the turn is scrubbed by scroll --------------------------------
+   Owner: "it moves too quick, look at it from a human perspective, it should
+   link to the scroll."
 
-   Every delay clears the section's own 460ms [data-fg-cas-reveal] fade, so no
-   beat animates behind an invisible parent. Total 1.76s.
+   It used to be a timed transition off `.is-visible`, the same 1.2s whatever
+   the reader did. Now `--fg-turn`, `--fg-turn-cols` and `--fg-turn-rows` are
+   written by the controller in main.js from the section's painted position, so
+   the reader sets the pace and can stop halfway and read a half-turned
+   sentence. THERE IS NO `transition` ON THE TRACKS: a transition on top of a
+   scrubbed value fights the scroll and lags behind the wheel.
 
-   OLD BROWSERS: interpolating an fr track needs roughly Chrome 117 / Safari 17.
-   Below that the tracks flip instead of easing, so the squeeze and the
-   expansion snap. The per-term stagger is kept rather than folded into the
-   container precisely so that those readers still get a visible, staggered
-   arrival instead of nothing. Do not reach for calc-size() to widen support:
-   its floor is higher, not lower. */
+   The fallbacks in each `var()` are the pre-turn state, so if the controller
+   never runs the sentence simply reads "It's not just a uPVC window." with the
+   terms still closed, which is true and grammatical.
+
+   Opacity self-clamps to 0-1, so the term and resolve ramps need no clamp() of
+   their own; the resolve's transform does, because a translate does not clamp.
+
+   The old-browser note is gone with the transitions: nothing here interpolates
+   an fr track any more, it is set outright every frame, so the Chrome 117 /
+   Safari 17 floor no longer applies to the geometry. */
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__squeeze {
-  grid-template-columns: 1fr;
-  transition: grid-template-columns 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 520ms;
+  grid-template-columns: var(--fg-turn-cols, 1fr);
+}
+
+/* The run fades as it narrows, and is gone a little before the gap finishes
+   closing. Without this you watch " not just" get sliced down the middle of a
+   letter, which reads as a clipping bug rather than as a word leaving. The
+   reference site fades its run for the same reason. */
+.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__run {
+  opacity: calc(1 - var(--fg-turn, 0) * 1.4);
 }
 
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items {
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 520ms;
+  grid-template-rows: var(--fg-turn-rows, 0fr);
 }
 
+/* Each term inks in over its own slice, roughly tracking the line the opening
+   container has uncovered by that point, so the words arrive as the space for
+   them appears rather than before it. */
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term {
-  opacity: 0;
-  transition: opacity 460ms cubic-bezier(0.22, 0.61, 0.36, 1)
-              calc(560ms + var(--fg-term-index, 0) * 60ms);
+  opacity: calc((var(--fg-turn, 0) - var(--fg-term-index, 0) * 0.09) * 3.2);
 }
 
+/* Last, over the closing third, once the sentence it resolves is complete. */
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve {
-  opacity: 0;
-  transform: translate3d(0, 0.35em, 0);
-  transition:
-    opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 1240ms,
-    transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 1240ms;
+  opacity: calc((var(--fg-turn, 0) - 0.68) * 3.4);
+  transform: translate3d(0, calc(0.35em * (1 - clamp(0, (var(--fg-turn, 0) - 0.68) * 3.4, 1))), 0);
 }
 
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__squeeze { grid-template-columns: 0fr; }
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__items   { grid-template-rows: 1fr; }
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__term    { opacity: 1; }
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__resolve { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  /* The controller never runs under this query, so the custom properties are
+     never set and the `var()` fallbacks would leave the terms closed. These
+     force the finished sentence instead. */
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__squeeze { grid-template-columns: 1fr; }
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items { grid-template-rows: 1fr; }
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__run { opacity: 1; }
+
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term,
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve {
+    opacity: 1;
+    transform: none;
+  }
+}
 
 /* The chapter pay-off line, written once and shared by both chapter turns and
    the closer. Keyed off the nearest reveal target rather than the section, so
@@ -39438,10 +39460,6 @@ html.fg-blinds-reveal-locked {
    matches at load, so this only catches someone turning the setting on with the
    page already open. */
 @media (prefers-reduced-motion: reduce) {
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__squeeze { grid-template-columns: 1fr; transition: none; }
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items   { grid-template-rows: 1fr; transition: none; }
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term,
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve,
   .js .fg-cas-motion-ready .fg-cas-turn__land {
     opacity: 1;
     transform: none;

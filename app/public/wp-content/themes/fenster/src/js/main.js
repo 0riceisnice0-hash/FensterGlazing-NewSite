@@ -8887,6 +8887,85 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   updateLockArrive();
 }
 
+/* ---------- The casement opening sentence, scrolled -----------------------
+   Owner, 2026-09-05: "it needs some work on the title animation. it moves too
+   quick, look at it from a human perspective, it should link to the scroll."
+
+   It was a timed transition off `.is-visible`: the same 1.2 seconds whatever
+   the reader did, which is why it felt fast. It is now scrubbed by scroll, so
+   the reader sets the pace and can stop halfway and read the half-turned
+   sentence. That is what the reference site does, and it is the only version
+   where the words move because YOU moved.
+
+   READS LAYOUT, NOT `window.scrollY`, for the same reason the lock arrival
+   above does: this site runs Lenis smooth scrolling, so the painted position
+   and the scroll position are not the same number, and anything derived from
+   `scrollY` drifts away from what is on screen. `getBoundingClientRect()` is
+   whatever is actually painted.
+
+   THE BAND. Nothing happens until the section has risen past 72% of the
+   viewport, and the sentence is finished by the time its top is 5% down, which
+   is also the moment the whole section is first framed on screen. At 900px
+   that is about 600px of scrolling: two or three unhurried gestures, and the
+   turn is complete exactly when the reader arrives rather than before.
+
+   `from` is deliberately BELOW where the section sits at page load, so the
+   progress clamps to nought until the reader actually scrolls. Landing on the
+   page and reading it must not consume the animation. */
+const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--overture');
+const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
+
+if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let queued = false;
+
+  const updateCasTurn = () => {
+    queued = false;
+
+    const rect = casTurnSection.getBoundingClientRect();
+    const viewport = Math.max(1, window.innerHeight);
+    const from = viewport * 0.72;
+    const to = viewport * 0.05;
+    const progress = clamp((from - rect.top) / Math.max(1, from - to), 0, 1);
+    /* Smoothstep, not the cubic ease-out the lock uses. An ease-out front-loads
+       the movement, which is the opposite of what was asked for here: this has
+       to feel tied to the wheel, so both ends are softened and the middle
+       tracks the scroll almost one to one. */
+    const eased = progress * progress * (3 - 2 * progress);
+
+    /* SQUARE ROOTS, AND THEY ARE NOT DECORATION. A flexible track whose flex
+       factor is below 1 takes only that fraction of the LEFTOVER space, and in
+       an auto-sized grid the leftover depends on the track, so the painted size
+       comes out as the square of the factor. Measured on this exact markup:
+       factor 0.3925 painted 15.4% of full, 0.7517 painted 56.5%, 0.9834 painted
+       96.7% -- p squared to three decimals every time.
+
+       Left uncompensated that is the owner's complaint made geometric: the
+       squeeze collapses as (1-p) squared, so " not just" is 63% gone a third of
+       the way through the scroll while the terms have opened 15%. Feeding the
+       roots in cancels the square exactly, so both halves track the wheel one
+       to one and the gap closes at the same rate it opens.
+
+       If a browser ever sizes these linearly instead, this becomes a gentler
+       ease rather than a fault: nothing breaks, the pacing just softens. */
+    casTurnSection.style.setProperty('--fg-turn', eased.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-cols', `${Math.sqrt(1 - eased).toFixed(4)}fr`);
+    casTurnSection.style.setProperty('--fg-turn-rows', `${Math.sqrt(eased).toFixed(4)}fr`);
+  };
+
+  /* Throttled to a frame, unlike the lock. That one writes a transform, which
+     the compositor absorbs; these write grid tracks, which cost a layout, and
+     a raw scroll handler can fire several times per frame. */
+  const queueCasTurn = () => {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(updateCasTurn);
+  };
+
+  window.addEventListener('scroll', queueCasTurn, { passive: true });
+  window.addEventListener('resize', queueCasTurn);
+  updateCasTurn();
+}
+
 /* ---------- Casement chapters --------------------------------------------
    THE FOUR CHAPTERS NO LONGER STACK. This was a sticky-pin controller: each of
    the opening, versatility, energy and security panels pinned in turn, a
