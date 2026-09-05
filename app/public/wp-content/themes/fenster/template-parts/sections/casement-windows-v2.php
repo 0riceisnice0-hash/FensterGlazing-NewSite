@@ -344,6 +344,20 @@ $faqs = [
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--opening">
 
+    <?php /* COPY REWRITTEN 2026-09-05. Owner: "this paragraph sounds dumb and
+             ai, especially the second para."
+
+             He was right about both. The first ended "a bathroom window, a full
+             bay and everything in between", which is a construction that says
+             nothing and reads as filler. The second was worse: three sentence
+             fragments in a row ("We fit one." / a profile with no verb /
+             "Everything on this page is that window."), "upgrade tier" is trade
+             jargon a homeowner does not use, and the last line is the page
+             talking about itself rather than to the reader.
+
+             Rewritten as plain sentences that each carry a fact: how a casement
+             opens, that it is made to the opening rather than a stock size, what
+             we fit, and that it is not charged as an extra. */ ?>
     <?php /* Overture. The claim sits ON the photograph rather than above it,
              on the owner's instruction of 2026-09-05: "combine all of this 'The
              window most British homes are built around.' overlaid onto the image
@@ -367,8 +381,8 @@ $faqs = [
             <p class="fg-cas-eyebrow"><?php esc_html_e('70mm Liniar EnergyPlus', 'fenster'); ?></p>
             <h2 id="fg-cas-overture-title" class="fg-cas-display"><?php esc_html_e('The window most British homes are built around.', 'fenster'); ?></h2>
             <div class="fg-cas-overture__copy">
-                <p><?php esc_html_e('A casement is the everyday window: sashes hinged at the side or the top, opening outwards, made to the millimetre for the hole in your wall. It is the most adaptable window there is, which is why one system covers a bathroom window, a full bay and everything in between.', 'fenster'); ?></p>
-                <p><?php esc_html_e('We fit one. The 70mm Liniar EnergyPlus profile, sculptured, as standard rather than as an upgrade tier. Everything on this page is that window.', 'fenster'); ?></p>
+                <p><?php esc_html_e('A casement hinges at the side or the top and opens outwards. Every one is made to your opening rather than to a stock size, so the same system suits a small bathroom window and a full bay.', 'fenster'); ?></p>
+                <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus, in the sculptured profile. It is what you get as standard, not an upgrade we charge extra for.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-actions">
                     <?php if ($quote_url !== '') : ?>
