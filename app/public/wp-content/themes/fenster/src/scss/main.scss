@@ -39374,58 +39374,52 @@ html.fg-blinds-reveal-locked {
   letter-spacing: -0.025em;
 }
 
-/* ---- the pin, and the chapter that climbs over it --------------------------
-   Owner: "needs to be 2 events. scroll, then the words animate, because
-   otherwise its over by the tiem you get there." And then: "can we do the
-   stack thing now so the energy efficiency section appears from underneath."
+/* ---- the pin, and the opening lifting off the chapter ---------------------
+   Owner: "the top bit wants to pull up and reveal whats underneath - youve got
+   it so the bottom bit lifts up over."
 
-   Three beats on one pin. The opening arrives and holds; the sentence turns
-   while it sits still; then the energy chapter climbs up over it and takes the
-   screen. The track is scroll length and nothing else.
+   FOUR BEATS ON ONE RUN. The opening arrives and holds; the sentence turns in
+   three stages while it sits still; the finished sentence rests; then the
+   opening LIFTS AWAY and uncovers the chapter that was already sitting
+   underneath it.
 
-   WHY THE STACK IS SAFE THIS TIME, because a version of it was taken off this
-   page earlier today for hiding half a chapter. The fault was never the
-   overlap, it was WHAT WAS PINNED. That build pinned the ENERGY chapter, which
-   is 1678px in a 900px viewport, so its own foot could never be reached. Here
-   the pinned thing is the OPENING, which is shorter than the viewport by
-   construction, and the energy chapter is never pinned at all: it is an
-   ordinary block in flow, pulled up by a margin, that scrolls past completely
-   under its own power. Nothing can be trapped in a block that never stops
-   scrolling.
+   The difference from the build before this one is the whole point. There the
+   chapter climbed up over a stationary opening, which is the wrong way round:
+   the reader should feel the top plate being drawn off something already
+   there, not a new plate arriving. So the opening is on top, and it is the one
+   that moves; the chapter is beneath, and it holds.
 
-   The two conditions in the parked note both still hold: `top` is the header
-   height and never 0, and the pinned section is shorter than the viewport,
-   with main.js withholding the pin outright if content ever overflows its
-   min-height.
+   WHICH MEANS THE CHAPTER HAS TO PIN, AND PINNING THIS CHAPTER IS WHAT BROKE
+   THE PAGE THIS MORNING. The difference is the containing block:
 
-   `--fg-cas-cover` IS THE SINGLE SOURCE OF TRUTH for the climb. The negative
-   margin below and the point at which main.js must have finished the sentence
-   are both derived from it, so they cannot drift apart. It lives on the stack
-   rather than the track because it has to reach the energy panel, and custom
-   properties inherit down, not sideways.
+     THE OLD BUILD gave the whole stack as the containing block, so the sticky
+     range was unbounded. It pinned once and never let go, later panels rode
+     over it, and 46% of the chapter could not be reached at any scroll
+     position.
 
-   The document is no longer than before: the track gains exactly what the
-   energy panel is pulled up by. */
-/* THE COVER MUST EXCEED THE SECTION'S OWN HEIGHT, and 62vh did not.
+     THIS ONE bounds the range to `--fg-cas-reveal` and nothing more, by making
+     the panel its own containing block with exactly that much padding at the
+     foot. The chapter holds for the length of one opening screen, then
+     releases and scrolls like any other block, so every pixel of it is
+     reachable the moment the reveal is over.
 
-   The pin releases when the track runs out, which is `section height` before
-   the end. The chapter finishes covering the opening `cover` before the end.
-   With cover 62vh (558px) against a 736px section, the release came FIRST: the
-   opening un-pinned and slid up under the site header while the chapter was
-   still only two thirds of the way across it. Owner: "it should be underneath
-   the top (its going under now)."
+   `--fg-cas-reveal` is the opening's own height plus a little, written with the
+   same expression as the section's min-height so the two cannot drift. It has
+   to be at least that, or the chapter lets go before the opening has finished
+   sliding off it. The panel is pulled up by the same amount it pads, so the
+   document gains no length.
 
-   92vh clears the section at every viewport the section can have, because its
-   min-height is `min(46rem, 100svh - header)` and so is never more than about
-   90% of the screen. The chapter therefore covers the opening completely
-   BEFORE the pin lets go, and the release happens out of sight behind it.
-   Nothing is ever seen sliding under the header. */
+   Both conditions in the parked note still hold: `top` is the header height and
+   never 0, and the pinned OPENING is shorter than the viewport by
+   construction. The pinned chapter is taller than the viewport, which the note
+   forbids for an UNBOUNDED pin: here its range is one screen and it releases,
+   which is the case the note's second sentence was written to allow. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-  --fg-cas-cover: 92vh;
+  --fg-cas-reveal: calc(min(46rem, 100svh - var(--site-header-main-height)) + 8vh);
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
-  min-height: calc(100svh + 160vh + var(--fg-cas-cover));
+  min-height: calc(100svh + 160vh);
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
@@ -39433,57 +39427,52 @@ html.fg-blinds-reveal-locked {
   top: var(--site-header-main-height);
 }
 
-/* The climb. Relative and above, so it rides over the pinned opening rather
-   than under it, and its own opaque panel ground is what makes the edge read.
-   Pulled up by exactly the cover distance the track gained. */
-.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy {
+/* The opening is the layer that moves, and it is on top. Its panel ground is
+   opaque, which is what stops the chapter showing through it before the lift. */
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--opening {
   position: relative;
   z-index: 2;
-  margin-top: calc(var(--fg-cas-cover) * -1);
 }
 
-/* Everything after energy rides above it in turn, so no later chapter can be
-   painted under the one it follows. Nothing here is sticky, so this is paint
-   order only: it costs no scroll and traps nothing. */
+/* The chapter waits underneath, pulled up so it is already in place behind the
+   opening, and padded at the foot by exactly the distance it must hold for. */
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(var(--fg-cas-reveal) * -1);
+  padding-bottom: var(--fg-cas-reveal);
+}
+
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-under {
+  position: sticky;
+  top: var(--site-header-main-height);
+}
+
+/* Everything after the chapter scrolls over it in the ordinary way. Paint order
+   only: nothing here is sticky, so it costs no scroll and traps nothing. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--security,
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--versatility {
   position: relative;
   z-index: 3;
 }
 
-/* Phone. The climb is shorter, because a thumb covers less ground per gesture
-   than a wheel does, but the TURN portion is only a little shorter than the
-   desktop 85vh and was briefly much shorter, which was wrong.
-
-   The reason is not obvious and is worth writing down. The sentence has to be
-   finished before the next chapter crosses the fold, and that crossing happens
-   one whole VIEWPORT before the chapter reaches the top of the pin. A phone
-   viewport is a far larger share of the track than a desktop one, so it eats
-   proportionally more of it: at 55vh the turn came out at 321px of scrolling
-   against 620px on desktop, which is the "moves too quick" complaint coming
-   back in through the side door. 75vh restores it to about 510px. */
 @media (max-width: 760px) {
-  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-    /* Same rule as desktop: it has to clear the section, which is 544px of an
-       844px screen here, so 42vh was well under and released early. */
-    --fg-cas-cover: 75vh;
-  }
-
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
-    min-height: calc(100svh + 140vh + var(--fg-cas-cover));
+    min-height: calc(100svh + 140vh);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-    --fg-cas-cover: 0px;
+    --fg-cas-reveal: 0px;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
     min-height: 0;
   }
 
-  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage,
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-under {
     position: relative;
     top: auto;
   }

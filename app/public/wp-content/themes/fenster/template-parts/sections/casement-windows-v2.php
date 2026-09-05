@@ -539,6 +539,27 @@ $faqs = [
     ?>
     <div class="fg-cas-stack__panel fg-cas-stack__panel--energy">
 
+    <?php /* THE CHAPTER IS ALREADY THERE AND THE OPENING LIFTS OFF IT. Owner,
+             2026-09-05: "the top bit wants to pull up and reveal whats
+             underneath - youve got it so the bottom bit lifts up over."
+
+             So this chapter holds still while the opening slides up and away,
+             rather than climbing over a stationary opening. That means it has
+             to be pinned, and pinning this chapter is exactly what broke the
+             page this morning, so the difference matters:
+
+             THE OLD BUILD pinned it with the whole stack as its containing
+             block, which gave it an unbounded range. It pinned once and never
+             released, later panels rode over it, and 46% of it could not be
+             reached at any scroll position.
+
+             THIS ONE IS BOUNDED. The panel is its own containing block and
+             carries `padding-bottom: var(--fg-cas-reveal)`, so the sticky range
+             is exactly that padding and no more: it holds for the length of one
+             opening screen, then lets go and scrolls like anything else. Its
+             full height is reachable the moment it releases. */ ?>
+    <div class="fg-cas-under">
+
     <?php /* ---------- 01 ENERGYPLUS ---------- */ ?>
     <section class="fg-cas-energy" data-fg-cas-reveal aria-labelledby="fg-cas-energy-title">
         <div class="container fg-cas-chapter__head">
@@ -613,6 +634,7 @@ $faqs = [
 
     <?php get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows')); ?>
 
+    </div><?php /* end .fg-cas-under */ ?>
     </div><?php /* end the energy panel */ ?>
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--security">

@@ -8928,25 +8928,18 @@ const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--
 const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
 const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
 const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chapters]');
-/* The panel that climbs is whichever one FOLLOWS the opening, found by
-   position rather than by name. Naming it `--energy` here is what made the old
-   build silently wrong when the owner reordered the chapters. */
-const casTurnCoverPanel = casTurnTrack
-  && casTurnTrack.closest('.fg-cas-stack__panel')
-  && casTurnTrack.closest('.fg-cas-stack__panel').nextElementSibling;
-
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
      single word moves, and rests finished before the section releases. Without
      the lead-in the turn starts on the same gesture that brings it to rest,
      which is the "over by the time you get there" problem in miniature. */
   const SETTLE_IN = 0.12;
-  /* The tail of the pin is no longer a pause, it is the cover: the energy
-     chapter climbs over the still-pinned opening. Its length is read from
-     `--fg-cas-cover` so the CSS that sets the negative margin and the JS that
-     decides when the turn must be finished cannot drift apart. Falls back to a
-     plain settle if the property is missing. */
-  let coverPx = 0;
+  /* The tail of the pin is stillness. The finished sentence sits for this
+     share of the run before the opening lifts off the chapter beneath it, and
+     the lift begins exactly where the pin ends, so this is a plain fraction
+     with nothing to derive. Owner: "the animated text needs to stop before the
+     page slides over." */
+  const SETTLE_OUT = 0.18;
 
   let headerOffset = 0;
   let pinning = false;
@@ -8962,9 +8955,7 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
        three-quarters-turned sentence. `margin-top` is a real property and comes
        back resolved, in pixels, and it is the very thing that creates the
        overlap, so it cannot disagree with it either. */
-    coverPx = casTurnCoverPanel
-      ? Math.max(0, -parseFloat(getComputedStyle(casTurnCoverPanel).marginTop) || 0)
-      : 0;
+
   };
 
   /* THE GUARD. A section pinned in less room than it needs can never show its
@@ -8993,29 +8984,12 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
       if (range <= 0) return 0;
       const travelled = headerOffset - rect.top;
       const raw = clamp(travelled / range, 0, 1);
-      /* THE TURN MUST BE FINISHED BEFORE THE NEXT CHAPTER IS VISIBLE, or it
-         climbs over a half-turned sentence. The first version of this took the
-         end point as `1 - cover / range`, which is wrong and measured wrong:
-         the chapter does not become visible when its top reaches the pin
-         offset, it becomes visible a whole VIEWPORT earlier, when its top
-         crosses the bottom of the screen. That left the turn at 0.74 with the
-         chapter already climbing.
-
-         So the end point is the raw progress at which the chapter's top first
-         crosses the fold, worked out from the same geometry the CSS uses:
-         the track's height, less the cover it gained, less a viewport, plus
-         the header offset the pin sits at. Times 0.94, so the sentence is
-         settled with a little in hand rather than landing on the exact frame
-         the chapter arrives. */
-      const appears = (rect.height - coverPx - window.innerHeight + headerOffset) / range;
-      /* 0.82, not 0.94. Owner: "the animated text needs to stop before the
-         page slides over." 0.94 left about 110px between the sentence landing
-         and the chapter appearing, which at scrolling speed is no gap at all:
-         the two read as one continuous movement. 0.82 leaves roughly a third
-         of a screen of stillness, so the finished sentence is something you
-         arrive at and look at before anything else moves. */
-      const end = clamp(appears * 0.82, SETTLE_IN + 0.05, 1);
-      return clamp((raw - SETTLE_IN) / (end - SETTLE_IN), 0, 1);
+      /* The turn owns the first stretch of the pin and the rest is stillness.
+         The opening lifts the instant the pin ends, so there is no separate
+         geometry to solve for any more: the previous build had to work out
+         when a CLIMBING chapter would cross the fold, which is a whole
+         viewport earlier than it reaches the top and was got wrong twice. */
+      return clamp((raw - SETTLE_IN) / Math.max(0.01, 1 - SETTLE_IN - SETTLE_OUT), 0, 1);
     }
 
     /* Not pinned: scrub on the approach instead. Worse, because the turn is
