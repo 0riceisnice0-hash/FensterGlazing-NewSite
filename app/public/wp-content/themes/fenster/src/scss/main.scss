@@ -39415,6 +39415,18 @@ html.fg-blinds-reveal-locked {
   top: var(--site-header-main-height);
 }
 
+/* Shorter pin on a phone. The same 85vh leaves about 1017px of pinned
+   scrolling on a 844px screen, which is more than a full viewport of the page
+   apparently refusing to move, and a thumb covers less ground per gesture than
+   a wheel does. Measured after this change: 764px of pin, 565px of it turning.
+   The section is also shorter here (544px against 736px), so the same number
+   of gestures shows proportionally more of the movement. */
+@media (max-width: 760px) {
+  .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
+    min-height: calc(100svh + 55vh);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .js .fg-cas-motion-ready .fg-cas-overture-track.is-pinning {
     min-height: 0;
