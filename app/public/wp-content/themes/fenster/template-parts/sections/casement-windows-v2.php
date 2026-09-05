@@ -153,36 +153,31 @@ $glass_options = [
         'name'   => __('Eco Toughened', 'fenster'),
         'tint'   => '#2eac66',
         'panes'  => ['plain', 'plain'],
-        'what'   => __('Two panes, both toughened. Toughened glass is heat treated so that if it ever does break it goes into blunt granules rather than shards.', 'fenster'),
-        'when'   => __('The standard choice, and the one most windows are priced on.', 'fenster'),
+        'copy'   => __('Two panes, both toughened, so a break goes to blunt granules rather than shards. The standard choice, and the one most windows are priced on.', 'fenster'),
     ],
     [
         'name'   => __('Eco Laminated', 'fenster'),
         'tint'   => '#9b8ec9',
         'panes'  => ['plain', 'lam'],
-        'what'   => __('One pane is two thinner sheets bonded to a clear interlayer. Break it and the glass holds together on that layer instead of leaving the opening.', 'fenster'),
-        'when'   => __('Ground floor windows, anywhere reachable, and where security matters more than the extra cost.', 'fenster'),
+        'copy'   => __('One pane is two sheets bonded to a clear interlayer, so it holds together instead of leaving the opening. For ground floors and anywhere reachable.', 'fenster'),
     ],
     [
         'name'   => __('Eco Acoustic Laminated', 'fenster'),
         'tint'   => '#e0a2a2',
         'panes'  => ['plain', 'lam-acoustic'],
-        'what'   => __('The same laminated build with an acoustic interlayer in place of the clear one, which damps sound coming through the glass.', 'fenster'),
-        'when'   => __('A main road, a flight path, or a room you want quieter than the one next to it.', 'fenster'),
+        'copy'   => __('The same laminated build with an acoustic interlayer in place of the clear one, which damps sound through the glass. For a main road or a flight path.', 'fenster'),
     ],
     [
         'name'   => __('Triple Glazed Eco Toughened', 'fenster'),
         'tint'   => '#8fb6d4',
         'panes'  => ['plain', 'plain', 'plain'],
-        'what'   => __('Three panes and two cavities instead of two panes and one, all toughened.', 'fenster'),
-        'when'   => __('Where you want the warmest unit on the list and the frame is made to carry it.', 'fenster'),
+        'copy'   => __('Three panes and two cavities instead of two panes and one, all toughened. The warmest of the standard builds.', 'fenster'),
     ],
     [
         'name'   => __('Triple Glazed Eco Acoustic Laminated', 'fenster'),
         'tint'   => '#d98f9e',
         'panes'  => ['plain', 'plain', 'lam-acoustic'],
-        'what'   => __('Three panes, two cavities, and one of them laminated with the acoustic interlayer.', 'fenster'),
-        'when'   => __('The quietest and warmest of the five, and the most expensive.', 'fenster'),
+        'copy'   => __('Three panes and two cavities with the acoustic laminate in one of them. The quietest and the warmest, and the dearest of the five.', 'fenster'),
     ],
 ];
 
@@ -570,9 +565,9 @@ $faqs = [
             <div class="fg-cas-section-head">
                 <div>
                     <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
-                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns, lead and glass.', 'fenster'); ?></h2>
+                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All of it is priced with the window, not added afterwards.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-trio">
                 <?php foreach ($details as $detail) : ?>
@@ -589,35 +584,6 @@ $faqs = [
                         <figcaption><strong><?php echo esc_html($detail['name']); ?></strong><span><?php echo esc_html($detail['copy']); ?></span></figcaption>
                     </figure>
                 <?php endforeach; ?>
-            </div>
-
-            <?php /* The glass make-up sits with the other specification choices
-                     rather than beside the quote tool, on the owner's note of
-                     2026-09-04: "it would actually make sense under the spec
-                     choices title with obscure glass". The obscure glass link
-                     is directly below it, which is the adjacency he meant. */ ?>
-            <div class="fg-glass-makeup">
-                <div class="fg-glass-makeup__head">
-                    <h3><?php esc_html_e('And the glass itself.', 'fenster'); ?></h3>
-                    <p><?php esc_html_e('Five make-ups price in the window designer, and the names do not say much on their own. Every one is an Eco unit, the energy efficient build we price as standard. What changes between them is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
-                </div>
-                <ul class="fg-glass-makeup__grid">
-                    <?php foreach ($glass_options as $option) : ?>
-                        <li class="fg-glass-makeup__card" style="--gm-tint: <?php echo esc_attr($option['tint']); ?>;">
-                            <span class="fg-glass-makeup__figure" aria-hidden="true">
-                                <span class="fg-glass-makeup__unit">
-                                    <?php foreach ($option['panes'] as $pane) : ?>
-                                        <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
-                                    <?php endforeach; ?>
-                                </span>
-                                <span class="fg-glass-makeup__count"><?php echo esc_html(sprintf(_n('%d pane', '%d panes', count($option['panes']), 'fenster'), count($option['panes']))); ?></span>
-                            </span>
-                            <h4><?php echo esc_html($option['name']); ?></h4>
-                            <p class="fg-glass-makeup__what"><?php echo esc_html($option['what']); ?></p>
-                            <p class="fg-glass-makeup__when"><?php echo esc_html($option['when']); ?></p>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
             </div>
 
             <p class="fg-cas-note">
@@ -682,6 +648,54 @@ $faqs = [
     <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
     <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
     <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
+
+    <?php /* The glass make-up, fourth in the run of choice components and
+             directly under privacy glass. Owner, 2026-09-04: "wrong section.
+             wants to go with privacy glass. also make it more like the size of
+             the privacy bar thing."
+
+             IT BORROWS THE PRIVACY CARD'S OWN CLASSES rather than defining a
+             band of its own: `fg-product-gallery-band`, `section-heading
+             --wide`, `fg-product-choice-map--single` and
+             `fg-product-option-card`. That is what makes it exactly the size of
+             the card above it, and it means this block inherits any future
+             change to that chrome instead of drifting from it. The only new CSS
+             is the rows inside the card.
+
+             The shared component itself was NOT touched. It renders on the
+             generic product journey as well as here, so a second card inside it
+             would have appeared on pages nobody asked for it on. */ ?>
+    <section class="fg-product-gallery-band fg-product-gallery-band--glass fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
+        <div class="container">
+            <div class="section-heading section-heading--wide">
+                <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
+                <h2 id="fg-glass-makeup-title"><?php esc_html_e('And the glass inside the unit.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Five make-ups price in the window designer, and the names do not say much on their own. Every one is an Eco unit, the energy efficient build we price as standard. What changes is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-product-choice-map fg-product-choice-map--single">
+                <div class="fg-product-option-card fg-glass-makeup__card">
+                    <ul class="fg-glass-makeup__list">
+                        <?php foreach ($glass_options as $option) : ?>
+                            <li class="fg-glass-makeup__row" style="--gm-tint: <?php echo esc_attr($option['tint']); ?>;">
+                                <span class="fg-glass-makeup__figure" aria-hidden="true">
+                                    <span class="fg-glass-makeup__unit">
+                                        <?php foreach ($option['panes'] as $pane) : ?>
+                                            <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
+                                        <?php endforeach; ?>
+                                    </span>
+                                </span>
+                                <span class="fg-glass-makeup__name">
+                                    <strong><?php echo esc_html($option['name']); ?></strong>
+                                    <span class="fg-glass-makeup__count"><?php echo esc_html(sprintf(_n('%d pane', '%d panes', count($option['panes']), 'fenster'), count($option['panes']))); ?></span>
+                                </span>
+                                <span class="fg-glass-makeup__copy"><?php echo esc_html($option['copy']); ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <?php /* ---------- PROOF ---------- */ ?>
     <section class="fg-cas-proof" aria-labelledby="fg-cas-proof-title">
