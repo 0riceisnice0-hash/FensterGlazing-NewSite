@@ -357,7 +357,7 @@ $faqs = [
 
              The photograph keeps its alt: it is the product on a real elevation,
              not decoration, even though it is now behind the words. */ ?>
-    <section class="fg-cas-overture fg-cas-overture--onimage" aria-labelledby="fg-cas-overture-title">
+    <section class="fg-cas-overture fg-cas-overture--onimage" data-fg-cas-reveal aria-labelledby="fg-cas-overture-title">
         <figure class="fg-cas-overture__media">
             <img src="<?php echo esc_url(fenster_generated_url($base . 'gallery/casement-stone-elevation.webp')); ?>"
                 alt="<?php esc_attr_e('White uPVC casement windows across the front elevation and dormers of a stone house', 'fenster'); ?>"

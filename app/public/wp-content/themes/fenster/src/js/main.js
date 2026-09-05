@@ -8934,11 +8934,47 @@ document.querySelectorAll('[data-fg-cas-chapters]').forEach((chapters) => {
       observer.unobserve(entry.target);
     });
   }, {
-    rootMargin: '0px 0px -12% 0px',
-    threshold: 0.12,
+    // -15% and a quarter, rather than -12% and an eighth, because the overture
+    // begins 690px down and is already 210px into a 900px viewport at load. The
+    // looser pair fired it before anyone had scrolled, which is the fault the
+    // owner reported: the animation was over by the time you reached it. Every
+    // target here is comfortably taller than a quarter of the viewport, so no
+    // section can fail to reach the threshold.
+    rootMargin: '0px 0px -15% 0px',
+    threshold: 0.25,
   });
 
   revealItems.forEach((item) => observer.observe(item));
+
+  /* ---- the one reveal ----
+     The opening panel scrolls away to uncover the first chapter pinned beneath
+     it. A chained version was built and measured on 2026-09-05 and does not
+     work: a sticky panel's range is its containing block, so the first to pin
+     never releases and the rest queue up invisibly behind it. One junction is
+     all this mechanism supports.
+
+     The overlap is measured rather than guessed. The chapter is pulled up by the
+     overture's own height so it sits exactly behind it, and a ResizeObserver
+     keeps that true when the overture reflows: its height is content-driven and
+     ran 95px past its own min-height at 1440. */
+  const overture = chapters.querySelector('.fg-cas-overture--onimage');
+  const firstChapter = chapters.querySelector('.fg-cas-stack__panel--energy');
+
+  if (overture && firstChapter) {
+    const setOverlap = () => {
+      const height = Math.round(overture.getBoundingClientRect().height);
+      firstChapter.style.setProperty('--fg-reveal-overlap', `${height}px`);
+    };
+
+    setOverlap();
+    chapters.classList.add('is-revealing');
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(setOverlap).observe(overture);
+    } else {
+      window.addEventListener('resize', setOverlap, { passive: true });
+    }
+  }
 });
 
 /* ---- Key specifications: the values arrive on a drum --------------------------
