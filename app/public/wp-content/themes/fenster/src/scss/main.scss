@@ -38029,8 +38029,13 @@ html.fg-blinds-reveal-locked {
 
    Keyed to the panel rather than to either block, because the thing that needs
    the room is whatever a chapter happens to end with, and that has already
-   changed twice this week. Chapter 03 is excluded: nothing covers it, and it is
-   the last plate again now that options and finishes have left the stack. */
+   changed twice this week.
+
+   The LAST panel is excluded, and since 2026-09-05 the selector says so
+   positionally instead of naming a modifier. It read
+   `:not(.fg-cas-stack__panel--security)`, which was only ever a spelling of
+   "not the last one" and quietly became wrong the moment the owner moved
+   versatility to the end. Positional intent, written positionally. */
 /* Was clamp(7.5rem, 18vh, 15rem), to hold a chapter's last block clear of the
    panel arriving over it. Nothing arrives over anything now, so it is ordinary
    section rhythm. */
