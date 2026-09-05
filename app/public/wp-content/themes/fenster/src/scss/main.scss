@@ -4036,6 +4036,7 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
   text-align: center;
 }
 
@@ -4053,8 +4054,8 @@ h3 {
   align-items: stretch;
   justify-content: center;
   gap: clamp(0.4rem, 1vw, 0.7rem);
-  width: min(100%, 6.75rem);
-  height: clamp(5rem, 9vw, 6.5rem);
+  width: min(100%, 8rem);
+  height: clamp(6rem, 11vw, 8rem);
   margin: 0 auto;
   padding: 0.55rem 0.6rem 1.15rem;
   background: linear-gradient(180deg, #f4f9fa 0%, #e4eef0 100%);
@@ -4063,7 +4064,7 @@ h3 {
 }
 
 .fg-glass-makeup .fg-glass-makeup__pane {
-  width: clamp(0.3rem, 0.8vw, 0.45rem);
+  width: clamp(0.34rem, 0.95vw, 0.52rem);
   border-radius: 2px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 42%),
@@ -4075,7 +4076,7 @@ h3 {
    with the interlayer as a band of the option's own colour. */
 .fg-glass-makeup .fg-glass-makeup__pane--lam,
 .fg-glass-makeup .fg-glass-makeup__pane--lam-acoustic {
-  width: clamp(0.48rem, 1.25vw, 0.7rem);
+  width: clamp(0.55rem, 1.5vw, 0.82rem);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 42%),
     linear-gradient(
@@ -4136,8 +4137,10 @@ h3 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.3rem;
-  margin: 0.85rem 0 0;
-  padding: 0;
+  margin: auto 0 0;
+  padding-top: 0.85rem;
+  padding-inline: 0;
+  padding-bottom: 0;
   list-style: none;
 }
 
