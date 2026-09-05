@@ -340,7 +340,7 @@ $faqs = [
        See the block in main.scss for how the sticky offset is derived and why
        every panel after the first has to be opaque. ---------------------- */
     ?>
-    <div class="fg-cas-stack fg-cas-stack--reveal" data-fg-cas-chapters>
+    <div class="fg-cas-stack" data-fg-cas-chapters>
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--opening">
 
