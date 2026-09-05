@@ -668,7 +668,10 @@ $faqs = [
     <section class="fg-product-gallery-band fg-product-gallery-band--glass fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
         <div class="container">
             <div class="section-heading section-heading--wide">
-                <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
+                <?php /* NOT "Specification choices": the privacy card directly
+                         above already carries that eyebrow, and two bands running
+                         the same one reads as a duplication rather than a pair. */ ?>
+                <p class="eyebrow"><?php esc_html_e('Glass', 'fenster'); ?></p>
                 <h2 id="fg-glass-makeup-title"><?php esc_html_e('And the glass inside the unit.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Five make-ups price in the window designer, and the names do not say much on their own. Every one is an Eco unit, the energy efficient build we price as standard. What changes is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
             </div>
