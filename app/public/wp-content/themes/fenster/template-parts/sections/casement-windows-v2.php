@@ -182,42 +182,47 @@ $glass_marks = [
 $glass_options = [
     [
         'name'    => __('Eco Toughened', 'fenster'),
-        'spec'    => '28mm unit &middot; 1.2 W/m&sup2;K',
         'tint'    => '#2eac66',
         'panes'   => ['plain', 'plain'],
-        'caption' => __('Breaks into blunt granules.', 'fenster'),
+        'uvalue'  => '1.2 W/m&sup2;K',
+        'caption' => __('Our standard. If it is ever broken it goes to blunt granules rather than shards.', 'fenster'),
+        'build'   => __('28mm unit, toughened both panes.', 'fenster'),
         'marks'   => ['safety'],
     ],
     [
         'name'    => __('Eco Laminated', 'fenster'),
-        'spec'    => '28mm unit &middot; 1.2 W/m&sup2;K',
         'tint'    => '#9b8ec9',
         'panes'   => ['plain', 'lam'],
-        'caption' => __('Holds together when broken.', 'fenster'),
+        'uvalue'  => '1.2 W/m&sup2;K',
+        'caption' => __('Stays in the frame if it is broken, so it is far harder to get through.', 'fenster'),
+        'build'   => __('28mm unit, one pane bonded to a clear interlayer.', 'fenster'),
         'marks'   => ['safety', 'security'],
     ],
     [
         'name'    => __('Eco Acoustic Laminated', 'fenster'),
-        'spec'    => '28mm unit &middot; 1.2 W/m&sup2;K',
         'tint'    => '#e0a2a2',
         'panes'   => ['plain', 'lam-acoustic'],
-        'caption' => __('An interlayer that damps sound.', 'fenster'),
+        'uvalue'  => '1.2 W/m&sup2;K',
+        'caption' => __('Takes the edge off a busy road or a flight path.', 'fenster'),
+        'build'   => __('6.8mm Pilkington Optiphon, 18mm cavity, 4mm outer pane.', 'fenster'),
         'marks'   => ['safety', 'security', 'quiet'],
     ],
     [
         'name'    => __('Triple Glazed Eco Toughened', 'fenster'),
-        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K',
         'tint'    => '#8fb6d4',
         'panes'   => ['plain', 'plain', 'plain'],
-        'caption' => __('A third pane, a second cavity.', 'fenster'),
+        'uvalue'  => '0.95 W/m&sup2;K',
+        'caption' => __('The warmest rooms on the list.', 'fenster'),
+        'build'   => __('36mm unit, three panes and two cavities.', 'fenster'),
         'marks'   => ['safety', 'warmth'],
     ],
     [
         'name'    => __('Triple Glazed Eco Acoustic Laminated', 'fenster'),
-        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K',
         'tint'    => '#d98f9e',
         'panes'   => ['plain', 'plain', 'lam-acoustic'],
-        'caption' => __('Three panes and the acoustic laminate.', 'fenster'),
+        'uvalue'  => '0.95 W/m&sup2;K',
+        'caption' => __('Quietest and warmest together.', 'fenster'),
+        'build'   => __('36mm unit with the Optiphon laminate in one pane.', 'fenster'),
         'marks'   => ['safety', 'security', 'quiet', 'warmth'],
     ],
 ];
@@ -691,42 +696,48 @@ $faqs = [
     <section class="fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
         <div class="container">
             <div class="section-heading section-heading--wide">
-                <?php /* Not "Specification choices": the privacy card directly
-                         above carries that eyebrow, and two bands running the
-                         same one reads as a duplication rather than a pair. */ ?>
                 <p class="eyebrow"><?php esc_html_e('Glass make-up', 'fenster'); ?></p>
-                <h2 id="fg-glass-makeup-title"><?php esc_html_e('And the glass inside the unit.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Five make-ups price in the window designer. Every one is an Eco unit: low-E coated glass, argon filled, with a warm edge spacer. What changes across them is the number of panes and what the glass does when something hits it. The U-values are whole window figures.', 'fenster'); ?></p>
+                <h2 id="fg-glass-makeup-title"><?php esc_html_e('The glass is the part you live with.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Five to choose from, and they share the same core: a low-E coating, argon in the cavity and a warm edge spacer. What changes is how many panes there are, and how the glass behaves if something hits it or the road outside is loud.', 'fenster'); ?></p>
             </div>
             <ul class="fg-glass-makeup__row">
                 <?php foreach ($glass_options as $option) : ?>
                     <li class="fg-glass-makeup__col" style="--gm-tint: <?php echo esc_attr($option['tint']); ?>;">
-                        <span class="fg-glass-makeup__figure" aria-hidden="true">
-                            <span class="fg-glass-makeup__unit">
-                                <?php foreach ($option['panes'] as $pane) : ?>
-                                    <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
-                                <?php endforeach; ?>
-                                <span class="fg-glass-makeup__spacer"></span>
-                            </span>
-                        </span>
-                        <span class="fg-glass-makeup__count"><?php echo esc_html(sprintf(_n('%d pane', '%d panes', count($option['panes']), 'fenster'), count($option['panes']))); ?></span>
-                        <?php /* wp_kses so &middot; and &sup2; render as characters
-                                 rather than as literal entities. */ ?>
-                        <span class="fg-glass-makeup__spec"><?php echo wp_kses($option['spec'], []); ?></span>
-                        <h3><?php echo esc_html($option['name']); ?></h3>
-                        <p class="fg-glass-makeup__caption"><?php echo esc_html($option['caption']); ?></p>
-                        <ul class="fg-glass-makeup__marks">
-                            <?php foreach ($option['marks'] as $mark) : ?>
-                                <?php $m = $glass_marks[$mark]; ?>
-                                <li>
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="<?php echo esc_attr($m['path']); ?>"/></svg>
-                                    <?php echo esc_html($m['label']); ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <?php /* A native <details>, so the detail opens on tap and on
+                                 keyboard without a line of JavaScript, and the column
+                                 shows three things until someone asks for more. */ ?>
+                        <details class="fg-glass-makeup__detail">
+                            <summary>
+                                <span class="fg-glass-makeup__figure" aria-hidden="true">
+                                    <span class="fg-glass-makeup__unit">
+                                        <?php foreach ($option['panes'] as $pane) : ?>
+                                            <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
+                                        <?php endforeach; ?>
+                                        <span class="fg-glass-makeup__spacer"></span>
+                                    </span>
+                                </span>
+                                <span class="fg-glass-makeup__name"><?php echo esc_html($option['name']); ?></span>
+                                <span class="fg-glass-makeup__uvalue"><?php echo wp_kses($option['uvalue'], []); ?></span>
+                                <span class="fg-glass-makeup__more"><?php esc_html_e('What it does', 'fenster'); ?></span>
+                            </summary>
+                            <div class="fg-glass-makeup__panel">
+                                <p class="fg-glass-makeup__caption"><?php echo esc_html($option['caption']); ?></p>
+                                <ul class="fg-glass-makeup__marks">
+                                    <?php foreach ($option['marks'] as $mark) : ?>
+                                        <?php $m = $glass_marks[$mark]; ?>
+                                        <li>
+                                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="<?php echo esc_attr($m['path']); ?>"/></svg>
+                                            <?php echo esc_html($m['label']); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <p class="fg-glass-makeup__build"><?php echo esc_html($option['build']); ?></p>
+                            </div>
+                        </details>
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <p class="fg-glass-makeup__foot"><?php esc_html_e('U-values are whole window figures. The survey confirms the glass before anything is ordered.', 'fenster'); ?></p>
         </div>
     </section>
 
