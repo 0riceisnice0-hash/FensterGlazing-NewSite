@@ -124,60 +124,100 @@ $details = [
     ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares, then sealed into the unit against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by us in Rushden'],
 ];
 /* ---------- Glass make-up ------------------------------------------------
-   Owner, 2026-09-04: "explains the glass make up options. as per our
-   windowcad, so people actually know what they're choosing... keep it super
-   simple and near the designer."
+   Owner, 2026-09-04: "explains the glass make up options. as per our windowcad,
+   so people actually know what they're choosing", then "wants to go with
+   privacy glass", then "needs to look WAYYYY cleaner. not a list, but side by
+   side, not lines of text - maybe use an icon system? think apple or dyson
+   website level".
 
-   It sits immediately BEFORE the quote embed and OUTSIDE the page wrapper
-   that closes above. The wrapper's base type rules are (0,1,1) and would
-   repaint this the way they would repaint the shared quote and FAQ blocks,
-   which is why those live out here too.
+   So: five columns side by side, the drawing doing the explaining, a caption of
+   a few words and a set of marks. No paragraphs.
 
-   THE DIAGRAM DELIBERATELY DOES NOT LABEL INSIDE OR OUTSIDE. It shows the
-   number of panes, the cavities between them and which pane is laminated,
-   all of which are true of every one of these units. Which face the
-   laminate sits on is a specification nobody here has confirmed, so the
-   drawing makes no claim about it.
+   WHAT "ECO" IS, owner-confirmed 2026-09-04: low-E coated glass, argon filled,
+   warm edge spacer. It is common to all five, so it is stated once above the
+   columns and the spacer is drawn into every unit. Before he confirmed it the
+   line read "the energy efficient build we price as standard", which said
+   nothing. Do not go back to that.
 
-   NO FIGURES. No U-values, no decibels, no cavity widths, no coating brand.
-   "Eco" is common to all five so it is described once, above the cards, and
-   only as the energy-efficient unit the tool prices as standard. If the
-   owner confirms what Eco denotes in WindowCAD, that line can say more.
-   Do not add performance numbers without him.
+   STILL NO FIGURES. No U-values, no decibels, no cavity widths, no coating
+   brand. The marks name what an option adds, they do not rank or measure it.
 
-   The five names and the colour coding are lifted from the WindowCAD
-   designer so the page and the tool agree on sight. If the tool's list
-   changes, this changes with it. */
+   FIGURES COME FROM THIS PAGE, NOT FROM ANYWHERE ELSE. Owner: "you know the
+   figures for double/triple too." The page already publishes a 28mm double and
+   a 36mm triple, and 0.95 W/m2K whole window with the triple, in the energy
+   strip and the sealed unit anatomy. Those are reused verbatim.
+
+   THE DOUBLE HAS NO U-VALUE HERE ON PURPOSE. The only double figure on the site
+   is 1.2 W/m2K and it belongs to the FLUSH casement, a different frame. Putting
+   it against a standard casement double would be quietly wrong, so the double
+   columns carry the unit thickness and nothing else until someone confirms it.
+
+   0.95 IS A WHOLE WINDOW FIGURE, not a glass one, and is labelled as such.
+
+   NO ACOUSTIC FIGURE, AND IT IS NOT AN OVERSIGHT. Asked for one on 2026-09-04.
+   Every dB figure on the site belongs to a different product: 35 dB is the
+   FLUSH casement (Liniar's figure for that system), 37 dB is tilt and turn, and
+   31 dB is the Distinction composite door. Nothing is published for the 70mm
+   EnergyPlus casement this page is about.
+
+   Two of those would also be the wrong KIND of number even if the frame
+   matched. They are whole-window system figures; what an Eco Acoustic Laminated
+   unit does is a property of the glass and its interlayer, which is a separate
+   figure from a separate source. Do not borrow one from a neighbouring product
+   to fill the gap.
+
+   THE DRAWING DOES NOT LABEL INSIDE OR OUTSIDE. Which face the laminate sits on
+   is not confirmed, so the section makes no claim about it.
+
+   The five names and the colour coding are lifted from the WindowCAD designer
+   so the page and the tool agree on sight. */
+$glass_marks = [
+    'safety'   => ['label' => __('Safety', 'fenster'),   'path' => 'M12 3 4 6v5.5c0 4.3 3.2 8.3 8 9.5 4.8-1.2 8-5.2 8-9.5V6l-8-3Z'],
+    'security' => ['label' => __('Security', 'fenster'), 'path' => 'M7 10V7a5 5 0 0 1 10 0v3M5.5 10h13v10h-13z'],
+    'quiet'    => ['label' => __('Quiet', 'fenster'),    'path' => 'M4 9v6h4l5 4V5L8 9H4ZM17 9.5a4 4 0 0 1 0 5M20 7a8 8 0 0 1 0 10'],
+    'warmth'   => ['label' => __('Warmth', 'fenster'),   'path' => 'M14 14.8V5a2 2 0 1 0-4 0v9.8a4 4 0 1 0 4 0Z'],
+];
+
 $glass_options = [
     [
-        'name'   => __('Eco Toughened', 'fenster'),
-        'tint'   => '#2eac66',
-        'panes'  => ['plain', 'plain'],
-        'copy'   => __('Two panes, both toughened, so a break goes to blunt granules rather than shards. The standard choice, and the one most windows are priced on.', 'fenster'),
+        'name'    => __('Eco Toughened', 'fenster'),
+        'spec'    => '28mm unit',
+        'tint'    => '#2eac66',
+        'panes'   => ['plain', 'plain'],
+        'caption' => __('Breaks into blunt granules.', 'fenster'),
+        'marks'   => ['safety'],
     ],
     [
-        'name'   => __('Eco Laminated', 'fenster'),
-        'tint'   => '#9b8ec9',
-        'panes'  => ['plain', 'lam'],
-        'copy'   => __('One pane is two sheets bonded to a clear interlayer, so it holds together instead of leaving the opening. For ground floors and anywhere reachable.', 'fenster'),
+        'name'    => __('Eco Laminated', 'fenster'),
+        'spec'    => '28mm unit',
+        'tint'    => '#9b8ec9',
+        'panes'   => ['plain', 'lam'],
+        'caption' => __('Holds together when broken.', 'fenster'),
+        'marks'   => ['safety', 'security'],
     ],
     [
-        'name'   => __('Eco Acoustic Laminated', 'fenster'),
-        'tint'   => '#e0a2a2',
-        'panes'  => ['plain', 'lam-acoustic'],
-        'copy'   => __('The same laminated build with an acoustic interlayer in place of the clear one, which damps sound through the glass. For a main road or a flight path.', 'fenster'),
+        'name'    => __('Eco Acoustic Laminated', 'fenster'),
+        'spec'    => '28mm unit',
+        'tint'    => '#e0a2a2',
+        'panes'   => ['plain', 'lam-acoustic'],
+        'caption' => __('An interlayer that damps sound.', 'fenster'),
+        'marks'   => ['safety', 'security', 'quiet'],
     ],
     [
-        'name'   => __('Triple Glazed Eco Toughened', 'fenster'),
-        'tint'   => '#8fb6d4',
-        'panes'  => ['plain', 'plain', 'plain'],
-        'copy'   => __('Three panes and two cavities instead of two panes and one, all toughened. The warmest of the standard builds.', 'fenster'),
+        'name'    => __('Triple Glazed Eco Toughened', 'fenster'),
+        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K whole window',
+        'tint'    => '#8fb6d4',
+        'panes'   => ['plain', 'plain', 'plain'],
+        'caption' => __('A third pane, a second cavity.', 'fenster'),
+        'marks'   => ['safety', 'warmth'],
     ],
     [
-        'name'   => __('Triple Glazed Eco Acoustic Laminated', 'fenster'),
-        'tint'   => '#d98f9e',
-        'panes'  => ['plain', 'plain', 'lam-acoustic'],
-        'copy'   => __('Three panes and two cavities with the acoustic laminate in one of them. The quietest and the warmest, and the dearest of the five.', 'fenster'),
+        'name'    => __('Triple Glazed Eco Acoustic Laminated', 'fenster'),
+        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K whole window',
+        'tint'    => '#d98f9e',
+        'panes'   => ['plain', 'plain', 'lam-acoustic'],
+        'caption' => __('Three panes and the acoustic laminate.', 'fenster'),
+        'marks'   => ['safety', 'security', 'quiet', 'warmth'],
     ],
 ];
 
@@ -665,38 +705,45 @@ $faqs = [
              The shared component itself was NOT touched. It renders on the
              generic product journey as well as here, so a second card inside it
              would have appeared on pages nobody asked for it on. */ ?>
-    <section class="fg-product-gallery-band fg-product-gallery-band--glass fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
+    <section class="fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
         <div class="container">
             <div class="section-heading section-heading--wide">
-                <?php /* NOT "Specification choices": the privacy card directly
-                         above already carries that eyebrow, and two bands running
-                         the same one reads as a duplication rather than a pair. */ ?>
+                <?php /* Not "Specification choices": the privacy card directly
+                         above carries that eyebrow, and two bands running the
+                         same one reads as a duplication rather than a pair. */ ?>
                 <p class="eyebrow"><?php esc_html_e('Glass', 'fenster'); ?></p>
                 <h2 id="fg-glass-makeup-title"><?php esc_html_e('And the glass inside the unit.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Five make-ups price in the window designer, and the names do not say much on their own. Every one is an Eco unit, the energy efficient build we price as standard. What changes is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Five make-ups price in the window designer. Every one is an Eco unit: low-E coated glass, argon filled, with a warm edge spacer. What changes across them is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
             </div>
-            <div class="fg-product-choice-map fg-product-choice-map--single">
-                <div class="fg-product-option-card fg-glass-makeup__card">
-                    <ul class="fg-glass-makeup__list">
-                        <?php foreach ($glass_options as $option) : ?>
-                            <li class="fg-glass-makeup__row" style="--gm-tint: <?php echo esc_attr($option['tint']); ?>;">
-                                <span class="fg-glass-makeup__figure" aria-hidden="true">
-                                    <span class="fg-glass-makeup__unit">
-                                        <?php foreach ($option['panes'] as $pane) : ?>
-                                            <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
-                                        <?php endforeach; ?>
-                                    </span>
-                                </span>
-                                <span class="fg-glass-makeup__name">
-                                    <strong><?php echo esc_html($option['name']); ?></strong>
-                                    <span class="fg-glass-makeup__count"><?php echo esc_html(sprintf(_n('%d pane', '%d panes', count($option['panes']), 'fenster'), count($option['panes']))); ?></span>
-                                </span>
-                                <span class="fg-glass-makeup__copy"><?php echo esc_html($option['copy']); ?></span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            </div>
+            <ul class="fg-glass-makeup__row">
+                <?php foreach ($glass_options as $option) : ?>
+                    <li class="fg-glass-makeup__col" style="--gm-tint: <?php echo esc_attr($option['tint']); ?>;">
+                        <span class="fg-glass-makeup__figure" aria-hidden="true">
+                            <span class="fg-glass-makeup__unit">
+                                <?php foreach ($option['panes'] as $pane) : ?>
+                                    <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
+                                <?php endforeach; ?>
+                                <span class="fg-glass-makeup__spacer"></span>
+                            </span>
+                        </span>
+                        <span class="fg-glass-makeup__count"><?php echo esc_html(sprintf(_n('%d pane', '%d panes', count($option['panes']), 'fenster'), count($option['panes']))); ?></span>
+                        <?php /* wp_kses so &middot; and &sup2; render as characters
+                                 rather than as literal entities. */ ?>
+                        <span class="fg-glass-makeup__spec"><?php echo wp_kses($option['spec'], []); ?></span>
+                        <h3><?php echo esc_html($option['name']); ?></h3>
+                        <p class="fg-glass-makeup__caption"><?php echo esc_html($option['caption']); ?></p>
+                        <ul class="fg-glass-makeup__marks">
+                            <?php foreach ($option['marks'] as $mark) : ?>
+                                <?php $m = $glass_marks[$mark]; ?>
+                                <li>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="<?php echo esc_attr($m['path']); ?>"/></svg>
+                                    <?php echo esc_html($m['label']); ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </section>
 
