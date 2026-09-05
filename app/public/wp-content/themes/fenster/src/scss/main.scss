@@ -39332,9 +39332,16 @@ html.fg-blinds-reveal-locked {
 
 /* The `ch` caps are there to control where the lines break on a wide screen.
    On a phone the container is already narrower than all three of them, so
-   keeping them would break the lines twice and leave a ragged column. Same
-   reasoning as the `.fg-cas-display` rule in the 860px block below. */
-@media (max-width: 860px) {
+   keeping them would break the lines twice and leave a ragged column.
+
+   760px, NOT the 860px used by the `.fg-cas-display` rule further down, which
+   is what this was first written as. Between those two widths the container is
+   still around 740px wide, so lifting the caps there does not tidy anything:
+   it lets the negation go flat across one full line and pushes the resolve out
+   past the end of the scrim onto the brickwork, where it loses its contrast.
+   760px is the width the rest of `.fg-cas-overture--onimage` already breaks at,
+   and below it the container is genuinely narrower than every cap. */
+@media (max-width: 760px) {
   .fg-cas .fg-cas-manifesto__negation,
   .fg-cas .fg-cas-manifesto__terms,
   .fg-cas .fg-cas-manifesto__resolve {
