@@ -340,33 +340,43 @@ $faqs = [
        See the block in main.scss for how the sticky offset is derived and why
        every panel after the first has to be opaque. ---------------------- */
     ?>
-    <div class="fg-cas-stack" data-fg-cas-chapters>
+    <div class="fg-cas-stack fg-cas-stack--reveal" data-fg-cas-chapters>
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--opening">
 
-    <?php /* Overture. One claim, the system named once, one wide photograph. */ ?>
-    <section class="fg-cas-overture" aria-labelledby="fg-cas-overture-title">
-        <div class="container fg-cas-overture__grid">
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('70mm Liniar EnergyPlus', 'fenster'); ?></p>
-                <h2 id="fg-cas-overture-title" class="fg-cas-display"><?php esc_html_e('The window most British homes are built around.', 'fenster'); ?></h2>
-            </div>
+    <?php /* Overture. The claim sits ON the photograph rather than above it,
+             on the owner's instruction of 2026-09-05: "combine all of this 'The
+             window most British homes are built around.' overlaid onto the image
+             below but being reveal with a bit of animation".
+
+             IT ANIMATES ON LOAD, NOT ON INTERSECTION. This is the first thing on
+             the page and is in view immediately, so an observer would hide it
+             after first paint and show a flicker before revealing it. A CSS
+             animation starts from its own first frame instead, and the whole
+             thing is off under reduced motion.
+
+             The photograph keeps its alt: it is the product on a real elevation,
+             not decoration, even though it is now behind the words. */ ?>
+    <section class="fg-cas-overture fg-cas-overture--onimage" aria-labelledby="fg-cas-overture-title">
+        <figure class="fg-cas-overture__media">
+            <img src="<?php echo esc_url(fenster_generated_url($base . 'gallery/casement-stone-elevation.webp')); ?>"
+                alt="<?php esc_attr_e('White uPVC casement windows across the front elevation and dormers of a stone house', 'fenster'); ?>"
+                loading="lazy" width="1200" height="803">
+        </figure>
+        <div class="container fg-cas-overture__inner">
+            <p class="fg-cas-eyebrow"><?php esc_html_e('70mm Liniar EnergyPlus', 'fenster'); ?></p>
+            <h2 id="fg-cas-overture-title" class="fg-cas-display"><?php esc_html_e('The window most British homes are built around.', 'fenster'); ?></h2>
             <div class="fg-cas-overture__copy">
                 <p><?php esc_html_e('A casement is the everyday window: sashes hinged at the side or the top, opening outwards, made to the millimetre for the hole in your wall. It is the most adaptable window there is, which is why one system covers a bathroom window, a full bay and everything in between.', 'fenster'); ?></p>
                 <p><?php esc_html_e('We fit one. The 70mm Liniar EnergyPlus profile, sculptured, as standard rather than as an upgrade tier. Everything on this page is that window.', 'fenster'); ?></p>
-                <div class="fg-cas-actions">
+            </div>
+            <div class="fg-cas-actions">
                     <?php if ($quote_url !== '') : ?>
                         <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <?php endif; ?>
                     <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $phone)); ?></a>
                 </div>
-            </div>
         </div>
-        <figure class="fg-cas-bleed">
-            <img src="<?php echo esc_url(fenster_generated_url($base . 'gallery/casement-stone-elevation.webp')); ?>"
-                alt="<?php esc_attr_e('White uPVC casement windows across the front elevation and dormers of a stone house', 'fenster'); ?>"
-                loading="lazy" width="1200" height="803">
-        </figure>
     </section>
 
     <?php
@@ -418,61 +428,12 @@ $faqs = [
        three things that carry an argument, not for everything on the page.
        ------------------------------------------------------------------- */
     ?>
-    <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
-
-    <?php /* ---------- 01 VERSATILITY ---------- */ ?>
-    <section class="fg-cas-chapter" data-fg-cas-reveal aria-labelledby="fg-cas-ch1-title">
-        <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">01</span>
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('Versatility', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch1-title" class="fg-cas-display"><?php esc_html_e('One system. Every opening in the house.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, in one outer frame, at any size we can make. Every window is drawn for the opening it goes into rather than picked from a catalogue.', 'fenster'); ?></p>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="fg-cas-styles" data-fg-cas-reveal>
-                <?php foreach ($styles as $style) : ?>
-                    <article class="fg-cas-style">
-                        <figure>
-                            <img src="<?php echo esc_url(fenster_generated_url($style['image'])); ?>" alt="<?php echo esc_attr($style['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $style['w']); ?>" height="<?php echo esc_attr((string) $style['h']); ?>"<?php if (! empty($style['focus'])) : ?> style="object-position: <?php echo esc_attr($style['focus']); ?>"<?php endif; ?>>
-                        </figure>
-                        <h3><?php echo esc_html($style['name']); ?></h3>
-                        <p><?php echo esc_html($style['copy']); ?></p>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-        <?php
-        /* Combinations is not a fourth opening style, it is what you get from
-           mixing the three, so it reads as a band rather than a fourth card.
-           That also keeps the three studio photographs above as one matched
-           set instead of putting an elevation shot among them. */
-        ?>
-        <div class="container fg-cas-combi">
-            <figure>
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-house-rear-1600w.webp')); ?>"
-                    alt="<?php esc_attr_e('Anthracite grey uPVC casement windows in several different configurations across the rear elevation of a house', 'fenster'); ?>"
-                    loading="lazy" width="1600" height="900">
-            </figure>
-            <div>
-                <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
-                <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
-            </div>
-        </div>
-    </section>
-
-    </div><?php /* end panel 01 */ ?>
-
     <div class="fg-cas-stack__panel fg-cas-stack__panel--energy">
 
     <?php /* ---------- 02 ENERGYPLUS ---------- */ ?>
     <section class="fg-cas-energy" data-fg-cas-reveal aria-labelledby="fg-cas-ch2-title">
         <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">02</span>
+            <span class="fg-cas-num" aria-hidden="true">01</span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('EnergyPlus', 'fenster'); ?></p>
                 <h2 id="fg-cas-ch2-title" class="fg-cas-display"><?php esc_html_e('Energy efficiency starts in the frame.', 'fenster'); ?></h2>
@@ -521,6 +482,55 @@ $faqs = [
     <?php get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows')); ?>
 
     </div><?php /* end panel 02 */ ?>
+
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
+
+    <?php /* ---------- 01 VERSATILITY ---------- */ ?>
+    <section class="fg-cas-chapter" data-fg-cas-reveal aria-labelledby="fg-cas-ch1-title">
+        <div class="container fg-cas-chapter__head">
+            <span class="fg-cas-num" aria-hidden="true">02</span>
+            <div>
+                <p class="fg-cas-eyebrow"><?php esc_html_e('Versatility', 'fenster'); ?></p>
+                <h2 id="fg-cas-ch1-title" class="fg-cas-display"><?php esc_html_e('One system. Every opening in the house.', 'fenster'); ?></h2>
+                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, in one outer frame, at any size we can make. Every window is drawn for the opening it goes into rather than picked from a catalogue.', 'fenster'); ?></p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="fg-cas-styles" data-fg-cas-reveal>
+                <?php foreach ($styles as $style) : ?>
+                    <article class="fg-cas-style">
+                        <figure>
+                            <img src="<?php echo esc_url(fenster_generated_url($style['image'])); ?>" alt="<?php echo esc_attr($style['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $style['w']); ?>" height="<?php echo esc_attr((string) $style['h']); ?>"<?php if (! empty($style['focus'])) : ?> style="object-position: <?php echo esc_attr($style['focus']); ?>"<?php endif; ?>>
+                        </figure>
+                        <h3><?php echo esc_html($style['name']); ?></h3>
+                        <p><?php echo esc_html($style['copy']); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <?php
+        /* Combinations is not a fourth opening style, it is what you get from
+           mixing the three, so it reads as a band rather than a fourth card.
+           That also keeps the three studio photographs above as one matched
+           set instead of putting an elevation shot among them. */
+        ?>
+        <div class="container fg-cas-combi">
+            <figure>
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-house-rear-1600w.webp')); ?>"
+                    alt="<?php esc_attr_e('Anthracite grey uPVC casement windows in several different configurations across the rear elevation of a house', 'fenster'); ?>"
+                    loading="lazy" width="1600" height="900">
+            </figure>
+            <div>
+                <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
+                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
+                <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
+            </div>
+        </div>
+    </section>
+
+    </div><?php /* end panel 01 */ ?>
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--security">
 

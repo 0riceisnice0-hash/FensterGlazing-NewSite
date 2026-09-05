@@ -39113,6 +39113,136 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+/* ---------- Casement overture, on the photograph -------------------------
+   The claim sits on the image rather than above it. Owner, 2026-09-05.
+
+   IT ANIMATES ON LOAD, NOT ON INTERSECTION. This is the first thing on the page
+   and is in view immediately, so an observer would hide it after first paint and
+   flicker before revealing. A CSS animation runs from its own first frame, so
+   there is nothing to see before it starts.
+
+   Every text rule here is (0,2,0). `.fg-cas p` is (0,1,1) and sets a muted
+   colour that would be unreadable on the scrim.
+   ------------------------------------------------------------------------- */
+.fg-cas-overture--onimage {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(28rem, 74vh, 44rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.fg-cas-overture--onimage .fg-cas-overture__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
+
+.fg-cas-overture--onimage .fg-cas-overture__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+
+/* The scrim. Heaviest at the left where the words sit, clearing to nothing on
+   the right so the elevation is still legible as a photograph. */
+.fg-cas-overture--onimage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      100deg,
+      rgba(2, 20, 26, 0.88) 0%,
+      rgba(2, 20, 26, 0.72) 34%,
+      rgba(2, 20, 26, 0.28) 66%,
+      rgba(2, 20, 26, 0.05) 100%
+    ),
+    linear-gradient(180deg, rgba(2, 20, 26, 0.42) 0%, transparent 38%);
+  pointer-events: none;
+}
+
+.fg-cas-overture--onimage .fg-cas-overture__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 46rem;
+  margin-right: auto;
+  padding-top: clamp(4rem, 12vh, 8rem);
+  padding-bottom: clamp(2.5rem, 7vh, 4.5rem);
+  color: #ffffff;
+}
+
+.fg-cas-overture--onimage .fg-cas-eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-cas-overture--onimage .fg-cas-display {
+  margin: 0.5rem 0 1.1rem;
+  color: #ffffff;
+}
+
+.fg-cas-overture--onimage .fg-cas-overture__copy p {
+  max-width: 42ch;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.fg-cas-overture--onimage .fg-cas-actions {
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+}
+
+/* ---- the reveal ---- */
+@keyframes fg-cas-overture-rise {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes fg-cas-overture-settle {
+  from { transform: scale(1.07); }
+  to   { transform: scale(1); }
+}
+
+.js .fg-cas-overture--onimage .fg-cas-overture__media img {
+  animation: fg-cas-overture-settle 1600ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.js .fg-cas-overture--onimage .fg-cas-eyebrow,
+.js .fg-cas-overture--onimage .fg-cas-display,
+.js .fg-cas-overture--onimage .fg-cas-overture__copy,
+.js .fg-cas-overture--onimage .fg-cas-actions {
+  animation: fg-cas-overture-rise 760ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.js .fg-cas-overture--onimage .fg-cas-eyebrow      { animation-delay: 80ms; }
+.js .fg-cas-overture--onimage .fg-cas-display      { animation-delay: 180ms; }
+.js .fg-cas-overture--onimage .fg-cas-overture__copy { animation-delay: 300ms; }
+.js .fg-cas-overture--onimage .fg-cas-actions      { animation-delay: 400ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .fg-cas-overture--onimage .fg-cas-overture__media img,
+  .js .fg-cas-overture--onimage .fg-cas-eyebrow,
+  .js .fg-cas-overture--onimage .fg-cas-display,
+  .js .fg-cas-overture--onimage .fg-cas-overture__copy,
+  .js .fg-cas-overture--onimage .fg-cas-actions {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .fg-cas-overture--onimage {
+    min-height: clamp(26rem, 68vh, 34rem);
+  }
+
+  .fg-cas-overture--onimage::after {
+    background:
+      linear-gradient(180deg, rgba(2, 20, 26, 0.55) 0%, rgba(2, 20, 26, 0.88) 62%, rgba(2, 20, 26, 0.94) 100%);
+  }
+}
+
 /* ---------- Casement chapters --------------------------------------------
    THE FOUR CHAPTERS NO LONGER STACK. Until 2026-09-05 the opening, versatility,
    energy and security panels were sticky, pinned in turn and dimmed the one
@@ -39138,6 +39268,38 @@ html.fg-blinds-reveal-locked {
    ------------------------------------------------------------------------- */
 .fg-cas-stack {
   position: relative;
+}
+
+/* ---- reveal stack: the panel above scrolls away off the one beneath ----
+   EXPERIMENT, being measured. Descending z-index with the later panels sticky:
+   the outgoing panel is opaque and on top, the incoming one is pinned at the
+   viewport top behind it, so scrolling lifts the outgoing panel off and uncovers
+   the next. That is the inverse of the build removed on 2026-09-05, where the
+   incoming panel slid up OVER the outgoing one and dimmed it. */
+.fg-cas-stack--reveal .fg-cas-stack__panel--energy,
+.fg-cas-stack--reveal .fg-cas-stack__panel--versatility,
+.fg-cas-stack--reveal .fg-cas-stack__panel--security {
+  position: sticky;
+  top: 0;
+}
+
+.fg-cas-stack--reveal .fg-cas-stack__panel--opening      { position: relative; z-index: 4; }
+.fg-cas-stack--reveal .fg-cas-stack__panel--energy       { z-index: 3; }
+.fg-cas-stack--reveal .fg-cas-stack__panel--versatility  { z-index: 2; }
+.fg-cas-stack--reveal .fg-cas-stack__panel--security     { z-index: 1; }
+
+/* Each panel must be opaque or the one beneath shows through it. */
+.fg-cas-stack--reveal .fg-cas-stack__panel--opening,
+.fg-cas-stack--reveal .fg-cas-stack__panel--energy,
+.fg-cas-stack--reveal .fg-cas-stack__panel--versatility {
+  background: var(--fg-page-gradient);
+  background-attachment: fixed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cas-stack--reveal .fg-cas-stack__panel {
+    position: static;
+  }
 }
 
 /* Kept from the stacking build: an opaque backing under the dark security
