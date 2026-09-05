@@ -147,10 +147,11 @@ $details = [
    a 36mm triple, and 0.95 W/m2K whole window with the triple, in the energy
    strip and the sealed unit anatomy. Those are reused verbatim.
 
-   THE DOUBLE HAS NO U-VALUE HERE ON PURPOSE. The only double figure on the site
-   is 1.2 W/m2K and it belongs to the FLUSH casement, a different frame. Putting
-   it against a standard casement double would be quietly wrong, so the double
-   columns carry the unit thickness and nothing else until someone confirms it.
+   THE DOUBLE IS 1.2 W/m2K AND IT WAS WRONG TO LEAVE IT OUT. I read the
+   standard-against-flush comparison, which gives flush 1.2 with a 28mm double,
+   and concluded 1.2 was the flush figure alone. The anatomy band on THIS page
+   states it for THIS system in its own right: "0.95 W/m2K with 36mm triple
+   glazing / 1.2 W/m2K with 28mm double glazing". The owner caught it.
 
    0.95 IS A WHOLE WINDOW FIGURE, not a glass one, and is labelled as such.
 
@@ -181,7 +182,7 @@ $glass_marks = [
 $glass_options = [
     [
         'name'    => __('Eco Toughened', 'fenster'),
-        'spec'    => '28mm unit',
+        'spec'    => '28mm unit &middot; 1.2 W/m&sup2;K',
         'tint'    => '#2eac66',
         'panes'   => ['plain', 'plain'],
         'caption' => __('Breaks into blunt granules.', 'fenster'),
@@ -189,7 +190,7 @@ $glass_options = [
     ],
     [
         'name'    => __('Eco Laminated', 'fenster'),
-        'spec'    => '28mm unit',
+        'spec'    => '28mm unit &middot; 1.2 W/m&sup2;K',
         'tint'    => '#9b8ec9',
         'panes'   => ['plain', 'lam'],
         'caption' => __('Holds together when broken.', 'fenster'),
@@ -197,7 +198,7 @@ $glass_options = [
     ],
     [
         'name'    => __('Eco Acoustic Laminated', 'fenster'),
-        'spec'    => '28mm unit',
+        'spec'    => '28mm unit &middot; 1.2 W/m&sup2;K',
         'tint'    => '#e0a2a2',
         'panes'   => ['plain', 'lam-acoustic'],
         'caption' => __('An interlayer that damps sound.', 'fenster'),
@@ -205,7 +206,7 @@ $glass_options = [
     ],
     [
         'name'    => __('Triple Glazed Eco Toughened', 'fenster'),
-        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K whole window',
+        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K',
         'tint'    => '#8fb6d4',
         'panes'   => ['plain', 'plain', 'plain'],
         'caption' => __('A third pane, a second cavity.', 'fenster'),
@@ -213,7 +214,7 @@ $glass_options = [
     ],
     [
         'name'    => __('Triple Glazed Eco Acoustic Laminated', 'fenster'),
-        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K whole window',
+        'spec'    => '36mm unit &middot; 0.95 W/m&sup2;K',
         'tint'    => '#d98f9e',
         'panes'   => ['plain', 'plain', 'lam-acoustic'],
         'caption' => __('Three panes and the acoustic laminate.', 'fenster'),
@@ -687,33 +688,15 @@ $faqs = [
              they need nothing above them now the 05 head has gone. */ ?>
     <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
     <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
-    <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
-
-    <?php /* The glass make-up, fourth in the run of choice components and
-             directly under privacy glass. Owner, 2026-09-04: "wrong section.
-             wants to go with privacy glass. also make it more like the size of
-             the privacy bar thing."
-
-             IT BORROWS THE PRIVACY CARD'S OWN CLASSES rather than defining a
-             band of its own: `fg-product-gallery-band`, `section-heading
-             --wide`, `fg-product-choice-map--single` and
-             `fg-product-option-card`. That is what makes it exactly the size of
-             the card above it, and it means this block inherits any future
-             change to that chrome instead of drifting from it. The only new CSS
-             is the rows inside the card.
-
-             The shared component itself was NOT touched. It renders on the
-             generic product journey as well as here, so a second card inside it
-             would have appeared on pages nobody asked for it on. */ ?>
     <section class="fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
         <div class="container">
             <div class="section-heading section-heading--wide">
                 <?php /* Not "Specification choices": the privacy card directly
                          above carries that eyebrow, and two bands running the
                          same one reads as a duplication rather than a pair. */ ?>
-                <p class="eyebrow"><?php esc_html_e('Glass', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Glass make-up', 'fenster'); ?></p>
                 <h2 id="fg-glass-makeup-title"><?php esc_html_e('And the glass inside the unit.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Five make-ups price in the window designer. Every one is an Eco unit: low-E coated glass, argon filled, with a warm edge spacer. What changes across them is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Five make-ups price in the window designer. Every one is an Eco unit: low-E coated glass, argon filled, with a warm edge spacer. What changes across them is the number of panes and what the glass does when something hits it. The U-values are whole window figures.', 'fenster'); ?></p>
             </div>
             <ul class="fg-glass-makeup__row">
                 <?php foreach ($glass_options as $option) : ?>
@@ -747,6 +730,29 @@ $faqs = [
         </div>
     </section>
 
+    <?php /* eyebrow overridden here only. Its default is "Specification
+             choices", which sat above a second band also about glass and read
+             as a duplicate. Owner: "you have spec choices, then glass. they're
+             both glass options". The component is shared, so the override is
+             passed rather than edited. */ ?>
+    <?php get_template_part('template-parts/components/privacy-glass-card', null, ['eyebrow' => __('Privacy glass', 'fenster')]); ?>
+
+    <?php /* The glass make-up, fourth in the run of choice components and
+             directly under privacy glass. Owner, 2026-09-04: "wrong section.
+             wants to go with privacy glass. also make it more like the size of
+             the privacy bar thing."
+
+             IT BORROWS THE PRIVACY CARD'S OWN CLASSES rather than defining a
+             band of its own: `fg-product-gallery-band`, `section-heading
+             --wide`, `fg-product-choice-map--single` and
+             `fg-product-option-card`. That is what makes it exactly the size of
+             the card above it, and it means this block inherits any future
+             change to that chrome instead of drifting from it. The only new CSS
+             is the rows inside the card.
+
+             The shared component itself was NOT touched. It renders on the
+             generic product journey as well as here, so a second card inside it
+             would have appeared on pages nobody asked for it on. */ ?>
     <?php /* ---------- PROOF ---------- */ ?>
     <section class="fg-cas-proof" aria-labelledby="fg-cas-proof-title">
         <div class="container">

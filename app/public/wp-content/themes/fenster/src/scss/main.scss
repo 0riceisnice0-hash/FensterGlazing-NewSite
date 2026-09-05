@@ -3999,35 +3999,39 @@ h3 {
 }
 
 /* ---------- Glass make-up -------------------------------------------------
-   Five columns side by side under the privacy card, on the owner's brief of
-   2026-09-04: "not a list, but side by side, not lines of text - maybe use an
-   icon system? think apple or dyson website level".
+   Five columns under the privacy card. Owner's brief, 2026-09-04: "not a list,
+   but side by side, not lines of text - maybe use an icon system? think apple
+   or dyson website level", then "nowhere near clean enough yet".
 
-   So the drawing carries the explanation, the caption is a few words and the
-   rest is marks. No card chrome and no boxes: the whitespace does the
-   separating, which is what makes it read as considered rather than as a table
-   with the borders turned off.
+   SO THE DRAWING CARRIES THE COLUMN AND EVERYTHING ELSE GETS OUT OF ITS WAY.
+   The unit is the largest thing in the module by a distance; under it there is
+   one line of specification, one name, one short caption and a row of marks,
+   each a step quieter than the last. No pills, no boxes, no borders except the
+   hairline of tint under each drawing.
 
-   FIVE COLUMNS, FIXED, NOT AUTO-FIT. Five does not divide without a remainder,
-   so an auto-fit grid strands the fifth on its own row at some width. It holds
-   five across while there is room and drops straight to two, then one. There is
-   no three or four column state, on purpose.
+   THE BAND STAYS TRANSPARENT. `.fg-product-gallery-band` is transparent and the
+   privacy card sits in one directly below, so a tinted panel here would split
+   two things the owner asked to read as related.
 
-   EVERY RULE IS (0,2,0). The block sits inside `.fg-cas`, whose base type rules
-   are `.fg-cas p` and `.fg-cas h3` at (0,1,1) and `.fg-cas p:last-child` at
-   (0,1,2). A single class loses to all three.
+   FIVE COLUMNS, FIXED, NOT AUTO-FIT. Five does not divide, so an auto-fit grid
+   strands the fifth at some width. Five, then two, then one. No three or four
+   state on purpose.
 
-   The unit is CSS, not an image: panes are flex children, the gap between them
-   is the cavity, and a double and a triple differ by one element. The bar along
-   the bottom is the spacer, drawn neutral because a warm edge spacer is warm in
-   the thermal sense and colouring it would say something the drawing cannot.
-   --gm-tint is the colour that option carries in the WindowCAD designer.
+   EVERY RULE IS (0,2,0). Inside `.fg-cas`, whose base type rules are (0,1,1)
+   and (0,1,2). A single class loses to them.
+
+   The unit is CSS, not an image: panes are flex children, the gap is the
+   cavity, a double and a triple differ by one element, and a laminated pane
+   draws its interlayer with a gradient. The bar at the bottom is the spacer,
+   neutral because a warm edge spacer is warm thermally and colouring it would
+   claim something the drawing cannot. --gm-tint is that option's WindowCAD
+   colour.
    ------------------------------------------------------------------------- */
 .fg-glass-makeup .fg-glass-makeup__row {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(1rem, 2.6vw, 2.4rem);
-  margin: clamp(2rem, 4vw, 3.25rem) 0 0;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -4040,12 +4044,12 @@ h3 {
   text-align: center;
 }
 
-/* ---- the unit, in section ---- */
+/* ---- the unit, and it is the point of the module ---- */
 .fg-glass-makeup .fg-glass-makeup__figure {
   display: block;
   width: 100%;
-  padding-bottom: 0.9rem;
-  border-bottom: 2px solid var(--gm-tint, var(--color-accent));
+  padding-bottom: 1.35rem;
+  border-bottom: 1px solid rgba(0, 45, 58, 0.1);
 }
 
 .fg-glass-makeup .fg-glass-makeup__unit {
@@ -4053,107 +4057,111 @@ h3 {
   display: flex;
   align-items: stretch;
   justify-content: center;
-  gap: clamp(0.4rem, 1vw, 0.7rem);
-  width: min(100%, 8rem);
-  height: clamp(6rem, 11vw, 8rem);
+  gap: clamp(0.5rem, 1.3vw, 0.95rem);
+  width: min(100%, 9.5rem);
+  height: clamp(7rem, 13vw, 10rem);
   margin: 0 auto;
-  padding: 0.55rem 0.6rem 1.15rem;
-  background: linear-gradient(180deg, #f4f9fa 0%, #e4eef0 100%);
-  border: 1px solid rgba(0, 45, 58, 0.14);
-  border-radius: 9px;
+  padding: 0.9rem 0.95rem 1.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(165deg, #f6fafb 0%, #e6f0f2 58%, #dbe8eb 100%);
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 14px 34px rgba(0, 45, 58, 0.07);
 }
 
 .fg-glass-makeup .fg-glass-makeup__pane {
-  width: clamp(0.34rem, 0.95vw, 0.52rem);
+  width: clamp(0.4rem, 1.1vw, 0.6rem);
   border-radius: 2px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 42%),
-    linear-gradient(90deg, #9cc2cb 0%, #bfdae0 55%, #8cb5bf 100%);
-  box-shadow: 0 0 0 1px rgba(6, 33, 42, 0.09);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 30%),
+    linear-gradient(90deg, #8fbac4 0%, #c6dee3 42%, #a8cad2 72%, #83b0bb 100%);
+  box-shadow:
+    0 0 0 1px rgba(6, 33, 42, 0.1),
+    0 2px 6px rgba(6, 33, 42, 0.08);
 }
 
-/* A laminated pane is two thinner sheets bonded to an interlayer, drawn wider
-   with the interlayer as a band of the option's own colour. */
+/* A laminated pane is two thinner sheets bonded to an interlayer, so it is
+   drawn wider with the interlayer as a band of the option's own colour. */
 .fg-glass-makeup .fg-glass-makeup__pane--lam,
 .fg-glass-makeup .fg-glass-makeup__pane--lam-acoustic {
-  width: clamp(0.55rem, 1.5vw, 0.82rem);
+  width: clamp(0.66rem, 1.75vw, 0.98rem);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 30%),
     linear-gradient(
       90deg,
-      #9cc2cb 0 34%,
-      var(--gm-tint, var(--color-accent)) 34% 66%,
-      #9cc2cb 66% 100%
+      #8fbac4 0 32%,
+      var(--gm-tint, var(--color-accent)) 32% 68%,
+      #8fbac4 68% 100%
     );
 }
 
 /* The spacer runs the width of the unit at the bottom, where it sits. */
 .fg-glass-makeup .fg-glass-makeup__spacer {
   position: absolute;
-  right: 0.6rem;
-  bottom: 0.5rem;
-  left: 0.6rem;
-  height: 0.3rem;
+  right: 0.95rem;
+  bottom: 0.75rem;
+  left: 0.95rem;
+  height: 0.34rem;
   border-radius: 2px;
-  background: linear-gradient(180deg, #8b9ba1 0%, #6f8087 100%);
+  background: linear-gradient(180deg, #93a3a9 0%, #74858c 100%);
 }
 
-/* ---- the words, and there are deliberately few ---- */
+/* ---- and then, quieter with each step down ---- */
 .fg-glass-makeup .fg-glass-makeup__count {
-  margin-top: 0.85rem;
-  font-size: 0.64rem;
+  margin-top: 1.1rem;
+  font-size: 0.63rem;
   font-weight: 700;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--gm-tint, var(--color-accent));
 }
 
 .fg-glass-makeup .fg-glass-makeup__col h3 {
   max-width: none;
-  margin: 0.3rem 0 0;
-  font-size: 0.92rem;
-  line-height: 1.28;
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
   color: var(--color-ink);
 }
 
 .fg-glass-makeup .fg-glass-makeup__spec {
-  margin-top: 0.28rem;
-  font-size: 0.7rem;
+  margin-top: 0.35rem;
+  font-size: 0.74rem;
   line-height: 1.35;
-  color: var(--color-muted);
+  color: var(--color-ink);
+  opacity: 0.72;
 }
 
 .fg-glass-makeup .fg-glass-makeup__caption {
   max-width: none;
-  margin: 0.45rem 0 0;
-  font-size: 0.8rem;
-  line-height: 1.4;
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
   color: var(--color-muted);
 }
 
-/* ---- the marks ---- */
+/* ---- the marks: no pills, they are a caption with a glyph ---- */
 .fg-glass-makeup .fg-glass-makeup__marks {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.3rem;
+  gap: 0.3rem 0.85rem;
   margin: auto 0 0;
-  padding-top: 0.85rem;
-  padding-inline: 0;
-  padding-bottom: 0;
+  padding: 1.15rem 0 0;
   list-style: none;
 }
 
 .fg-glass-makeup .fg-glass-makeup__marks li {
   display: inline-flex;
   align-items: center;
-  gap: 0.28rem;
-  padding: 0.22rem 0.5rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--color-steel);
-  background: rgba(0, 45, 58, 0.045);
-  border-radius: 999px;
+  gap: 0.32rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-muted);
 }
 
 .fg-glass-makeup .fg-glass-makeup__marks svg {
@@ -4166,7 +4174,7 @@ h3 {
 @media (max-width: 1080px) {
   .fg-glass-makeup .fg-glass-makeup__row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(1.5rem, 4vw, 2.25rem);
+    gap: clamp(2rem, 5vw, 3rem);
   }
 }
 
