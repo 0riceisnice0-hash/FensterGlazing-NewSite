@@ -39193,6 +39193,15 @@ html.fg-blinds-reveal-locked {
   z-index: 2;
   display: flex;
   flex-direction: column;
+  /* Centred, not top-anchored with the buttons pushed to the foot. Anchoring
+     them with `margin-top: auto` kept the call to action still while the
+     sentence turned, but it opened roughly 280px of dead space between the
+     copy and the buttons in a viewport-height box, which is the negative space
+     the owner has pulled this page up on before. Centring closes the gap, and
+     the buttons now move by half the terms' growth rather than all of it. It
+     also keeps the statement clear of the sticky header at every scroll
+     position, which top-anchoring did not. */
+  justify-content: center;
   max-width: 46rem;
   margin-right: auto;
   padding-top: clamp(2.5rem, 6vh, 4rem);
@@ -39450,13 +39459,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cas-overture--onimage .fg-cas-actions {
-  /* `auto`, not a fixed gap: the terms block grows by roughly 114px as the
-     sentence turns, and the free space above the buttons absorbs it so the
-     call to action does not slide down the screen while someone is reaching
-     for it. If the slack is ever exhausted the section simply grows, because
-     everything here is min-height and never height. */
-  margin-top: auto;
-  padding-top: clamp(1.25rem, 3vh, 2rem);
+  margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
 }
 
 /* The media settles once the section is reached. The words ride the shared
