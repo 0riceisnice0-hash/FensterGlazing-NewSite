@@ -363,11 +363,13 @@ $faqs = [
              window most British homes are built around.' overlaid onto the image
              below but being reveal with a bit of animation".
 
-             IT ANIMATES ON LOAD, NOT ON INTERSECTION. This is the first thing on
-             the page and is in view immediately, so an observer would hide it
-             after first paint and show a flicker before revealing it. A CSS
-             animation starts from its own first frame instead, and the whole
-             thing is off under reduced motion.
+             IT REVEALS ON APPROACH, NOT ON LOAD. This was written as a load
+             animation on the reasoning that it is the first thing on the page.
+             It is not: the hero and the specification strip sit above it and it
+             begins around 690px down, so the animation had already finished
+             before anyone scrolled to it. The owner caught that. It is a
+             `data-fg-cas-reveal` target now, like the chapters below it, and
+             the whole thing is off under reduced motion.
 
              The photograph keeps its alt: it is the product on a real elevation,
              not decoration, even though it is now behind the words. */ ?>
@@ -378,11 +380,55 @@ $faqs = [
                 loading="lazy" width="1200" height="803">
         </figure>
         <div class="container fg-cas-overture__inner">
-            <p class="fg-cas-eyebrow"><?php esc_html_e('70mm Liniar EnergyPlus', 'fenster'); ?></p>
-            <h2 id="fg-cas-overture-title" class="fg-cas-display"><?php esc_html_e('The window most British homes are built around.', 'fenster'); ?></h2>
+            <?php /* The eight terms. Every one is a fact published further down
+                     this page, so the array is the single place they are
+                     written and the stagger index cannot drift away from the
+                     copy. Order builds outwards: the frame, then the seal,
+                     then the lock, then the test bench.
+
+                       six-chambered        the six sealed air pockets
+                       corner-welded        welded corners, not screwed
+                       lead-free            the profile itself
+                       draught-sealing      held into its seals full length
+                       bolt-throwing        steel shoot bolts into the frame
+                       claw-locking         bi-directional claws into keeps
+                       salt-spray-tested    240 hours, beyond BS EN 1670
+                       100,000-cycle-tested Kenrick's mechanism test
+
+                     Not one of them is an adjective we invented, which is the
+                     whole difference between this and marketing noise. If a
+                     term is ever removed from the page below, remove it
+                     here too. */ ?>
+            <?php
+            $overture_terms = [
+                __('six-chambered', 'fenster'),
+                __('corner-welded', 'fenster'),
+                __('lead-free', 'fenster'),
+                __('draught-sealing', 'fenster'),
+                __('bolt-throwing', 'fenster'),
+                __('claw-locking', 'fenster'),
+                __('salt-spray-tested', 'fenster'),
+                __('100,000-cycle-tested', 'fenster'),
+            ];
+            $overture_last = count($overture_terms) - 1;
+            ?>
+            <?php /* One <h2>, not three elements. A screen reader gets the whole
+                     statement as a single heading in reading order rather than
+                     a heading followed by orphaned word soup, and the commas
+                     are in the markup so it is read with the right pacing
+                     instead of relying on CSS separators. */ ?>
+            <h2 id="fg-cas-overture-title" class="fg-cas-manifesto">
+                <span class="fg-cas-manifesto__negation"><?php esc_html_e('It’s not just a uPVC window.', 'fenster'); ?></span>
+                <span class="fg-cas-manifesto__terms">
+                    <?php foreach ($overture_terms as $i => $overture_term) : ?>
+                        <span class="fg-cas-manifesto__term" style="--fg-term-index: <?php echo (int) $i; ?>"><?php echo esc_html($overture_term); ?><?php echo $i < $overture_last ? ',' : '.'; ?></span>
+                    <?php endforeach; ?>
+                </span>
+                <span class="fg-cas-manifesto__resolve"><?php esc_html_e('It’s the 70mm Liniar EnergyPlus casement. We fit it as standard.', 'fenster'); ?></span>
+            </h2>
             <div class="fg-cas-overture__copy">
                 <p><?php esc_html_e('A casement hinges at the side or the top and opens outwards. Every one is made to your opening rather than to a stock size, so the same system suits a small bathroom window and a full bay.', 'fenster'); ?></p>
-                <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus, in the sculptured profile. It is what you get as standard, not an upgrade we charge extra for.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The profile is sculptured rather than chamfered. Glass, reinforcement and hardware are then confirmed against your individual job.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-actions">
                     <?php if ($quote_url !== '') : ?>
