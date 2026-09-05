@@ -267,19 +267,32 @@ $h30_case_url = static function (string $slug): string {
                 <!-- The pricing tool itself, rather than a description of it. The frame
                      stays empty until the band is reached (or the button is pressed), so a
                      third-party origin never delays the rest of the page. -->
-                <div class="fg-h30-price__quote" data-h30-quote data-h30-quote-src="<?php echo esc_url($h30_quote_embed); ?>">
+                <!-- THE FRAME IS ONE OF main.js's QUOTE FRAMES, NOT ITS OWN THING. Until
+                     2026-09-05 it loaded the bare WindowCAD URL from `quote.js`, so a
+                     quote started here arrived with no Tracking value and fired no
+                     `quote_iframe_loaded`: every homepage quote was unattributed and the
+                     dashboard could not see it start. `/online-quote/` and every product
+                     page already carry the wrap that stamps the journey reference into
+                     the URL, records the load, re-stamps on a consent change and holds
+                     off reloading a quote somebody is building. These attributes make
+                     the homepage frame that same wrap; `quote.js` now only reveals it.
+                     `data-quote-card` deliberately does NOT sit on this element: the
+                     full-screen handler finds the wrap with a descendant query from the
+                     card, so the card is the section around it. -->
+                <div class="fg-h30-price__quote" data-h30-quote data-quote-frame-wrap data-quote-autoload="near" data-lenis-prevent data-quote-url="<?php echo esc_url($h30_quote_embed); ?>">
                     <div class="fg-h30-price__quote-note" data-h30-quote-note>
                         <strong>Instant pricing</strong>
                         <span>Loads as you reach this section.</span>
-                        <button class="fg-h30-btn fg-h30-btn--primary" type="button" data-h30-quote-load>Load the pricing tool</button>
+                        <button class="fg-h30-btn fg-h30-btn--primary" type="button" data-load-quote>Load the pricing tool</button>
                     </div>
                     <iframe
+                        data-quote-iframe-src="<?php echo esc_url($h30_quote_embed); ?>"
                         title="Fenster instant pricing tool"
                         loading="lazy"
                         allow="fullscreen"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                     <!-- The same expand control the other quote pages carry. -->
-                    <button class="fg-h30-price__expand" type="button" data-h30-quote-expand>
+                    <button class="fg-h30-price__expand" type="button" data-fullscreen-quote>
                         <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 2H2v4M10 2h4v4M10 14h4v-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Full screen
                     </button>
