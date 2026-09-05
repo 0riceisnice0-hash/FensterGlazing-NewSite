@@ -38034,7 +38034,7 @@ html.fg-blinds-reveal-locked {
 /* Was clamp(7.5rem, 18vh, 15rem), to hold a chapter's last block clear of the
    panel arriving over it. Nothing arrives over anything now, so it is ordinary
    section rhythm. */
-.fg-cas-stack__panel:not(.fg-cas-stack__panel--security) > *:last-child {
+.fg-cas-stack__panel:not(:last-child) > *:last-child {
   padding-bottom: clamp(2rem, 5vh, 4rem);
 }
 
@@ -38435,15 +38435,6 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ---- Overture ---- */
-.fg-cas-overture__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: start;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  margin-bottom: clamp(2rem, 4vw, 3.25rem);
-}
-
-.fg-cas .fg-cas-overture__grid .fg-cas-display { max-width: 14ch; }
 
 /* Full-bleed photography. The container is escaped on purpose: an image that
    stops at the text column reads as an illustration, one that runs to the edge
@@ -38621,21 +38612,18 @@ html.fg-blinds-reveal-locked {
   line-height: 1.55;
 }
 
-/* ---- 02 EnergyPlus. Dark, because the claim is technical. ---- */
-.fg-cas-energy,
-.fg-cas-security {
-  background: linear-gradient(168deg, #06222a 0%, #0c313b 52%, #061d24 100%);
-  color: #ffffff;
-}
+/* ---- 01 EnergyPlus and 02 Security. LIGHT. ----
+   These two chapters were a navy gradient with white type, on the reasoning
+   that a technical claim wants a technical ground. The owner: "lighten it all
+   up - page looks dark af". The ground now sits on the panel wrapper instead
+   (see the panel grounds further down), so the whole run is soft / white /
+   soft and nothing here needs a background of its own.
 
-.fg-cas-energy .fg-cas-display,
-.fg-cas-security .fg-cas-display { color: #ffffff; }
-
-.fg-cas-energy p,
-.fg-cas-security p { color: rgba(255, 255, 255, 0.74); }
-
-.fg-cas-energy .fg-cas-num,
-.fg-cas-security .fg-cas-num { -webkit-text-stroke-color: rgba(255, 255, 255, 0.32); }
+   EVERYTHING THAT WAS INVERTED FOR WHITE-ON-DARK HAS TO COME BACK, and it is
+   more than the four rules that used to live here. The stats, the accordion,
+   the security list, the caption and the lock shadow were all tinted for the
+   dark band; each one is corrected at its own rule below and marked RETINT.
+   Miss one and it renders white on near-white and simply disappears. */
 
 .fg-cas-energy__grid {
   display: grid;
@@ -38648,6 +38636,12 @@ html.fg-blinds-reveal-locked {
   overflow: hidden;
   border-radius: 4px;
   background: #ffffff;
+  /* RETINT. The white stays and gains an edge: the chapter ground is now
+     var(--color-soft), so a white plate on it needs a line or it floats. Not
+     switched to a drop-shadow cut-out, because cas-profile-cutaway-c.webp is a
+     plain VP8 file with no alpha channel, so a shadow would trace its
+     rectangle and produce the shadowed card the file forbids elsewhere. */
+  border: 1px solid var(--color-line);
 }
 
 /* The studio files are already framed; letting them keep their own proportion
@@ -38728,7 +38722,7 @@ html.fg-blinds-reveal-locked {
 /* Names the part without giving it a heading. */
 .fg-cas-security__caption {
   margin: 0.2rem 0 clamp(1.1rem, 2.4vw, 1.6rem);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-muted); /* RETINT */
   font-size: var(--fg-text-xs);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -38766,7 +38760,11 @@ html.fg-blinds-reveal-locked {
   display: block;
   width: min(100%, 520px);
   height: auto;
-  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.46));
+  /* RETINT. 0.46 black was tuned against a near-black band; on white it
+     smears. cas-kenrick-excalibur.webp is a real alpha file, so the shadow is
+     what floats the cut-out and it has to stay, just softer and tinted to the
+     page ink rather than to black. */
+  filter: drop-shadow(0 20px 30px rgba(0, 45, 58, 0.18));
   transform: translateY(var(--fg-parallax-y));
   transition: transform 120ms linear;
 }
@@ -38784,7 +38782,7 @@ html.fg-blinds-reveal-locked {
   display: flex;
   align-items: baseline;
   gap: 0.45rem;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--color-muted); /* RETINT */
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -38792,7 +38790,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cas-stats dt span {
-  color: #ffffff;
+  color: var(--color-ink); /* RETINT */
   font-size: clamp(2rem, 3.6vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -38802,7 +38800,7 @@ html.fg-blinds-reveal-locked {
 .fg-cas-stats dd {
   max-width: 34ch;
   margin: 0.3rem 0 0;
-  color: rgba(255, 255, 255, 0.68);
+  color: var(--color-muted); /* RETINT */
   font-size: var(--fg-text-md);
   line-height: 1.5;
 }
@@ -38812,10 +38810,10 @@ html.fg-blinds-reveal-locked {
   margin: clamp(2rem, 4vw, 3rem) 0 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--cas-rule); /* RETINT */
 }
 
-.fg-cas-anatomy li { border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
+.fg-cas-anatomy li { border-bottom: 1px solid var(--cas-rule); } /* RETINT */
 .fg-cas-anatomy h3 { margin: 0; }
 
 .fg-cas-anatomy__toggle {
@@ -38828,7 +38826,7 @@ html.fg-blinds-reveal-locked {
   padding: 1rem 0;
   border: 0;
   background: none;
-  color: #ffffff;
+  color: var(--color-ink); /* RETINT. White here is five invisible headings. */
   font: inherit;
   font-size: 1.05rem;
   font-weight: 700;
@@ -38837,7 +38835,10 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cas-anatomy__num {
-  color: var(--color-accent);
+  /* RETINT. --color-accent #2eac66 is about 2.9:1 on the soft ground and fails
+     AA at this size and weight; --color-accent-dark is 4.49:1, still under.
+     --color-muted is 4.68:1 and is the only one of the three that passes. */
+  color: var(--color-muted);
   font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -38850,7 +38851,9 @@ html.fg-blinds-reveal-locked {
   position: absolute;
   inset: 0;
   margin: auto;
-  background: var(--color-accent);
+  /* RETINT. A 2px graphical mark needs 3:1, not 4.5:1, so the accent survives
+     here at 4.49:1 and the chapter keeps a touch of green. */
+  background: var(--color-accent-dark);
   content: '';
 }
 
@@ -38871,6 +38874,9 @@ html.fg-blinds-reveal-locked {
   margin: clamp(1.35rem, 3vw, 1.9rem) 0 0;
   border-radius: 4px;
   background: #ffffff;
+  /* RETINT. cas-security-keep.webp has no alpha, so it needs the white plate;
+     the plate now sits on a white ground and needs an edge. */
+  border: 1px solid var(--color-line);
 }
 
 .fg-cas-lock__keep img {
@@ -38892,14 +38898,14 @@ html.fg-blinds-reveal-locked {
 
 .fg-cas-list div {
   padding: 1rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid var(--cas-rule); /* RETINT */
 }
 
 .fg-cas-list div:first-child { border-top: 0; padding-top: 0; }
 
 .fg-cas-list dt {
   margin-bottom: 0.3rem;
-  color: #ffffff;
+  color: var(--color-ink); /* RETINT */
   font-size: 1.02rem;
   font-weight: 700;
 }
@@ -38907,7 +38913,7 @@ html.fg-blinds-reveal-locked {
 .fg-cas-list dd {
   max-width: 52ch;
   margin: 0;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-muted); /* RETINT */
   font-size: 0.93rem;
   line-height: 1.55;
 }
@@ -39132,11 +39138,20 @@ html.fg-blinds-reveal-locked {
 .fg-cas-overture--onimage {
   position: relative;
   display: flex;
-  align-items: flex-end;
-  min-height: clamp(28rem, 74vh, 44rem);
+  align-items: stretch;
+  /* One screen, less the sticky header, and never more than 46rem. The panel
+     measured 1032px before this rebuild, which is not an opening moment, it is
+     a page. svh rather than vh so a mobile browser's collapsing toolbar does
+     not make it taller than the screen it is meant to fit. */
+  min-height: min(46rem, calc(100svh - var(--site-header-main-height)));
   overflow: hidden;
   isolation: isolate;
 }
+
+/* (0,2,0), so it clears `.fg-cas section` at (0,1,1). That rule's
+   clamp(3rem, 7vh, 5.5rem) was up to 126px of padding INSIDE this box on top of
+   the inner's own, and it was half the reason the panel ran to 1032px. */
+.fg-cas .fg-cas-overture--onimage { padding-block: 0; }
 
 .fg-cas-overture--onimage .fg-cas-overture__media {
   position: absolute;
@@ -39176,186 +39191,272 @@ html.fg-blinds-reveal-locked {
 .fg-cas-overture--onimage .fg-cas-overture__inner {
   position: relative;
   z-index: 2;
-  max-width: 46rem;
-  margin-right: auto;
-  padding-top: clamp(4rem, 12vh, 8rem);
-  padding-bottom: clamp(2.5rem, 7vh, 4.5rem);
-}
-
-/* ---- the opening statement -----------------------------------------------
-   Owner instruction, 2026-09-05: "you could do something epic here, just like
-   dyson at the top of the page with their 'its not a toothbrush' bit ...
-   actually copy their style with the expanding text and then the reveal after
-   that", and then, on placement: "i meant for the part: The window most
-   British homes are built around ... in place of that".
-
-   So this is not a new block bolted on above the page. It is the overture's
-   own h2, rebuilt as three beats: a flat negation, an expansion into the
-   terms that earn it, and a resolve that finally names the system.
-
-   FOUR THINGS THAT ARE DELIBERATE:
-
-   1. The eyebrow that used to sit above this is gone. It read "70mm Liniar
-      EnergyPlus", which is the answer the resolve line is built to withhold
-      for two seconds. Naming the system twice, once in advance, is the one
-      thing that would flatten the whole device. The fact is not lost; it is
-      just now the payoff instead of the preamble.
-
-   2. The negation tops out at `--fg-font-size-max`, matching the site hero
-      rather than beating it. An opening moment that breaks the type scale to
-      get attention is a different site, not a better one.
-
-   3. NO NEW JAVASCRIPT. The stagger hangs off `.is-visible`, which the
-      existing chapter observer already puts on this section, and the delays
-      start after that section's own 460ms fade so no beat animates behind an
-      invisible parent. With JS off, or under reduced motion, every beat is
-      simply visible at full size: `.fg-cas-motion-ready` is never added on
-      those paths, so none of the hiding rules below ever match.
-
-   4. The letter-spacing is what does the expanding, not the scale. Type that
-      grows by transform goes soft at the edges mid-flight; type that opens
-      from tight tracking to settled tracking stays sharp on every frame and
-      reads as the words spreading rather than the words zooming.
-   ------------------------------------------------------------------------- */
-.fg-cas .fg-cas-manifesto {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(0.8rem, 1.8vw, 1.3rem);
-  margin: 0 0 clamp(1.2rem, 3vh, 1.8rem);
-  color: var(--color-ink);
-  font-size: 1rem;
-  line-height: 1.06;
+  max-width: 46rem;
+  margin-right: auto;
+  padding-top: clamp(2.5rem, 6vh, 4rem);
+  padding-bottom: clamp(2rem, 5vh, 3rem);
 }
 
-.fg-cas .fg-cas-manifesto__negation {
+/* ---- the opening statement: one sentence that turns ----------------------
+   Owner: "actually copy their style with the expanding text and then the reveal
+   after that", and on placement, "i meant for the part: The window most British
+   homes are built around ... in place of that". Then: "make it better, cleaner,
+   simpler. more like the dyson page. the more you can copy itm the better."
+
+   THE FIRST BUILD OF THIS GOT THE DEVICE WRONG. It was three separate beats
+   stacked up: a negation, a list, a conclusion. The reference is not three
+   beats. It is ONE SENTENCE THAT MUTATES IN PLACE. Read off the live page on
+   2026-09-05: a run of words is an inline-block whose WIDTH collapses so it
+   squeezes out of the line without reflowing it, while a container's HEIGHT
+   opens from zero and injects the descriptors into the gap it left. The
+   negation does not sit above the claim; the negation BECOMES the claim.
+
+   Here: "It's not just a ... uPVC window." turns into "It's a six-chambered,
+   corner-welded, draught-sealing, argon-filled, multi-point-locking uPVC
+   window." The frame sentence never moves. Only " not just" leaves and the
+   terms arrive.
+
+   NOTHING IS MEASURED. Both halves interpolate an `fr` track to and from the
+   natural content size, so there is no width or height in pixels anywhere, no
+   ResizeObserver, and nothing for Lenis to fight. The previous build measured
+   the overture with a ResizeObserver to drive a negative margin; that is the
+   mechanism that produced the bug this rebuild removes. Measurement is the
+   thing being designed out.
+
+   THE RESTING STATE IS THE FINISHED, TRUE SENTENCE. With JavaScript off or
+   under reduced motion neither `.js` nor `.fg-cas-motion-ready` exists, no rule
+   below can match, and the reader gets "It's not just a six-chambered ... uPVC
+   window." That is grammatical, true and complete. There is no state in which
+   anyone reads something false.
+
+   TWO DELIBERATE DEVIATIONS FROM THE REFERENCE, both measured:
+     - They set the injected words at rgb(143,143,143), about 2.9:1 on their
+       ground, which fails AA. Ours are var(--color-muted), 5.0:1 on the scrim.
+     - Their descriptors are 0.87 of the frame size because theirs sit one per
+       line. Ours flow inline as long compounds, so 0.87 would make the term
+       block taller than both frame lines together and stop it reading as one
+       sentence. Ours is 0.72em.
+   And no en dash inside the compounds: a British compound modifier takes a
+   hyphen.
+   ------------------------------------------------------------------------- */
+.fg-cas .fg-cas-turn--overture {
   display: block;
-  max-width: 15ch;
-  font-size: clamp(2.15rem, 5.6vw, var(--fg-font-size-max));
+  margin: 0 0 clamp(0.9rem, 2vh, 1.4rem);
+  color: var(--color-ink);
+  font-size: clamp(1.95rem, 4.2vw, 2.6rem);
   font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.025em;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
 }
 
-.fg-cas .fg-cas-manifesto__terms {
+/* Baseline flex, so the collapsing run sits on the same baseline as the words
+   either side without a magic vertical-align. flex-wrap is what lets the line
+   break on a narrow phone instead of being clipped by the section's
+   overflow:hidden. */
+.fg-cas .fg-cas-turn__line {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.3em 0.45em;
-  max-width: 30ch;
-  color: var(--color-accent-dark);
-  font-size: clamp(1.02rem, 2.05vw, 1.6rem);
-  font-weight: 600;
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  max-width: 20ch;
 }
 
-/* Each term holds together or wraps whole. A compound broken across two lines
-   at its own hyphen reads as two different claims. */
-.fg-cas .fg-cas-manifesto__term {
-  display: inline-block;
-  white-space: nowrap;
-}
+.fg-cas .fg-cas-turn__line > span { white-space: pre; }
 
-.fg-cas .fg-cas-manifesto__resolve {
-  display: block;
-  max-width: 24ch;
-  color: var(--color-ink);
-  font-size: clamp(1.3rem, 2.8vw, 2rem);
-  font-weight: 600;
+/* The squeeze: a single fr track collapsing to nothing. */
+.fg-cas .fg-cas-turn__squeeze { display: inline-grid; grid-template-columns: 1fr; }
+.fg-cas .fg-cas-turn__run { min-width: 0; overflow: hidden; white-space: pre; }
+
+/* The expansion: same idiom, other axis. min-height:0 on the child is what lets
+   0fr actually collapse it. */
+.fg-cas .fg-cas-turn__items { display: grid; grid-template-rows: 1fr; }
+
+.fg-cas .fg-cas-turn__reel {
+  min-height: 0;
+  max-width: 34ch;
+  overflow: hidden;
+  padding: 0.1em 0 0.16em;
+  color: var(--color-muted);
+  font-size: 0.72em;
+  font-weight: 700;
   line-height: 1.16;
-  letter-spacing: -0.018em;
+  letter-spacing: -0.005em;
 }
 
-/* The three beats, hidden only when JS is running AND motion is allowed, in
-   the same way as `[data-fg-cas-reveal]` above. */
-.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__negation,
-.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__term,
-.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__resolve {
+/* A compound broken at its own hyphen reads as two claims. */
+.fg-cas .fg-cas-turn__term { display: inline-block; white-space: nowrap; }
+
+/* Never animated, never hidden. It is the one sentence here written for
+   somebody who has not bought a window before, and gating the answer to "what
+   is a casement" behind a two second transition to buy screen height is the
+   trade this rebuild refuses. */
+.fg-cas .fg-cas-turn__define {
+  max-width: 52ch;
+  margin: 0 0 clamp(0.7rem, 1.6vh, 1rem);
+  color: var(--color-ink);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.5;
+}
+
+.fg-cas .fg-cas-turn__resolve {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+/* ---- the two line chapter turn, shared by 01 and 02, and by the closer ----
+   The reference's "Others can't see the gaps. / Only ours can." A muted set-up
+   line and an inked pay-off. Used exactly twice as a heading plus once as the
+   closer: a third would stop it being rhetoric and make it the page's default
+   heading style. Chapter 03 keeps a plain heading for that reason. */
+.fg-cas .fg-cas-turn--chapter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06em;
+  max-width: 22ch;
+  margin: 0 0 0.9rem;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.fg-cas .fg-cas-turn__set { color: var(--color-muted); }
+.fg-cas .fg-cas-turn__land { color: var(--color-ink); }
+
+/* A sub-head, not a second heading, so it is deliberately smaller than the
+   chapter h2. (0,2,0) clears `.fg-cas h3` at (0,1,1). */
+.fg-cas .fg-cas-staccato {
+  max-width: none;
+  margin: 0 0 clamp(1rem, 2.2vw, 1.5rem);
+  color: var(--color-ink);
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* The hand-off into "Bars, horns and lead.". A <p>, not a heading, so it cannot
+   compete with the h2 immediately below it. (0,2,0) clears
+   `.fg-cas p:last-child` at (0,1,2). */
+.fg-cas .fg-cas-close {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06em;
+  max-width: 22ch;
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+  padding-top: clamp(1.75rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--cas-rule);
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+/* ---- motion ---------------------------------------------------------------
+   Armed only by `.js .fg-cas-motion-ready`, triggered only by `.is-visible`,
+   which the existing observer already writes on this section. No new
+   JavaScript, no new observer target, nothing scroll-linked.
+
+   Every delay clears the section's own 460ms [data-fg-cas-reveal] fade, so no
+   beat animates behind an invisible parent. Total 1.76s.
+
+   OLD BROWSERS: interpolating an fr track needs roughly Chrome 117 / Safari 17.
+   Below that the tracks flip instead of easing, so the squeeze and the
+   expansion snap. The per-term stagger is kept rather than folded into the
+   container precisely so that those readers still get a visible, staggered
+   arrival instead of nothing. Do not reach for calc-size() to widen support:
+   its floor is higher, not lower. */
+.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__squeeze {
+  grid-template-columns: 1fr;
+  transition: grid-template-columns 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 520ms;
+}
+
+.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items {
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 520ms;
+}
+
+.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term {
   opacity: 0;
-  transform: translate3d(0, 0.4em, 0);
+  transition: opacity 460ms cubic-bezier(0.22, 0.61, 0.36, 1)
+              calc(560ms + var(--fg-term-index, 0) * 60ms);
+}
+
+.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve {
+  opacity: 0;
+  transform: translate3d(0, 0.35em, 0);
   transition:
-    opacity 600ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    letter-spacing 820ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, transform;
+    opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 1240ms,
+    transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 1240ms;
 }
 
-/* Beat one. Opens from tight tracking as it rises. */
-.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__negation {
-  transition-delay: 240ms;
-  letter-spacing: -0.085em;
+.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__squeeze { grid-template-columns: 0fr; }
+.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__items   { grid-template-rows: 1fr; }
+.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__term    { opacity: 1; }
+.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-turn__resolve { opacity: 1; transform: none; }
+
+/* The chapter pay-off line, written once and shared by both chapter turns and
+   the closer. Keyed off the nearest reveal target rather than the section, so
+   the closer needs its own `data-fg-cas-reveal` (it has one) or it would play
+   thousands of pixels before anyone reached it. */
+.js .fg-cas-motion-ready .fg-cas-turn__land {
+  opacity: 0;
+  transform: translate3d(0, 0.25em, 0);
+  transition:
+    opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 520ms,
+    transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 520ms;
 }
 
-/* Beat two. 72ms apart, so eight terms take 500ms end to end rather than
-   turning into a queue you have to wait through. */
-.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__term {
-  transition-delay: calc(620ms + var(--fg-term-index, 0) * 72ms);
-  letter-spacing: -0.05em;
-}
-
-/* Beat three, once the last term has landed. */
-.js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__resolve {
-  transition-delay: 1340ms;
-  letter-spacing: -0.055em;
-}
-
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-manifesto__negation,
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-manifesto__term,
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-manifesto__resolve {
+.js .fg-cas-motion-ready [data-fg-cas-reveal].is-visible .fg-cas-turn__land {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: none;
 }
-
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-manifesto__negation { letter-spacing: -0.025em; }
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-manifesto__term { letter-spacing: -0.01em; }
-.js .fg-cas-motion-ready .fg-cas-overture--onimage.is-visible .fg-cas-manifesto__resolve { letter-spacing: -0.018em; }
 
 /* Belt and braces. `.fg-cas-motion-ready` is not added at all when the query
-   matches at load, so this only catches someone turning the setting on with
-   the page already open. The settled tracking is repeated rather than reset
-   to `inherit`, which would take the h2 value and not the beat's own. */
+   matches at load, so this only catches someone turning the setting on with the
+   page already open. */
 @media (prefers-reduced-motion: reduce) {
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__negation,
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__term,
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__resolve {
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__squeeze { grid-template-columns: 1fr; transition: none; }
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items   { grid-template-rows: 1fr; transition: none; }
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term,
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve,
+  .js .fg-cas-motion-ready .fg-cas-turn__land {
     opacity: 1;
     transform: none;
     transition: none;
     transition-delay: 0s;
   }
-
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__negation { letter-spacing: -0.025em; }
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__term { letter-spacing: -0.01em; }
-  .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-manifesto__resolve { letter-spacing: -0.018em; }
 }
 
-/* The `ch` caps are there to control where the lines break on a wide screen.
-   On a phone the container is already narrower than all three of them, so
-   keeping them would break the lines twice and leave a ragged column.
-
-   760px, NOT the 860px used by the `.fg-cas-display` rule further down, which
-   is what this was first written as. Between those two widths the container is
-   still around 740px wide, so lifting the caps there does not tidy anything:
-   it lets the negation go flat across one full line and pushes the resolve out
-   past the end of the scrim onto the brickwork, where it loses its contrast.
-   760px is the width the rest of `.fg-cas-overture--onimage` already breaks at,
-   and below it the container is genuinely narrower than every cap. */
+/* The `ch` caps control where the lines break on a wide screen. On a phone the
+   container is already narrower than all of them, so keeping them would break
+   the lines twice and leave a ragged column. 760px is the width the rest of
+   `.fg-cas-overture--onimage` already breaks at. */
 @media (max-width: 760px) {
-  .fg-cas .fg-cas-manifesto__negation,
-  .fg-cas .fg-cas-manifesto__terms,
-  .fg-cas .fg-cas-manifesto__resolve {
-    max-width: none;
-  }
-}
-
-.fg-cas-overture--onimage .fg-cas-overture__copy p {
-  max-width: 42ch;
-  color: var(--color-muted);
+  .fg-cas .fg-cas-turn__line,
+  .fg-cas .fg-cas-turn__reel,
+  .fg-cas .fg-cas-turn__define,
+  .fg-cas .fg-cas-turn__resolve,
+  .fg-cas .fg-cas-turn--chapter,
+  .fg-cas .fg-cas-close { max-width: none; }
 }
 
 .fg-cas-overture--onimage .fg-cas-actions {
-  margin-top: clamp(1.25rem, 3vh, 2rem);
+  /* `auto`, not a fixed gap: the terms block grows by roughly 114px as the
+     sentence turns, and the free space above the buttons absorbs it so the
+     call to action does not slide down the screen while someone is reaching
+     for it. If the slack is ever exhausted the section simply grows, because
+     everything here is min-height and never height. */
+  margin-top: auto;
+  padding-top: clamp(1.25rem, 3vh, 2rem);
 }
 
 /* The media settles once the section is reached. The words ride the shared
@@ -39387,50 +39488,6 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* ---- the one reveal ------------------------------------------------------
-   The opening panel scrolls away to uncover the first chapter pinned beneath it.
-   `is-revealing` and `--fg-reveal-overlap` are both set by main.js, so with
-   JavaScript off nothing here applies and the chapters read in ordinary order.
-
-   The chapter is pulled up by the overture's measured height so it sits exactly
-   behind it, pinned at the top, while the opening panel passes over on a higher
-   layer. Everything above and below the pinned chapter needs an opaque
-   background or it shows through.
-
-   ONE JUNCTION ONLY. See the note below for why a chain is not available.
-   ------------------------------------------------------------------------- */
-.fg-cas-stack.is-revealing .fg-cas-stack__panel--opening {
-  position: relative;
-  z-index: 2;
-}
-
-.fg-cas-stack.is-revealing .fg-cas-stack__panel--energy {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  margin-top: calc(var(--fg-reveal-overlap, 0px) * -1);
-}
-
-/* Later chapters ride over the pinned one. */
-.fg-cas-stack.is-revealing .fg-cas-stack__panel--versatility,
-.fg-cas-stack.is-revealing .fg-cas-stack__panel--security {
-  position: relative;
-  z-index: 3;
-}
-
-.fg-cas-stack.is-revealing .fg-cas-stack__panel--opening,
-.fg-cas-stack.is-revealing .fg-cas-stack__panel--versatility {
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fg-cas-stack.is-revealing .fg-cas-stack__panel--energy {
-    position: static;
-    margin-top: 0;
-  }
-}
-
 /* ---- reveal stack: MEASURED AND PARKED, 2026-09-05 ----------------------
    The owner asked for the inverse of the old stack: the panel above on top,
    scrolling away to uncover the one beneath. Built as descending z-index with
@@ -39447,8 +39504,30 @@ html.fg-blinds-reveal-locked {
    panels of exactly one viewport (these run 1.3 to 2.0 screens of real content)
    or a controller that decides which panel is pinned as you scroll.
 
-   The rules are kept, unreferenced, so the measurement does not have to be
-   repeated. Add `fg-cas-stack--reveal` to the wrapper to see it again.
+   THE SINGLE JUNCTION WAS MEASURED TOO, ON 2026-09-05, AND ALSO FAILS. Keeping
+   one pin instead of three did not avoid the fault above, and it added a second:
+
+     1. The pinned chapter is 1657px in a 900px viewport. Pinned at top 0 with
+        the next panel riding over it on a higher z-index, the most of it ever
+        visible at once is 900px, falling to 349px by y=1998 and to nothing by
+        y=2400. Its accordion and its guarantee note were unreachable at every
+        scroll position. That shipped, and it was live.
+     2. `top: 0` puts the pinned panel under `.site-header`, which is itself
+        sticky at top 0 with z-index 50 and 72px tall. `.fg-cas-stack` is
+        position:relative with no z-index, so it opens no stacking context and
+        the panel's z-index 1 loses to the header outright. The numeral, the
+        eyebrow and the top of the heading sat behind the header for the whole
+        pin. That is what the owner saw and reported as section one being part
+        hidden at the top.
+
+   The rules are gone rather than parked. A parked rule set that names panels in
+   an order the page no longer has is worse than none, and the order changed on
+   2026-09-05 (energy, security, versatility). The measurement above is the part
+   worth keeping, so it stays here as prose.
+
+   IF ANYTHING ON THIS PAGE IS EVER STICKY AGAIN: it is
+   `top: var(--site-header-main-height)`, never `top: 0`, and it is one panel
+   shorter than the viewport or it is nothing.
    ------------------------------------------------------------------------- */
 /* ---------- Casement chapters --------------------------------------------
    THE FOUR CHAPTERS NO LONGER STACK. Until 2026-09-05 the opening, versatility,
@@ -39477,44 +39556,31 @@ html.fg-blinds-reveal-locked {
   position: relative;
 }
 
-/* ---- reveal stack: the panel above scrolls away off the one beneath ----
-   EXPERIMENT, being measured. Descending z-index with the later panels sticky:
-   the outgoing panel is opaque and on top, the incoming one is pinned at the
-   viewport top behind it, so scrolling lifts the outgoing panel off and uncovers
-   the next. That is the inverse of the build removed on 2026-09-05, where the
-   incoming panel slid up OVER the outgoing one and dimmed it. */
-.fg-cas-stack--reveal .fg-cas-stack__panel--energy,
-.fg-cas-stack--reveal .fg-cas-stack__panel--versatility,
-.fg-cas-stack--reveal .fg-cas-stack__panel--security {
-  position: sticky;
-  top: 0;
-}
+/* Each panel carries its own opaque ground. Nothing is layered any more, so
+   this is no longer a flash guard: it IS the junction. The seam between two
+   chapters is a change of ground rather than one plate sliding over another,
+   which is what the note above concluded and what the reference site does.
 
-.fg-cas-stack--reveal .fg-cas-stack__panel--opening      { position: relative; z-index: 4; }
-.fg-cas-stack--reveal .fg-cas-stack__panel--energy       { z-index: 3; }
-.fg-cas-stack--reveal .fg-cas-stack__panel--versatility  { z-index: 2; }
-.fg-cas-stack--reveal .fg-cas-stack__panel--security     { z-index: 1; }
+   Soft / white / soft, so the run has rhythm and no dark band anywhere. The
+   ground sits on the PANEL, not the section, so a chapter and the sections it
+   introduces (the tech banner rides inside the energy panel) share one ground
+   and the banner's white card lifts off it. On the section it would read as
+   four grounds instead of three. */
+.fg-cas-stack__panel--opening     { background: var(--color-surface); }
+.fg-cas-stack__panel--energy      { background: var(--color-soft); }
+.fg-cas-stack__panel--security    { background: var(--color-surface); }
+.fg-cas-stack__panel--versatility { background: var(--color-soft); }
 
-/* Each panel must be opaque or the one beneath shows through it. */
-.fg-cas-stack--reveal .fg-cas-stack__panel--opening,
-.fg-cas-stack--reveal .fg-cas-stack__panel--energy,
-.fg-cas-stack--reveal .fg-cas-stack__panel--versatility {
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fg-cas-stack--reveal .fg-cas-stack__panel {
-    position: static;
-  }
-}
-
-/* Kept from the stacking build: an opaque backing under the dark security
-   chapter. It is invisible either way, and removing it risks a flash on a slow
-   paint before the section's own gradient lands. */
-.fg-cas-stack__panel--security {
-  background-color: #061d24;
-}
+/* The chapter numerals are counted, not typed. Three literals in the markup is
+   how they came to disagree with the heading ids in the first place, and the
+   owner has now reordered these panels once. `.fg-cas-num` is aria-hidden, so
+   generated content costs assistive technology nothing, and counters are
+   already house vocabulary here (fg-about-way, fg-care-rule, the case stepper).
+   The opening panel has no `.fg-cas-num`, so counting starts at 01 on the first
+   chapter and follows DOM order for ever. */
+.fg-cas-stack { counter-reset: fg-cas-chapter; }
+.fg-cas-stack .fg-cas-num { counter-increment: fg-cas-chapter; }
+.fg-cas-stack .fg-cas-num::before { content: counter(fg-cas-chapter, decimal-leading-zero); }
 
 /* Hidden only when JavaScript is running AND motion is allowed, so with either
    absent the chapters are simply visible. */
@@ -39551,7 +39617,6 @@ html.fg-blinds-reveal-locked {
   .fg-cas p { max-width: none; }
 
   .fg-cas-section-head,
-  .fg-cas-overture__grid,
   .fg-cas-energy__grid,
   .fg-cas-film__grid,
   .fg-cas-versus__body,
@@ -39581,7 +39646,6 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cas-section-head,
-  .fg-cas-overture__grid { gap: 0.75rem; }
 
   /* The number sits above the title on a phone rather than stealing a column. */
   .fg-cas-chapter__head { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }

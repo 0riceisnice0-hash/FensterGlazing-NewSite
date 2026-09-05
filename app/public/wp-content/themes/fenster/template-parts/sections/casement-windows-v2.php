@@ -8,11 +8,16 @@
  *
  * The journey, in the order a buyer asks the questions:
  *   what is it, does it suit my house -> the overture
- *   can I have it the way I want it   -> 01 Versatility
- *   will it be warm                   -> 02 EnergyPlus
- *   will it be safe                   -> 03 Security
+ *   will it be warm                   -> 01 EnergyPlus
+ *   will it be safe, does it cost more-> 02 Security
+ *   can I have it the way I want it   -> 03 Versatility
  *   are you any good                  -> the proof
  *   what does it cost                 -> the quote tool
+ *
+ * Reordered 2026-09-05 on the owner's instruction: versatility moved to last
+ * "as that feeds nicely into the detail with bars/horns etc". The two technical
+ * proofs are now delivered while attention is highest, and the chapter about
+ * choosing sits next to the sections about choosing.
  *
  * Imagery rule for this page: the best image wins, and manufacturer studio
  * photography beats a rough job photograph everywhere except the proof
@@ -337,8 +342,13 @@ $faqs = [
        shared hero and the four-tile specification strip render above this
        partial and are untouched.
 
-       See the block in main.scss for how the sticky offset is derived and why
-       every panel after the first has to be opaque. ---------------------- */
+       NOTHING PINS AND NOTHING OVERLAPS ANY MORE, as of 2026-09-05. A panel is
+       now just a grouping that carries an opaque ground, and the seam between
+       two chapters is a change of ground rather than one plate sliding over
+       another. See the parked note in main.scss for the two measurements that
+       killed the sticky version, including the one that shipped: a pinned
+       chapter taller than the viewport hides its own tail, and `top: 0` puts it
+       under the sticky site header. ---------------------------------------- */
     ?>
     <div class="fg-cas-stack" data-fg-cas-chapters>
 
@@ -380,56 +390,74 @@ $faqs = [
                 loading="lazy" width="1200" height="803">
         </figure>
         <div class="container fg-cas-overture__inner">
-            <?php /* The eight terms. Every one is a fact published further down
-                     this page, so the array is the single place they are
-                     written and the stagger index cannot drift away from the
-                     copy. Order builds outwards: the frame, then the seal,
-                     then the lock, then the test bench.
+            <?php /* Five terms. Every one is a fact published further down this
+                     page, so the array is the single place they are written and
+                     the stagger index cannot drift from the copy. The readable
+                     sentence below is built from the same array, so what a
+                     screen reader hears cannot drift from it either.
 
                        six-chambered        the six sealed air pockets
                        corner-welded        welded corners, not screwed
-                       lead-free            the profile itself
                        draught-sealing      held into its seals full length
-                       bolt-throwing        steel shoot bolts into the frame
-                       claw-locking         bi-directional claws into keeps
-                       salt-spray-tested    240 hours, beyond BS EN 1670
-                       100,000-cycle-tested Kenrick's mechanism test
+                       argon-filled         argon in the cavity, all five units
+                       multi-point-locking  "Multi-point locking as standard"
 
-                     Not one of them is an adjective we invented, which is the
-                     whole difference between this and marketing noise. If a
-                     term is ever removed from the page below, remove it
-                     here too. */ ?>
+                     CUT ON 2026-09-05, DO NOT PUT THEM BACK:
+                       salt-spray-tested and 100,000-cycle-tested are Kenrick's
+                       published figures for a MECHANISM. The note under
+                       $security_points says in terms: "Do not restate any of
+                       these as a Fenster figure." Hanging them off "uPVC
+                       window" restates them, which is exactly what the first
+                       build of this statement did. They stay where they belong,
+                       inside the guarantee point.
+                       lead-free is true and is still published twice in the
+                       FAQ, but at the very top of the page it answers a doubt
+                       the reader did not arrive with.
+
+                     If a fact ever leaves the page below, remove its term. */ ?>
             <?php
             $overture_terms = [
                 __('six-chambered', 'fenster'),
                 __('corner-welded', 'fenster'),
-                __('lead-free', 'fenster'),
                 __('draught-sealing', 'fenster'),
-                __('bolt-throwing', 'fenster'),
-                __('claw-locking', 'fenster'),
-                __('salt-spray-tested', 'fenster'),
-                __('100,000-cycle-tested', 'fenster'),
+                __('argon-filled', 'fenster'),
+                __('multi-point-locking', 'fenster'),
             ];
             $overture_last = count($overture_terms) - 1;
+            /* translators: %s is a comma separated list of window specifications. */
+            $overture_sentence = sprintf(
+                __('It’s not just a uPVC window. It’s a %s uPVC window.', 'fenster'),
+                implode(', ', $overture_terms)
+            );
             ?>
-            <?php /* One <h2>, not three elements. A screen reader gets the whole
-                     statement as a single heading in reading order rather than
-                     a heading followed by orphaned word soup, and the commas
-                     are in the markup so it is read with the right pacing
-                     instead of relying on CSS separators. */ ?>
-            <h2 id="fg-cas-overture-title" class="fg-cas-manifesto">
-                <span class="fg-cas-manifesto__negation"><?php esc_html_e('It’s not just a uPVC window.', 'fenster'); ?></span>
-                <span class="fg-cas-manifesto__terms">
-                    <?php foreach ($overture_terms as $i => $overture_term) : ?>
-                        <span class="fg-cas-manifesto__term" style="--fg-term-index: <?php echo (int) $i; ?>"><?php echo esc_html($overture_term); ?><?php echo $i < $overture_last ? ',' : '.'; ?></span>
-                    <?php endforeach; ?>
+            <?php /* ONE SENTENCE THAT TURNS, not three stacked beats. " not just"
+                     squeezes out of the line while the terms open into the gap
+                     it leaves, so the negation becomes the claim without the
+                     frame sentence moving.
+
+                     The visible halves are aria-hidden and the whole readable
+                     sentence is carried once, first, in .fg-cas-sr. Both states
+                     are in it, in order, so what is heard, what renders with
+                     JavaScript off and what renders after the turn can never
+                     disagree. The h2 still carries the id, so the section's
+                     aria-labelledby resolves to a real heading. */ ?>
+            <h2 id="fg-cas-overture-title" class="fg-cas-turn fg-cas-turn--overture">
+                <span class="fg-cas-sr"><?php echo esc_html($overture_sentence); ?></span>
+                <span class="fg-cas-turn__frame" aria-hidden="true">
+                    <span class="fg-cas-turn__line"><span><?php esc_html_e('It’s', 'fenster'); ?></span><span class="fg-cas-turn__squeeze"><span class="fg-cas-turn__run"> <?php esc_html_e('not just', 'fenster'); ?></span></span><span> <?php esc_html_e('a', 'fenster'); ?></span></span>
+                    <span class="fg-cas-turn__items"><span class="fg-cas-turn__reel"><?php foreach ($overture_terms as $i => $overture_term) : ?><span class="fg-cas-turn__term" style="--fg-term-index: <?php echo (int) $i; ?>"><?php echo esc_html($overture_term); ?><?php echo $i < $overture_last ? ',' : ''; ?></span> <?php endforeach; ?></span></span>
+                    <span class="fg-cas-turn__line"><span><?php esc_html_e('uPVC window.', 'fenster'); ?></span></span>
                 </span>
-                <span class="fg-cas-manifesto__resolve"><?php esc_html_e('It’s the 70mm Liniar EnergyPlus casement. We fit it as standard.', 'fenster'); ?></span>
             </h2>
-            <div class="fg-cas-overture__copy">
-                <p><?php esc_html_e('A casement hinges at the side or the top and opens outwards. Every one is made to your opening rather than to a stock size, so the same system suits a small bathroom window and a full bay.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The profile is sculptured rather than chamfered. Glass, reinforcement and hardware are then confirmed against your individual job.', 'fenster'); ?></p>
-            </div>
+
+            <?php /* Never animated and never hidden. This is the one sentence on
+                     the page written for somebody who has not bought a window
+                     before, and gating it behind the turn to buy screen height
+                     is the trade this rebuild refuses to make. */ ?>
+            <p class="fg-cas-turn__define"><?php esc_html_e('A casement hinges at the side or the top and opens outwards, and every one is made to your opening rather than to a stock size.', 'fenster'); ?></p>
+
+            <p class="fg-cas-turn__resolve"><?php esc_html_e('It’s the 70mm Liniar EnergyPlus casement. We fit it as standard.', 'fenster'); ?></p>
+
             <div class="fg-cas-actions">
                     <?php if ($quote_url !== '') : ?>
                         <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
@@ -471,33 +499,50 @@ $faqs = [
 
     <?php
     /* ---------- The three chapters ---------------------------------------------
-       01, 02 and 03 read as physical panels: each one anchors at the foot of the
-       viewport once you have scrolled through it, and the next slides up over it.
-       Security is the last plate, and the page returns to ordinary scrolling under
-       it.
+       01 EnergyPlus, 02 Security, 03 Versatility, in that order since 2026-09-05.
+       They scroll normally. Each one sits on its own opaque ground, soft / white
+       / soft, so the run has rhythm and the joins are legible without anything
+       being pinned or layered.
 
        A panel is a chapter AND the sections it owns, because the chapters are not
-       adjacent in the flow: 02 owns the EnergyPlus tech banner that closes it.
-       Keep a chapter and the sections it introduces in one panel — split a chapter
-       from its own run and the covering sequence breaks.
+       adjacent in the flow: EnergyPlus owns the tech banner that closes it, and
+       the ground sits on the panel so the banner shares it. Keep a chapter and
+       the sections it introduces in one panel.
 
-       01 is now only the ways the window opens, which is what its own heading
-       says. The dressings, the two faces and the finishes all sit below the stack
-       and scroll normally; they carry their own section heads. Three plates is the
-       whole device, and the number of them is deliberate: the stack is for the
-       three things that carry an argument, not for everything on the page.
+       THE NUMERALS ARE NOT TYPED. `.fg-cas-num` is empty markup and a CSS counter
+       on `.fg-cas-stack` fills it, so the numbers follow DOM order and cannot go
+       stale the next time these panels move. They already had, once: the heading
+       ids read ch1/ch2/ch3 in a different order from the printed numbers, which
+       is why the ids are now named for their topic instead.
+
+       03 is only the ways the window opens. The dressings, the two faces and the
+       finishes sit below and carry their own section heads. Three chapters is
+       deliberate: this run is for the three things that carry an argument, not
+       for everything on the page.
        ------------------------------------------------------------------- */
     ?>
     <div class="fg-cas-stack__panel fg-cas-stack__panel--energy">
 
-    <?php /* ---------- 02 ENERGYPLUS ---------- */ ?>
-    <section class="fg-cas-energy" data-fg-cas-reveal aria-labelledby="fg-cas-ch2-title">
+    <?php /* ---------- 01 ENERGYPLUS ---------- */ ?>
+    <section class="fg-cas-energy" data-fg-cas-reveal aria-labelledby="fg-cas-energy-title">
         <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">01</span>
+            <span class="fg-cas-num" aria-hidden="true"></span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('EnergyPlus', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch2-title" class="fg-cas-display"><?php esc_html_e('Energy efficiency starts in the frame.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('A standard uPVC profile has four chambers. EnergyPlus has six, running the length of every frame section, each one interrupting the route heat takes out of the room. It is what we specify as standard on every casement we fit.', 'fenster'); ?></p>
+                <?php /* Both halves are this page's own words, split. The old
+                         heading, "Energy efficiency starts in the frame.", was
+                         true and carried no number; this one carries two. Both
+                         lines are real text, so nothing is aria-hidden and a
+                         screen reader gets one heading. */ ?>
+                <h2 id="fg-cas-energy-title" class="fg-cas-turn fg-cas-turn--chapter">
+                    <span class="fg-cas-turn__set"><?php esc_html_e('A standard uPVC profile has four chambers.', 'fenster'); ?></span>
+                    <span class="fg-cas-turn__land"><?php esc_html_e('This one has six.', 'fenster'); ?></span>
+                </h2>
+                <?php /* Not the old lead and not $anatomy[0] verbatim: the
+                         accordion's first item is open by default about 200px
+                         below this line, so quoting it here prints the same
+                         sentence twice on one screen. */ ?>
+                <p class="fg-cas-lead"><?php esc_html_e('The six run the full length of every frame section. It is the profile we fit as standard, not an option on top.', 'fenster'); ?></p>
             </div>
         </div>
 
@@ -541,66 +586,30 @@ $faqs = [
 
     <?php get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows')); ?>
 
-    </div><?php /* end panel 02 */ ?>
-
-    <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
-
-    <?php /* ---------- 01 VERSATILITY ---------- */ ?>
-    <section class="fg-cas-chapter" data-fg-cas-reveal aria-labelledby="fg-cas-ch1-title">
-        <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">02</span>
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('Versatility', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch1-title" class="fg-cas-display"><?php esc_html_e('One system. Every opening in the house.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, in one outer frame, at any size we can make. Every window is drawn for the opening it goes into rather than picked from a catalogue.', 'fenster'); ?></p>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="fg-cas-styles" data-fg-cas-reveal>
-                <?php foreach ($styles as $style) : ?>
-                    <article class="fg-cas-style">
-                        <figure>
-                            <img src="<?php echo esc_url(fenster_generated_url($style['image'])); ?>" alt="<?php echo esc_attr($style['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $style['w']); ?>" height="<?php echo esc_attr((string) $style['h']); ?>"<?php if (! empty($style['focus'])) : ?> style="object-position: <?php echo esc_attr($style['focus']); ?>"<?php endif; ?>>
-                        </figure>
-                        <h3><?php echo esc_html($style['name']); ?></h3>
-                        <p><?php echo esc_html($style['copy']); ?></p>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-        <?php
-        /* Combinations is not a fourth opening style, it is what you get from
-           mixing the three, so it reads as a band rather than a fourth card.
-           That also keeps the three studio photographs above as one matched
-           set instead of putting an elevation shot among them. */
-        ?>
-        <div class="container fg-cas-combi">
-            <figure>
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-house-rear-1600w.webp')); ?>"
-                    alt="<?php esc_attr_e('Anthracite grey uPVC casement windows in several different configurations across the rear elevation of a house', 'fenster'); ?>"
-                    loading="lazy" width="1600" height="900">
-            </figure>
-            <div>
-                <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
-                <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
-            </div>
-        </div>
-    </section>
-
-    </div><?php /* end panel 01 */ ?>
+    </div><?php /* end the energy panel */ ?>
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--security">
 
-    <?php /* ---------- 03 SECURITY ---------- */ ?>
-    <section class="fg-cas-security" data-fg-cas-reveal aria-labelledby="fg-cas-ch3-title">
+    <?php /* ---------- 02 SECURITY ---------- */ ?>
+    <section class="fg-cas-security" data-fg-cas-reveal aria-labelledby="fg-cas-security-title">
         <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">03</span>
+            <span class="fg-cas-num" aria-hidden="true"></span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch3-title" class="fg-cas-display"><?php esc_html_e('Secure as standard, and tested to prove it.', 'fenster'); ?></h2>
+                <?php /* Both halves come from $security_points[0], which is
+                         named "Multi-point locking as standard" and opens "Not
+                         an upgrade." This answers the question a buyer actually
+                         asks first, which is whether it costs extra.
+
+                         It deliberately does NOT promise a tested window. PAS 24
+                         and Secured by Design are "Both available", confirmed
+                         per configuration, and a pay-off implying every window
+                         we fit is certified would harden a claim this page has
+                         been pulled back from more than once. */ ?>
+                <h2 id="fg-cas-security-title" class="fg-cas-turn fg-cas-turn--chapter">
+                    <span class="fg-cas-turn__set"><?php esc_html_e('Multi-point locking is not an upgrade.', 'fenster'); ?></span>
+                    <span class="fg-cas-turn__land"><?php esc_html_e('It is what we fit.', 'fenster'); ?></span>
+                </h2>
                 <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, what it pulls against, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
             </div>
         </div>
@@ -648,9 +657,89 @@ $faqs = [
         </div>
     </section>
 
-    </div><?php /* end panel 03 */ ?>
+    </div><?php /* end the security panel */ ?>
 
-    </div><?php /* end .fg-cas-stack — security is the last plate */ ?>
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
+
+    <?php /* ---------- 03 VERSATILITY ---------- */ ?>
+    <section class="fg-cas-chapter" data-fg-cas-reveal aria-labelledby="fg-cas-versatility-title">
+        <div class="container fg-cas-chapter__head">
+            <span class="fg-cas-num" aria-hidden="true"></span>
+            <div>
+                <p class="fg-cas-eyebrow"><?php esc_html_e('Versatility', 'fenster'); ?></p>
+                <h2 id="fg-cas-versatility-title" class="fg-cas-display"><?php esc_html_e('One system. Every opening in the house.', 'fenster'); ?></h2>
+                <?php /* Trimmed to the first sentence. The combinations band two blocks
+                         below already prints "Every window is drawn, made and priced
+                         for the hole it goes into" verbatim. One statement per
+                         chapter. */ ?>
+                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, in one outer frame, at any size we can make.', 'fenster'); ?></p>
+            </div>
+        </div>
+
+        <div class="container">
+            <?php /* The three words ARE the three card names, so the sub-head
+                     and the cards under it are one list at two scales and no
+                     explanatory sentence is needed: the cards are the
+                     sentence. */ ?>
+            <h3 class="fg-cas-staccato"><?php esc_html_e('Side. Top. Fixed.', 'fenster'); ?></h3>
+            <div class="fg-cas-styles" data-fg-cas-reveal>
+                <?php foreach ($styles as $style) : ?>
+                    <article class="fg-cas-style">
+                        <figure>
+                            <img src="<?php echo esc_url(fenster_generated_url($style['image'])); ?>" alt="<?php echo esc_attr($style['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $style['w']); ?>" height="<?php echo esc_attr((string) $style['h']); ?>"<?php if (! empty($style['focus'])) : ?> style="object-position: <?php echo esc_attr($style['focus']); ?>"<?php endif; ?>>
+                        </figure>
+                        <h3><?php echo esc_html($style['name']); ?></h3>
+                        <p><?php echo esc_html($style['copy']); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <?php
+        /* Combinations is not a fourth opening style, it is what you get from
+           mixing the three, so it reads as a band rather than a fourth card.
+           That also keeps the three studio photographs above as one matched
+           set instead of putting an elevation shot among them. */
+        ?>
+        <div class="container fg-cas-combi">
+            <figure>
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-house-rear-1600w.webp')); ?>"
+                    alt="<?php esc_attr_e('Anthracite grey uPVC casement windows in several different configurations across the rear elevation of a house', 'fenster'); ?>"
+                    loading="lazy" width="1600" height="900">
+            </figure>
+            <div>
+                <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
+                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
+                <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
+            </div>
+        </div>
+
+        <?php /* The hand-off into "Bars, horns and lead.", and the reason the
+                 owner asked for versatility to come last. A <p>, not a heading,
+                 so it cannot compete with the h2 immediately below it.
+
+                 "One frame, any arrangement" is lifted from the paragraph above
+                 it ("Openers and fixed panes share one outer frame, in any
+                 arrangement"). "The rest is how it looks" is a transition, not a
+                 specification: it turns the dressings from a list of extras into
+                 the next question in the same conversation.
+
+                 IT CARRIES ITS OWN data-fg-cas-reveal. Hanging it off the
+                 section's would fire it when the section TOP crossed the
+                 threshold, thousands of pixels above this line, which is the
+                 exact fault the owner already caught once. */ ?>
+        <div class="container">
+            <p class="fg-cas-close" data-fg-cas-reveal>
+                <span class="fg-cas-turn__set"><?php esc_html_e('One frame, any arrangement.', 'fenster'); ?></span>
+                <span class="fg-cas-turn__land"><?php esc_html_e('The rest is how it looks.', 'fenster'); ?></span>
+            </p>
+        </div>
+    </section>
+
+    </div><?php /* end the versatility panel */ ?>
+
+    </div><?php /* end .fg-cas-stack — versatility is the last plate, and it
+                     hands straight into "Bars, horns and lead." below */ ?>
 
     <?php
     /* ---------- Everything below scrolls normally --------------------------------

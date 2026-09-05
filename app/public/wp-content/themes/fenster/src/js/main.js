@@ -8945,36 +8945,6 @@ document.querySelectorAll('[data-fg-cas-chapters]').forEach((chapters) => {
   });
 
   revealItems.forEach((item) => observer.observe(item));
-
-  /* ---- the one reveal ----
-     The opening panel scrolls away to uncover the first chapter pinned beneath
-     it. A chained version was built and measured on 2026-09-05 and does not
-     work: a sticky panel's range is its containing block, so the first to pin
-     never releases and the rest queue up invisibly behind it. One junction is
-     all this mechanism supports.
-
-     The overlap is measured rather than guessed. The chapter is pulled up by the
-     overture's own height so it sits exactly behind it, and a ResizeObserver
-     keeps that true when the overture reflows: its height is content-driven and
-     ran 95px past its own min-height at 1440. */
-  const overture = chapters.querySelector('.fg-cas-overture--onimage');
-  const firstChapter = chapters.querySelector('.fg-cas-stack__panel--energy');
-
-  if (overture && firstChapter) {
-    const setOverlap = () => {
-      const height = Math.round(overture.getBoundingClientRect().height);
-      firstChapter.style.setProperty('--fg-reveal-overlap', `${height}px`);
-    };
-
-    setOverlap();
-    chapters.classList.add('is-revealing');
-
-    if ('ResizeObserver' in window) {
-      new ResizeObserver(setOverlap).observe(overture);
-    } else {
-      window.addEventListener('resize', setOverlap, { passive: true });
-    }
-  }
 });
 
 /* ---- Key specifications: the values arrive on a drum --------------------------
