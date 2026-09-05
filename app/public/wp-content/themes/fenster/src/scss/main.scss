@@ -39437,16 +39437,24 @@ html.fg-blinds-reveal-locked {
   z-index: 3;
 }
 
-/* Shorter climb and shorter pin on a phone. The same 85vh leaves over a full
-   viewport of the page apparently refusing to move, and a thumb covers less
-   ground per gesture than a wheel. */
+/* Phone. The climb is shorter, because a thumb covers less ground per gesture
+   than a wheel does, but the TURN portion is only a little shorter than the
+   desktop 85vh and was briefly much shorter, which was wrong.
+
+   The reason is not obvious and is worth writing down. The sentence has to be
+   finished before the next chapter crosses the fold, and that crossing happens
+   one whole VIEWPORT before the chapter reaches the top of the pin. A phone
+   viewport is a far larger share of the track than a desktop one, so it eats
+   proportionally more of it: at 55vh the turn came out at 321px of scrolling
+   against 620px on desktop, which is the "moves too quick" complaint coming
+   back in through the side door. 75vh restores it to about 510px. */
 @media (max-width: 760px) {
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
     --fg-cas-cover: 42vh;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
-    min-height: calc(100svh + 55vh + var(--fg-cas-cover));
+    min-height: calc(100svh + 75vh + var(--fg-cas-cover));
   }
 }
 
