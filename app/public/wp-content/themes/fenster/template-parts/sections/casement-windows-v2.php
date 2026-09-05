@@ -123,6 +123,69 @@ $details = [
     ['name' => 'Mock sash horns', 'copy' => 'Turned on the bottom corners of the sash, the way a period sash window was always finished.', 'image' => $base . 'casement-mockhorn-detail-600w.webp', 'w' => 600, 'h' => 600, 'alt' => 'Mock sash horns turned on the bottom corners of open white uPVC casement sashes'],
     ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares, then sealed into the unit against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by us in Rushden'],
 ];
+/* ---------- Glass make-up ------------------------------------------------
+   Owner, 2026-09-04: "explains the glass make up options. as per our
+   windowcad, so people actually know what they're choosing... keep it super
+   simple and near the designer."
+
+   It sits immediately BEFORE the quote embed and OUTSIDE the page wrapper
+   that closes above. The wrapper's base type rules are (0,1,1) and would
+   repaint this the way they would repaint the shared quote and FAQ blocks,
+   which is why those live out here too.
+
+   THE DIAGRAM DELIBERATELY DOES NOT LABEL INSIDE OR OUTSIDE. It shows the
+   number of panes, the cavities between them and which pane is laminated,
+   all of which are true of every one of these units. Which face the
+   laminate sits on is a specification nobody here has confirmed, so the
+   drawing makes no claim about it.
+
+   NO FIGURES. No U-values, no decibels, no cavity widths, no coating brand.
+   "Eco" is common to all five so it is described once, above the cards, and
+   only as the energy-efficient unit the tool prices as standard. If the
+   owner confirms what Eco denotes in WindowCAD, that line can say more.
+   Do not add performance numbers without him.
+
+   The five names and the colour coding are lifted from the WindowCAD
+   designer so the page and the tool agree on sight. If the tool's list
+   changes, this changes with it. */
+$glass_options = [
+    [
+        'name'   => __('Eco Toughened', 'fenster'),
+        'tint'   => '#2eac66',
+        'panes'  => ['plain', 'plain'],
+        'what'   => __('Two panes, both toughened. Toughened glass is heat treated so that if it ever does break it goes into blunt granules rather than shards.', 'fenster'),
+        'when'   => __('The standard choice, and the one most windows are priced on.', 'fenster'),
+    ],
+    [
+        'name'   => __('Eco Laminated', 'fenster'),
+        'tint'   => '#9b8ec9',
+        'panes'  => ['plain', 'lam'],
+        'what'   => __('One pane is two thinner sheets bonded to a clear interlayer. Break it and the glass holds together on that layer instead of leaving the opening.', 'fenster'),
+        'when'   => __('Ground floor windows, anywhere reachable, and where security matters more than the extra cost.', 'fenster'),
+    ],
+    [
+        'name'   => __('Eco Acoustic Laminated', 'fenster'),
+        'tint'   => '#e0a2a2',
+        'panes'  => ['plain', 'lam-acoustic'],
+        'what'   => __('The same laminated build with an acoustic interlayer in place of the clear one, which damps sound coming through the glass.', 'fenster'),
+        'when'   => __('A main road, a flight path, or a room you want quieter than the one next to it.', 'fenster'),
+    ],
+    [
+        'name'   => __('Triple Glazed Eco Toughened', 'fenster'),
+        'tint'   => '#8fb6d4',
+        'panes'  => ['plain', 'plain', 'plain'],
+        'what'   => __('Three panes and two cavities instead of two panes and one, all toughened.', 'fenster'),
+        'when'   => __('Where you want the warmest unit on the list and the frame is made to carry it.', 'fenster'),
+    ],
+    [
+        'name'   => __('Triple Glazed Eco Acoustic Laminated', 'fenster'),
+        'tint'   => '#d98f9e',
+        'panes'  => ['plain', 'plain', 'lam-acoustic'],
+        'what'   => __('Three panes, two cavities, and one of them laminated with the acoustic interlayer.', 'fenster'),
+        'when'   => __('The quietest and warmest of the five, and the most expensive.', 'fenster'),
+    ],
+];
+
 $energy_stats = [
     ['figure' => '0.95', 'unit' => 'W/m²K', 'note' => 'Whole window, with the 36mm triple glazed unit'],
     ['figure' => 'A+', 'unit' => 'rated', 'note' => 'On the specification we list'],
@@ -507,9 +570,9 @@ $faqs = [
             <div class="fg-cas-section-head">
                 <div>
                     <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
-                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
+                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns, lead and glass.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All of it is priced with the window, not added afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-trio">
                 <?php foreach ($details as $detail) : ?>
@@ -527,6 +590,36 @@ $faqs = [
                     </figure>
                 <?php endforeach; ?>
             </div>
+
+            <?php /* The glass make-up sits with the other specification choices
+                     rather than beside the quote tool, on the owner's note of
+                     2026-09-04: "it would actually make sense under the spec
+                     choices title with obscure glass". The obscure glass link
+                     is directly below it, which is the adjacency he meant. */ ?>
+            <div class="fg-glass-makeup">
+                <div class="fg-glass-makeup__head">
+                    <h3><?php esc_html_e('And the glass itself.', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('Five make-ups price in the window designer, and the names do not say much on their own. Every one is an Eco unit, the energy efficient build we price as standard. What changes between them is the number of panes and what the glass does when something hits it.', 'fenster'); ?></p>
+                </div>
+                <ul class="fg-glass-makeup__grid">
+                    <?php foreach ($glass_options as $option) : ?>
+                        <li class="fg-glass-makeup__card" style="--gm-tint: <?php echo esc_attr($option['tint']); ?>;">
+                            <span class="fg-glass-makeup__figure" aria-hidden="true">
+                                <span class="fg-glass-makeup__unit">
+                                    <?php foreach ($option['panes'] as $pane) : ?>
+                                        <span class="fg-glass-makeup__pane fg-glass-makeup__pane--<?php echo esc_attr($pane); ?>"></span>
+                                    <?php endforeach; ?>
+                                </span>
+                                <span class="fg-glass-makeup__count"><?php echo esc_html(sprintf(_n('%d pane', '%d panes', count($option['panes']), 'fenster'), count($option['panes']))); ?></span>
+                            </span>
+                            <h4><?php echo esc_html($option['name']); ?></h4>
+                            <p class="fg-glass-makeup__what"><?php echo esc_html($option['what']); ?></p>
+                            <p class="fg-glass-makeup__when"><?php echo esc_html($option['when']); ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
             <p class="fg-cas-note">
                 <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
                 <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>

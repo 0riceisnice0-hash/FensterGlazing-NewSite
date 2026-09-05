@@ -3998,6 +3998,150 @@ h3 {
   max-width: 16ch;
 }
 
+/* ---------- Glass make-up -------------------------------------------------
+   A block inside the `fg-cas-detail` band, not a band of its own, so it carries
+   no background or vertical padding: the section around it already sets those.
+
+   EVERY RULE IS (0,2,0) ON PURPOSE. It lives inside `.fg-cas`, whose base type
+   rules are `.fg-cas p` and `.fg-cas h3` at (0,1,1), and `.fg-cas p:last-child`
+   at (0,1,2). A single class would lose to all three, so each selector is
+   prefixed with the block name. Do not "simplify" these back to one class.
+
+   The card accent and the laminate line both come from --gm-tint, set inline
+   per card from the colour the WindowCAD designer uses for that option, so the
+   page and the tool read as the same thing.
+
+   The unit drawing is CSS, not an image: panes are flex children and the gap
+   between them is the cavity, so a double and a triple differ by one element
+   rather than by a new asset. A laminated pane draws its interlayer with a
+   background gradient rather than a pseudo element.
+   ------------------------------------------------------------------------- */
+.fg-glass-makeup {
+  margin-top: clamp(2.25rem, 4vw, 3.25rem);
+  padding-top: clamp(1.75rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--cas-rule, var(--color-line));
+}
+
+.fg-glass-makeup .fg-glass-makeup__head {
+  max-width: 62ch;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.85rem);
+}
+
+.fg-glass-makeup .fg-glass-makeup__head h3 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.fg-glass-makeup .fg-glass-makeup__head p {
+  max-width: none;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.fg-glass-makeup .fg-glass-makeup__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr));
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-glass-makeup .fg-glass-makeup__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.1rem 1.1rem 1.2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-top: 3px solid var(--gm-tint, var(--color-accent));
+  border-radius: 14px;
+}
+
+.fg-glass-makeup .fg-glass-makeup__card h4 {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.fg-glass-makeup .fg-glass-makeup__figure {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.1rem;
+}
+
+/* The unit in section. Panes are the children; the flex gap is the cavity. */
+.fg-glass-makeup .fg-glass-makeup__unit {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0.28rem 0.36rem;
+  background: linear-gradient(180deg, #eef5f6 0%, #dfebed 100%);
+  border: 1px solid var(--color-line);
+  border-radius: 5px;
+}
+
+.fg-glass-makeup .fg-glass-makeup__pane {
+  width: 0.38rem;
+  border-radius: 1px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 38%),
+    linear-gradient(90deg, #9fc4cc 0%, #b9d6dc 55%, #8fb8c1 100%);
+  box-shadow: 0 0 0 1px rgba(6, 33, 42, 0.08);
+}
+
+/* A laminated pane is two thinner sheets bonded to an interlayer, so it is
+   drawn wider with the interlayer as a band of the option's own colour. */
+.fg-glass-makeup .fg-glass-makeup__pane--lam,
+.fg-glass-makeup .fg-glass-makeup__pane--lam-acoustic {
+  width: 0.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 38%),
+    linear-gradient(
+      90deg,
+      #9fc4cc 0 38%,
+      var(--gm-tint, var(--color-accent)) 38% 62%,
+      #9fc4cc 62% 100%
+    );
+}
+
+.fg-glass-makeup .fg-glass-makeup__count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.fg-glass-makeup .fg-glass-makeup__what {
+  max-width: none;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.fg-glass-makeup .fg-glass-makeup__when {
+  max-width: none;
+  margin: auto 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--color-line);
+  font-size: 0.83rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+@media (max-width: 560px) {
+  .fg-glass-makeup .fg-glass-makeup__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .fg-product-quote-embed {
   padding: clamp(2.4rem, 5vw, 4rem) 0;
   background: transparent;
