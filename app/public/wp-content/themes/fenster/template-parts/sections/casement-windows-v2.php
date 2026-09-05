@@ -340,7 +340,7 @@ $faqs = [
        See the block in main.scss for how the sticky offset is derived and why
        every panel after the first has to be opaque. ---------------------- */
     ?>
-    <div class="fg-cas-stack" data-fg-chapter-stack>
+    <div class="fg-cas-stack" data-fg-cas-chapters>
 
     <div class="fg-cas-stack__panel fg-cas-stack__panel--opening">
 
@@ -381,7 +381,7 @@ $faqs = [
        rather than the video element alone. */
     ?>
     <?php if ($film_src !== '') : ?>
-        <section class="fg-cas-film" aria-labelledby="fg-cas-film-title">
+        <section class="fg-cas-film" data-fg-cas-reveal aria-labelledby="fg-cas-film-title">
             <div class="container fg-cas-film__grid">
                 <div>
                     <p class="fg-cas-eyebrow"><?php esc_html_e('On this page', 'fenster'); ?></p>
@@ -421,7 +421,7 @@ $faqs = [
     <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
 
     <?php /* ---------- 01 VERSATILITY ---------- */ ?>
-    <section class="fg-cas-chapter" aria-labelledby="fg-cas-ch1-title">
+    <section class="fg-cas-chapter" data-fg-cas-reveal aria-labelledby="fg-cas-ch1-title">
         <div class="container fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true">01</span>
             <div>
@@ -432,7 +432,7 @@ $faqs = [
         </div>
 
         <div class="container">
-            <div class="fg-cas-styles">
+            <div class="fg-cas-styles" data-fg-cas-reveal>
                 <?php foreach ($styles as $style) : ?>
                     <article class="fg-cas-style">
                         <figure>
@@ -470,7 +470,7 @@ $faqs = [
     <div class="fg-cas-stack__panel fg-cas-stack__panel--energy">
 
     <?php /* ---------- 02 ENERGYPLUS ---------- */ ?>
-    <section class="fg-cas-energy" aria-labelledby="fg-cas-ch2-title">
+    <section class="fg-cas-energy" data-fg-cas-reveal aria-labelledby="fg-cas-ch2-title">
         <div class="container fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true">02</span>
             <div>
@@ -525,7 +525,7 @@ $faqs = [
     <div class="fg-cas-stack__panel fg-cas-stack__panel--security">
 
     <?php /* ---------- 03 SECURITY ---------- */ ?>
-    <section class="fg-cas-security" aria-labelledby="fg-cas-ch3-title">
+    <section class="fg-cas-security" data-fg-cas-reveal aria-labelledby="fg-cas-ch3-title">
         <div class="container fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true">03</span>
             <div>

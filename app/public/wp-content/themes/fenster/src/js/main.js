@@ -8887,122 +8887,59 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   updateLockArrive();
 }
 
-/* ---- Stacked chapters on /casement-windows/ ---------------------------------
-   Chapters 01, 02 and 03 read as physical panels: each one anchors at the foot of
-   the viewport once it has been scrolled through, and the next slides up over it.
+/* ---------- Casement chapters --------------------------------------------
+   THE FOUR CHAPTERS NO LONGER STACK. This was a sticky-pin controller: each of
+   the opening, versatility, energy and security panels pinned in turn, a
+   ResizeObserver re-measured their heights into `--fg-stack-top`, and a
+   scroll-linked pass wrote `--fg-stack-dim` so the covered panel receded.
 
-   The movement itself is `position: sticky` in CSS, so the browser owns it and it
-   stays smooth in both directions with no animation loop. This file supplies the
-   two things CSS cannot work out for itself.
+   It was 6.1 screens of overlapping scroll, about a third of the page. The
+   owner called it on 2026-09-05 -- "toom uch overlapping with the parallax...
+   i like the level of movement in general but it's just not executed too well"
+   -- with Dyson as the reference, and Dyson pins nothing, overlaps nothing and
+   keeps to single-element motion inside a section.
 
-   1. The sticky offset. These panels run two to three viewports tall, so the
-      offset has to be a *negative* top of `viewport - panel height`: a `top`
-      constraint only ever pushes a box down, so the panel scrolls normally
-      through its content and pins exactly as its bottom edge reaches the bottom
-      of the screen. `top: 0` would freeze each panel after one screenful and
-      `bottom: 0` drags the later panels up onto the first one from the first
-      paint. Both were measured before this settled on the negative offset.
-   2. The dim on the panel being covered, which is what stops it reading as a hole
-      behind the incoming one and makes the two feel like layers rather than a cut.
+   The diagnosis, for anyone tempted to bring it back: four pinned panels in a
+   row stop the reader's scroll mapping to travel. One is a device; four is a
+   system the reader has to learn mid-page. The dim compounded it, taking the
+   screen to 32% dark four times on the way down.
 
-   Heights are re-measured through a ResizeObserver rather than on load alone,
-   because these panels contain lazy images and an accordion and their height is
-   not final when the script first runs. Progress for the dim is taken from the
-   incoming panel's top edge, so it is scroll-linked rather than time-linked: it
-   is exact in both directions, cannot drift, and can be checked by measurement
-   rather than by watching, which matters because rAF is throttled in every
-   harness this project has (see nick.md).
+   WHAT REPLACED IT is one short entrance per chapter, on entry, once, not
+   scroll-linked. It is deliberately the same shape as the `[data-fg-mk-reveal]`
+   block further down rather than a second idiom: hidden only when JS is running
+   and motion is allowed, revealed once, then unobserved.
 
-   `is-stacked` is added only once a real measurement exists, so with JavaScript
-   off, or under reduced motion, the chapters stay in ordinary document flow. */
-const chapterStack = document.querySelector('[data-fg-chapter-stack]');
+   Removing the stack cost no page length. Sticky elements already occupy their
+   full height in flow. */
+document.querySelectorAll('[data-fg-cas-chapters]').forEach((chapters) => {
+  const revealItems = [...chapters.querySelectorAll('[data-fg-cas-reveal]')];
 
-if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const stackPanels = [...chapterStack.querySelectorAll('.fg-cas-stack__panel')];
-  const narrowStack = window.matchMedia('(max-width: 860px)');
-  let stackFrame = 0;
+  if (!revealItems.length) return;
 
-  // Pin point per panel. Re-read on resize and whenever a panel's own height
-  // changes; both are rare, and neither happens per frame.
-  const siteHeader = document.querySelector('.site-header');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const measureChapterStack = () => {
-    const viewport = Math.max(1, window.innerHeight);
-    // The header is sticky on desktop and fixed on mobile, so a panel pinned at
-    // zero puts its own first line behind it. Short panels stop just below it.
-    const headerHeight = siteHeader ? Math.round(siteHeader.getBoundingClientRect().height) : 0;
-
-    stackPanels.forEach((panel) => {
-      const height = panel.getBoundingClientRect().height;
-      // Taller than the screen, which is the case for the three chapters, pins by
-      // the bottom edge: `viewport - height` is negative and a `top` constraint
-      // only ever pushes a box down, so the panel reads in full first. Shorter
-      // than the screen, which the film plate is, pins under the header instead.
-      const offset = Math.min(headerHeight, viewport - height);
-      panel.style.setProperty('--fg-stack-top', `${Math.round(offset)}px`);
-    });
-
-    if (stackPanels.length) {
-      chapterStack.classList.add('is-stacked');
-    }
-  };
-
-  const updateChapterStack = () => {
-    stackFrame = 0;
-    // Restrained on a phone, where the panels meet in a much narrower frame and
-    // a full-strength dim reads as the screen going out rather than as depth.
-    const maxDim = narrowStack.matches ? 0.16 : 0.32;
-    const viewport = Math.max(1, window.innerHeight);
-
-    stackPanels.forEach((panel, index) => {
-      const incoming = stackPanels[index + 1];
-
-      // The last panel is never covered.
-      if (!incoming) {
-        panel.style.setProperty('--fg-stack-dim', '0');
-        return;
-      }
-
-      // 0 when the incoming panel's top edge is at the bottom of the viewport,
-      // 1 once it has reached the top and is covering completely.
-      const covered = clamp(1 - (incoming.getBoundingClientRect().top / viewport));
-      panel.style.setProperty('--fg-stack-dim', (covered * maxDim).toFixed(3));
-    });
-  };
-
-  const requestChapterStackUpdate = () => {
-    if (!stackFrame) {
-      stackFrame = requestAnimationFrame(updateChapterStack);
-    }
-  };
-
-  const remeasureChapterStack = () => {
-    measureChapterStack();
-    requestChapterStackUpdate();
-  };
-
-  measureChapterStack();
-  requestChapterStackUpdate();
-
-  window.addEventListener('scroll', requestChapterStackUpdate, { passive: true });
-  window.addEventListener('resize', remeasureChapterStack);
-  window.addEventListener('load', remeasureChapterStack);
-
-  if ('ResizeObserver' in window) {
-    // Measuring the panel we are about to resize would loop, so the callback is
-    // deferred a frame and only writes when the value actually moves.
-    const stackObserver = new ResizeObserver(() => {
-      if (!stackFrame) {
-        stackFrame = requestAnimationFrame(() => {
-          measureChapterStack();
-          updateChapterStack();
-        });
-      }
-    });
-
-    stackPanels.forEach((panel) => stackObserver.observe(panel));
+  // Without the observer, or with motion turned down, the chapters are simply
+  // visible: `fg-cas-motion-ready` is never added, so the CSS never hides them.
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
   }
-}
+
+  chapters.classList.add('fg-cas-motion-ready');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '0px 0px -12% 0px',
+    threshold: 0.12,
+  });
+
+  revealItems.forEach((item) => observer.observe(item));
+});
 
 /* ---- Key specifications: the values arrive on a drum --------------------------
    Each value is revealed the way a mechanical counter settles rather than by

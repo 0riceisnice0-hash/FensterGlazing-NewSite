@@ -38031,8 +38031,11 @@ html.fg-blinds-reveal-locked {
    the room is whatever a chapter happens to end with, and that has already
    changed twice this week. Chapter 03 is excluded: nothing covers it, and it is
    the last plate again now that options and finishes have left the stack. */
+/* Was clamp(7.5rem, 18vh, 15rem), to hold a chapter's last block clear of the
+   panel arriving over it. Nothing arrives over anything now, so it is ordinary
+   section rhythm. */
 .fg-cas-stack__panel:not(.fg-cas-stack__panel--security) > *:last-child {
-  padding-bottom: clamp(7.5rem, 18vh, 15rem);
+  padding-bottom: clamp(2rem, 5vh, 4rem);
 }
 
 .fg-tech-banner__panel {
@@ -39110,165 +39113,62 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* ---- The chapters, stacked -------------------------------------------------
-   01, 02 and 03 behave as physical panels: each anchors at the foot of the
-   viewport once it has been read, and the next slides up and covers it. The
-   page's opening is the base plate beneath them, so 01 rises over something in
-   the same way 02 and 03 do rather than arriving in ordinary flow. The shared
-   hero and specification strip above the plate still scroll normally, which is
-   the run-up that makes the first cover read as deliberate.
+/* ---------- Casement chapters --------------------------------------------
+   THE FOUR CHAPTERS NO LONGER STACK. Until 2026-09-05 the opening, versatility,
+   energy and security panels were sticky, pinned in turn and dimmed the one
+   beneath as they covered it. That was 6.1 screens of overlapping scroll, about
+   a third of the page.
 
-   This is `position: sticky`, not a scroll-driven transform, and the distinction
-   is the whole reason it feels expensive. The browser owns the movement, so it is
-   compositor-smooth, it carries Lenis's momentum for free, it behaves identically
-   scrolling back up, and there is no rAF loop to drift or stutter.
+   The owner called it: "toom uch overlapping with the parallax... i like the
+   level of movement in general but it's just not executed too well", against
+   Dyson as the reference. Dyson pins nothing, overlaps nothing and keeps to
+   single-element motion inside a section, which is the opposite of what was
+   here. Four pinned panels in a row stop the reader's scroll mapping to travel,
+   and the dim reads as the screen going out rather than as depth.
 
-   The offset is the part worth understanding, because the two obvious values are
-   both wrong for panels this tall. `top: 0` pins a panel the moment its top edge
-   arrives, and these panels run two to three viewports, so everything below the
-   first screenful would be unreachable. `bottom: 0` shifts a sticky box in *both*
-   directions, so panels 02 and 03 get dragged up to the top of the stack and sit
-   on 01 from the first paint; measured before this was corrected, all three
-   panels reported an identical top offset at scroll zero.
+   Removing it cost no page length: sticky elements already occupy their full
+   height in flow, so the page is exactly as long as it was.
 
-   What is right is a *negative* top of `viewport height - panel height`. A `top`
-   constraint only ever shifts a box down, never up, so each panel stays in normal
-   flow and scrolls through all of its content, then pins exactly when its bottom
-   edge reaches the bottom of the screen. CSS cannot express an element's own
-   height in `top`, so main.js measures it into `--fg-stack-top` and adds
-   `is-stacked`. Without JavaScript nothing here applies and the chapters read as
-   ordinary sections, which is the honest fallback.
+   WHAT REPLACED IT is one short entrance per chapter, on entry, once, not
+   scroll-linked, in the same shape as the `[data-fg-mk-reveal]` system rather
+   than as a second idiom. The hero is deliberately not a target: it is in view
+   at load and would flash.
 
-   No rotation, no scale, no 3D. A transform on these elements would also make
-   them a containing block for the fixed-attachment canvas below and blur the
-   text on a pinned layer. Depth comes from the cast shadow and the dim instead.
-   -------------------------------------------------------------------------- */
-/* `z-index: 0` makes this a stacking context, which confines the panel ladder
-   below to this element rather than letting values 1 to 4 compete in the root
-   context. The header, Legend and the lightbox all sit far above anyway, but the
-   consent dialog is `z-index: 1` and only rides above everything because it opens
-   with `showModal()` and lands in the top layer; on a browser old enough to take
-   the `setAttribute('open')` fallback in inc/consent.php it would not, and a panel
-   could paint over it. Containing the ladder costs nothing and removes that.
-   A stacking context does not create a containing block for fixed backgrounds, so
-   the viewport-anchored canvas on the panels below is unaffected. */
+   If this is ever reinstated, reinstate ONE panel, not four.
+   ------------------------------------------------------------------------- */
 .fg-cas-stack {
   position: relative;
-  z-index: 0;
 }
 
-.fg-cas-stack.is-stacked .fg-cas-stack__panel {
-  position: sticky;
-  top: var(--fg-stack-top, 0px);
-  /* The ladder is set per panel below. It has to be explicit: source order alone
-     does not decide paint order once these are positioned. */
-  z-index: 1;
-}
-
-/* Each panel paints over the one before it. The opening is the base plate: it is
-   what chapter 01 rises over, so 01 behaves like 02 and 03 instead of arriving in
-   ordinary flow. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--opening { z-index: 1; }
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--versatility { z-index: 2; }
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--energy { z-index: 3; }
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--security { z-index: 4; }
-
-/* A panel must be completely opaque, or what is behind it shows through: an
-   incoming panel would show the one it is covering, and a pinned one would show
-   the page scrolling up behind it. 03 is the dark security band and needs
-   nothing. The opening plate and 01 both sit on the page canvas throughout, and
-   02 is dark for the EnergyPlus chapter but ends on the tech banner, which also
-   sits on the canvas. All three therefore repaint that canvas underneath
-   themselves. The opening plate needs it in its own right: the shared hero and
-   specification strip scroll up behind it while it is anchored.
-
-   This does not breach the continuous-background rule in STYLE.md. That rule
-   exists because a second, *scrolling* copy of the gradient slides against the
-   fixed one on `body` and reads as banding between sections. `background-attachment:
-   fixed` here anchors this copy to the viewport exactly as `body` anchors its own,
-   and both resolve the same live custom properties the gradient-motion controller
-   writes to `:root`, so the two are pixel-identical at every scroll position and
-   there is no seam to see. `.fg-heritage-door-page` already uses this exact pair
-   for the same reason. Do not drop the `fixed` half. */
-.fg-cas-stack__panel--opening,
-.fg-cas-stack__panel--versatility,
-.fg-cas-stack__panel--energy {
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
-}
-
-/* 03 was the one panel exempt from the rule above, on the reasoning that the dark
-   security band already covers it. Measured on live 2026-08-05: the panel itself
-   computes to `rgba(0, 0, 0, 0)` and only its child section paints anything, so
-   the sticky layer the compositor handles is transparent while every other panel's
-   is opaque. That is the one panel breaking the invariant this rule exists to
-   state, and a transparent sticky layer over other sticky layers is a plausible
-   source of the dark flicker the owner reported the same day.
-
-   The darkest stop of the section's own gradient, so it is invisible: the section
-   fills the panel exactly (1239px against 1239px when measured) and paints over
-   this completely. Solid rather than the gradient because nothing ever sees it â€”
-   it exists to give the layer an opaque backing, not to be looked at. */
+/* Kept from the stacking build: an opaque backing under the dark security
+   chapter. It is invisible either way, and removing it risks a flash on a slow
+   paint before the section's own gradient lands. */
 .fg-cas-stack__panel--security {
   background-color: #061d24;
 }
 
-/* The leading edge casts onto the panel it is covering. This is the single
-   biggest cue that the panels have thickness, and it costs nothing: the shadow
-   paints inside the incoming panel's own stacking context, which is above the
-   outgoing one. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel + .fg-cas-stack__panel {
-  box-shadow:
-    0 -36px 64px -20px rgba(2, 20, 26, 0.42),
-    0 -1px 0 0 rgba(255, 255, 255, 0.05);
+/* Hidden only when JavaScript is running AND motion is allowed, so with either
+   absent the chapters are simply visible. */
+.js .fg-cas-motion-ready [data-fg-cas-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 460ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 460ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
 }
 
-/* The panel being covered recedes. `--fg-stack-dim` is written by the scroll
-   handler in main.js and is 0 until something starts to cover it. Absolutely
-   positioned over the whole panel rather than the visible part of it: only the
-   pinned viewport is ever rasterised, so the height is free. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: #04161c;
-  opacity: var(--fg-stack-dim, 0);
-  pointer-events: none;
+.js .fg-cas-motion-ready [data-fg-cas-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
-/* The exception is always the last plate, because nothing covers it. It went 03
-   to 05 when the chapters were split on 2026-08-05 and back to 03 the same
-   evening when options and finishes left the stack; if a chapter is ever added
-   below, this and the padding rule above both move with it.
-
-   Getting this wrong is visible rather than subtle: the JS writes `0` to the
-   last panel's `--fg-stack-dim` because nothing follows it, so a stale exception
-   leaves a real overlay sitting at zero opacity â€” harmless until any rounding or
-   a mid-scroll re-measure puts a value in it, at which point the final plate
-   darkens with nothing above it to explain why. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--security::after { content: none; }
-
-@media (max-width: 860px) {
-  /* Restrained on a phone: the same movement, less of the atmosphere around it.
-     A softer shadow because the panels meet within a narrower frame, and the JS
-     halves the dim at this width. */
-  .fg-cas-stack.is-stacked .fg-cas-stack__panel + .fg-cas-stack__panel {
-    box-shadow: 0 -20px 34px -14px rgba(2, 20, 26, 0.34);
-  }
-}
-
-/* Reduced motion gets the page in plain document order. main.js already declines
-   to add `is-stacked`, so this is the guard for a visitor who turns the setting on
-   after the page has loaded, when the class is already there. Panel 02 keeps its
-   canvas repaint, which is invisible against the identical one on `body`. */
 @media (prefers-reduced-motion: reduce) {
-  .fg-cas-stack.is-stacked .fg-cas-stack__panel {
-    position: static;
-    box-shadow: none;
+  .js .fg-cas-motion-ready [data-fg-cas-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
-
-  .fg-cas-stack.is-stacked .fg-cas-stack__panel::after { content: none; }
 }
 
 @media (max-width: 1080px) {
