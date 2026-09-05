@@ -39406,12 +39406,26 @@ html.fg-blinds-reveal-locked {
 
    The document is no longer than before: the track gains exactly what the
    energy panel is pulled up by. */
+/* THE COVER MUST EXCEED THE SECTION'S OWN HEIGHT, and 62vh did not.
+
+   The pin releases when the track runs out, which is `section height` before
+   the end. The chapter finishes covering the opening `cover` before the end.
+   With cover 62vh (558px) against a 736px section, the release came FIRST: the
+   opening un-pinned and slid up under the site header while the chapter was
+   still only two thirds of the way across it. Owner: "it should be underneath
+   the top (its going under now)."
+
+   92vh clears the section at every viewport the section can have, because its
+   min-height is `min(46rem, 100svh - header)` and so is never more than about
+   90% of the screen. The chapter therefore covers the opening completely
+   BEFORE the pin lets go, and the release happens out of sight behind it.
+   Nothing is ever seen sliding under the header. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-  --fg-cas-cover: 62vh;
+  --fg-cas-cover: 92vh;
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
-  min-height: calc(100svh + 85vh + var(--fg-cas-cover));
+  min-height: calc(100svh + 160vh + var(--fg-cas-cover));
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture--onimage {
@@ -39450,11 +39464,13 @@ html.fg-blinds-reveal-locked {
    back in through the side door. 75vh restores it to about 510px. */
 @media (max-width: 760px) {
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-    --fg-cas-cover: 42vh;
+    /* Same rule as desktop: it has to clear the section, which is 544px of an
+       844px screen here, so 42vh was well under and released early. */
+    --fg-cas-cover: 75vh;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
-    min-height: calc(100svh + 75vh + var(--fg-cas-cover));
+    min-height: calc(100svh + 140vh + var(--fg-cas-cover));
   }
 }
 
@@ -39501,26 +39517,33 @@ html.fg-blinds-reveal-locked {
 /* The run fades as it narrows, and is gone a little before the gap finishes
    closing. Without this you watch " not just" get sliced down the middle of a
    letter, which reads as a clipping bug rather than as a word leaving. The
-   reference site fades its run for the same reason. */
+   reference site fades its run for the same reason.
+
+   Keyed to its OWN stage now, not to the master progress, so it finishes and
+   stops while the terms are still waiting their turn. */
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__run {
-  opacity: calc(1 - var(--fg-turn, 0) * 1.4);
+  opacity: calc(1 - var(--fg-turn-squeeze, 0) * 1.25);
 }
 
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items {
   grid-template-rows: var(--fg-turn-rows, 0fr);
 }
 
-/* Each term inks in over its own slice, roughly tracking the line the opening
-   container has uncovered by that point, so the words arrive as the space for
-   them appears rather than before it. */
+/* Each term inks in over its own slice of the EXPANSION stage, tracking the
+   line the container has uncovered by that point, so the words arrive as the
+   space for them appears rather than before it. The stagger sits inside one
+   stage on purpose: the container opening and the words landing in it are a
+   single movement, not two. */
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term {
-  opacity: calc((var(--fg-turn, 0) - var(--fg-term-index, 0) * 0.09) * 3.2);
+  opacity: calc((var(--fg-turn-open, 0) - var(--fg-term-index, 0) * 0.09) * 3.2);
 }
 
-/* Last, over the closing third, once the sentence it resolves is complete. */
+/* Last, and only after the sentence it resolves has been sitting finished for
+   a beat. Its own stage, so no clamping arithmetic is needed here: the value
+   already arrives as a clean 0 to 1. */
 .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve {
-  opacity: calc((var(--fg-turn, 0) - 0.68) * 3.4);
-  transform: translate3d(0, calc(0.35em * (1 - clamp(0, (var(--fg-turn, 0) - 0.68) * 3.4, 1))), 0);
+  opacity: var(--fg-turn-resolve, 0);
+  transform: translate3d(0, calc(0.35em * (1 - var(--fg-turn-resolve, 0))), 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -39530,6 +39553,7 @@ html.fg-blinds-reveal-locked {
   .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__squeeze { grid-template-columns: 1fr; }
   .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__items { grid-template-rows: 1fr; }
   .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__run { opacity: 1; }
+  .js .fg-cas-motion-ready .fg-cas-overture--onimage { --fg-turn-open: 1; --fg-turn-resolve: 1; --fg-turn-squeeze: 0; }
 
   .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__term,
   .js .fg-cas-motion-ready .fg-cas-overture--onimage .fg-cas-turn__resolve {

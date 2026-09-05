@@ -9008,7 +9008,13 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          settled with a little in hand rather than landing on the exact frame
          the chapter arrives. */
       const appears = (rect.height - coverPx - window.innerHeight + headerOffset) / range;
-      const end = clamp(appears * 0.94, SETTLE_IN + 0.05, 1);
+      /* 0.82, not 0.94. Owner: "the animated text needs to stop before the
+         page slides over." 0.94 left about 110px between the sentence landing
+         and the chapter appearing, which at scrolling speed is no gap at all:
+         the two read as one continuous movement. 0.82 leaves roughly a third
+         of a screen of stillness, so the finished sentence is something you
+         arrive at and look at before anything else moves. */
+      const end = clamp(appears * 0.82, SETTLE_IN + 0.05, 1);
       return clamp((raw - SETTLE_IN) / (end - SETTLE_IN), 0, 1);
     }
 
@@ -9025,12 +9031,39 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
   const updateCasTurn = () => {
     queued = false;
 
-    /* Smoothstep, not the cubic ease-out the lock uses. An ease-out front-loads
-       the movement, which is the opposite of what is wanted here: this has to
-       feel tied to the wheel, so both ends are softened and the middle tracks
-       the scroll almost one to one. */
+    /* THREE SEPARATE ANIMATIONS WITH A HOLD BETWEEN EACH, not one blended
+       scrub. Owner, 2026-09-05: "alll too quick. each animation needs to stop
+       before the next starts."
+
+       The first scrubbed build ran the squeeze, the expansion and the resolve
+       off a single progress value with overlapping ranges, so all three were
+       partly in flight at once and none of them read as a finished movement.
+       Each now owns a band of the scroll and comes to a complete stop before
+       the next one begins:
+
+         0.00 - 0.22   " not just" fades and squeezes out of the line
+         0.22 - 0.36   HOLD. "It's a ... uPVC window." sits, closed.
+         0.36 - 0.64   the terms push the line open and ink in
+         0.64 - 0.78   HOLD. The full sentence sits, complete.
+         0.78 - 0.94   the resolve rises
+         0.94 - 1.00   HOLD, and then a further fifth of the pin before the
+                       chapter appears at all (see `end` below)
+
+       The holds are 0.14 wide, not the 0.08 they started at. At 0.08 they
+       measured 60px and 80px of scrolling, which a single flick clears without
+       the eye registering a stop at all, so the three movements still read as
+       one. The tracks were lengthened at the same time so widening the holds
+       did not come out of the stages.
+
+       Smoothstep inside each band, so every movement eases in and out of its
+       own stop rather than being clipped off mid-travel at the boundary. */
     const p = progress();
-    const eased = p * p * (3 - 2 * p);
+    const band = (from, to) => clamp((p - from) / Math.max(0.0001, to - from), 0, 1);
+    const settle = (x) => x * x * (3 - 2 * x);
+
+    const squeeze = settle(band(0, 0.22));
+    const open = settle(band(0.36, 0.64));
+    const resolve = settle(band(0.78, 0.94));
 
     /* SQUARE ROOTS, AND THEY ARE NOT DECORATION. A flexible track whose flex
        factor is below 1 takes only that fraction of the LEFTOVER space, and in
@@ -9044,9 +9077,12 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
        The roots cancel the square exactly, so both halves track the wheel one
        to one and the gap closes at the same rate it opens. If a browser ever
        sizes these linearly this becomes a gentler ease, not a fault. */
-    casTurnSection.style.setProperty('--fg-turn', eased.toFixed(4));
-    casTurnSection.style.setProperty('--fg-turn-cols', `${Math.sqrt(1 - eased).toFixed(4)}fr`);
-    casTurnSection.style.setProperty('--fg-turn-rows', `${Math.sqrt(eased).toFixed(4)}fr`);
+    casTurnSection.style.setProperty('--fg-turn', p.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-squeeze', squeeze.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-open', open.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-resolve', resolve.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-cols', `${Math.sqrt(1 - squeeze).toFixed(4)}fr`);
+    casTurnSection.style.setProperty('--fg-turn-rows', `${Math.sqrt(open).toFixed(4)}fr`);
   };
 
   /* Throttled to a frame, unlike the lock. That one writes a transform, which
