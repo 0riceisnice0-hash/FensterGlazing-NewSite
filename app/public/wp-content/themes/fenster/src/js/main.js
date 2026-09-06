@@ -1180,6 +1180,13 @@ document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) =>
  * a cutaway pointing at a component nobody selected. Clicking the open row is
  * therefore a no-op rather than a close.
  *
+ * `data-fg-anatomy-collapsible` OPTS AN INSTANCE OUT OF THAT, and it exists
+ * because the casement chapter reuses this controller for a plain list with no
+ * drawing beside it. There, nothing depends on something being open, and the
+ * owner asked for it to start closed and take a click. It is opt-in rather than
+ * the new default precisely so the slab explorer keeps the behaviour it needs:
+ * this controller has two callers and only one of them has a cutaway.
+ *
  * The only other thing this does is write the open index to the root as
  * `data-active-layer`. Everything visual hangs off that one attribute in the
  * stylesheet, including the leader dot's position, so there are no geometry
@@ -1188,6 +1195,16 @@ document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) =>
 document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
   const toggles = [...explorer.querySelectorAll('[data-fg-anatomy-toggle]')];
   if (!toggles.length) return;
+
+  const collapsible = explorer.hasAttribute('data-fg-anatomy-collapsible');
+
+  const closeAll = () => {
+    toggles.forEach((other) => {
+      const body = document.getElementById(other.getAttribute('aria-controls'));
+      other.setAttribute('aria-expanded', 'false');
+      if (body) body.hidden = true;
+    });
+  };
 
   const open = (toggle) => {
     toggles.forEach((other) => {
@@ -1202,15 +1219,23 @@ document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
 
   toggles.forEach((toggle) => {
     toggle.addEventListener('click', () => {
-      // Re-clicking the open row used to collapse it. See above.
-      if (toggle.getAttribute('aria-expanded') === 'true') return;
+      if (toggle.getAttribute('aria-expanded') === 'true') {
+        // A no-op where a drawing depends on something being open; a close
+        // where the list stands on its own.
+        if (collapsible) closeAll();
+        return;
+      }
       open(toggle);
     });
   });
 
   // Re-assert from the markup so the attribute and the accordion cannot start
-  // out of step if the open row is ever changed in PHP.
-  const initial = toggles.find((t) => t.getAttribute('aria-expanded') === 'true') || toggles[0];
+  // out of step if the open row is ever changed in PHP. A collapsible instance
+  // with nothing marked open in the markup stays shut: falling back to the
+  // first row is what was forcing the casement list open despite every toggle
+  // being written as aria-expanded="false".
+  const marked = toggles.find((t) => t.getAttribute('aria-expanded') === 'true');
+  const initial = marked || (collapsible ? null : toggles[0]);
   if (initial) open(initial);
 });
 
@@ -8887,122 +8912,530 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   updateLockArrive();
 }
 
-/* ---- Stacked chapters on /casement-windows/ ---------------------------------
-   Chapters 01, 02 and 03 read as physical panels: each one anchors at the foot of
-   the viewport once it has been scrolled through, and the next slides up over it.
+/* ---------- The three figures, one at a time, on the scroll ----------------
+   Owner, 2026-09-06: "the 3x spec figures feel bunched up now, can they hold
+   one position and cycle through?", and then "the spec points dont change with
+   the scroll."
 
-   The movement itself is `position: sticky` in CSS, so the browser owns it and it
-   stays smooth in both directions with no animation loop. This file supplies the
-   two things CSS cannot work out for itself.
+   They were bunched because they moved into the left hand column when the
+   profile took a column of its own, which halved the room three of them had to
+   share. Holding one position fixes that properly rather than shaving type: a
+   single figure gets the whole column and can be set large.
 
-   1. The sticky offset. These panels run two to three viewports tall, so the
-      offset has to be a *negative* top of `viewport - panel height`: a `top`
-      constraint only ever pushes a box down, so the panel scrolls normally
-      through its content and pins exactly as its bottom edge reaches the bottom
-      of the screen. `top: 0` would freeze each panel after one screenful and
-      `bottom: 0` drags the later panels up onto the first one from the first
-      paint. Both were measured before this settled on the negative offset.
-   2. The dim on the panel being covered, which is what stops it reading as a hole
-      behind the incoming one and makes the two feel like layers rather than a cut.
+   THE FIRST VERSION USED A TIMER, AND THAT WAS THE WRONG INSTRUMENT. Everything
+   else on this page is scrubbed from the scroll, so a figure changing on its own
+   clock reads as a different component that happens to be sitting here. It also
+   meant the change could happen while you were reading, or not happen at all
+   while you were. Now it advances with the wheel like everything else, and as a
+   consequence it needs no pause control: nothing moves unless the reader moves
+   it, so WCAG 2.2.2 does not apply and the indicators can go back to being
+   indicators.
 
-   Heights are re-measured through a ResizeObserver rather than on load alone,
-   because these panels contain lazy images and an accordion and their height is
-   not final when the script first runs. Progress for the dim is taken from the
-   incoming panel's top edge, so it is scroll-linked rather than time-linked: it
-   is exact in both directions, cannot drift, and can be checked by measurement
-   rather than by watching, which matters because rAF is throttled in every
-   harness this project has (see nick.md).
+   THE BAND IS DERIVED, NOT GUESSED. The chapter is pinned for `reveal + hold`;
+   the reveal is spent uncovering it and is no use here, because the figures are
+   still behind the plate. So the cycle runs across the HOLD alone, and where the
+   hold begins is read from the same two numbers the CSS uses: the negative
+   margin is the reveal, and the panel's height less its sticky child is the
+   whole range.
 
-   `is-stacked` is added only once a real measurement exists, so with JavaScript
-   off, or under reduced motion, the chapters stay in ordinary document flow. */
-const chapterStack = document.querySelector('[data-fg-chapter-stack]');
+   Off the pinned path (a phone, reduced motion, a viewport too short to pin)
+   there is no range to read, so it falls back to the block's own travel through
+   the viewport. */
+const statCycles = [...document.querySelectorAll('[data-fg-cas-cycle]')];
 
-if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const stackPanels = [...chapterStack.querySelectorAll('.fg-cas-stack__panel')];
-  const narrowStack = window.matchMedia('(max-width: 860px)');
-  let stackFrame = 0;
+statCycles.forEach((cycle) => {
+  const items = [...cycle.querySelectorAll('[data-fg-cas-cycle-item]')];
 
-  // Pin point per panel. Re-read on resize and whenever a panel's own height
-  // changes; both are rare, and neither happens per frame.
-  const siteHeader = document.querySelector('.site-header');
+  if (items.length < 2) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const measureChapterStack = () => {
-    const viewport = Math.max(1, window.innerHeight);
-    // The header is sticky on desktop and fixed on mobile, so a panel pinned at
-    // zero puts its own first line behind it. Short panels stop just below it.
-    const headerHeight = siteHeader ? Math.round(siteHeader.getBoundingClientRect().height) : 0;
+  cycle.classList.add('is-cycling');
 
-    stackPanels.forEach((panel) => {
-      const height = panel.getBoundingClientRect().height;
-      // Taller than the screen, which is the case for the three chapters, pins by
-      // the bottom edge: `viewport - height` is negative and a `top` constraint
-      // only ever pushes a box down, so the panel reads in full first. Shorter
-      // than the screen, which the film plate is, pins under the header instead.
-      const offset = Math.min(headerHeight, viewport - height);
-      panel.style.setProperty('--fg-stack-top', `${Math.round(offset)}px`);
-    });
+  const panel = cycle.closest('.fg-cas-stack__panel');
+  const sticky = panel && panel.querySelector('.fg-cas-under');
 
-    if (stackPanels.length) {
-      chapterStack.classList.add('is-stacked');
-    }
+  let index = -1;
+  let queued = false;
+
+  const dots = document.createElement('div');
+  dots.className = 'fg-cas-stats__dots';
+  dots.setAttribute('aria-hidden', 'true');
+
+  const marks = items.map(() => {
+    const mark = document.createElement('span');
+    mark.className = 'fg-cas-stats__dot';
+    dots.appendChild(mark);
+    return mark;
+  });
+
+  cycle.appendChild(dots);
+
+  const show = (next) => {
+    if (next === index) return;
+    index = next;
+    items.forEach((item, i) => item.classList.toggle('is-current', i === next));
+    marks.forEach((mark, i) => mark.classList.toggle('is-current', i === next));
   };
 
-  const updateChapterStack = () => {
-    stackFrame = 0;
-    // Restrained on a phone, where the panels meet in a much narrower frame and
-    // a full-strength dim reads as the screen going out rather than as depth.
-    const maxDim = narrowStack.matches ? 0.16 : 0.32;
-    const viewport = Math.max(1, window.innerHeight);
+  const progress = () => {
+    if (panel && sticky) {
+      const panelRect = panel.getBoundingClientRect();
+      const range = panelRect.height - sticky.getBoundingClientRect().height;
 
-    stackPanels.forEach((panel, index) => {
-      const incoming = stackPanels[index + 1];
-
-      // The last panel is never covered.
-      if (!incoming) {
-        panel.style.setProperty('--fg-stack-dim', '0');
-        return;
+      if (range > 1) {
+        const offset = parseFloat(getComputedStyle(document.documentElement)
+          .getPropertyValue('--site-header-main-height')) || 0;
+        const raw = clamp((offset - panelRect.top) / range, 0, 1);
+        /* Where the uncovering ends and the hold begins. */
+        const reveal = Math.max(0, -parseFloat(getComputedStyle(panel).marginTop) || 0);
+        const start = clamp(reveal / range, 0, 0.95);
+        return clamp((raw - start) / Math.max(0.01, 1 - start), 0, 1);
       }
-
-      // 0 when the incoming panel's top edge is at the bottom of the viewport,
-      // 1 once it has reached the top and is covering completely.
-      const covered = clamp(1 - (incoming.getBoundingClientRect().top / viewport));
-      panel.style.setProperty('--fg-stack-dim', (covered * maxDim).toFixed(3));
-    });
-  };
-
-  const requestChapterStackUpdate = () => {
-    if (!stackFrame) {
-      stackFrame = requestAnimationFrame(updateChapterStack);
     }
+
+    const rect = cycle.getBoundingClientRect();
+    const viewport = Math.max(1, window.innerHeight);
+    return clamp((viewport * 0.85 - rect.top) / (viewport * 0.6), 0, 1);
   };
 
-  const remeasureChapterStack = () => {
-    measureChapterStack();
-    requestChapterStackUpdate();
+  const update = () => {
+    queued = false;
+    show(Math.min(items.length - 1, Math.floor(progress() * items.length)));
   };
 
-  measureChapterStack();
-  requestChapterStackUpdate();
+  const queue = () => {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(update);
+  };
 
-  window.addEventListener('scroll', requestChapterStackUpdate, { passive: true });
-  window.addEventListener('resize', remeasureChapterStack);
-  window.addEventListener('load', remeasureChapterStack);
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  update();
+});
 
-  if ('ResizeObserver' in window) {
-    // Measuring the panel we are about to resize would loop, so the callback is
-    // deferred a frame and only writes when the value actually moves.
-    const stackObserver = new ResizeObserver(() => {
-      if (!stackFrame) {
-        stackFrame = requestAnimationFrame(() => {
-          measureChapterStack();
-          updateChapterStack();
-        });
+/* ---------- The casement opening sentence, scrolled -----------------------
+   Owner, 2026-09-05: "it needs some work on the title animation. it moves too
+   quick, look at it from a human perspective, it should link to the scroll."
+
+   It was a timed transition off `.is-visible`: the same 1.2 seconds whatever
+   the reader did, which is why it felt fast. It is now scrubbed by scroll, so
+   the reader sets the pace and can stop halfway and read the half-turned
+   sentence. That is what the reference site does, and it is the only version
+   where the words move because YOU moved.
+
+   READS LAYOUT, NOT `window.scrollY`, for the same reason the lock arrival
+   above does: this site runs Lenis smooth scrolling, so the painted position
+   and the scroll position are not the same number, and anything derived from
+   `scrollY` drifts away from what is on screen. `getBoundingClientRect()` is
+   whatever is actually painted.
+
+   TWO EVENTS, NOT ONE. The first scrubbed version scrubbed on the APPROACH:
+   the turn ran while the section rose up the screen and was finished by the
+   time it settled, so the reader never watched it happen. The owner again:
+   "needs to be 2 events. scroll, then the words animate, because otherwise its
+   over by the tiem you get there."
+
+   So the section pins. Event one is arriving: the statement rises, settles
+   below the header and stops, reading "It's not just a uPVC window." Event two
+   is the turn, scrubbed while it sits still in front of you, and only then
+   does the section release and the page carry on.
+
+   The measure is the TRACK, not the section: once pinned the section stops
+   moving and can say nothing about how far through we are, while the track
+   keeps travelling. The pin lasts the track's height less the section's, and
+   `SETTLE_IN` / `SETTLE_OUT` hold the two ends still so the statement arrives
+   before it moves and rests finished before it goes.
+
+   `measureFit` is the safety rail, and it is not decoration: a section pinned
+   in less room than it needs can never show its own foot, which is exactly the
+   bug taken off this page earlier today. It withholds the pin instead, and the
+   approach band survives below as the fallback. */
+const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--overture');
+const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
+const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
+const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chapters]');
+/* The chapter's WHOLE HEAD, not just the pay-off line. The reveal uncovers from
+   the bottom of the screen upwards, so the numeral, the eyebrow and the set-up
+   sentence all clear the plate AFTER the pay-off does. Timing off the pay-off's
+   own top therefore started it typing before the sentence it pays off had been
+   seen at all, which is why it still read as early after the first fix. */
+const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .fg-cas-chapter__head');
+/* The chapter's own sticky wrapper. While it is pinned its top sits exactly on
+   the header offset; the moment it releases, that number starts falling. That
+   is the instant the copy beside the photograph begins to travel up the screen,
+   and it is what the heat sweep hangs off. */
+const casUnder = casTurnStack && casTurnStack.querySelector('.fg-cas-under');
+
+/* Where "This one ha" falls as a share of the run's painted width, and how much
+   further plate travel the stacked-layout heat sweep gets after the line lands. */
+const CAS_LAND_DELAY = 0.6929;
+const CAS_SWEEP_HOLD = 0.75;
+
+/* The three boxes the sweep's LENGTH is derived from, so it is geometry rather
+   than a number somebody picked. See the sweep block for what they mean. */
+const casEnergyAside = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__aside');
+const casEnergyMedia = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__media');
+const casEnergyHeat = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__heat');
+if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  /* Held still at each end of the pin: the statement arrives and sits before a
+     single word moves, and rests finished before the section releases. Without
+     the lead-in the turn starts on the same gesture that brings it to rest,
+     which is the "over by the time you get there" problem in miniature. */
+  const SETTLE_IN = 0.12;
+  /* The tail of the pin is stillness. The finished sentence sits for this
+     share of the run before the opening lifts off the chapter beneath it, and
+     the lift begins exactly where the pin ends, so this is a plain fraction
+     with nothing to derive. Owner: "the animated text needs to stop before the
+     page slides over." */
+  const SETTLE_OUT = 0.18;
+
+  let headerOffset = 0;
+  let pinning = false;
+  let queued = false;
+
+  const readMetrics = () => {
+    headerOffset = parseFloat(getComputedStyle(document.documentElement)
+      .getPropertyValue('--site-header-main-height')) || 0;
+    /* MEASURED OFF THE RESOLVED MARGIN, NOT OFF `--fg-cas-cover`. A custom
+       property is substitution-only: getPropertyValue hands back the token it
+       was written as, "62vh", and parseFloat turns that into 62. That silently
+       made the cover a tenth of its real size and let the chapter climb over a
+       three-quarters-turned sentence. `margin-top` is a real property and comes
+       back resolved, in pixels, and it is the very thing that creates the
+       overlap, so it cannot disagree with it either. */
+
+  };
+
+  /* THE GUARD. A section pinned in less room than it needs can never show its
+     own foot, which is the bug taken off this page earlier today. The
+     min-height formula makes that impossible by construction, but content can
+     still overflow a min-height at large zoom or a raised minimum font size,
+     so it is measured rather than assumed. No fit, no pin: the track loses its
+     extra height, nothing is sticky and the fallback band below takes over. */
+  const measureFit = () => {
+    if (!casTurnTrack || !casTurnStack) return false;
+    const available = window.innerHeight - headerOffset;
+    pinning = casTurnSection.offsetHeight <= available + 1;
+    /* On the STACK, not the track, because the cover distance has to reach the
+       energy panel too and custom properties inherit down, not sideways. */
+    casTurnStack.classList.toggle('is-turn-pinned', pinning);
+    return pinning;
+  };
+
+  const progress = () => {
+    if (pinning) {
+      /* Pinned: the section stops moving, so it can say nothing about how far
+         through we are. The TRACK is what still travels, and the pin lasts for
+         its height less the section's. */
+      const rect = casTurnTrack.getBoundingClientRect();
+      const range = rect.height - casTurnSection.offsetHeight;
+      if (range <= 0) return 0;
+      const travelled = headerOffset - rect.top;
+      const raw = clamp(travelled / range, 0, 1);
+      /* The turn owns the first stretch of the pin and the rest is stillness.
+         The opening lifts the instant the pin ends, so there is no separate
+         geometry to solve for any more: the previous build had to work out
+         when a CLIMBING chapter would cross the fold, which is a whole
+         viewport earlier than it reaches the top and was got wrong twice. */
+      return clamp((raw - SETTLE_IN) / Math.max(0.01, 1 - SETTLE_IN - SETTLE_OUT), 0, 1);
+    }
+
+    /* Not pinned: scrub on the approach instead. Worse, because the turn is
+       spent before the section settles, but it is the honest fallback when the
+       section does not fit and it is better than no movement at all. */
+    const rect = casTurnSection.getBoundingClientRect();
+    const viewport = Math.max(1, window.innerHeight);
+    const from = viewport * 0.72;
+    const to = viewport * 0.05;
+    return clamp((from - rect.top) / Math.max(1, from - to), 0, 1);
+  };
+
+  const updateCasTurn = () => {
+    queued = false;
+
+    /* THREE SEPARATE ANIMATIONS WITH A HOLD BETWEEN EACH, not one blended
+       scrub. Owner, 2026-09-05: "alll too quick. each animation needs to stop
+       before the next starts."
+
+       The first scrubbed build ran the squeeze, the expansion and the resolve
+       off a single progress value with overlapping ranges, so all three were
+       partly in flight at once and none of them read as a finished movement.
+       Each now owns a band of the scroll and comes to a complete stop before
+       the next one begins:
+
+         0.00 - 0.22   " not just" fades and squeezes out of the line
+         0.22 - 0.36   HOLD. "It's a ... uPVC window." sits, closed.
+         0.36 - 0.64   the terms push the line open and ink in
+         0.64 - 0.78   HOLD. The full sentence sits, complete.
+         0.78 - 0.94   the resolve rises
+         0.94 - 1.00   HOLD, and then a further fifth of the pin before the
+                       chapter appears at all (see `end` below)
+
+       The holds are 0.14 wide, not the 0.08 they started at. At 0.08 they
+       measured 60px and 80px of scrolling, which a single flick clears without
+       the eye registering a stop at all, so the three movements still read as
+       one. The tracks were lengthened at the same time so widening the holds
+       did not come out of the stages.
+
+       Smoothstep inside each band, so every movement eases in and out of its
+       own stop rather than being clipped off mid-travel at the boundary. */
+    const p = progress();
+    const band = (from, to) => clamp((p - from) / Math.max(0.0001, to - from), 0, 1);
+    const settle = (x) => x * x * (3 - 2 * x);
+
+    const squeeze = settle(band(0, 0.22));
+    const open = settle(band(0.36, 0.64));
+    const resolve = settle(band(0.78, 0.94));
+
+    /* SQUARE ROOTS, AND THEY ARE NOT DECORATION. A flexible track whose flex
+       factor is below 1 takes only that fraction of the LEFTOVER space, and in
+       an auto-sized grid the leftover depends on the track, so the painted size
+       comes out as the square of the factor. Measured on this exact markup:
+       factor 0.3925 painted 15.4% of full, 0.7517 painted 56.5%, 0.9834 painted
+       96.7% -- p squared to three decimals every time.
+
+       Left uncompensated the squeeze collapses as (1-p) squared, so " not just"
+       is 63% gone a third of the way through while the terms have opened 15%.
+       The roots cancel the square exactly, so both halves track the wheel one
+       to one and the gap closes at the same rate it opens. If a browser ever
+       sizes these linearly this becomes a gentler ease, not a fault. */
+    /* HOW FAR THE CHAPTER BENEATH HAS BEEN UNCOVERED, 0 to 1, published on the
+       stack so anything in the chapter can hang off it.
+
+       The chapter's own entrance cannot: it is a `[data-fg-cas-reveal]` target,
+       and that observer fires when the section's TOP crosses the threshold,
+       which happens while the opening is still sitting on top of it. Its
+       pay-off line was therefore playing, in full, behind the plate that was
+       covering it, and was over before anyone saw the chapter at all. Same
+       class of fault as the one the owner caught on the overture.
+
+       Measured off the opening's own bottom edge rather than the pin, because
+       that is literally what is doing the covering: at rest its bottom sits a
+       full section-height below the header and nothing shows; by the time it
+       reaches the header the chapter is completely clear. */
+    const openRect = casTurnSection.getBoundingClientRect();
+    const uncover = 1 - clamp(
+      (openRect.bottom - headerOffset) / Math.max(1, openRect.height), 0, 1
+    );
+    if (casTurnStack) {
+      casTurnStack.style.setProperty('--fg-cas-uncover', uncover.toFixed(4));
+      /* WHERE THE LINE STOPS BEING COVERED, MEASURED, NOT A CONSTANT.
+
+         This ran over a fixed slice of `uncover` (0.46 to 0.80) and the owner
+         caught it starting too early. The reason is the direction of the
+         reveal: the opening lifts, so the chapter is uncovered from the BOTTOM
+         of the screen upwards, and the heading sits at the TOP of the chapter,
+         which makes it the last thing to appear. At 0.46 uncovered the line was
+         still behind the plate, so by the time you could see it, it was already
+         half open.
+
+         The opening's bottom edge IS the curtain. The wipe starts where that
+         edge clears the top of the whole chapter head, so the numeral, the
+         eyebrow and the set-up sentence are all on screen before the pay-off
+         begins to type, and runs over the lift that remains, times 1.15 so it
+         is finished a little before the plate has completely gone rather than
+         on the same frame.
+
+         Both rects are read while the chapter is pinned, so neither is moving.
+
+         Then the same square root the overture needs: a flex factor below 1
+         takes that share of the LEFTOVER space, and in an auto-sized grid the
+         painted width is the SQUARE of the factor. Linear inside the band
+         rather than eased, because a steady rate is what reads as typing. */
+      /* THE LINE STARTS LATE ON PURPOSE. Owner: "delay the text animation on
+         'This one has six.' starting at the point where it currently says
+         'this one ha'." Measured in the page's own metrics rather than counted
+         off in characters: "This one ha" is 0.6929 of the run's painted width
+         at both 1440 and 390, because the face is the same and scales evenly.
+
+         Subtracting it AFTER the 1.15 is what keeps the pace. The line does not
+         squeeze into what is left of the plate's travel and type faster; the
+         plate's bottom edge keeps falling once it has cleared the screen, so
+         `landRaw` runs on past 1 and the delayed line finishes later at exactly
+         the rate it had before. Compressing instead would have made it quicker,
+         which is the opposite of every note on this animation so far. */
+      let land = 1;
+      let landRaw = 2;
+      if (casTurnLand) {
+        const landRect = casTurnLand.getBoundingClientRect();
+        const from = landRect.top;
+        const to = headerOffset;
+        landRaw = ((from - openRect.bottom) / Math.max(1, from - to)) * 1.15;
+        land = clamp(landRaw - CAS_LAND_DELAY, 0, 1);
       }
-    });
+      casTurnStack.style.setProperty('--fg-cas-land-cols', `${Math.sqrt(land).toFixed(4)}fr`);
 
-    stackPanels.forEach((panel) => stackObserver.observe(panel));
-  }
+      /* THE SWEEP STARTS WHEN THE TEXT STARTS TO MOVE, not when the plate
+         starts to lift. Owner: "aniomation starts way too early. it wants to
+         start when the text to the left of it starts to move up."
+
+         It was tied to the plate uncovering the photograph, which happens while
+         the chapter is still pinned and still being read: the colour crossed
+         before anyone had got to the words. The chapter is stationary for the
+         whole of the reveal and the whole of the hold, and the only moment
+         anything on that side of the screen moves is when the sticky wrapper
+         finally releases. Pinned, its top IS the header offset; released, that
+         number falls. So the distance it has travelled upwards is the sweep,
+         over a little over half a screen of it.
+
+         Measured, not assumed: while pinned this reads 0 at every scroll
+         position, which is the thing the previous two versions both got wrong
+         in different ways. */
+      if (casUnder) {
+        let sweep;
+        /* WHICH ANCHOR IS A QUESTION ABOUT THE LAYOUT, SO ASK THE LAYOUT.
+           This used to test `max-width: 760px`, a breakpoint I had assumed the
+           stylesheet stacked this layout at. It does not: measured, the columns
+           collapse and `.fg-cas-energy__media` drops to `static` somewhere
+           between 900 and 820, so every width from 761 to ~899 took the
+           two-column path with a hold of ZERO -- a 72px sweep, over almost
+           before it started, and the opposite of what was asked for.
+
+           So nothing here names a pixel. The two-column path needs the picture
+           to actually be held while the copy passes it, and that is a thing we
+           can measure: the media box is shorter than the column it sticks in.
+           When it is not, the layout is stacked, whatever the width. */
+        const asideRect = casEnergyAside && casEnergyAside.getBoundingClientRect();
+        const mediaRect = casEnergyMedia && casEnergyMedia.getBoundingClientRect();
+        const hold = asideRect && mediaRect ? asideRect.height - mediaRect.height : 0;
+
+        if (hold <= 1) {
+          /* Stacked. There is no "text to the left" -- the photograph sits ABOVE
+             the copy and is in normal flow, so the moment the wrapper releases
+             it climbs away and is off the top within ~345px. Measured: on the
+             release anchor the sweep passed 0.80 with the cutaway already 0% on
+             screen, so the reader never saw it finish.
+
+             The one stretch where the image is both stationary and whole is the
+             tail of the hold, after the line has typed. So it runs there, off
+             the same plate travel the line uses, starting exactly where the line
+             lands: `landRaw` reaches 1 + the delay at that instant. */
+          sweep = clamp((landRaw - (1 + CAS_LAND_DELAY)) / CAS_SWEEP_HOLD, 0, 1);
+        } else {
+          /* IT LASTS AS LONG AS THE CUTAWAY IS ON SCREEN. Owner: "wants to
+             slow down so it ends when the same text movement that triggers it,
+             comes to an end."
+
+             0.55 of a viewport was a number I picked, and on a 900-high screen
+             it ran out after 495px while the copy was still going. The length
+             is now read off the layout instead, in two parts:
+
+               the media box's sticky hold  = aside height - media height
+               plus the drop it then falls  = its sticky top + where the image
+                                              sits inside that box
+
+             which is exactly the travel between the wrapper releasing and the
+             top of the cutaway reaching the top of the window. Measured at
+             1440x900 that is 767px against the old 495, so it is a little over
+             half the speed, and it recomputes rather than assuming 900.
+
+             It cannot honestly run to the END of the copy's travel, which is
+             what the note asks for: the copy does not stop until 4815, and the
+             cutaway shares its grid row, so it has left the screen by 4560. The
+             last frame that can still be SEEN is the one this ends on. */
+          const underRect = casUnder.getBoundingClientRect();
+          /* The image's offset inside the media box is constant: the two move
+             together whether the box is stuck or not. */
+          const inset = casEnergyHeat
+            ? casEnergyHeat.getBoundingClientRect().top - mediaRect.top : 0;
+          const travel = hold + headerOffset + inset;
+          sweep = clamp((headerOffset - underRect.top) / Math.max(1, travel), 0, 1);
+        }
+        casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
+      }
+    }
+
+    casTurnSection.style.setProperty('--fg-turn', p.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-squeeze', squeeze.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-open', open.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-resolve', resolve.toFixed(4));
+    casTurnSection.style.setProperty('--fg-turn-cols', `${Math.sqrt(1 - squeeze).toFixed(4)}fr`);
+    casTurnSection.style.setProperty('--fg-turn-rows', `${Math.sqrt(open).toFixed(4)}fr`);
+  };
+
+  /* Throttled to a frame, unlike the lock. That one writes a transform, which
+     the compositor absorbs; these write grid tracks, which cost a layout, and a
+     raw scroll handler can fire several times per frame. */
+  const queueCasTurn = () => {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(updateCasTurn);
+  };
+
+  const remeasureCasTurn = () => {
+    readMetrics();
+    measureFit();
+    /* Read again: `is-turn-pinned` is what puts `--fg-cas-cover` on the stack,
+       so the first read above sees nothing on a cold start. */
+    readMetrics();
+    updateCasTurn();
+  };
+
+  window.addEventListener('scroll', queueCasTurn, { passive: true });
+  window.addEventListener('resize', remeasureCasTurn);
+  remeasureCasTurn();
 }
+
+/* ---------- Casement chapters --------------------------------------------
+   THE FOUR CHAPTERS NO LONGER STACK. This was a sticky-pin controller: each of
+   the opening, versatility, energy and security panels pinned in turn, a
+   ResizeObserver re-measured their heights into `--fg-stack-top`, and a
+   scroll-linked pass wrote `--fg-stack-dim` so the covered panel receded.
+
+   It was 6.1 screens of overlapping scroll, about a third of the page. The
+   owner called it on 2026-09-05 -- "toom uch overlapping with the parallax...
+   i like the level of movement in general but it's just not executed too well"
+   -- with Dyson as the reference, and Dyson pins nothing, overlaps nothing and
+   keeps to single-element motion inside a section.
+
+   The diagnosis, for anyone tempted to bring it back: four pinned panels in a
+   row stop the reader's scroll mapping to travel. One is a device; four is a
+   system the reader has to learn mid-page. The dim compounded it, taking the
+   screen to 32% dark four times on the way down.
+
+   WHAT REPLACED IT is one short entrance per chapter, on entry, once, not
+   scroll-linked. It is deliberately the same shape as the `[data-fg-mk-reveal]`
+   block further down rather than a second idiom: hidden only when JS is running
+   and motion is allowed, revealed once, then unobserved.
+
+   Removing the stack cost no page length. Sticky elements already occupy their
+   full height in flow. */
+document.querySelectorAll('[data-fg-cas-chapters]').forEach((chapters) => {
+  const revealItems = [...chapters.querySelectorAll('[data-fg-cas-reveal]')];
+
+  if (!revealItems.length) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Without the observer, or with motion turned down, the chapters are simply
+  // visible: `fg-cas-motion-ready` is never added, so the CSS never hides them.
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  chapters.classList.add('fg-cas-motion-ready');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    // -15% and a quarter, rather than -12% and an eighth, because the overture
+    // begins 690px down and is already 210px into a 900px viewport at load. The
+    // looser pair fired it before anyone had scrolled, which is the fault the
+    // owner reported: the animation was over by the time you reached it. Every
+    // target here is comfortably taller than a quarter of the viewport, so no
+    // section can fail to reach the threshold.
+    rootMargin: '0px 0px -15% 0px',
+    threshold: 0.25,
+  });
+
+  revealItems.forEach((item) => observer.observe(item));
+});
 
 /* ---- Key specifications: the values arrive on a drum --------------------------
    Each value is revealed the way a mechanical counter settles rather than by
