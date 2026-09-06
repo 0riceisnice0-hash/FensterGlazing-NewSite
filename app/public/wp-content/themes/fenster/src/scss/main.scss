@@ -39332,11 +39332,19 @@ html.fg-blinds-reveal-locked {
   position: relative;
   display: flex;
   align-items: stretch;
-  /* One screen, less the sticky header, and never more than 46rem. The panel
-     measured 1032px before this rebuild, which is not an opening moment, it is
-     a page. svh rather than vh so a mobile browser's collapsing toolbar does
-     not make it taller than the screen it is meant to fit. */
-  min-height: min(46rem, calc(100svh - var(--site-header-main-height)));
+  /* EXACTLY one screen, less the sticky header. svh rather than vh so a mobile
+     browser's collapsing toolbar cannot make it taller than the screen it is
+     meant to fit.
+
+     It was `min(46rem, ...)`, and the cap was the bug. This panel is PINNED
+     while the sentence turns, so anything under one screen is dead white held
+     on screen for the whole of that scroll. Measured at 390x844: the panel was
+     544px in an 844 viewport, so 224px of nothing sat under it the entire
+     time, which is what the owner photographed. A tall desktop was worse -- at
+     1200 high the 46rem cap left 391px. The cap was there because the panel
+     had measured 1032px before the rebuild, but the fix for too tall is one
+     screen, not less than one. */
+  min-height: calc(100svh - var(--site-header-main-height));
   overflow: hidden;
   isolation: isolate;
 }
@@ -39582,9 +39590,28 @@ html.fg-blinds-reveal-locked {
   letter-spacing: -0.02em;
 }
 
-/* The hand-off into "Bars, horns and lead.". A <p>, not a heading, so it cannot
-   compete with the h2 immediately below it. (0,2,0) clears
-   `.fg-cas p:last-child` at (0,1,2). */
+/* The close line and the CTA that skips to the designer sit on one row.
+   Owner, 2026-09-06: "to the right of 'One frame, any arrangement. / Now the
+   glass, and the finish.' there should be a CTA that skips you to the
+   designer." `flex-end` so the button sits with the line's block rather than
+   floating up against the rule above it. */
+.fg-cas-close-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.fg-cas-close-row .fg-cas-close__cta { flex: 0 0 auto; margin-bottom: 0.15rem; }
+
+@media (max-width: 760px) {
+  .fg-cas-close-row { align-items: stretch; }
+  .fg-cas-close-row .fg-cas-close__cta { width: 100%; text-align: center; }
+}
+
+/* The hand-off into the choosing. A <p>, not a heading, so it cannot compete
+   with the h2 below it. (0,2,0) clears `.fg-cas p:last-child` at (0,1,2). */
 .fg-cas .fg-cas-close {
   display: flex;
   flex-direction: column;
@@ -39949,8 +39976,11 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 760px) {
+  /* Was clamp(26rem, 68vh, 34rem), which capped at 544px and left the white
+     band described above. A phone gets the same rule as everything else: one
+     screen less the header, in svh so the toolbar is accounted for. */
   .fg-cas-overture--onimage {
-    min-height: clamp(26rem, 68vh, 34rem);
+    min-height: calc(100svh - var(--site-header-main-height));
   }
 
   .fg-cas-overture--onimage::after {
@@ -40133,7 +40163,24 @@ html.fg-blinds-reveal-locked {
   .fg-cas-chapter__head { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
   .fg-cas-num { font-size: 2.4rem; }
 
-  .fg-cas-styles { grid-template-columns: minmax(0, 1fr); }
+  /* "side.top.fixed. first 3 images should swipe." (owner, 2026-09-06). Three
+     cards with a photograph and a full paragraph each ran the section well past
+     a screen stacked. One at a time, next one showing, same rail as the rest. */
+  .fg-cas-styles {
+    display: flex;
+    grid-template-columns: none;
+    gap: clamp(0.75rem, 3vw, 1.1rem);
+    padding-bottom: 0.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .fg-cas-style {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
 
   .fg-cas-actions .button { flex: 1 1 auto; text-align: center; }
 
@@ -40218,15 +40265,35 @@ html.fg-blinds-reveal-locked {
     overscroll-behavior-x: contain;
   }
 
-  /* Read one, then the next. */
+  /* Glass goes two up, not one: "also can show 2 side by side rather than one
+     at a time" (owner, 2026-09-06). The columns are a drawing, a name, a
+     U-value and a toggle, which all survive 168px, and two at a time is what
+     lets a reader compare two make-ups without swiping between them. */
   .fg-glass-makeup .fg-glass-makeup__col {
-    flex: 0 0 82%;
-    scroll-snap-align: center;
+    flex: 0 0 clamp(9rem, 46%, 13rem);
+    scroll-snap-align: start;
   }
 
   .fg-cas-trio figure {
     flex: 0 0 78%;
     scroll-snap-align: center;
+  }
+
+  /* The colour and handle blocks carry their OWN heading, a 0.8fr/1fr grid
+     with the h2 left and the paragraph right. Owner, 2026-09-06: "the left /
+     right text formatting under colour looks bad. do it as per the sections
+     above. same thing with handles text." At 390 the left column is ~160px, so
+     "Sixteen colours outside, matched or white inside." broke over five lines
+     beside its own paragraph. Stacked, like every other heading on the page.
+
+     Scoped to `.fg-cas` deliberately: both components render on the generated
+     product routes, upvc-doors, composite-doors and heritage-aluminium, and
+     they are not this page's to restyle. The same cramping is on those pages. */
+  .fg-cas .fg-upvc-colours__heading,
+  .fg-cas .fg-handle-finishes__heading {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.6rem;
+    align-items: start;
   }
 
   /* Scanned in pairs. `start` rather than `centre`: a two-up rail centred on

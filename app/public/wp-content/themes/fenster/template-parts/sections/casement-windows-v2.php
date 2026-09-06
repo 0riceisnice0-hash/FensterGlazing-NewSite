@@ -1027,11 +1027,17 @@ $faqs = [
                  section's would fire it when the section TOP crossed the
                  threshold, thousands of pixels above this line, which is the
                  exact fault the owner already caught once. */ ?>
-        <div class="container">
+        <div class="container fg-cas-close-row">
             <p class="fg-cas-close" data-fg-cas-reveal>
                 <span class="fg-cas-turn__set"><?php esc_html_e('One frame, any arrangement.', 'fenster'); ?></span>
                 <span class="fg-cas-turn__land"><?php esc_html_e('Now the glass, and the finish.', 'fenster'); ?></span>
             </p>
+            <?php /* Skips to the designer. Same target as the hero's own
+                     button, and guarded the same way, so a route without a
+                     quote tool does not render a link to nothing. */ ?>
+            <?php if ($quote_url !== '') : ?>
+                <a class="button fg-cas-close__cta" href="#fenster-product-quote"><?php esc_html_e('Design your window', 'fenster'); ?></a>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -1071,7 +1077,11 @@ $faqs = [
     <section class="fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
         <div class="container">
             <div class="section-heading section-heading--wide">
-                <p class="eyebrow"><?php esc_html_e('Glass make-up', 'fenster'); ?></p>
+                <?php /* "Glass spec", not "Glass make-up", 2026-09-06 at the
+                         owner's request. Make-up is the trade word for what a
+                         unit is built from; spec is what a buyer calls the same
+                         thing when they are choosing one. */ ?>
+                <p class="eyebrow"><?php esc_html_e('Glass spec', 'fenster'); ?></p>
                 <h2 id="fg-glass-makeup-title"><?php esc_html_e('The glass is the part you live with.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Five to choose from, and they share the same core: a low-E coating, argon in the cavity and a warm edge spacer. What changes is how many panes there are, and how the glass behaves if something hits it or the road outside is loud.', 'fenster'); ?></p>
             </div>
