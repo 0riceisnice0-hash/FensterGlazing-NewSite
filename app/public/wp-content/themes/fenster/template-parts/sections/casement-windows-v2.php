@@ -430,40 +430,48 @@ $faqs = [
                 loading="lazy" width="1200" height="803">
         </figure>
         <div class="container fg-cas-overture__inner">
-            <?php /* Five terms. Every one is a fact published further down this
-                     page, so the array is the single place they are written and
-                     the stagger index cannot drift from the copy. The readable
-                     sentence below is built from the same array, so what a
-                     screen reader hears cannot drift from it either.
+            <?php /* Five terms, BENEFITS RATHER THAN FABRICATION DETAILS, one to
+                     a line. Owner, 2026-09-06: "look at our offering and state
+                     the things that really make it unique and what a consumer
+                     would actaully care about. 'coner welded' for eg like who
+                     cares about that?!"
 
-                       six-chambered        the six sealed air pockets
-                       corner-welded        welded corners, not screwed
-                       draught-sealing      held into its seals full length
-                       argon-filled         argon in the cavity, all five units
-                       multi-point-locking  "Multi-point locking as standard"
+                     He is right, and it applied to more than one of them.
+                     corner-welded and six-chambered are how the thing is made;
+                     a homeowner has no way to tell whether either is good.
+                     argon-filled and draught-sealing were half way there. What
+                     someone actually wants to know is whether it will fit their
+                     house, whether it will be cold, whether it is secure and
+                     who is behind it if it goes wrong.
 
-                     CUT ON 2026-09-05, DO NOT PUT THEM BACK:
-                       salt-spray-tested and 100,000-cycle-tested are Kenrick's
-                       published figures for a MECHANISM. The note under
-                       $security_points says in terms: "Do not restate any of
-                       these as a Fenster figure." Hanging them off "uPVC
-                       window" restates them, which is exactly what the first
-                       build of this statement did. They stay where they belong,
-                       inside the guarantee point.
-                       lead-free is true and is still published twice in the
-                       FAQ, but at the very top of the page it answers a doubt
-                       the reader did not arrive with.
+                       made-to-measure      "made to your opening rather than to
+                                            a stock size"
+                       draught-sealed       the seal is extruded with the profile
+                                            ($anatomy 'The gasket'), and the lock
+                                            holds the sash into it full length
+                       A+ rated             $energy_stats, "on the specification
+                                            we list"
+                       multi-point-locked   "Multi-point locking as standard"
+                       ten-year-guaranteed  Liniar ten on the frame, ours ten on
+                                            the installation
 
-                     If a fact ever leaves the page below, remove its term. */ ?>
-            <?php
+                     Every one is still a published fact and every one is
+                     STANDARD, which the resolve line underneath promises. Not
+                     used, deliberately: PAS 24 and laminated glass are options
+                     rather than standard, and the Kenrick cycle and salt spray
+                     figures belong to a mechanism and must not be restated as
+                     ours (see the note under $security_points).
+
+                     six-chambered is not lost: it is the whole of chapter 01,
+                     which is the right place to explain a word nobody arrives
+                     knowing. */ ?>
             $overture_terms = [
-                __('six-chambered', 'fenster'),
-                __('corner-welded', 'fenster'),
-                __('draught-sealing', 'fenster'),
-                __('argon-filled', 'fenster'),
-                __('multi-point-locking', 'fenster'),
+                __('made-to-measure', 'fenster'),
+                __('draught-sealed', 'fenster'),
+                __('A+ rated', 'fenster'),
+                __('multi-point-locked', 'fenster'),
+                __('ten-year-guaranteed', 'fenster'),
             ];
-            $overture_last = count($overture_terms) - 1;
             /* translators: %s is a comma separated list of window specifications. */
             $overture_sentence = sprintf(
                 __('It’s not just a uPVC window. It’s a %s uPVC window.', 'fenster'),
@@ -485,7 +493,7 @@ $faqs = [
                 <span class="fg-cas-sr"><?php echo esc_html($overture_sentence); ?></span>
                 <span class="fg-cas-turn__frame" aria-hidden="true">
                     <span class="fg-cas-turn__line"><span><?php esc_html_e('It’s', 'fenster'); ?></span><span class="fg-cas-turn__squeeze"><span class="fg-cas-turn__run"> <?php esc_html_e('not just', 'fenster'); ?></span></span><span> <?php esc_html_e('a', 'fenster'); ?></span></span>
-                    <span class="fg-cas-turn__items"><span class="fg-cas-turn__reel"><?php foreach ($overture_terms as $i => $overture_term) : ?><span class="fg-cas-turn__term" style="--fg-term-index: <?php echo (int) $i; ?>"><?php echo esc_html($overture_term); ?><?php echo $i < $overture_last ? ',' : ''; ?></span> <?php endforeach; ?></span></span>
+                    <span class="fg-cas-turn__items"><span class="fg-cas-turn__reel"><?php foreach ($overture_terms as $i => $overture_term) : ?><span class="fg-cas-turn__term" style="--fg-term-index: <?php echo (int) $i; ?>"><?php echo esc_html($overture_term); ?></span><?php endforeach; ?></span></span>
                     <span class="fg-cas-turn__line"><span><?php esc_html_e('uPVC window.', 'fenster'); ?></span></span>
                 </span>
             </h2>
@@ -494,7 +502,7 @@ $faqs = [
                      the page written for somebody who has not bought a window
                      before, and gating it behind the turn to buy screen height
                      is the trade this rebuild refuses to make. */ ?>
-            <p class="fg-cas-turn__define"><?php esc_html_e('A casement hinges at the side or the top and opens outwards, and every one is made to your opening rather than to a stock size.', 'fenster'); ?></p>
+            <p class="fg-cas-turn__define"><?php esc_html_e('A casement hinges at the side or the top and opens outwards. Openers and fixed panes are made into one frame, so a single window can do more than one job.', 'fenster'); ?></p>
 
             <p class="fg-cas-turn__resolve"><?php esc_html_e('It’s the 70mm Liniar EnergyPlus casement. We fit it as standard.', 'fenster'); ?></p>
 

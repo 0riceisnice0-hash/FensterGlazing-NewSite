@@ -39472,18 +39472,27 @@ html.fg-blinds-reveal-locked {
 
 .fg-cas .fg-cas-turn__reel {
   min-height: 0;
-  max-width: 34ch;
   overflow: hidden;
   padding: 0.1em 0 0.16em;
   color: var(--color-muted);
   font-size: 0.72em;
   font-weight: 700;
-  line-height: 1.16;
+  /* Tighter than prose: these are five stacked labels, not a paragraph. */
+  line-height: 1.18;
   letter-spacing: -0.005em;
 }
 
-/* A compound broken at its own hyphen reads as two claims. */
-.fg-cas .fg-cas-turn__term { display: inline-block; white-space: nowrap; }
+/* ONE TO A LINE. Owner, 2026-09-06: "first it should be one featire per line."
+   They flowed inline and wrapped, which turned five separate claims into three
+   ragged lines of prose. Stacked they read as a list, which is what they are,
+   and it is what the reference does with its ten.
+
+   `nowrap` still matters: a compound broken at its own hyphen reads as two
+   claims rather than one. */
+.fg-cas .fg-cas-turn__term {
+  display: block;
+  white-space: nowrap;
+}
 
 /* Never animated, never hidden. It is the one sentence here written for
    somebody who has not bought a window before, and gating the answer to "what
