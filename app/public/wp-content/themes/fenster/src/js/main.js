@@ -9067,10 +9067,12 @@ const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .
    and it is what the heat sweep hangs off. */
 const casUnder = casTurnStack && casTurnStack.querySelector('.fg-cas-under');
 
-/* Where "This one ha" falls as a share of the run's painted width, and how much
-   further plate travel the stacked-layout heat sweep gets after the line lands. */
-const CAS_LAND_DELAY = 0.6929;
-const CAS_SWEEP_HOLD = 0.75;
+/* How far the lifting plate travels PAST the header before the line has
+   finished typing, and how much further the stacked-layout heat sweep gets
+   after that. Both are plate travel, which is 1:1 with scroll while the
+   chapter is held, so they are also scroll distances. */
+const CAS_TYPE_TRAVEL = 190;
+const CAS_SWEEP_TRAVEL = 300;
 
 /* The three boxes the sweep's LENGTH is derived from, so it is geometry rather
    than a number somebody picked. See the sweep block for what they mean. */
@@ -9255,27 +9257,31 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          takes that share of the LEFTOVER space, and in an auto-sized grid the
          painted width is the SQUARE of the factor. Linear inside the band
          rather than eased, because a steady rate is what reads as typing. */
-      /* THE LINE STARTS LATE ON PURPOSE. Owner: "delay the text animation on
-         'This one has six.' starting at the point where it currently says
-         'this one ha'." Measured in the page's own metrics rather than counted
-         off in characters: "This one ha" is 0.6929 of the run's painted width
-         at both 1440 and 390, because the face is the same and scales evenly.
+      /* The line was once delayed by a measured 0.6929 of its own painted width,
+         to start where it read "This one ha". That mechanism is GONE: keying to
+         the plate below supersedes it, and starts the line later still on a
+         phone. The reason it existed is still honoured -- the line must not
+         begin the instant the chapter appears -- it is simply expressed as a
+         plate position now rather than as a share of a string. */
+      /* NOTHING TYPES UNTIL THE PLATE IS OFF. Owner: "the animation timing is
+         bad. Check it using same logic as desktop so that animations don't
+         start until it's properly visible."
 
-         Subtracting it AFTER the 1.15 is what keeps the pace. The line does not
-         squeeze into what is left of the plate's travel and type faster; the
-         plate's bottom edge keeps falling once it has cleared the screen, so
-         `landRaw` runs on past 1 and the delayed line finishes later at exactly
-         the rate it had before. Compressing instead would have made it quicker,
-         which is the opposite of every note on this animation so far. */
-      let land = 1;
-      let landRaw = 2;
-      if (casTurnLand) {
-        const landRect = casTurnLand.getBoundingClientRect();
-        const from = landRect.top;
-        const to = headerOffset;
-        landRaw = ((from - openRect.bottom) / Math.max(1, from - to)) * 1.15;
-        land = clamp(landRaw - CAS_LAND_DELAY, 0, 1);
-      }
+         It used to be scrubbed against the LAND LINE's own top edge, so the
+         trigger moved with wherever that line happened to sit in the layout.
+         Desktop got away with it because the line is near the top of a
+         two-column chapter; the phone stacks the photograph above the copy, so
+         the same expression fired while the plate still covered the top 120px
+         of the screen. Measured at the first typed pixel: desktop plate bottom
+         77 with the cutaway 100% uncovered, phone plate bottom 196 with the
+         cutaway only 61% uncovered.
+
+         So the reference is the PLATE, not the line. `openRect.bottom` reaching
+         the header means the opening has fully lifted, and that is the same
+         instant on every layout. Desktop is unchanged by this in practice -- it
+         already started within 5px of it -- and the phone now waits. */
+      const plateGone = headerOffset - openRect.bottom;
+      const land = clamp(plateGone / CAS_TYPE_TRAVEL, 0, 1);
       casTurnStack.style.setProperty('--fg-cas-land-cols', `${Math.sqrt(land).toFixed(4)}fr`);
 
       /* THE SWEEP STARTS WHEN THE TEXT STARTS TO MOVE, not when the plate
@@ -9321,9 +9327,9 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
 
              The one stretch where the image is both stationary and whole is the
              tail of the hold, after the line has typed. So it runs there, off
-             the same plate travel the line uses, starting exactly where the line
-             lands: `landRaw` reaches 1 + the delay at that instant. */
-          sweep = clamp((landRaw - (1 + CAS_LAND_DELAY)) / CAS_SWEEP_HOLD, 0, 1);
+             the same plate travel the line uses, starting exactly where the
+             line lands. */
+          sweep = clamp((plateGone - CAS_TYPE_TRAVEL) / CAS_SWEEP_TRAVEL, 0, 1);
         } else {
           /* IT LASTS AS LONG AS THE CUTAWAY IS ON SCREEN. Owner: "wants to
              slow down so it ends when the same text movement that triggers it,

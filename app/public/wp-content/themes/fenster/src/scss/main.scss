@@ -39682,7 +39682,24 @@ html.fg-blinds-reveal-locked {
      that keeps the chapter still after it is uncovered. It is added to the
      spacer below but NOT to the negative margin, which is what decouples them.
      This one genuinely costs page length, which a real pause has to. */
-  --fg-cas-reveal: calc(min(46rem, 100svh - var(--site-header-main-height)) + 8vh);
+  /* THIS DRIFTED FROM THE PANEL AND THAT IS WHAT KILLED THE STACK, 2026-09-06.
+     Owner: "You've overdone it. The stacking has gone now."
+
+     The note above says this is written with the same expression as the
+     section's min-height "so the two cannot drift", and that if it is less
+     "the chapter lets go before the opening has finished sliding off it".
+     Earlier today the `min(46rem, ...)` cap was taken off the panel's
+     min-height to kill the dead white band, and it was left on here. So they
+     drifted by exactly the amount the cap used to bite:
+
+       phone 390x844   opening 768  reveal 803  -- 32px short
+       desktop 1440x900 opening 828  reveal 808 -- 20px short
+       desktop 1440x1200 opening 1127 reveal 832 -- 295px SHORT
+
+     The chapter was never pulled fully in behind the opening, so instead of a
+     plate lifting off a chapter already in place, both were on screen together
+     for the length of the lift. Same expression as the panel again. */
+  --fg-cas-reveal: calc(100svh - var(--site-header-main-height) + 8vh);
   --fg-cas-hold: 55vh;
 }
 
