@@ -604,9 +604,7 @@ $faqs = [
                     alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
                     loading="lazy" width="1100" height="733">
             </figure>
-        </div>
 
-        <div class="container">
             <?php /* The figures arrive one after another as the chapter is
                      reached, rather than being there already. Owner, 2026-09-05:
                      "then maybe bring the rh figures in on a scroll motion too".
@@ -628,19 +626,25 @@ $faqs = [
             </dl>
         </div>
 
+        <?php /* The detail sits BELOW the fold on purpose. Owner, 2026-09-06:
+                 "dont have them in the immediate viewport. make the image, title
+                 and 3x spec points have their own before the accordion." The
+                 band above carries a viewport of its own, so this is what you
+                 find when you choose to go further, not what competes with the
+                 claim while you are still reading it. */ ?>
         <div class="container">
             <ol class="fg-cas-anatomy" data-fg-anatomy>
                 <?php foreach ($anatomy as $i => $item) : ?>
                     <?php $id = 'fg-cas-anatomy-' . $i; ?>
                     <li>
                         <h3>
-                            <button type="button" class="fg-cas-anatomy__toggle" data-fg-anatomy-toggle aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr($id); ?>">
+                            <button type="button" class="fg-cas-anatomy__toggle" data-fg-anatomy-toggle aria-expanded="false" aria-controls="<?php echo esc_attr($id); ?>">
                                 <span class="fg-cas-anatomy__num" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $i + 1)); ?></span>
                                 <span class="fg-cas-anatomy__name"><?php echo esc_html($item['name']); ?></span>
                                 <span class="fg-cas-anatomy__mark" aria-hidden="true"></span>
                             </button>
                         </h3>
-                        <div class="fg-cas-anatomy__body" id="<?php echo esc_attr($id); ?>" <?php echo $i === 0 ? '' : 'hidden'; ?>>
+                        <div class="fg-cas-anatomy__body" id="<?php echo esc_attr($id); ?>" hidden>
                             <p><?php echo esc_html($item['copy']); ?></p>
                         </div>
                     </li>

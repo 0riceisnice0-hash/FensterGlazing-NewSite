@@ -9051,6 +9051,26 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
        The roots cancel the square exactly, so both halves track the wheel one
        to one and the gap closes at the same rate it opens. If a browser ever
        sizes these linearly this becomes a gentler ease, not a fault. */
+    /* HOW FAR THE CHAPTER BENEATH HAS BEEN UNCOVERED, 0 to 1, published on the
+       stack so anything in the chapter can hang off it.
+
+       The chapter's own entrance cannot: it is a `[data-fg-cas-reveal]` target,
+       and that observer fires when the section's TOP crosses the threshold,
+       which happens while the opening is still sitting on top of it. Its
+       pay-off line was therefore playing, in full, behind the plate that was
+       covering it, and was over before anyone saw the chapter at all. Same
+       class of fault as the one the owner caught on the overture.
+
+       Measured off the opening's own bottom edge rather than the pin, because
+       that is literally what is doing the covering: at rest its bottom sits a
+       full section-height below the header and nothing shows; by the time it
+       reaches the header the chapter is completely clear. */
+    const openRect = casTurnSection.getBoundingClientRect();
+    const uncover = 1 - clamp(
+      (openRect.bottom - headerOffset) / Math.max(1, openRect.height), 0, 1
+    );
+    if (casTurnStack) casTurnStack.style.setProperty('--fg-cas-uncover', uncover.toFixed(4));
+
     casTurnSection.style.setProperty('--fg-turn', p.toFixed(4));
     casTurnSection.style.setProperty('--fg-turn-squeeze', squeeze.toFixed(4));
     casTurnSection.style.setProperty('--fg-turn-open', open.toFixed(4));
