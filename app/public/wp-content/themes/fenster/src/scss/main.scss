@@ -39083,45 +39083,7 @@ html.fg-blinds-reveal-locked {
 
 /* The keep sits under the mechanism copy now, filling the space the test
    figures left rather than opening a band of its own below it. */
-/* NO CARD. Owner, 2026-09-06: "'The keep it locks into' image seems out of
-   place. either get rid or make it seamless with the page (ie no box if it'll
-   work)."
 
-   It cannot lose its background the way the profile cutaway did: that file is a
-   product shot on pure white, so multiplying it away works, and this one is a
-   photograph of a frame with content to all four edges (its corners sample
-   45,60,66 and 182,199,203). There is no white to remove.
-
-   So it stops being a CARD instead, which is what actually looked wrong beside
-   a lock that floats. The white plate, the border and the grey caption bar all
-   go, and what is left is the same treatment every other photograph on this
-   page already has: a plain image, 4px corners, and a caption in words rather
-   than in a bar. The radius sits on the image, not the figure, so the caption
-   is not inside a clipping box with it.
-
-   The caption is now identical to the lock's, so the two read as a pair. */
-.fg-cas-lock__keep {
-  margin: clamp(1.35rem, 3vw, 1.9rem) 0 0;
-}
-
-.fg-cas-lock__keep img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 210px;
-  border-radius: 4px;
-  object-fit: cover;
-}
-
-.fg-cas-lock__keep figcaption {
-  margin: 0.55rem 0 0;
-  color: var(--color-muted);
-  font-size: var(--fg-text-xs);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-align: center;
-  text-transform: uppercase;
-}
 
 .fg-cas-list div {
   padding: 1rem 0;

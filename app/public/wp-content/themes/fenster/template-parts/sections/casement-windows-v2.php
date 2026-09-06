@@ -792,12 +792,20 @@ $faqs = [
                          five things that make the window secure, not the subject of
                          the chapter. */ ?>
                 <p class="fg-cas-security__caption"><?php esc_html_e('Kenrick Excalibur multi-point mechanism', 'fenster'); ?></p>
-                <figure class="fg-cas-lock__keep">
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-security-keep.webp')); ?>"
-                        alt="<?php esc_attr_e('Steel locking keep and reinforced rebate inside a white uPVC casement window frame', 'fenster'); ?>"
-                        loading="lazy" width="1250" height="857">
-                    <figcaption><?php esc_html_e('The keep it locks into', 'fenster'); ?></figcaption>
-                </figure>
+                <?php /* THE KEEP PHOTOGRAPH IS GONE, 2026-09-06, on the owner's
+                         instruction: "get rid of the keep pic then."
+
+                         It had been a small card under the lock and it never
+                         sat right beside a cut-out that floats. De-carding it
+                         helped but did not earn its place: it is a cropped
+                         frame photograph with content to all four edges, so it
+                         can never float the way the mechanism does, and the
+                         list beside it already carries the point in words
+                         ("The frame it pulls against").
+
+                         The FILE STAYS. `cas-security-keep.webp` is registered
+                         twice in inc/site-data.php for other surfaces, so it is
+                         removed from this section only, not from the theme. */ ?>
             </div>
             <dl class="fg-cas-list">
                 <?php foreach ($security_points as $point) : ?>
