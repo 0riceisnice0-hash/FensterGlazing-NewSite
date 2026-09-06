@@ -8947,7 +8947,14 @@ statCycles.forEach((cycle) => {
     const term = item.querySelector('dt');
     button.type = 'button';
     button.className = 'fg-cas-stats__dot';
-    button.setAttribute('aria-label', term ? term.textContent.trim() : String(i + 1));
+    /* The figure and its unit are separate nodes spaced by a flex `gap`, so
+       `textContent` runs them together as "0.95W/m2K". Joining the child nodes
+       instead puts the space back for anything reading the label aloud. */
+    const label = term
+      ? [...term.childNodes].map((node) => node.textContent.trim()).filter(Boolean).join(' ')
+      : String(i + 1);
+
+    button.setAttribute('aria-label', label);
     button.addEventListener('click', () => {
       stopped = true;
       pause();
