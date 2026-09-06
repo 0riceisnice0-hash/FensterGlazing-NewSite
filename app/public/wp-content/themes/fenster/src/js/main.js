@@ -9115,21 +9115,37 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
      still overflow a min-height at large zoom or a raised minimum font size,
      so it is measured rather than assumed. No fit, no pin: the track loses its
      extra height, nothing is sticky and the fallback band below takes over. */
-  /* The guard below compares a box sized in `svh` against `window.innerHeight`,
-     and those two do not have to agree to the pixel. The panel is DESIGNED to
-     be exactly one screen less the header, so the honest slack is zero and the
-     old `+ 1` left the test balanced on a knife edge: any disagreement between
-     how the browser resolves `100svh` and what it reports as `innerHeight` --
-     or the header's own 1px bottom border, which `--site-header-main-height`
-     does not count -- flips the pin OFF and the whole chapter changes layout.
-     Before the panel was made full height it had 224px of slack and this could
-     not happen. Sixteen absorbs the rounding without weakening what the guard
-     is actually for, which is catching a section far taller than its room. */
+  /* IT ASKS THE SECTION ABOUT ITS OWN BOX, NOT THE WINDOW ABOUT ITS HEIGHT.
+     Owner, after the previous release: "Can't see that you've fixed it on
+     live. Animations still start too soon and stacking has gone." Both of
+     those are one failure -- the pin not engaging. With `pinning` false
+     nothing is sticky, no panel covers another, and `progress()` falls back to
+     the section's own travel, so every scrubbed animation runs far too early.
+
+     This used to be `window.innerHeight - headerOffset`, and that is the one
+     number on this page that a phone and the stylesheet can disagree about.
+     The section is sized `calc(100svh - var(--site-header-main-height))`;
+     `svh` is the viewport with the browser's bars SHOWN and never moves, while
+     `innerHeight` is whatever the visual viewport is at that instant and moves
+     with them. On a desktop and in Chrome's device emulation the two are equal,
+     which is exactly why every test here passed while the phone did not: THE
+     EMULATOR CANNOT PRODUCE THE DISAGREEMENT THAT BREAKS IT.
+
+     The note above already says what the guard is for -- content overflowing
+     the min-height at large zoom or a raised minimum font size -- and that is a
+     question about the section against ITS OWN BOX. So it asks that directly.
+     `min-height` is a real property and comes back from getComputedStyle
+     resolved in pixels, unlike a custom property, which is the trap recorded
+     further down this file. Same unit on both sides, so the designed case
+     cannot fail, and content that genuinely overflows still refuses the pin. */
   const PIN_SLACK = 16;
 
   const measureFit = () => {
     if (!casTurnTrack || !casTurnStack) return false;
-    const available = window.innerHeight - headerOffset;
+    const room = parseFloat(getComputedStyle(casTurnSection).minHeight);
+    const available = Number.isFinite(room) && room > 0
+      ? room
+      : window.innerHeight - headerOffset;
     pinning = casTurnSection.offsetHeight <= available + PIN_SLACK;
     /* On the STACK, not the track, because the cover distance has to reach the
        energy panel too and custom properties inherit down, not sideways. */
