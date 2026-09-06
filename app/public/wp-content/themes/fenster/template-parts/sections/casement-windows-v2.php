@@ -857,11 +857,30 @@ $faqs = [
                     <span class="fg-cas-turn__set"><?php esc_html_e('Multi-point locking is not an upgrade.', 'fenster'); ?></span>
                     <span class="fg-cas-turn__land"><?php esc_html_e('It is what we fit.', 'fenster'); ?></span>
                 </h2>
-                <?php /* The list used to have a point about what the lock pulls against and no
-         longer does, so this no longer names one. A lead that enumerates four
-         things over a list of four that does not include one of them is the
-         kind of small wrongness nobody can put their finger on. */ ?>
-                <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
+                <?php /* REWRITTEN 2026-09-06. Owner, of the previous version:
+                         "This is waffle."
+
+                         It was "Security in a window is a system: the lock, the
+                         glass, and the test the finished window passed. A
+                         profile name on its own proves none of it." Three
+                         faults. It opened on an abstraction. It then listed the
+                         four things the list immediately below already lists,
+                         so it previewed rather than added. And it closed on
+                         profile names, which is a trade argument -- nobody
+                         choosing a window for their house is being sold a
+                         profile name and needs warning off it.
+
+                         This takes the shape the energy chapter's lead already
+                         uses: name the component, then say what a buyer can
+                         choose on top of it. "It is" carries straight on from
+                         the heading above, so the lock is named without saying
+                         "we fit it as standard" a second time.
+
+                         STILL DOES NOT PROMISE A TESTED WINDOW. PAS 24 and
+                         Secured by Design are things you can add, which is the
+                         same "available, confirmed per configuration" position
+                         the rest of the page holds. */ ?>
+                <p class="fg-cas-lead"><?php esc_html_e('It is a Kenrick Excalibur. What you can add on top of it is laminated glass, and a window tested to PAS 24 or Secured by Design.', 'fenster'); ?></p>
             </div>
         </div>
         <?php /* Images left, copy right, which is the arrangement the owner
