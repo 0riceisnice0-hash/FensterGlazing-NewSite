@@ -9466,7 +9466,29 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
      bring the rewinding back. */
   let casLastWidth = window.innerWidth;
 
+  /* THE FIT MUST BE JUDGED AT REST, because the thing it measures is the thing
+     the pin is gating. The overture's own turn opens a reel of terms inside the
+     h2, and that makes the SECTION TALLER while it plays: measured at 375x667
+     it goes 591 at rest to 611 mid-turn. Re-deciding on that number un-pinned
+     the chapter halfway through its own animation, which collapsed the stack
+     and every effect hanging off it -- and it did so only on small screens,
+     where the resting height already sits against the box.
+
+     So a re-measure is only allowed while the turn is at 0. Every moment we
+     genuinely want to re-decide -- first paint, fonts, the hero image, a
+     rotation -- happens at rest anyway. Mid-flight we still repaint, we just do
+     not change our minds. */
+  const turnAtRest = () => {
+    const p = parseFloat(getComputedStyle(casTurnSection).getPropertyValue('--fg-turn'));
+    return !Number.isFinite(p) || p <= 0.01;
+  };
+
   const refit = () => {
+    if (!turnAtRest()) {
+      updateCasTurn();
+      return;
+    }
+
     const was = pinning;
     measureFit();
 
