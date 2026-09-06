@@ -681,7 +681,7 @@ $faqs = [
                  band above carries a viewport of its own, so this is what you
                  find when you choose to go further, not what competes with the
                  claim while you are still reading it. */ ?>
-                <ol class="fg-cas-anatomy" data-fg-anatomy>
+                <ol class="fg-cas-anatomy" data-fg-anatomy data-fg-anatomy-collapsible>
                 <?php foreach ($anatomy as $i => $item) : ?>
                     <?php $id = 'fg-cas-anatomy-' . $i; ?>
                     <li>

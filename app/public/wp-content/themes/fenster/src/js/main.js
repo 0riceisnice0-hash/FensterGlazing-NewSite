@@ -1180,6 +1180,13 @@ document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) =>
  * a cutaway pointing at a component nobody selected. Clicking the open row is
  * therefore a no-op rather than a close.
  *
+ * `data-fg-anatomy-collapsible` OPTS AN INSTANCE OUT OF THAT, and it exists
+ * because the casement chapter reuses this controller for a plain list with no
+ * drawing beside it. There, nothing depends on something being open, and the
+ * owner asked for it to start closed and take a click. It is opt-in rather than
+ * the new default precisely so the slab explorer keeps the behaviour it needs:
+ * this controller has two callers and only one of them has a cutaway.
+ *
  * The only other thing this does is write the open index to the root as
  * `data-active-layer`. Everything visual hangs off that one attribute in the
  * stylesheet, including the leader dot's position, so there are no geometry
@@ -1188,6 +1195,16 @@ document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) =>
 document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
   const toggles = [...explorer.querySelectorAll('[data-fg-anatomy-toggle]')];
   if (!toggles.length) return;
+
+  const collapsible = explorer.hasAttribute('data-fg-anatomy-collapsible');
+
+  const closeAll = () => {
+    toggles.forEach((other) => {
+      const body = document.getElementById(other.getAttribute('aria-controls'));
+      other.setAttribute('aria-expanded', 'false');
+      if (body) body.hidden = true;
+    });
+  };
 
   const open = (toggle) => {
     toggles.forEach((other) => {
@@ -1202,15 +1219,23 @@ document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
 
   toggles.forEach((toggle) => {
     toggle.addEventListener('click', () => {
-      // Re-clicking the open row used to collapse it. See above.
-      if (toggle.getAttribute('aria-expanded') === 'true') return;
+      if (toggle.getAttribute('aria-expanded') === 'true') {
+        // A no-op where a drawing depends on something being open; a close
+        // where the list stands on its own.
+        if (collapsible) closeAll();
+        return;
+      }
       open(toggle);
     });
   });
 
   // Re-assert from the markup so the attribute and the accordion cannot start
-  // out of step if the open row is ever changed in PHP.
-  const initial = toggles.find((t) => t.getAttribute('aria-expanded') === 'true') || toggles[0];
+  // out of step if the open row is ever changed in PHP. A collapsible instance
+  // with nothing marked open in the markup stays shut: falling back to the
+  // first row is what was forcing the casement list open despite every toggle
+  // being written as aria-expanded="false".
+  const marked = toggles.find((t) => t.getAttribute('aria-expanded') === 'true');
+  const initial = marked || (collapsible ? null : toggles[0]);
   if (initial) open(initial);
 });
 
