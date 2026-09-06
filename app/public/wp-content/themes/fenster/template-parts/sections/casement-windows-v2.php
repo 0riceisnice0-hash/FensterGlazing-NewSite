@@ -316,7 +316,6 @@ $security_points = [
        IF THERE IS A REAL ANSWER, this is the slot for it: the point that a lock
        is only as good as what it is fixed into is a good one, and the owner has
        it. Ask before adding it back. */
-    ['name' => 'The glass does half the work', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
     ['name' => 'Tested, and guaranteed ten years', 'copy' => 'Kenrick test the mechanism to 100,000 opening cycles and 240 hours of salt spray, beyond what BS EN 1670 asks, and guarantee it for ten years.'],
     /* Tightened 2026-09-06. Owner: "this is also waffle". It was three
        sentences where two were caveats: what Part Q asks for, then a
@@ -326,6 +325,20 @@ $security_points = [
        tested to it, which puts the approval at the window instead of
        announcing where it does not sit. Same fact, one clause, no lecture. */
     ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. Part Q asks for PAS 24 on new dwellings and some extensions, so tell us at survey if yours is covered and we will specify a complete window tested to it.'],
+    /* LAST, AND NAMED AS AN OPTION, 2026-09-06. Owner: "This should be the last
+       point in that section and shouldn't undermine the locking. It's an
+       optional upgrade."
+
+       It was second of four and called "The glass does half the work", which
+       says in its own title that the lock only does the other half -- directly
+       under a heading whose whole job is "Multi-point locking is not an
+       upgrade. It is what we fit." The copy never undermined anything; the
+       title did.
+
+       The order now runs: what is fitted as standard, the proof behind it, the
+       approvals available, and then the one thing a buyer can choose to add.
+       The option belongs at the end of that argument, not interrupting it. */
+    ['name' => 'Laminated glass, an optional upgrade', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
 ];
 /* Kenrick's own published figures for the Excalibur, taken from
    kenricks.co.uk/products/window-hardware/excalibur on 2026-08-04. They belong
