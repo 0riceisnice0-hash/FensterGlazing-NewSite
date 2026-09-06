@@ -39440,12 +39440,22 @@ html.fg-blinds-reveal-locked {
    forbids for an UNBOUNDED pin: here its range is one screen and it releases,
    which is the case the note's second sentence was written to allow. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-  /* The opening's own height, so it fully clears, PLUS a hold. The 8vh this
-     started at meant the chapter released the instant it was uncovered, which
-     is the owner's "as soon as the title is revealed, it scrolls off of it".
-     50vh gives about half a screen of stillness with the composition fully
-     visible before anything moves again. */
-  --fg-cas-reveal: calc(min(46rem, 100svh - var(--site-header-main-height)) + 50vh);
+  /* THE PULL AND THE RANGE ARE TWO DIFFERENT NUMBERS, and conflating them is
+     why the first attempt at a hold did nothing at all.
+
+     `--fg-cas-reveal` is how far the chapter is pulled up, and it only has to
+     be the opening's own height so the opening fully clears. Making it bigger
+     does NOT buy a pause: it moves the moment the chapter pins EARLIER by
+     exactly as much as it extends the range, so the release lands on the same
+     scroll position either way. Measured: 50vh of extra reveal bought 0px of
+     hold.
+
+     `--fg-cas-hold` is the extra sticky range on top, and it is the only thing
+     that keeps the chapter still after it is uncovered. It is added to the
+     spacer below but NOT to the negative margin, which is what decouples them.
+     This one genuinely costs page length, which a real pause has to. */
+  --fg-cas-reveal: calc(min(46rem, 100svh - var(--site-header-main-height)) + 8vh);
+  --fg-cas-hold: 55vh;
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
@@ -39512,7 +39522,7 @@ html.fg-blinds-reveal-locked {
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--energy::after {
   content: "";
   display: block;
-  height: var(--fg-cas-reveal);
+  height: calc(var(--fg-cas-reveal) + var(--fg-cas-hold, 0px));
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-under {
@@ -39529,6 +39539,12 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 760px) {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
+    /* Shorter hold on a phone: the composed screen is a single column there, so
+       it is read in less time, and a thumb covers less ground per gesture. */
+    --fg-cas-hold: 38vh;
+  }
+
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
     min-height: calc(100svh + 140vh);
   }
@@ -39537,6 +39553,7 @@ html.fg-blinds-reveal-locked {
 @media (prefers-reduced-motion: reduce) {
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
     --fg-cas-reveal: 0px;
+    --fg-cas-hold: 0px;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
