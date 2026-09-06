@@ -9068,11 +9068,15 @@ const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .
 const casUnder = casTurnStack && casTurnStack.querySelector('.fg-cas-under');
 
 /* Where "This one ha" falls as a share of the run's painted width, and how much
-   further plate travel the narrow-screen heat sweep gets after the line lands.
-   760px is the breakpoint the stylesheet already changes this layout at. */
+   further plate travel the stacked-layout heat sweep gets after the line lands. */
 const CAS_LAND_DELAY = 0.6929;
 const CAS_SWEEP_HOLD = 0.75;
-const casNarrow = window.matchMedia('(max-width: 760px)');
+
+/* The three boxes the sweep's LENGTH is derived from, so it is geometry rather
+   than a number somebody picked. See the sweep block for what they mean. */
+const casEnergyAside = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__aside');
+const casEnergyMedia = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__media');
+const casEnergyHeat = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__heat');
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
      single word moves, and rests finished before the section releases. Without
@@ -9280,13 +9284,28 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          in different ways. */
       if (casUnder) {
         let sweep;
-        if (casNarrow.matches) {
-          /* Narrow screens genuinely differ, so they get a different anchor.
-             There is no "text to the left" under 760px -- the photograph sits
-             ABOVE the copy and is in normal flow, so the moment the wrapper
-             releases it climbs away and is off the top within ~345px. Measured:
-             on the release anchor the sweep passed 0.80 with the cutaway
-             already 0% on screen, so the reader never saw it finish.
+        /* WHICH ANCHOR IS A QUESTION ABOUT THE LAYOUT, SO ASK THE LAYOUT.
+           This used to test `max-width: 760px`, a breakpoint I had assumed the
+           stylesheet stacked this layout at. It does not: measured, the columns
+           collapse and `.fg-cas-energy__media` drops to `static` somewhere
+           between 900 and 820, so every width from 761 to ~899 took the
+           two-column path with a hold of ZERO -- a 72px sweep, over almost
+           before it started, and the opposite of what was asked for.
+
+           So nothing here names a pixel. The two-column path needs the picture
+           to actually be held while the copy passes it, and that is a thing we
+           can measure: the media box is shorter than the column it sticks in.
+           When it is not, the layout is stacked, whatever the width. */
+        const asideRect = casEnergyAside && casEnergyAside.getBoundingClientRect();
+        const mediaRect = casEnergyMedia && casEnergyMedia.getBoundingClientRect();
+        const hold = asideRect && mediaRect ? asideRect.height - mediaRect.height : 0;
+
+        if (hold <= 1) {
+          /* Stacked. There is no "text to the left" -- the photograph sits ABOVE
+             the copy and is in normal flow, so the moment the wrapper releases
+             it climbs away and is off the top within ~345px. Measured: on the
+             release anchor the sweep passed 0.80 with the cutaway already 0% on
+             screen, so the reader never saw it finish.
 
              The one stretch where the image is both stationary and whole is the
              tail of the hold, after the line has typed. So it runs there, off
@@ -9294,9 +9313,34 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
              lands: `landRaw` reaches 1 + the delay at that instant. */
           sweep = clamp((landRaw - (1 + CAS_LAND_DELAY)) / CAS_SWEEP_HOLD, 0, 1);
         } else {
+          /* IT LASTS AS LONG AS THE CUTAWAY IS ON SCREEN. Owner: "wants to
+             slow down so it ends when the same text movement that triggers it,
+             comes to an end."
+
+             0.55 of a viewport was a number I picked, and on a 900-high screen
+             it ran out after 495px while the copy was still going. The length
+             is now read off the layout instead, in two parts:
+
+               the media box's sticky hold  = aside height - media height
+               plus the drop it then falls  = its sticky top + where the image
+                                              sits inside that box
+
+             which is exactly the travel between the wrapper releasing and the
+             top of the cutaway reaching the top of the window. Measured at
+             1440x900 that is 767px against the old 495, so it is a little over
+             half the speed, and it recomputes rather than assuming 900.
+
+             It cannot honestly run to the END of the copy's travel, which is
+             what the note asks for: the copy does not stop until 4815, and the
+             cutaway shares its grid row, so it has left the screen by 4560. The
+             last frame that can still be SEEN is the one this ends on. */
           const underRect = casUnder.getBoundingClientRect();
-          const travel = Math.max(1, window.innerHeight * 0.55);
-          sweep = clamp((headerOffset - underRect.top) / travel, 0, 1);
+          /* The image's offset inside the media box is constant: the two move
+             together whether the box is stuck or not. */
+          const inset = casEnergyHeat
+            ? casEnergyHeat.getBoundingClientRect().top - mediaRect.top : 0;
+          const travel = hold + headerOffset + inset;
+          sweep = clamp((headerOffset - underRect.top) / Math.max(1, travel), 0, 1);
         }
         casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
       }

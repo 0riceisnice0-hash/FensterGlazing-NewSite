@@ -249,7 +249,24 @@ $anatomy = [
        say: why six pockets are better than four. */
     ['name' => 'Six chambers', 'copy' => 'Six sealed air pockets, and each one interrupts the route heat takes out of the room. They sit inside the frame where you never see them, so nothing about the window looks different for it.'],
     ['name' => 'The gasket', 'copy' => 'The weather seal is formed with the profile as it is extruded rather than pushed into a groove afterwards, so it cannot shrink back or work loose at a corner. Corners are where a pushed-in gasket fails first.'],
-    ['name' => 'Reinforcement', 'copy' => 'Sized window by window. A large dark sash on an exposed elevation is stiffened differently from a small white one in a sheltered wall, which is a survey decision rather than a catalogue one.'],
+    /* "Reinforcement" WAS HERE AND IS GONE, 2026-09-06. Owner: "this doesnt
+       make sense and isnt true. we dont specify reinforcment."
+
+       Worth recording because I got this wrong twice in two days and in
+       opposite directions. On 2026-09-06 the same sentence was cut from
+       $security_points as a duplicate, and the note there argued this copy was
+       its CORRECT home and that it was really about wind load and thermal
+       movement. That defence was of a claim the owner says we do not make:
+       reinforcement is not something we size window by window and not a survey
+       decision, so "a large dark sash on an exposed elevation is stiffened
+       differently" was invented reasoning, not a fact off this business.
+
+       Not rewritten. There is no confirmed statement about how reinforcement is
+       decided on this system, and the whole point of the security note below is
+       that inventing one is worse than saying nothing. THE ACCORDION READS
+       FINE AT FOUR: the numbers are printed from the loop index, so they close
+       up on their own. Ask the owner before any reinforcement claim returns,
+       here or in the FAQs, which still mention it three times. */
     ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm edge spacer decide most of the whole window figure. A 28mm double or a 36mm triple, with the triple reaching 0.95 W/m²K. The number we agree follows your glass rather than a brochure.'],
     ['name' => 'The installation', 'copy' => 'Fixing, sealing and finishing are what connect a tested window to your actual wall. Our own installers do it, which is why the ten year guarantee on the work is ours to give.'],
 ];
@@ -292,7 +309,14 @@ $security_points = [
        it. Ask before adding it back. */
     ['name' => 'The glass does half the work', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
     ['name' => 'Tested, and guaranteed ten years', 'copy' => 'Kenrick test the mechanism to 100,000 opening cycles and 240 hours of salt spray, beyond what BS EN 1670 asks, and guarantee it for ten years.'],
-    ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is what Part Q calls for on new dwellings and some extensions, so tell us early if your build is covered. The approval belongs to a tested complete window, not to a profile name or a lock on its own.'],
+    /* Tightened 2026-09-06. Owner: "this is also waffle". It was three
+       sentences where two were caveats: what Part Q asks for, then a
+       disclaimer that the approval belongs to a tested complete window rather
+       than to a profile or a lock. That disclaimer is load-bearing and stays
+       TRUE here, but it is now carried by saying we specify a complete window
+       tested to it, which puts the approval at the window instead of
+       announcing where it does not sit. Same fact, one clause, no lecture. */
+    ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. Part Q asks for PAS 24 on new dwellings and some extensions, so tell us at survey if yours is covered and we will specify a complete window tested to it.'],
 ];
 /* Kenrick's own published figures for the Excalibur, taken from
    kenricks.co.uk/products/window-hardware/excalibur on 2026-08-04. They belong
@@ -967,15 +991,25 @@ $faqs = [
             </div>
         </div>
 
-        <?php /* The hand-off into "Bars, horns and lead.", and the reason the
-                 owner asked for versatility to come last. A <p>, not a heading,
-                 so it cannot compete with the h2 immediately below it.
+        <?php /* The hand-off into the choosing, and the reason the owner asked
+                 for versatility to come last. A <p>, not a heading, so it
+                 cannot compete with the h2 immediately below it.
 
                  "One frame, any arrangement" is lifted from the paragraph above
                  it ("Openers and fixed panes share one outer frame, in any
-                 arrangement"). "The rest is how it looks" is a transition, not a
-                 specification: it turns the dressings from a list of extras into
-                 the next question in the same conversation.
+                 arrangement"). The second half is the payoff, in ink against
+                 the muted first half, so it has to be the thing worth reading.
+
+                 IT WAS "The rest is how it looks", 2026-09-06. Owner: "the
+                 second sentence doesnt sound right. consdier what a customer
+                 should see." Two things were wrong with it. It described the
+                 rest of the page as appearance, and the very next section is
+                 now Glass make-up, which is about safety, quiet and warmth --
+                 not looks. And it said nothing to the reader. What actually
+                 follows is glass, then the dressings, then colour and handles,
+                 every one of them a decision they make, so the line now names
+                 that: the frame is the given, the rest is theirs. The order
+                 change on the same day is what exposed it.
 
                  IT CARRIES ITS OWN data-fg-cas-reveal. Hanging it off the
                  section's would fire it when the section TOP crossed the
@@ -984,7 +1018,7 @@ $faqs = [
         <div class="container">
             <p class="fg-cas-close" data-fg-cas-reveal>
                 <span class="fg-cas-turn__set"><?php esc_html_e('One frame, any arrangement.', 'fenster'); ?></span>
-                <span class="fg-cas-turn__land"><?php esc_html_e('The rest is how it looks.', 'fenster'); ?></span>
+                <span class="fg-cas-turn__land"><?php esc_html_e('The rest is what you choose.', 'fenster'); ?></span>
             </p>
         </div>
     </section>
@@ -1006,8 +1040,9 @@ $faqs = [
        the dark band a proper close instead of a light plate sliding over it.
 
        Their own section heads carry them from here, which is what the rest of the
-       site already does: Detail / Bars, horns and lead, then Two faces / Standard
-       or flush, then the three finishes components with headings of their own.
+       site already does. The running order below was changed by the owner on
+       2026-09-06 and is now Glass make-up, then Detail / Bars, horns and lead,
+       then the finishes components, then Our work with Two faces under it.
        Those are untouched. Nothing below this line is inside `.fg-cas-stack`, so
        no sticky, no z-index ladder and no dim overlay applies to any of it.
 
@@ -1015,96 +1050,12 @@ $faqs = [
        set: there is no 04 or 05 to be missing. ----------------------------- */
     ?>
 
-    <?php /* Owner instruction, 2026-08-05: the detail runs before the two faces.
-             It reads as the closer of the two, so the chapter opens on how the
-             window is put together and closes on which face it wears. */ ?>
-    <section class="fg-cas-detail" aria-labelledby="fg-cas-detail-title">
-        <div class="container">
-            <div class="fg-cas-section-head">
-                <div>
-                    <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
-                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-cas-trio">
-                <?php foreach ($details as $detail) : ?>
-                    <figure>
-                        <?php if ($detail['image'] !== '') : ?>
-                            <img src="<?php echo esc_url(fenster_generated_url($detail['image'])); ?>" alt="<?php echo esc_attr($detail['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $detail['w']); ?>" height="<?php echo esc_attr((string) $detail['h']); ?>">
-                        <?php else : ?>
-                            <?php /* Holding the slot rather than dropping the tile: the
-                                     option is real and sold, only the photograph is
-                                     missing. Dashed and labelled so it reads as
-                                     deliberate rather than as a failed image. */ ?>
-                            <p class="fg-cas-trio__placeholder"><?php esc_html_e('Photograph to follow', 'fenster'); ?></p>
-                        <?php endif; ?>
-                        <figcaption><strong><?php echo esc_html($detail['name']); ?></strong><span><?php echo esc_html($detail['copy']); ?></span></figcaption>
-                    </figure>
-                <?php endforeach; ?>
-            </div>
-
-            <p class="fg-cas-note">
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/handle-options/')); ?>"><?php esc_html_e('Handle options', 'fenster'); ?></a>
-            </p>
-        </div>
-    </section>
-
-    <?php /* Standard against flush, in matched studio photography. */ ?>
-    <section class="fg-cas-versus" aria-labelledby="fg-cas-versus-title">
-        <div class="container">
-            <div class="fg-cas-section-head">
-                <div>
-                    <p class="fg-cas-eyebrow"><?php esc_html_e('Two faces', 'fenster'); ?></p>
-                    <h2 id="fg-cas-versus-title" class="fg-cas-display"><?php esc_html_e('Standard or flush.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('The same 70mm Liniar uPVC, the same sixteen colours, the same fitters. The sash is the difference, and it changes both the look and the glass.', 'fenster'); ?></p>
-            </div>
-
-            <div class="fg-cas-versus__body">
-            <div class="fg-cas-versus__pair">
-                <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-sash-proud-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC standard casement window, the opening sash standing proud of the outer frame', 'fenster'); ?>" loading="lazy" width="820" height="857">
-                    <figcaption><strong><?php esc_html_e('Standard casement', 'fenster'); ?></strong><span><?php esc_html_e('The sash stands proud. Fixed panes glaze straight into the frame, so they carry more glass.', 'fenster'); ?></span></figcaption>
-                </figure>
-                <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="820" height="857">
-                    <?php /* Owner instruction, 2026-08-05: the link belongs in the
-                             flush card rather than at the foot of the section, where
-                             it read as a footnote to the comparison instead of the
-                             way on from the half of it people are choosing. */ ?>
-                    <figcaption><strong><?php esc_html_e('Flush casement', 'fenster'); ?></strong><span><?php esc_html_e('Every sash closes level with the frame, in one plane, the way timber joinery sits.', 'fenster'); ?></span><a class="fg-cas-link fg-cas-versus__link" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('See flush casements', 'fenster'); ?></a></figcaption>
-                </figure>
-            </div>
-
-            <table class="fg-cas-table">
-                <thead>
-                    <tr>
-                        <th scope="col"><span class="fg-cas-sr"><?php esc_html_e('Specification', 'fenster'); ?></span></th>
-                        <th scope="col"><?php esc_html_e('Standard', 'fenster'); ?></th>
-                        <th scope="col"><?php esc_html_e('Flush', 'fenster'); ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($versus_rows as $row) : ?>
-                        <tr>
-                            <th scope="row"><?php echo esc_html($row['label']); ?></th>
-                            <td><?php echo esc_html($row['a']); ?></td>
-                            <td><?php echo esc_html($row['b']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            </div>
-        </div>
-    </section>
-
-    <?php /* Colour, handles and glass. Each component carries its own heading, so
-             they need nothing above them now the 05 head has gone. */ ?>
-    <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
-    <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
+    <?php /* Moved above the detail 2026-09-06. Owner: "windwocad designer
+             section should sit above detail section." This is the WindowCAD
+             section -- its five names and colour coding are lifted from that
+             designer, per the note on $glass_marks -- so it now opens the
+             choosing rather than sitting midway down it, and the glass is
+             settled before the dressings that go on top of it. */ ?>
     <section class="fg-glass-makeup" aria-labelledby="fg-glass-makeup-title">
         <div class="container">
             <div class="section-heading section-heading--wide">
@@ -1152,6 +1103,52 @@ $faqs = [
             <p class="fg-glass-makeup__foot"><?php esc_html_e('U-values are whole window figures. The survey confirms the glass before anything is ordered.', 'fenster'); ?></p>
         </div>
     </section>
+
+    <?php /* The 2026-08-05 instruction that the detail runs before the two
+             faces is SPENT: the two faces moved out to sit under Our work on
+             2026-09-06, so there is no longer a pair here to order. The detail
+             now follows the glass. */ ?>
+    <section class="fg-cas-detail" aria-labelledby="fg-cas-detail-title">
+        <div class="container">
+            <div class="fg-cas-section-head">
+                <div>
+                    <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
+                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-cas-trio">
+                <?php foreach ($details as $detail) : ?>
+                    <figure>
+                        <?php if ($detail['image'] !== '') : ?>
+                            <img src="<?php echo esc_url(fenster_generated_url($detail['image'])); ?>" alt="<?php echo esc_attr($detail['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $detail['w']); ?>" height="<?php echo esc_attr((string) $detail['h']); ?>">
+                        <?php else : ?>
+                            <?php /* Holding the slot rather than dropping the tile: the
+                                     option is real and sold, only the photograph is
+                                     missing. Dashed and labelled so it reads as
+                                     deliberate rather than as a failed image. */ ?>
+                            <p class="fg-cas-trio__placeholder"><?php esc_html_e('Photograph to follow', 'fenster'); ?></p>
+                        <?php endif; ?>
+                        <figcaption><strong><?php echo esc_html($detail['name']); ?></strong><span><?php echo esc_html($detail['copy']); ?></span></figcaption>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+
+            <p class="fg-cas-note">
+                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
+                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
+                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/handle-options/')); ?>"><?php esc_html_e('Handle options', 'fenster'); ?></a>
+            </p>
+        </div>
+    </section>
+
+
+    <?php /* Colour and handles. Each component carries its own heading, so they
+             need nothing above them now the 05 head has gone. The glass used to
+             be the third of this group and moved above the detail on
+             2026-09-06 at the owner's request. */ ?>
+    <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
+    <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
 
     <?php /* eyebrow overridden here only. Its default is "Specification
              choices", which sat above a second band also about glass and read
@@ -1222,6 +1219,60 @@ $faqs = [
                 <?php endforeach; ?>
             </div>
             <p class="fg-cas-swipe" aria-hidden="true"><?php esc_html_e('Swipe', 'fenster'); ?> <span>&rarr;</span></p>
+        </div>
+    </section>
+
+    <?php /* Moved down here 2026-09-06. Owner: "Two faces section should be
+             under our work section." It used to sit directly under the detail,
+             above the finishes. It is still INSIDE the `.fg-cas` wrapper, which
+             closes a few lines below -- outside it the section loses the
+             wrapper's type and rule colours. */ ?>
+    <?php /* Standard against flush, in matched studio photography. */ ?>
+    <section class="fg-cas-versus" aria-labelledby="fg-cas-versus-title">
+        <div class="container">
+            <div class="fg-cas-section-head">
+                <div>
+                    <p class="fg-cas-eyebrow"><?php esc_html_e('Two faces', 'fenster'); ?></p>
+                    <h2 id="fg-cas-versus-title" class="fg-cas-display"><?php esc_html_e('Standard or flush.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('The same 70mm Liniar uPVC, the same sixteen colours, the same fitters. The sash is the difference, and it changes both the look and the glass.', 'fenster'); ?></p>
+            </div>
+
+            <div class="fg-cas-versus__body">
+            <div class="fg-cas-versus__pair">
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-sash-proud-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC standard casement window, the opening sash standing proud of the outer frame', 'fenster'); ?>" loading="lazy" width="820" height="857">
+                    <figcaption><strong><?php esc_html_e('Standard casement', 'fenster'); ?></strong><span><?php esc_html_e('The sash stands proud. Fixed panes glaze straight into the frame, so they carry more glass.', 'fenster'); ?></span></figcaption>
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="820" height="857">
+                    <?php /* Owner instruction, 2026-08-05: the link belongs in the
+                             flush card rather than at the foot of the section, where
+                             it read as a footnote to the comparison instead of the
+                             way on from the half of it people are choosing. */ ?>
+                    <figcaption><strong><?php esc_html_e('Flush casement', 'fenster'); ?></strong><span><?php esc_html_e('Every sash closes level with the frame, in one plane, the way timber joinery sits.', 'fenster'); ?></span><a class="fg-cas-link fg-cas-versus__link" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('See flush casements', 'fenster'); ?></a></figcaption>
+                </figure>
+            </div>
+
+            <table class="fg-cas-table">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="fg-cas-sr"><?php esc_html_e('Specification', 'fenster'); ?></span></th>
+                        <th scope="col"><?php esc_html_e('Standard', 'fenster'); ?></th>
+                        <th scope="col"><?php esc_html_e('Flush', 'fenster'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($versus_rows as $row) : ?>
+                        <tr>
+                            <th scope="row"><?php echo esc_html($row['label']); ?></th>
+                            <td><?php echo esc_html($row['a']); ?></td>
+                            <td><?php echo esc_html($row['b']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            </div>
         </div>
     </section>
 
