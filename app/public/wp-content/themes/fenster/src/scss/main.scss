@@ -39717,7 +39717,13 @@ html.fg-blinds-reveal-locked {
      The chapter was never pulled fully in behind the opening, so instead of a
      plate lifting off a chapter already in place, both were on screen together
      for the length of the lift. Same expression as the panel again. */
-  --fg-cas-reveal: calc(100svh - var(--site-header-main-height) + 8vh);
+  /* The 8vh became 20vh on 2026-09-06: the opening's OWN turn makes the panel
+     taller while it plays -- 492 to 611 at 320x568 -- so a reveal measured off
+     the resting height left the chapter short of full cover exactly when the
+     plate was sliding off it. Twenty covers the growth at every size measured.
+     Per the note above, a larger reveal buys no pause; it only moves the moment
+     the chapter pins earlier, which is free. */
+  --fg-cas-reveal: calc(100svh - var(--site-header-main-height) + 20vh);
   --fg-cas-hold: 55vh;
 }
 
@@ -39803,9 +39809,19 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 760px) {
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-    /* Shorter hold on a phone: the composed screen is a single column there, so
-       it is read in less time, and a thumb covers less ground per gesture. */
-    --fg-cas-hold: 38vh;
+    /* THE HOLD HAS TO OUTLAST EVERYTHING THAT PLAYS INSIDE IT. Owner: "we lost
+       the thermal transfer animation above the viewport!!"
+
+       On a phone the cutaway is NOT sticky -- it is stacked above the copy in
+       one column -- so it only stays still while the chapter is held. It was
+       38vh, 321px at 844, and the typed line alone takes 190 of that, leaving
+       131 for a sweep that wants 300. Measured: the sweep reached 0.87 as the
+       chapter released and completed at scrollY 3384 with the image 0% on
+       screen. It finished above the fold, which is precisely what was reported.
+
+       62vh is 523px at 844: 190 for the line, 300 for the sweep, and change.
+       This one genuinely costs page length, which a real pause has to. */
+    --fg-cas-hold: 62vh;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
