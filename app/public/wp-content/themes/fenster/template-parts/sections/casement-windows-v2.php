@@ -239,7 +239,15 @@ $energy_stats = [
 ];
 
 $anatomy = [
-    ['name' => 'Six chambers', 'copy' => 'Six sealed air pockets run the length of every frame section, and each one interrupts the route heat takes out of the room. This is the difference between the EnergyPlus profile and a standard one, and it is what we fit as standard rather than as an upgrade tier.'],
+    /* Trimmed 2026-09-06 on a whole-page read. It said "run the length of every
+       frame section", which the stat note beside it and the chapter lead above
+       it both also said, and it closed on "the difference between the EnergyPlus
+       profile and a standard one", which is the chapter heading. It also still
+       carried "upgrade tier", which the owner called trade jargon a homeowner
+       does not use back on 2026-09-05 and which was taken out of the overture
+       then but survived here. What is left is the only thing this item alone can
+       say: why six pockets are better than four. */
+    ['name' => 'Six chambers', 'copy' => 'Six sealed air pockets, and each one interrupts the route heat takes out of the room. They sit inside the frame where you never see them, so nothing about the window looks different for it.'],
     ['name' => 'The gasket', 'copy' => 'The weather seal is formed with the profile as it is extruded rather than pushed into a groove afterwards, so it cannot shrink back or work loose at a corner. Corners are where a pushed-in gasket fails first.'],
     ['name' => 'Reinforcement', 'copy' => 'Sized window by window. A large dark sash on an exposed elevation is stiffened differently from a small white one in a sheltered wall, which is a survey decision rather than a catalogue one.'],
     ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm edge spacer decide most of the whole window figure. A 28mm double or a 36mm triple, with the triple reaching 0.95 W/m²K. The number we agree follows your glass rather than a brochure.'],
@@ -702,7 +710,7 @@ $faqs = [
                          same promise twice in two hundred words. "Specify on
                          every casement we fit" is the same fact in the words
                          the original lead used. */ ?>
-                <p class="fg-cas-lead"><?php esc_html_e('The six run the full length of every frame section. Liniar call that profile EnergyPlus, and it is the one we specify on every casement we fit.', 'fenster'); ?></p>
+                <p class="fg-cas-lead"><?php esc_html_e('Liniar call that profile EnergyPlus, and it is the one we specify on every casement we fit.', 'fenster'); ?></p>
             </div>
         </div>
 
