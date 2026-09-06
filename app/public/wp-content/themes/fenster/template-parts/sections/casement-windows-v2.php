@@ -465,6 +465,7 @@ $faqs = [
                      six-chambered is not lost: it is the whole of chapter 01,
                      which is the right place to explain a word nobody arrives
                      knowing. */ ?>
+            <?php
             $overture_terms = [
                 __('made-to-measure', 'fenster'),
                 __('draught-sealed', 'fenster'),
