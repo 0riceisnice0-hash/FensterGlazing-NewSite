@@ -38767,10 +38767,11 @@ html.fg-blinds-reveal-locked {
   max-width: 36ch;
 }
 
-/* Real buttons, not decoration: something that moves on its own needs a way to
-   stop it, and clicking one ends the automatic advance for good. Thin bars
-   rather than dots, so they read as a position in a set of three rather than as
-   a carousel. */
+/* Indicators, not controls. They were buttons while a timer drove this, because
+   anything moving by itself needs a way to stop it. The scroll drives it now, so
+   nothing moves unless the reader moves it and there is nothing to pause: they
+   go back to showing which of the three you are on. Thin bars rather than dots,
+   so they read as a position in a set rather than as a carousel. */
 .fg-cas-stats__dots {
   display: flex;
   gap: 0.4rem;
@@ -38784,17 +38785,11 @@ html.fg-blinds-reveal-locked {
   border: 0;
   border-radius: 2px;
   background: var(--cas-rule);
-  cursor: pointer;
   transition: background-color 260ms ease;
 }
 
-.fg-cas-stats__dot[aria-current="true"] {
+.fg-cas-stats__dot.is-current {
   background: var(--color-accent-dark);
-}
-
-.fg-cas-stats__dot:focus-visible {
-  outline: 2px solid var(--color-accent-dark);
-  outline-offset: 4px;
 }
 
 /* NO PLATE. Owner, 2026-09-06: "can you take the profile image out of it's

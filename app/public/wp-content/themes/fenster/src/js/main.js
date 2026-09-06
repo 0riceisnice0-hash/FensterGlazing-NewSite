@@ -8887,27 +8887,35 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   updateLockArrive();
 }
 
-/* ---------- The three figures, one at a time -------------------------------
+/* ---------- The three figures, one at a time, on the scroll ----------------
    Owner, 2026-09-06: "the 3x spec figures feel bunched up now, can they hold
-   one position and cycle through?"
+   one position and cycle through?", and then "the spec points dont change with
+   the scroll."
 
    They were bunched because they moved into the left hand column when the
    profile took a column of its own, which halved the room three of them had to
    share. Holding one position fixes that properly rather than shaving type: a
    single figure gets the whole column and can be set large.
 
-   NOTHING IS HIDDEN FROM ASSISTIVE TECHNOLOGY. All three stay in the DOM and
-   none is `hidden` or `aria-hidden`, so a screen reader still reads all three
-   facts in order; only the painting cycles.
+   THE FIRST VERSION USED A TIMER, AND THAT WAS THE WRONG INSTRUMENT. Everything
+   else on this page is scrubbed from the scroll, so a figure changing on its own
+   clock reads as a different component that happens to be sitting here. It also
+   meant the change could happen while you were reading, or not happen at all
+   while you were. Now it advances with the wheel like everything else, and as a
+   consequence it needs no pause control: nothing moves unless the reader moves
+   it, so WCAG 2.2.2 does not apply and the indicators can go back to being
+   indicators.
 
-   IT CAN BE STOPPED, which WCAG 2.2.2 requires of anything that moves by itself
-   for more than five seconds beside other content. The dots are real buttons:
-   clicking one selects that figure and ends the automatic advance for good.
-   Hover and focus pause it, and it does not run at all while off screen.
+   THE BAND IS DERIVED, NOT GUESSED. The chapter is pinned for `reveal + hold`;
+   the reveal is spent uncovering it and is no use here, because the figures are
+   still behind the plate. So the cycle runs across the HOLD alone, and where the
+   hold begins is read from the same two numbers the CSS uses: the negative
+   margin is the reveal, and the panel's height less its sticky child is the
+   whole range.
 
-   Under reduced motion the controller returns before adding `is-cycling`, so
-   the CSS leaves all three side by side exactly as they render with no
-   JavaScript at all. */
+   Off the pinned path (a phone, reduced motion, a viewport too short to pin)
+   there is no range to read, so it falls back to the block's own travel through
+   the viewport. */
 const statCycles = [...document.querySelectorAll('[data-fg-cas-cycle]')];
 
 statCycles.forEach((cycle) => {
@@ -8918,69 +8926,67 @@ statCycles.forEach((cycle) => {
 
   cycle.classList.add('is-cycling');
 
-  let index = 0;
-  let timer = null;
-  let stopped = false;
+  const panel = cycle.closest('.fg-cas-stack__panel');
+  const sticky = panel && panel.querySelector('.fg-cas-under');
 
-  const show = (next) => {
-    index = next;
-    items.forEach((item, i) => item.classList.toggle('is-current', i === next));
-    buttons.forEach((button, i) => button.setAttribute('aria-current', i === next ? 'true' : 'false'));
-  };
-
-  const pause = () => {
-    if (!timer) return;
-    window.clearInterval(timer);
-    timer = null;
-  };
-
-  const start = () => {
-    if (stopped || timer) return;
-    timer = window.setInterval(() => show((index + 1) % items.length), 3600);
-  };
+  let index = -1;
+  let queued = false;
 
   const dots = document.createElement('div');
   dots.className = 'fg-cas-stats__dots';
+  dots.setAttribute('aria-hidden', 'true');
 
-  const buttons = items.map((item, i) => {
-    const button = document.createElement('button');
-    const term = item.querySelector('dt');
-    button.type = 'button';
-    button.className = 'fg-cas-stats__dot';
-    /* The figure and its unit are separate nodes spaced by a flex `gap`, so
-       `textContent` runs them together as "0.95W/m2K". Joining the child nodes
-       instead puts the space back for anything reading the label aloud. */
-    const label = term
-      ? [...term.childNodes].map((node) => node.textContent.trim()).filter(Boolean).join(' ')
-      : String(i + 1);
-
-    button.setAttribute('aria-label', label);
-    button.addEventListener('click', () => {
-      stopped = true;
-      pause();
-      show(i);
-    });
-    dots.appendChild(button);
-    return button;
+  const marks = items.map(() => {
+    const mark = document.createElement('span');
+    mark.className = 'fg-cas-stats__dot';
+    dots.appendChild(mark);
+    return mark;
   });
 
   cycle.appendChild(dots);
-  show(0);
 
-  cycle.addEventListener('pointerenter', pause);
-  cycle.addEventListener('focusin', pause);
-  cycle.addEventListener('pointerleave', start);
-  cycle.addEventListener('focusout', start);
+  const show = (next) => {
+    if (next === index) return;
+    index = next;
+    items.forEach((item, i) => item.classList.toggle('is-current', i === next));
+    marks.forEach((mark, i) => mark.classList.toggle('is-current', i === next));
+  };
 
-  /* Off screen it does nothing at all, so the page is not running a timer
-     against something nobody is looking at. */
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      entries.forEach((entry) => (entry.isIntersecting ? start() : pause()));
-    }, { threshold: 0.35 }).observe(cycle);
-  } else {
-    start();
-  }
+  const progress = () => {
+    if (panel && sticky) {
+      const panelRect = panel.getBoundingClientRect();
+      const range = panelRect.height - sticky.getBoundingClientRect().height;
+
+      if (range > 1) {
+        const offset = parseFloat(getComputedStyle(document.documentElement)
+          .getPropertyValue('--site-header-main-height')) || 0;
+        const raw = clamp((offset - panelRect.top) / range, 0, 1);
+        /* Where the uncovering ends and the hold begins. */
+        const reveal = Math.max(0, -parseFloat(getComputedStyle(panel).marginTop) || 0);
+        const start = clamp(reveal / range, 0, 0.95);
+        return clamp((raw - start) / Math.max(0.01, 1 - start), 0, 1);
+      }
+    }
+
+    const rect = cycle.getBoundingClientRect();
+    const viewport = Math.max(1, window.innerHeight);
+    return clamp((viewport * 0.85 - rect.top) / (viewport * 0.6), 0, 1);
+  };
+
+  const update = () => {
+    queued = false;
+    show(Math.min(items.length - 1, Math.floor(progress() * items.length)));
+  };
+
+  const queue = () => {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  update();
 });
 
 /* ---------- The casement opening sentence, scrolled -----------------------
