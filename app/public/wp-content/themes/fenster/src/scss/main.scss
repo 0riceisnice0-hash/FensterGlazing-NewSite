@@ -38636,9 +38636,9 @@ html.fg-blinds-reveal-locked {
    photograph arrived. About 500px all in, so it reads as one screen. */
 .fg-cas-energy__open {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 6vw, 5rem);
 }
 
 /* The head keeps its numeral column but stops adding rhythm of its own: inside
@@ -38650,28 +38650,54 @@ html.fg-blinds-reveal-locked {
 /* The three figures run across under the band rather than stacking down beside
    the photograph, where they made the chapter a screen taller than it needed to
    be and pushed the heading off the top. */
+/* Space rather than a rule. The hairline here sat a couple of hundred pixels
+   above the accordion's own top border, and two lines that close read as
+   clutter. The reference divides nothing: it just leaves room. */
 .fg-cas-stats--row {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  margin-top: clamp(1.75rem, 4vh, 2.75rem);
-  padding-top: clamp(1.5rem, 3.5vh, 2.25rem);
-  border-top: 1px solid var(--cas-rule);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  margin-top: clamp(2.5rem, 6vh, 4rem);
 }
 
 .fg-cas-stats--row dd {
   max-width: 28ch;
 }
 
+/* NO PLATE. Owner, 2026-09-06: "can you take the profile image out of it's
+   box?" It sat on a white card with a hairline because the file has no alpha
+   channel: `cas-profile-cutaway-c.webp` is plain lossy VP8, so there is nothing
+   to cut the profile out against and a drop-shadow would just trace the
+   rectangle.
+
+   `mix-blend-mode: multiply` gets there without touching the asset. The file's
+   background is pure white at every corner (checked), and multiplying white
+   against the ground returns the ground exactly, so the card disappears; the
+   profile is light grey and survives essentially unchanged, and the soft
+   shadow baked into the photograph darkens the ground the way a real one
+   would. It needs a light ground to work, which this chapter has.
+
+   If blending is ever unavailable the white rectangle simply comes back, which
+   is what shipped before this, so there is no broken state.
+
+   IT NEEDS A GROUND DIRECTLY BENEATH IT. `mix-blend-mode` blends with the
+   backdrop of the nearest stacking context, and there are two of them between
+   the image and the panel that carries the chapter's colour: `.fg-cas-under` is
+   `position: sticky`, which always makes one, and `.fg-cas-energy` is a reveal
+   target carrying `will-change: opacity`, which makes another. Blending against
+   either of those means blending against nothing, and the white card stayed
+   exactly as it was through two attempts at this.
+
+   So the figure paints the ground itself, taken from `--fg-chapter-ground`,
+   which the panel publishes. A custom property inherits through stacking
+   contexts where a background does not, so this cannot drift from the panel's
+   own colour. */
 .fg-cas-energy__media {
-  overflow: hidden;
-  border-radius: 4px;
-  background: #ffffff;
-  /* RETINT. The white stays and gains an edge: the chapter ground is now
-     var(--color-soft), so a white plate on it needs a line or it floats. Not
-     switched to a drop-shadow cut-out, because cas-profile-cutaway-c.webp is a
-     plain VP8 file with no alpha channel, so a shadow would trace its
-     rectangle and produce the shadowed card the file forbids elsewhere. */
-  border: 1px solid var(--color-line);
+  margin: 0;
+  background-color: var(--fg-chapter-ground, transparent);
+}
+
+.fg-cas-energy__media img {
+  mix-blend-mode: multiply;
 }
 
 /* The studio files are already framed; letting them keep their own proportion
@@ -38682,33 +38708,19 @@ html.fg-blinds-reveal-locked {
   height: auto;
 }
 
-/* Chapter 02 has to open in one screen. Owner instruction, 2026-08-05. Measured
-   at 1280x800 the head and the cutaway ran 709px against a 713px viewport, so it
-   cleared the raw viewport by four pixels and nothing at all once the 72px
-   sticky header sat over it.
+/* THE OLD SQUEEZE IS GONE, AND ITS REASON WITH IT. The cutaway was capped at
+   300px and the figures had their gap and their numerals shrunk, because all
+   of it used to share ONE grid row with the photograph: a row is as tall as its
+   taller side, so both columns had to come down to keep the chapter inside a
+   screen.
 
-   Both columns had to come down, because the row is as tall as its taller side
-   and capping only the cutaway would have left the statistics setting the
-   height. The cutaway is contained rather than cropped, so the profile is still
-   whole, and the statistics tighten rather than lose one.
-
-   The head's own margin is no longer part of this. It had been cut to 26px and
-   was the one chapter whose head sat differently from the rest; retitling on
-   2026-08-05 took the heading from three lines to two, which paid for putting it
-   back and left the opening shorter than it was with the margin cut. */
+   The figures are their own full width row now, so the photograph competes with
+   nothing and the numerals need no shrinking. Keeping those caps was most of
+   why the owner read the result as bunched: a small picture beside big type,
+   with everything pulled tight to buy height that is no longer needed. */
 .fg-cas-energy__media img {
-  max-height: 300px;
+  max-height: clamp(240px, 34vh, 420px);
   object-fit: contain;
-}
-
-.fg-cas-energy .fg-cas-stats {
-  gap: clamp(0.8rem, 1.6vw, 1.1rem);
-}
-
-/* The statistics, not the cutaway, were setting the row height: a grid row is
-   as tall as its taller side, so capping the photograph alone moved nothing. */
-.fg-cas-energy .fg-cas-stats dt span {
-  font-size: clamp(1.7rem, 2.8vw, 2.35rem);
 }
 
 /* ---- The mechanism arrives -----------------------------------------------
@@ -39820,10 +39832,14 @@ html.fg-blinds-reveal-locked {
    introduces (the tech banner rides inside the energy panel) share one ground
    and the banner's white card lifts off it. On the section it would read as
    four grounds instead of three. */
-.fg-cas-stack__panel--opening     { background: var(--color-surface); }
-.fg-cas-stack__panel--energy      { background: var(--color-soft); }
-.fg-cas-stack__panel--security    { background: var(--color-surface); }
-.fg-cas-stack__panel--versatility { background: var(--color-soft); }
+/* Each panel names its ground in a custom property as well as painting it.
+   Custom properties inherit through everything, including the several stacking
+   contexts between a panel and its contents, which is what the blended cutaway
+   needs: see `.fg-cas-energy__media`. */
+.fg-cas-stack__panel--opening     { --fg-chapter-ground: var(--color-surface); background: var(--fg-chapter-ground); }
+.fg-cas-stack__panel--energy      { --fg-chapter-ground: var(--color-soft);    background: var(--fg-chapter-ground); }
+.fg-cas-stack__panel--security    { --fg-chapter-ground: var(--color-surface); background: var(--fg-chapter-ground); }
+.fg-cas-stack__panel--versatility { --fg-chapter-ground: var(--color-soft);    background: var(--fg-chapter-ground); }
 
 /* The chapter numerals are counted, not typed. Three literals in the markup is
    how they came to disagree with the heading ids in the first place, and the
