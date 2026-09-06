@@ -89,7 +89,18 @@ $colour_intro = (string) ($args['intro'] ?? __('A uPVC colour is a foil bonded t
             <?php endforeach; ?>
         </ul>
         <p class="fg-upvc-colours__note">
-            <?php esc_html_e('Availability, lead time and cost depend on the exact profile and the fabricator, so we confirm all three before you order rather than after.', 'fenster'); ?>
+            <?php /* NO SUPPLY CHAIN IN CUSTOMER COPY, 2026-09-06. Owner: "Why
+                     are we bringing fabricators into this? We're a high end
+                     retailer - we don't talk about supply chain stuff like that
+                     to customers."
+
+                     It read "depend on the exact profile and the fabricator",
+                     which tells a buyer who else is involved in their window and
+                     quietly moves the responsibility there. The promise is the
+                     same and it is ours to make: we confirm before you commit.
+                     Say what varies for the reader -- the colour -- not who it
+                     varies because of. */ ?>
+            <?php esc_html_e('Availability, lead time and cost vary by colour, so we confirm all three before you order rather than after.', 'fenster'); ?>
             <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Compare colours across every material', 'fenster'); ?></a>
         </p>
     </div>
