@@ -768,10 +768,29 @@ $faqs = [
                      CSS meet the claim and the figures before the illustration.
                      The grid puts it in the right hand column regardless. */ ?>
             <span class="fg-cas-energy__aside">
+            <?php /* The heat layer is a SECOND IMAGE stacked on the first, not a
+                     canvas. A per-pixel canvas version of this was built and
+                     measured first: 380,000 pixels a frame, which is fine on a
+                     desktop and not something to put in front of a phone. Baking
+                     the thermal state once and moving a CSS mask over it gets the
+                     same picture for no per-frame work at all, and the mask is a
+                     compositor property.
+
+                     It is decorative and it is aria-hidden. The cutaway below it
+                     carries the alt text, so nothing is described twice, and a
+                     reader who never sees the sweep loses nothing.
+
+                     Both files share one silhouette, generated from the same
+                     flood fill, so they register exactly when stacked. */ ?>
             <figure class="fg-cas-energy__media">
-                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-cut.webp')); ?>"
-                    alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
-                    loading="lazy" width="1100" height="733">
+                <span class="fg-cas-energy__stack">
+                    <img class="fg-cas-energy__profile"
+                        src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-cut.webp')); ?>"
+                        alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
+                        loading="lazy" width="1100" height="733">
+                    <img class="fg-cas-energy__heat" src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-heat.webp')); ?>"
+                        alt="" aria-hidden="true" loading="lazy" width="1100" height="733">
+                </span>
             </figure>
             </span>
         </div>

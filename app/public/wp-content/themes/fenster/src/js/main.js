@@ -9061,6 +9061,9 @@ const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chap
    own top therefore started it typing before the sentence it pays off had been
    seen at all, which is why it still read as early after the first fix. */
 const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .fg-cas-chapter__head');
+/* The cutaway, so the heat sweep can be tied to the plate uncovering it rather
+   than to a number somebody picked. */
+const casHeatSubject = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__profile');
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
      single word moves, and rests finished before the section releases. Without
@@ -9227,6 +9230,20 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          takes that share of the LEFTOVER space, and in an auto-sized grid the
          painted width is the SQUARE of the factor. Linear inside the band
          rather than eased, because a steady rate is what reads as typing. */
+      /* THE SWEEP IS THE UNCOVERING, not a separate animation with its own
+         timing. The plate's bottom edge is the curtain: while it sits below the
+         photograph nothing is coloured, and by the time it has passed the top
+         the profile is fully thermal. Because the photograph sits lower than
+         the chapter head, the sweep finishes before the pay-off line starts to
+         type, which is the order the owner asked for without needing a constant
+         to enforce it. */
+      if (casHeatSubject) {
+        const heatRect = casHeatSubject.getBoundingClientRect();
+        const span = Math.max(1, heatRect.bottom - heatRect.top);
+        const sweep = clamp((heatRect.bottom - openRect.bottom) / span, 0, 1);
+        casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
+      }
+
       let land = 1;
       if (casTurnLand) {
         const landRect = casTurnLand.getBoundingClientRect();

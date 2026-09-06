@@ -38814,6 +38814,49 @@ html.fg-blinds-reveal-locked {
    place it would look wrong is on a dark one, which the owner has taken this
    page away from. */
 
+/* ---- the heat sweep -------------------------------------------------------
+   Two images in register, and a mask that moves. The thermal state is baked
+   into `cas-profile-heat.webp`, so the only thing that changes per frame is a
+   mask position, which the compositor handles. A canvas version was built and
+   measured first at 380,000 pixels a frame; this draws none.
+
+   DRIVEN BY SCROLL, NOT BY A CLOCK. `--fg-cas-sweep` is written by main.js from
+   the lifting plate's own bottom edge against the photograph's box: covered is
+   0, clear is 1. So the colour arrives exactly as the chapter is uncovered, and
+   because the photograph sits lower than the chapter head it finishes before
+   the pay-off line begins to type.
+
+   NO `transition` ON THE MASK. The value is scrubbed from the wheel, and a
+   transition on top of a scrubbed value lags behind it. Same reason the opening
+   sentence has none.
+
+   124deg is the heat axis: the CSS angle for a direction running right and down
+   at 34 degrees, which is the axis the baked gradient itself uses. */
+.fg-cas-energy__stack {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.fg-cas-energy__heat {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.js .fg-cas-motion-ready .fg-cas-energy__heat {
+  --fg-heat-edge: calc(var(--fg-cas-sweep, 0) * 165% - 55%);
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(124deg, #000 var(--fg-heat-edge), transparent calc(var(--fg-heat-edge) + 24%));
+  mask-image: linear-gradient(124deg, #000 var(--fg-heat-edge), transparent calc(var(--fg-heat-edge) + 24%));
+}
+
+/* With the setting turned on after load the sweep simply is not there. */
+@media (prefers-reduced-motion: reduce) {
+  .js .fg-cas-motion-ready .fg-cas-energy__heat { opacity: 0; }
+}
+
 /* The studio files are already framed; letting them keep their own proportion
    means nothing is cropped a second time. */
 .fg-cas-energy__media img {
