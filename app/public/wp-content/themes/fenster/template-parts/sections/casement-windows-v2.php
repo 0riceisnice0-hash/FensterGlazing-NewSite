@@ -587,9 +587,31 @@ $faqs = [
                          true and carried no number; this one carries two. Both
                          lines are real text, so nothing is aria-hidden and a
                          screen reader gets one heading. */ ?>
+                <?php
+                /* The pay-off types itself in, a character at a time, as the
+                   chapter is uncovered. Owner, 2026-09-06: "'this one has six'
+                   wants to have the almost typewriter animation, not the swipe
+                   up that you gave it."
+
+                   SPLITTING TEXT INTO PER-CHARACTER SPANS IS HOSTILE TO SCREEN
+                   READERS, which is why the whole heading is carried once, as
+                   ordinary text, in `.fg-cas-sr`, and both visible halves are
+                   aria-hidden. Same arrangement as the overture. The split is
+                   built from the same string that feeds the readable copy, so
+                   the two cannot drift.
+
+                   `--fg-char` is the character's position as a fraction rather
+                   than its index, so the CSS that steps them on does not need
+                   to know how many there are. */
+                $energy_set  = __('A standard uPVC profile has four chambers.', 'fenster');
+                $energy_land = __('This one has six.', 'fenster');
+                $energy_chars = preg_split('//u', $energy_land, -1, PREG_SPLIT_NO_EMPTY);
+                $energy_last = max(1, count($energy_chars) - 1);
+                ?>
                 <h2 id="fg-cas-energy-title" class="fg-cas-turn fg-cas-turn--chapter">
-                    <span class="fg-cas-turn__set"><?php esc_html_e('A standard uPVC profile has four chambers.', 'fenster'); ?></span>
-                    <span class="fg-cas-turn__land"><?php esc_html_e('This one has six.', 'fenster'); ?></span>
+                    <span class="fg-cas-sr"><?php echo esc_html($energy_set . ' ' . $energy_land); ?></span>
+                    <span class="fg-cas-turn__set" aria-hidden="true"><?php echo esc_html($energy_set); ?></span>
+                    <span class="fg-cas-turn__land" aria-hidden="true"><?php foreach ($energy_chars as $ci => $energy_char) : ?><span class="fg-cas-turn__char" style="--fg-char: <?php echo esc_attr(number_format($ci / $energy_last, 4, '.', '')); ?>"><?php echo esc_html($energy_char); ?></span><?php endforeach; ?></span>
                 </h2>
                 <?php /* Not the old lead and not $anatomy[0] verbatim: the
                          accordion's first item is open by default about 200px
