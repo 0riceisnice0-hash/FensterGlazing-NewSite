@@ -1123,8 +1123,25 @@ $faqs = [
                          unit is built from; spec is what a buyer calls the same
                          thing when they are choosing one. */ ?>
                 <p class="eyebrow"><?php esc_html_e('Glass spec', 'fenster'); ?></p>
-                <h2 id="fg-glass-makeup-title"><?php esc_html_e('The glass is the part you live with.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Five to choose from, and they share the same core: a low-E coating, argon in the cavity and a warm edge spacer. What changes is how many panes there are, and how the glass behaves if something hits it or the road outside is loud.', 'fenster'); ?></p>
+                <?php /* RETITLED 2026-09-06. Owner, of "The glass is the part
+                         you live with.": "This title is weird. You live with all
+                         of it?" -- and he is right, it was true of every part of
+                         the window and therefore said nothing about the glass.
+
+                         What it should have carried is the thing a buyer needs
+                         before reading five columns: ONE OF THEM IS ALREADY IN
+                         THE PRICE. That is in the data already -- the first
+                         option is captioned "Our standard" -- but nothing above
+                         the row said so, so all five read as equal choices and
+                         the reader had to work out which one they were getting
+                         by default.
+
+                         The lead's opening moved with it, from "Five to choose
+                         from" to "All five", for the same reason: five to choose
+                         from implies a blank slate rather than a standard and
+                         four upgrades. */ ?>
+                <h2 id="fg-glass-makeup-title"><?php esc_html_e('Toughened glass comes as standard. The rest are upgrades.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('All five share the same core: a low-E coating, argon in the cavity and a warm edge spacer. What changes is how many panes there are, and how the glass behaves if something hits it or the road outside is loud.', 'fenster'); ?></p>
             </div>
             <ul class="fg-glass-makeup__row">
                 <?php foreach ($glass_options as $option) : ?>
