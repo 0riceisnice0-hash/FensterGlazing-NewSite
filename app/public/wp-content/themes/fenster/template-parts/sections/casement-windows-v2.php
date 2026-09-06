@@ -1181,11 +1181,16 @@ $faqs = [
                 <?php endforeach; ?>
             </div>
 
-            <p class="fg-cas-note">
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/handle-options/')); ?>"><?php esc_html_e('Handle options', 'fenster'); ?></a>
-            </p>
+            <?php /* THE THREE CROSS-LINKS WERE HERE AND ARE GONE, 2026-09-06. Owner:
+                     "Also these options are now superfluous."
+
+                     They pointed at /obscured-glass/, /colour-options/ and
+                     /handle-options/. When they were written the page said
+                     nothing about any of the three. It now carries Glass spec,
+                     the sixteen-colour grid and the handle grid inline, and
+                     they sit a screen below this line, so the links offered to
+                     take a reader away to something the next scroll shows them
+                     anyway. */ ?>
         </div>
     </section>
 

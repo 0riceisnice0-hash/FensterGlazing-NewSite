@@ -9297,7 +9297,33 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          instant on every layout. Desktop is unchanged by this in practice -- it
          already started within 5px of it -- and the phone now waits. */
       const plateGone = headerOffset - openRect.bottom;
-      const land = clamp(plateGone / CAS_TYPE_TRAVEL, 0, 1);
+      const byPlate = clamp(plateGone / CAS_TYPE_TRAVEL, 0, 1);
+
+      /* AND THE THING ITSELF HAS TO BE ON SCREEN. Owner, with a photograph of
+         it: "The part I circled animated before the viewport shows it on
+         mobile."
+
+         Keying to the plate is right while the chapter is PINNED, because then
+         the line is held at a known place on the screen. It is wrong the moment
+         the chapter is not pinned -- and it is not pinned on a short phone:
+         measured, 375x667 and 360x640 both refuse the pin because the opening's
+         copy genuinely overflows a box that short, which is the guard doing its
+         job. Off that path the plate is long gone by the time the chapter
+         arrives, so `byPlate` is already 1 and the line types wherever it
+         happens to be. At 375x667 it measured 100% typed with the line 303px
+         BELOW the fold.
+
+         So the plate says "not yet" and the element says "not until you can see
+         me", and the lower of the two wins. While pinned this is 1 and changes
+         nothing; off the pinned path it becomes the driver. */
+      const vh = Math.max(1, window.innerHeight);
+      const enters = (el) => {
+        if (!el) return 1;
+        const top = el.getBoundingClientRect().top;
+        return clamp((vh * 0.9 - top) / (vh * 0.15), 0, 1);
+      };
+
+      const land = Math.min(byPlate, enters(casTurnLand));
       casTurnStack.style.setProperty('--fg-cas-land-cols', `${Math.sqrt(land).toFixed(4)}fr`);
 
       /* THE SWEEP STARTS WHEN THE TEXT STARTS TO MOVE, not when the plate
@@ -9376,6 +9402,9 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
           const travel = hold + headerOffset + inset;
           sweep = clamp((headerOffset - underRect.top) / Math.max(1, travel), 0, 1);
         }
+        /* Same gate as the line: the cutaway cannot sweep before it is on
+           screen, on the pinned path or off it. */
+        sweep = Math.min(sweep, enters(casEnergyHeat));
         casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
       }
     }

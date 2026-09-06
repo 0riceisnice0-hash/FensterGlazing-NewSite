@@ -39574,7 +39574,25 @@ html.fg-blinds-reveal-locked {
   white-space: pre;
 }
 
-.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__wipe {
+/* NOT GATED ON `is-turn-pinned`, AND THAT GATE WAS THE BUG, 2026-09-06. Owner,
+   with a photograph: "The part I circled animated before the viewport shows it
+   on mobile."
+
+   A short phone does not pin -- measured, 375x667 and 360x640 both refuse it
+   because the opening's copy genuinely overflows a box that short, which is the
+   guard working correctly. But this rule required the pinned class, so off that
+   path it never applied and the line simply sat there FULLY TYPED from the
+   moment the page loaded. To a reader that is indistinguishable from an
+   animation that ran before they arrived, which is exactly what was reported,
+   and it is why three releases aimed at the timing changed nothing on his
+   phone: there was no animation there to retime.
+
+   `--fg-cas-land-cols` is published on every path and is gated in the
+   controller on the line being on screen, so this is safe unpinned. The `1fr`
+   fallback still means that with the property never written the line is simply
+   there, finished, and `.fg-cas-motion-ready` keeps it out of the way until the
+   controller is live. */
+.js .fg-cas-motion-ready.fg-cas-stack .fg-cas-energy .fg-cas-turn__wipe {
   grid-template-columns: var(--fg-cas-land-cols, 1fr);
 }
 
@@ -39816,7 +39834,9 @@ html.fg-blinds-reveal-locked {
     transform: none;
   }
 
-  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__wipe {
+  /* Matches the rule above, which no longer asks for the pinned class, so
+     reduced motion still lands the line whole on every path. */
+  .js .fg-cas-motion-ready.fg-cas-stack .fg-cas-energy .fg-cas-turn__wipe {
     grid-template-columns: 1fr;
   }
 }
