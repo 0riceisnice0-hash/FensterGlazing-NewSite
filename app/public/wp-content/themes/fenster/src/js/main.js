@@ -9113,10 +9113,22 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
      still overflow a min-height at large zoom or a raised minimum font size,
      so it is measured rather than assumed. No fit, no pin: the track loses its
      extra height, nothing is sticky and the fallback band below takes over. */
+  /* The guard below compares a box sized in `svh` against `window.innerHeight`,
+     and those two do not have to agree to the pixel. The panel is DESIGNED to
+     be exactly one screen less the header, so the honest slack is zero and the
+     old `+ 1` left the test balanced on a knife edge: any disagreement between
+     how the browser resolves `100svh` and what it reports as `innerHeight` --
+     or the header's own 1px bottom border, which `--site-header-main-height`
+     does not count -- flips the pin OFF and the whole chapter changes layout.
+     Before the panel was made full height it had 224px of slack and this could
+     not happen. Sixteen absorbs the rounding without weakening what the guard
+     is actually for, which is catching a section far taller than its room. */
+  const PIN_SLACK = 16;
+
   const measureFit = () => {
     if (!casTurnTrack || !casTurnStack) return false;
     const available = window.innerHeight - headerOffset;
-    pinning = casTurnSection.offsetHeight <= available + 1;
+    pinning = casTurnSection.offsetHeight <= available + PIN_SLACK;
     /* On the STACK, not the track, because the cover distance has to reach the
        energy panel too and custom properties inherit down, not sideways. */
     casTurnStack.classList.toggle('is-turn-pinned', pinning);
@@ -9373,7 +9385,35 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
   };
 
   window.addEventListener('scroll', queueCasTurn, { passive: true });
-  window.addEventListener('resize', remeasureCasTurn);
+
+  /* A PHONE'S TOOLBAR FIRES `resize`, AND IT FIRES IT ON EVERY CHANGE OF SCROLL
+     DIRECTION. Owner: "its also still skipping around when you move from
+     scrolling down to scrolling up."
+
+     Scrolling down retracts the address bar, scrolling up brings it back, and
+     each of those is a height-only `resize`. Re-measuring there re-ran the fit
+     test and re-rendered the turn from a viewport that had changed underneath
+     it. Measured at the same scrollY with the height going 844 -> 882 -> 844:
+     `--fg-turn` went 0.6451 -> 0.6120 -> 0.6451, so the animation visibly
+     REWOUND, and the overture box moved 91px with the CTAs 74px behind it.
+     Nothing had scrolled. That is the skip.
+
+     A width change is a real layout change -- a rotation, a resized desktop
+     window -- and still re-measures. A height-only change repaints the turn
+     from the current scroll position, which keeps it honest against the new
+     viewport, but does not touch the pin decision or the cached metrics. */
+  let casLastWidth = window.innerWidth;
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === casLastWidth) {
+      updateCasTurn();
+      return;
+    }
+
+    casLastWidth = window.innerWidth;
+    remeasureCasTurn();
+  });
+
   remeasureCasTurn();
 }
 
