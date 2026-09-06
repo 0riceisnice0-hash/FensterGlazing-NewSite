@@ -40117,13 +40117,6 @@ html.fg-blinds-reveal-locked {
   .fg-cas-lock__arrive { transform: none; }
   .fg-cas-lock__art { width: min(76%, 320px); }
 
-  /* The comparison stays two-up on a phone: side by side is the whole point,
-     and at 390 each image is still 165px wide, which is enough to read a sash
-     face against a flat one. */
-  .fg-cas-trio {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .fg-cas-combi figure { order: -1; }
 
   /* Nothing to hover with: the features are simply on. */
@@ -40192,6 +40185,57 @@ html.fg-blinds-reveal-locked {
   .fg-cas-mosaic figure:nth-child(n) { grid-column: auto; grid-row: auto; }
 
   .fg-cas .fg-cas-swipe { display: block; }
+
+  /* ---- the optional bits swipe, they do not list ------------------------
+     Owner, 2026-09-06: "all the optional bits shouldnt list on mobiel, they
+     should swipe. colours are smaller so can swipe 2 at a time."
+
+     Measured at 390 before this, and the case is in the numbers: the glass
+     column ran 1273px, the colours 937px, the detail 549px and the handles
+     437px. Better than 3,196px of stacked options between the reader and Our
+     work is four short rails, which is what the mosaic above already does and
+     what the rest of the site does on a phone.
+
+     PROXIMITY SNAPPING, NEVER MANDATORY. Mandatory refused to swipe on
+     iPhones -- the same fault already written up on the collections rail --
+     so every rail on this site is proximity.
+
+     Two card widths, because there are two kinds of thing here. The glass and
+     the detail are cards you read, so they take the mosaic's one-at-a-time
+     with the next one showing. The colours and the handles are swatches you
+     scan, and the owner asked for two at a time; the clamp is so that a 44%
+     card is about 160px on a phone but cannot grow silly on a wide one. */
+  .fg-glass-makeup .fg-glass-makeup__row,
+  .fg-cas-trio,
+  .fg-cas .fg-upvc-colours__grid,
+  .fg-cas .fg-handle-finishes__grid {
+    display: flex;
+    gap: clamp(0.75rem, 3vw, 1.1rem);
+    padding-bottom: 0.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  /* Read one, then the next. */
+  .fg-glass-makeup .fg-glass-makeup__col {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+
+  .fg-cas-trio figure {
+    flex: 0 0 78%;
+    scroll-snap-align: center;
+  }
+
+  /* Scanned in pairs. `start` rather than `centre`: a two-up rail centred on
+     one card leaves its partner half off the screen. */
+  .fg-cas .fg-upvc-colours__grid li,
+  .fg-cas .fg-handle-finishes__grid li {
+    flex: 0 0 clamp(8.5rem, 44%, 12rem);
+    scroll-snap-align: start;
+  }
 }
 
 /* ---- The .fg-cw layout, restored -------------------------------------------

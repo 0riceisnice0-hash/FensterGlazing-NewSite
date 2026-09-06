@@ -1122,11 +1122,27 @@ $faqs = [
              now follows the glass. */ ?>
     <section class="fg-cas-detail" aria-labelledby="fg-cas-detail-title">
         <div class="container">
-            <div class="fg-cas-section-head">
-                <div>
-                    <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
-                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
-                </div>
+            <?php /* The SHARED heading, not `fg-cas-section-head`, since
+                     2026-09-06. Owner: "also detail headign is formatted
+                     different to the others."
+
+                     There are two heading systems in play here and they are far
+                     enough apart to read as a mistake: `fg-cas-*` is a 41.6px
+                     display with a green 11.5px eyebrow, the shared one a
+                     31.7px h2 with a grey 16px eyebrow. That was fine while the
+                     detail sat next to Two faces, both of them `fg-cas`. The
+                     2026-09-06 reorder moved Glass make-up above it and left
+                     the colour and handle grids below it, all three on the
+                     shared style, so the detail alone jumped.
+
+                     It joins them rather than the other way round because it
+                     belongs with them: it is one of the optional bits a reader
+                     is choosing between, not a chapter. `fg-cas-display` and
+                     `fg-cas-eyebrow` stay in use by Our work and Two faces,
+                     which close the page and are not choices. */ ?>
+            <div class="section-heading section-heading--wide">
+                <p class="eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
+                <h2 id="fg-cas-detail-title"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-trio">
