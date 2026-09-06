@@ -9437,35 +9437,86 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
 
   window.addEventListener('scroll', queueCasTurn, { passive: true });
 
-  /* A PHONE'S TOOLBAR FIRES `resize`, AND IT FIRES IT ON EVERY CHANGE OF SCROLL
-     DIRECTION. Owner: "its also still skipping around when you move from
-     scrolling down to scrolling up."
+  /* A PHONE'S TOOLBAR FIRES `resize` ON EVERY CHANGE OF SCROLL DIRECTION, and
+     the first version of this fix threw the baby out with it.
 
-     Scrolling down retracts the address bar, scrolling up brings it back, and
-     each of those is a height-only `resize`. Re-measuring there re-ran the fit
-     test and re-rendered the turn from a viewport that had changed underneath
-     it. Measured at the same scrollY with the height going 844 -> 882 -> 844:
-     `--fg-turn` went 0.6451 -> 0.6120 -> 0.6451, so the animation visibly
-     REWOUND, and the overture box moved 91px with the CTAs 74px behind it.
-     Nothing had scrolled. That is the skip.
+     Scrolling down retracts the address bar, scrolling up restores it, and each
+     is a height-only `resize`. Re-rendering the turn on those made the
+     animation visibly rewind, so height-only resizes were made to skip
+     `remeasureCasTurn` entirely. That ALSO skipped `measureFit`, and the pin
+     decision then had exactly one chance to be right: the one taken at init,
+     before the stylesheet's `svh` min-height had necessarily resolved.
 
-     A width change is a real layout change -- a rotation, a resized desktop
-     window -- and still re-measures. A height-only change repaints the turn
-     from the current scroll position, which keeps it honest against the new
-     viewport, but does not touch the pin decision or the cached metrics. */
+     Measured on live at 375x667, 360x640 and 320x568: the section and its
+     min-height agreed exactly (591 vs 591) and stayed that way from 300ms
+     onward, the guard's own arithmetic said `true`, and `is-turn-pinned` was
+     still absent four seconds later -- while a ONE PIXEL width nudge pinned it
+     instantly. Nothing was wrong except that nobody had asked again.
+
+     Before the toolbar fix a phone hid this completely, because the toolbar
+     fired resizes constantly and the wrong answer was corrected within a
+     gesture. That is why it only appeared on small phones and only after that
+     release.
+
+     So the two jobs are separated. `measureFit` is cheap and writes no styles,
+     so it runs on EVERY resize; the expensive re-render only happens when the
+     answer actually changes. And because the guard now compares the section
+     against its own `min-height` -- both of which are `svh`-based and immune to
+     the toolbar -- the answer does not flip when the bars move, so this cannot
+     bring the rewinding back. */
   let casLastWidth = window.innerWidth;
 
+  const refit = () => {
+    const was = pinning;
+    measureFit();
+
+    if (pinning !== was) {
+      /* The class has just changed what is sticky and how tall the track is, so
+         the cached metrics are stale. */
+      readMetrics();
+      measureFit();
+    }
+
+    updateCasTurn();
+  };
+
   window.addEventListener('resize', () => {
-    if (window.innerWidth === casLastWidth) {
-      updateCasTurn();
+    if (window.innerWidth !== casLastWidth) {
+      casLastWidth = window.innerWidth;
+      remeasureCasTurn();
       return;
     }
 
-    casLastWidth = window.innerWidth;
-    remeasureCasTurn();
+    refit();
   });
 
   remeasureCasTurn();
+
+  /* ASK AGAIN, because the first answer is taken mid-load. Fonts change the
+     copy's height, the hero image changes the layout above it, and `100svh`
+     has to have resolved. Each of these is a moment the fit can legitimately
+     differ from the one measured at parse time, and none of them fires a
+     `resize`. */
+  window.requestAnimationFrame(refit);
+  window.addEventListener('load', refit, { once: true });
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(refit).catch(() => {});
+  }
+
+  /* And the precise instrument: the section's own box changing size, whatever
+     caused it. Guarded on the height actually differing so toggling the class
+     cannot feed itself. */
+  if (typeof ResizeObserver === 'function') {
+    let lastMeasured = casTurnSection.offsetHeight;
+
+    new ResizeObserver(() => {
+      const height = casTurnSection.offsetHeight;
+      if (height === lastMeasured) return;
+      lastMeasured = height;
+      refit();
+    }).observe(casTurnSection);
+  }
 }
 
 /* ---------- Casement chapters --------------------------------------------
