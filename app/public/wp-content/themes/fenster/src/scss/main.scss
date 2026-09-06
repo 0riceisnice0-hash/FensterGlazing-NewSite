@@ -39819,12 +39819,14 @@ html.fg-blinds-reveal-locked {
        chapter released and completed at scrollY 3384 with the image 0% on
        screen. It finished above the fold, which is precisely what was reported.
 
-       62vh was 523px at 844 -- enough for the line and the sweep, and nothing
-       left for the three figures, which then ran UNDERNEATH both of them.
-       120vh is 1,013px: 190 for the line, 300 for the sweep, and ~520 for the
-       figures, which is about 170 of scroll each. This one genuinely costs page
-       length, which a real pause has to. */
-    --fg-cas-hold: 120vh;
+       It went to 120vh to make room for the three figures after the line and
+       the sweep, and that was wasted: measured at 390x750 the figures sit at
+       647..788 in a 750 viewport, so they are BELOW THE FOLD for the whole pin
+       and no amount of hold could show them. They now cycle on their own travel
+       through the screen instead, so the hold only has to outlast the line
+       (190px) and the sweep (300px). 62vh is 523px at 844, which covers both
+       with room over, and gives the reader back ~490px of scrolling. */
+    --fg-cas-hold: 62vh;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {

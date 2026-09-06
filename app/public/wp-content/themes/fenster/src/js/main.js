@@ -9017,12 +9017,36 @@ statCycles.forEach((cycle) => {
            figures wait for the other two to finish. Detected off the media box
            rather than a breakpoint: it is only sticky in the two-column
            layout. */
+        /* STACKED, THE FIGURES ARE NOT ON THE PINNED SCREEN AT ALL, so hanging
+           them off the hold was always going to fail. Owner, three times, last
+           as "That spec section ani is still completely lost on mobile".
+
+           Measured at 390x750, which is a phone with Safari's bars showing:
+           the cutaway occupies 99..342, the chapter head 412..647, and the
+           figures 647..788 -- they START at the fold and run 38px past it. The
+           site's chat assistant is `position: fixed` at 634..750 with
+           `z-index: 1100`, so it covers what little would have shown. During
+           the whole pin they are simply not on screen, which is why every
+           adjustment to their timing changed nothing: the timing was never the
+           problem, the composition was.
+
+           Shrinking the cutaway to claw back 168px was the other option and the
+           owner offered it, but it is fragile -- it has to hold at every phone
+           height and still clear a fixed overlay this page does not own. The
+           figures instead cycle on their OWN travel through the viewport, the
+           fallback below, so they animate exactly when they can be seen. That
+           is the owner's other suggestion, trigger them later, made precise.
+
+           Two columns keep the hold-based version: there the figures sit beside
+           the cutaway, well inside the screen, and the sweep does not start
+           until the chapter releases, so they have the hold to themselves. */
         const media = panel.querySelector('.fg-cas-energy__media');
         const stacked = !media || getComputedStyle(media).position !== 'sticky';
-        const queued = stacked ? CAS_TYPE_TRAVEL + CAS_SWEEP_TRAVEL : 0;
 
-        const start = clamp((reveal + queued) / range, 0, 0.95);
-        return clamp((raw - start) / Math.max(0.01, 1 - start), 0, 1);
+        if (!stacked) {
+          const start = clamp(reveal / range, 0, 0.95);
+          return clamp((raw - start) / Math.max(0.01, 1 - start), 0, 1);
+        }
       }
     }
 
