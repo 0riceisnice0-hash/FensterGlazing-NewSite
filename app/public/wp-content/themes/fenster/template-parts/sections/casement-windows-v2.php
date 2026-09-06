@@ -256,7 +256,26 @@ $security_points = [
        mechanism, and the approval point says what belongs to a whole tested
        window. */
     ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Kenrick Excalibur strip runs the length of the sash, and one turn of the handle throws steel shoot bolts into the frame and bi-directional claws into keeps down the sash edge, so the window is held into its seals along its whole length rather than at the handle.'],
-    ['name' => 'The frame it pulls against', 'copy' => 'A lock is only as good as what it is fixed into. Reinforcement is sized window by window, because a large dark sash on an exposed elevation is stiffened differently from a small one in a sheltered wall.'],
+    /* "The frame it pulls against" WAS HERE AND IS GONE, 2026-09-06. Owner:
+       "'The frame it pulls against' mini section is nonsense." He is right, and
+       for a reason worth writing down so it does not come back.
+
+       It was the anatomy accordion's Reinforcement item repeated almost word
+       for word, one screen away on the same page, under a heading that
+       misdescribed it. Reinforcement is sized for WIND LOAD AND THERMAL
+       MOVEMENT: that is what "a large dark sash on an exposed elevation"
+       is about, dark frames absorbing heat and exposed walls catching wind.
+       None of that is what a lock pulls against, so the heading promised a
+       security fact and the sentence delivered a structural one.
+
+       Not rewritten, because there is no published fact to rewrite it with. The
+       page says the bolts throw into the frame and the claws into keeps down
+       the sash edge, but nothing anywhere states what those keeps are fixed
+       into. Inventing one would be worse than the sentence that was here.
+
+       IF THERE IS A REAL ANSWER, this is the slot for it: the point that a lock
+       is only as good as what it is fixed into is a good one, and the owner has
+       it. Ask before adding it back. */
     ['name' => 'The glass does half the work', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
     ['name' => 'Tested, and guaranteed ten years', 'copy' => 'Kenrick test the mechanism to 100,000 opening cycles and 240 hours of salt spray, beyond what BS EN 1670 asks, and guarantee it for ten years.'],
     ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is what Part Q calls for on new dwellings and some extensions, so tell us early if your build is covered. The approval belongs to a tested complete window, not to a profile name or a lock on its own.'],
