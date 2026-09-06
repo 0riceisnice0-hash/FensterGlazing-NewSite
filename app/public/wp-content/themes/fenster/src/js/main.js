@@ -9240,7 +9240,16 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
       if (casHeatSubject) {
         const heatRect = casHeatSubject.getBoundingClientRect();
         const span = Math.max(1, heatRect.bottom - heatRect.top);
-        const sweep = clamp((heatRect.bottom - openRect.bottom) / span, 0, 1);
+        /* Gated on the plate having actually started to lift. Without that, the
+           sweep reads 1 during the APPROACH, because the plate's bottom edge is
+           then above the photograph simply by virtue of the photograph being
+           further down the page. The chapter would slide up into view already
+           fully thermal, lose its colour as it went under the plate, and get it
+           back on the way out. Measured before the gate: 1.00 at scrollY 1650,
+           0.00 by 2100, 1.00 again by 2700. */
+        const sweep = uncover <= 0
+          ? 0
+          : clamp((heatRect.bottom - openRect.bottom) / span, 0, 1);
         casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
       }
 

@@ -39522,6 +39522,35 @@ html.fg-blinds-reveal-locked {
 .fg-cas .fg-cas-turn__set { color: var(--color-muted); }
 .fg-cas .fg-cas-turn__land { color: var(--color-ink); }
 
+/* ---- the pay-off opens, on the overture's own mechanism -------------------
+   RESTORED 2026-09-06. These rules were written, then lost to a later
+   range-based edit in this file, and because losing them leaves the line simply
+   PRESENT rather than broken, nothing looked wrong: the wipe just never played.
+   That is worth knowing, because a missing animation is invisible in a way a
+   missing layout rule is not.
+
+   Same single-`fr`-track idiom the overture uses for " not just" and for the
+   terms: the track opens from nothing while the text inside is clipped, so the
+   line uncovers left to right at a steady rate, which is what reads as typing.
+
+   No `transition`. The value is scrubbed from the scroll, and a transition on
+   top of a scrubbed value lags behind the wheel. The `1fr` fallback means that
+   with the property never written the line is simply there, finished. */
+.fg-cas-turn__wipe {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+}
+
+.fg-cas-turn__wipe-run {
+  min-width: 0;
+  overflow: hidden;
+  white-space: pre;
+}
+
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__wipe {
+  grid-template-columns: var(--fg-cas-land-cols, 1fr);
+}
+
 /* A sub-head, not a second heading, so it is deliberately smaller than the
    chapter h2. (0,2,0) clears `.fg-cas h3` at (0,1,1). */
 .fg-cas .fg-cas-staccato {
