@@ -9257,18 +9257,12 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          takes that share of the LEFTOVER space, and in an auto-sized grid the
          painted width is the SQUARE of the factor. Linear inside the band
          rather than eased, because a steady rate is what reads as typing. */
-      /* THE LINE STARTS LATE ON PURPOSE. Owner: "delay the text animation on
-         'This one has six.' starting at the point where it currently says
-         'this one ha'." Measured in the page's own metrics rather than counted
-         off in characters: "This one ha" is 0.6929 of the run's painted width
-         at both 1440 and 390, because the face is the same and scales evenly.
-
-         Subtracting it AFTER the 1.15 is what keeps the pace. The line does not
-         squeeze into what is left of the plate's travel and type faster; the
-         plate's bottom edge keeps falling once it has cleared the screen, so
-         `landRaw` runs on past 1 and the delayed line finishes later at exactly
-         the rate it had before. Compressing instead would have made it quicker,
-         which is the opposite of every note on this animation so far. */
+      /* The line was once delayed by a measured 0.6929 of its own painted width,
+         to start where it read "This one ha". That mechanism is GONE: keying to
+         the plate below supersedes it, and starts the line later still on a
+         phone. The reason it existed is still honoured -- the line must not
+         begin the instant the chapter appears -- it is simply expressed as a
+         plate position now rather than as a share of a string. */
       /* NOTHING TYPES UNTIL THE PLATE IS OFF. Owner: "the animation timing is
          bad. Check it using same logic as desktop so that animations don't
          start until it's properly visible."
