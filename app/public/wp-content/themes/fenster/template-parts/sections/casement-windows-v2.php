@@ -577,8 +577,36 @@ $faqs = [
                  figures run across underneath it. That whole opening is about
                  500px, so it is a single readable screen; the accordion is the
                  layer below it for anyone who wants the detail. */ ?>
-        <div class="container fg-cas-energy__open">
-        <div class="fg-cas-chapter__head">
+        <?php /* THE PROFILE TRAVELS WITH THE DETAIL. Owner, 2026-09-06: "i
+                 meant slide it down so it follwos to the side of the accordion."
+
+                 So the chapter is one two column layout rather than a band with
+                 a list under it: everything you read runs down the left, and the
+                 profile sits in a column of its own on the right and sticks
+                 there. It is the subject of every item in the accordion, so
+                 having it in view while you open them is the point.
+
+                 The claim and the three figures still get a screen to
+                 themselves, which is what `__screen` is for; the accordion
+                 simply begins under it in the same column. */ ?>
+        <?php /* THE PROFILE TRAVELS WITH THE DETAIL. Owner, 2026-09-06: "i
+                 meant slide it down so it follwos to the side of the accordion."
+
+                 So the chapter is one two column layout rather than a band with
+                 a list under it: everything you read runs down the left, and the
+                 profile sits in a column of its own on the right and sticks
+                 there. It is the subject of every item in the accordion, so
+                 having it in view while you open them is the point.
+
+                 The claim and the three figures still get a screen to
+                 themselves, which is what `__screen` is for; the accordion
+                 simply begins under it, in the same column. */ ?>
+        <div class="container fg-cas-energy__layout">
+
+            <div class="fg-cas-energy__main">
+
+                <div class="fg-cas-energy__screen">
+                    <div class="fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true"></span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('EnergyPlus', 'fenster'); ?></p>
@@ -624,13 +652,7 @@ $faqs = [
             </div>
         </div>
 
-            <figure class="fg-cas-energy__media">
-                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-c.webp')); ?>"
-                    alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
-                    loading="lazy" width="1100" height="733">
-            </figure>
-
-            <?php /* The figures arrive one after another as the chapter is
+                    <?php /* The figures arrive one after another as the chapter is
                      reached, rather than being there already. Owner, 2026-09-05:
                      "then maybe bring the rh figures in on a scroll motion too".
 
@@ -649,16 +671,15 @@ $faqs = [
                     </div>
                 <?php endforeach; ?>
             </dl>
-        </div>
+                </div>
 
-        <?php /* The detail sits BELOW the fold on purpose. Owner, 2026-09-06:
+                <?php /* The detail sits BELOW the fold on purpose. Owner, 2026-09-06:
                  "dont have them in the immediate viewport. make the image, title
                  and 3x spec points have their own before the accordion." The
                  band above carries a viewport of its own, so this is what you
                  find when you choose to go further, not what competes with the
                  claim while you are still reading it. */ ?>
-        <div class="container">
-            <ol class="fg-cas-anatomy" data-fg-anatomy>
+                <ol class="fg-cas-anatomy" data-fg-anatomy>
                 <?php foreach ($anatomy as $i => $item) : ?>
                     <?php $id = 'fg-cas-anatomy-' . $i; ?>
                     <li>
@@ -675,8 +696,22 @@ $faqs = [
                     </li>
                 <?php endforeach; ?>
             </ol>
-            <p class="fg-cas-note fg-cas-note--quiet"><?php esc_html_e('Liniar profiles are lead-free and recyclable at the end of their life, designed, extruded and tested in Derbyshire. The frame carries a ten year Liniar guarantee; our installation carries ten years of ours.', 'fenster'); ?></p>
+
+                <p class="fg-cas-note fg-cas-note--quiet"><?php esc_html_e('Liniar profiles are lead-free and recyclable at the end of their life, designed, extruded and tested in Derbyshire. The frame carries a ten year Liniar guarantee; our installation carries ten years of ours.', 'fenster'); ?></p>
+            </div>
+
+            <?php /* Last in the source, so a screen reader and a reader with no
+                     CSS meet the claim and the figures before the illustration.
+                     The grid puts it in the right hand column regardless. */ ?>
+            <span class="fg-cas-energy__aside">
+            <figure class="fg-cas-energy__media">
+                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-c.webp')); ?>"
+                    alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
+                    loading="lazy" width="1100" height="733">
+            </figure>
+            </span>
         </div>
+
     </section>
 
     <?php get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows')); ?>

@@ -38634,29 +38634,52 @@ html.fg-blinds-reveal-locked {
    reference sets its sections and what this chapter was missing: a full width
    head over a half width photograph meant the heading had gone by the time the
    photograph arrived. About 500px all in, so it reads as one screen. */
-/* THE BAND OWNS A SCREEN. Owner: "make the image, title and 3x spec points have
-   their own before the accordion." The claim, the profile and the three figures
-   are one viewport, centred in it, and the detail begins under the fold. */
-.fg-cas-energy__open {
+/* ONE LAYOUT FOR THE WHOLE CHAPTER. Everything you read runs down the left; the
+   profile has a column of its own on the right and stays in it.
+
+   Owner: "slide it down so it follwos to the side of the accordion." A drift on
+   the photograph was the wrong answer to that, because it does not FOLLOW
+   anything: it moves a fixed distance and stops. Sticking it in a column that
+   spans the whole chapter does, and the profile is the subject of every item in
+   the accordion, so having it there while you open them is the point. */
+.fg-cas-energy__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  align-content: center;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* The claim and the three figures still get a screen to themselves. The
+   accordion begins under it, in the same column. */
+.fg-cas-energy__screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: calc(100svh - var(--site-header-main-height));
   padding-block: clamp(2rem, 5vh, 3.5rem);
 }
 
-/* The figures run the full width beneath both columns. */
-.fg-cas-energy__open .fg-cas-stats--row {
-  grid-column: 1 / -1;
+.fg-cas-energy__aside {
+  display: block;
+}
+
+/* Sticky, and low enough that it sits against the detail rather than jammed
+   under the header. Its containing block is the layout, so it releases when the
+   chapter ends: bounded by construction, not by a measurement. */
+.fg-cas-energy__media {
+  position: sticky;
+  top: calc(var(--site-header-main-height) + clamp(1.5rem, 6vh, 4rem));
 }
 
 /* The head keeps its numeral column but stops adding rhythm of its own: inside
-   the band the gap is the grid's. */
-.fg-cas-energy__open .fg-cas-chapter__head {
+   the screen the space comes from the flex layout. */
+.fg-cas-energy__screen .fg-cas-chapter__head {
   margin-bottom: 0;
 }
+
+/* Grid children default to min-width:auto, which lets a long word or a wide
+   child push the column wider than its track. */
+.fg-cas-energy__main { min-width: 0; }
 
 /* The three figures run across under the band rather than stacking down beside
    the photograph, where they made the chapter a screen taller than it needed to
@@ -38706,23 +38729,6 @@ html.fg-blinds-reveal-locked {
 .fg-cas-energy__media {
   margin: 0;
   background-color: var(--fg-chapter-ground, transparent);
-}
-
-/* The profile comes DOWN into place as the chapter is uncovered, rather than
-   being there already. Owner: "can the profile image scroll down".
-
-   Driven by `--fg-cas-uncover`, not by the shared `[data-fg-depth]` parallax:
-   that one reads the element's distance from the middle of the screen, and this
-   chapter is PINNED while it is being revealed, so its distance never changes
-   and it would not move at all.
-
-   The transform is on the FIGURE and the blend stays on the image inside it. A
-   transform makes a stacking context, so putting it on the image would put the
-   image in one of its own and there would be nothing left to multiply against.
-   The figure carries the ground with it as it moves, and what it uncovers
-   behind is the panel painting the same colour, so nothing shows. */
-.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy__media {
-  transform: translate3d(0, calc((1 - var(--fg-cas-uncover, 1)) * -3.25rem), 0);
 }
 
 /* The pay-off OPENS ITSELF over the last stretch of the uncovering, on the same
@@ -39650,10 +39656,6 @@ html.fg-blinds-reveal-locked {
     top: auto;
   }
 
-  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy__media {
-    transform: none;
-  }
-
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__land {
     opacity: 1;
     transform: none;
@@ -39972,7 +39974,7 @@ html.fg-blinds-reveal-locked {
   .fg-cas p { max-width: none; }
 
   .fg-cas-section-head,
-  .fg-cas-energy__open,
+  .fg-cas-energy__layout,
   .fg-cas-film__grid,
   .fg-cas-versus__body,
   .fg-cas-combi {
@@ -40010,9 +40012,13 @@ html.fg-blinds-reveal-locked {
 
   .fg-cas-actions .button { flex: 1 1 auto; text-align: center; }
 
-  /* The photograph leads on a phone, as the figures elsewhere here do. */
-  .fg-cas-energy__open figure,
+  /* The photograph leads on a phone, as the figures elsewhere here do, and it
+     stops sticking: there is no second column for it to follow down. */
+  .fg-cas-energy__aside,
   .fg-cas-film__grid figure { order: -1; }
+
+  .fg-cas-energy__media { position: static; top: auto; }
+  .fg-cas-energy__screen { min-height: 0; }
 
   /* Three figures across is 100px a column on a phone, which breaks the notes
      into a ragged stack. They go back to one under another. */

@@ -8928,6 +8928,9 @@ const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--
 const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
 const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
 const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chapters]');
+/* The chapter's pay-off line, so the moment it stops being covered can be
+   measured rather than guessed at. */
+const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .fg-cas-turn__land');
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
      single word moves, and rests finished before the section releases. Without
@@ -9071,16 +9074,35 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
     );
     if (casTurnStack) {
       casTurnStack.style.setProperty('--fg-cas-uncover', uncover.toFixed(4));
-      /* The chapter's pay-off line opens on the same `fr` track idiom as the
-         overture, so it needs the same square root: a flex factor below 1 takes
-         that share of the LEFTOVER space, and in an auto-sized grid the painted
-         width comes out as the SQUARE of the factor. Uncompensated the line
-         would crawl and then snap.
+      /* WHERE THE LINE STOPS BEING COVERED, MEASURED, NOT A CONSTANT.
 
-         Linear inside the band rather than eased, because a steady rate is what
-         makes it read as typing; an ease-out would race the first half of the
-         words and dawdle over the last. */
-      const land = clamp((uncover - 0.46) / 0.34, 0, 1);
+         This ran over a fixed slice of `uncover` (0.46 to 0.80) and the owner
+         caught it starting too early. The reason is the direction of the
+         reveal: the opening lifts, so the chapter is uncovered from the BOTTOM
+         of the screen upwards, and the heading sits at the TOP of the chapter,
+         which makes it the last thing to appear. At 0.46 uncovered the line was
+         still behind the plate, so by the time you could see it, it was already
+         half open.
+
+         The opening's bottom edge IS the curtain. While it sits below the
+         line's top the line is covered; once it passes above, the line is
+         wholly clear. So the wipe starts exactly there and runs over the lift
+         that remains, times 1.15 so it is finished a little before the plate
+         has completely gone rather than on the same frame.
+
+         Both rects are read while the chapter is pinned, so neither is moving.
+
+         Then the same square root the overture needs: a flex factor below 1
+         takes that share of the LEFTOVER space, and in an auto-sized grid the
+         painted width is the SQUARE of the factor. Linear inside the band
+         rather than eased, because a steady rate is what reads as typing. */
+      let land = 1;
+      if (casTurnLand) {
+        const landRect = casTurnLand.getBoundingClientRect();
+        const from = landRect.top;
+        const to = headerOffset;
+        land = clamp(((from - openRect.bottom) / Math.max(1, from - to)) * 1.15, 0, 1);
+      }
       casTurnStack.style.setProperty('--fg-cas-land-cols', `${Math.sqrt(land).toFixed(4)}fr`);
     }
 
