@@ -782,7 +782,13 @@ function fenster_window_handle_grid_args(): array
         'id' => 'window-handle-finishes',
         'eyebrow' => 'Handles',
         'heading' => 'Six handle finishes, lockable as standard.',
-        'intro' => 'The S2 Signature range, in left and right hand versions so the operation matches the way the window opens. The release button and the screw cover cap come in the finish you choose rather than defaulting to white.',
+        /* "rather than defaulting to white" WAS INVENTED AND IS GONE,
+           2026-09-06. Owner: "No one said about a white default? Made up."
+           Correct -- nothing on this site or from the supplier says these parts
+           default to white anywhere, so the sentence was scoring a point against
+           a baseline that does not exist. The fact underneath it is real and
+           worth keeping on its own: the small parts match the finish. */
+        'intro' => 'The S2 Signature range, in left and right hand versions so the operation matches the way the window opens. The release button and the screw cover cap match the finish you choose.',
         'note' => 'Handing, restrictors and key-locking are settled at survey, alongside how far the sash swings and whether the handle can be reached comfortably.',
         'alt_pattern' => 'S2 Signature window handle in %s',
         'sub_label' => true,

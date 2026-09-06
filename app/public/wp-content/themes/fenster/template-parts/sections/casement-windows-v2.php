@@ -316,7 +316,6 @@ $security_points = [
        IF THERE IS A REAL ANSWER, this is the slot for it: the point that a lock
        is only as good as what it is fixed into is a good one, and the owner has
        it. Ask before adding it back. */
-    ['name' => 'The glass does half the work', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
     ['name' => 'Tested, and guaranteed ten years', 'copy' => 'Kenrick test the mechanism to 100,000 opening cycles and 240 hours of salt spray, beyond what BS EN 1670 asks, and guarantee it for ten years.'],
     /* Tightened 2026-09-06. Owner: "this is also waffle". It was three
        sentences where two were caveats: what Part Q asks for, then a
@@ -326,6 +325,20 @@ $security_points = [
        tested to it, which puts the approval at the window instead of
        announcing where it does not sit. Same fact, one clause, no lecture. */
     ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. Part Q asks for PAS 24 on new dwellings and some extensions, so tell us at survey if yours is covered and we will specify a complete window tested to it.'],
+    /* LAST, AND NAMED AS AN OPTION, 2026-09-06. Owner: "This should be the last
+       point in that section and shouldn't undermine the locking. It's an
+       optional upgrade."
+
+       It was second of four and called "The glass does half the work", which
+       says in its own title that the lock only does the other half -- directly
+       under a heading whose whole job is "Multi-point locking is not an
+       upgrade. It is what we fit." The copy never undermined anything; the
+       title did.
+
+       The order now runs: what is fitted as standard, the proof behind it, the
+       approvals available, and then the one thing a buyer can choose to add.
+       The option belongs at the end of that argument, not interrupting it. */
+    ['name' => 'Laminated glass, an optional upgrade', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
 ];
 /* Kenrick's own published figures for the Excalibur, taken from
    kenricks.co.uk/products/window-hardware/excalibur on 2026-08-04. They belong
@@ -375,11 +388,11 @@ $faqs = [
     ['question' => 'Are casement windows secure?', 'answer' => 'Multi-point locking is what we fit as standard, not an upgrade, and PAS 24 or Secured by Design can be specified on top. Part Q asks for PAS 24 on new dwellings and some extensions, so tell us at survey if yours is covered and we will specify a complete window tested to it.'],
     ['question' => 'Can I have triple glazing?', 'answer' => 'Yes. The 70mm frame takes a 28mm double glazed unit or a 36mm triple. Whether triple is worth it depends on the sash size, the weight and what you are actually trying to improve, so we will compare it with you rather than treating it as an automatic upgrade.'],
     ['question' => 'Will new casements make the house quieter?', 'answer' => 'They can, when the whole specification is designed for it. Liniar publish around 33 decibels for a standard double glazed unit and up to 37 decibels, rated 37 (-2;-5), where the window is built for acoustics. Reaching the higher figure is the glass doing the work rather than the frame. Pane thicknesses, frame seals and the ventilation path all affect the result, and the ventilation path is the one people forget.'],
-    ['question' => 'How many colours are there?', 'answer' => 'Sixteen foils, plus smooth white as the unfoiled profile. The colour you pick is the external face, with the same colour or smooth white on the inside. Liniar publish a wider foil catalogue, but availability, lead time and cost depend on the exact profile and the fabricator, so we confirm before you order.'],
+    ['question' => 'How many colours are there?', 'answer' => 'Sixteen foils, plus smooth white as the unfoiled profile. The colour you pick is the external face, with the same colour or smooth white on the inside. Liniar publish a wider foil catalogue, but availability, lead time and cost vary by colour, so we confirm before you order.'],
     ['question' => 'Can I have bars, horns or leaded glass?', 'answer' => 'Yes. Georgian bars sit inside the sealed unit, astragal bars are bonded to the glass face, mock sash horns dress the sash corners, and leaded glass comes in squares or diamonds. All of them are priced with the window rather than added afterwards.'],
     ['question' => 'Can you copy my existing window layout?', 'answer' => 'Usually, though an exact copy is not always the best answer. At survey we check escape, ventilation, handle reach, outside clearance and how the sightlines sit before the drawing is signed off.'],
     ['question' => 'What guarantee comes with them?', 'answer' => 'Two separate ones. Liniar guarantee the frame for ten years, and we guarantee our installation for ten years. They cover different things and come from different people, which is worth knowing if something ever needs putting right.'],
-    ['question' => 'Are the frames recyclable?', 'answer' => 'Liniar describe their uPVC profiles as lead-free and recyclable at the end of their useful life. The profiles are designed, extruded and tested in Derbyshire, and independent fabricators make the finished windows.'],
+    ['question' => 'Are the frames recyclable?', 'answer' => 'Liniar describe their uPVC profiles as lead-free and recyclable at the end of their useful life. The profiles are designed, extruded and tested in Derbyshire.'],
 ];
 
 // FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
@@ -857,11 +870,30 @@ $faqs = [
                     <span class="fg-cas-turn__set"><?php esc_html_e('Multi-point locking is not an upgrade.', 'fenster'); ?></span>
                     <span class="fg-cas-turn__land"><?php esc_html_e('It is what we fit.', 'fenster'); ?></span>
                 </h2>
-                <?php /* The list used to have a point about what the lock pulls against and no
-         longer does, so this no longer names one. A lead that enumerates four
-         things over a list of four that does not include one of them is the
-         kind of small wrongness nobody can put their finger on. */ ?>
-                <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
+                <?php /* REWRITTEN 2026-09-06. Owner, of the previous version:
+                         "This is waffle."
+
+                         It was "Security in a window is a system: the lock, the
+                         glass, and the test the finished window passed. A
+                         profile name on its own proves none of it." Three
+                         faults. It opened on an abstraction. It then listed the
+                         four things the list immediately below already lists,
+                         so it previewed rather than added. And it closed on
+                         profile names, which is a trade argument -- nobody
+                         choosing a window for their house is being sold a
+                         profile name and needs warning off it.
+
+                         This takes the shape the energy chapter's lead already
+                         uses: name the component, then say what a buyer can
+                         choose on top of it. "It is" carries straight on from
+                         the heading above, so the lock is named without saying
+                         "we fit it as standard" a second time.
+
+                         STILL DOES NOT PROMISE A TESTED WINDOW. PAS 24 and
+                         Secured by Design are things you can add, which is the
+                         same "available, confirmed per configuration" position
+                         the rest of the page holds. */ ?>
+                <p class="fg-cas-lead"><?php esc_html_e('It is a Kenrick Excalibur. What you can add on top of it is laminated glass, and a window tested to PAS 24 or Secured by Design.', 'fenster'); ?></p>
             </div>
         </div>
         <?php /* Images left, copy right, which is the arrangement the owner
@@ -1091,8 +1123,25 @@ $faqs = [
                          unit is built from; spec is what a buyer calls the same
                          thing when they are choosing one. */ ?>
                 <p class="eyebrow"><?php esc_html_e('Glass spec', 'fenster'); ?></p>
-                <h2 id="fg-glass-makeup-title"><?php esc_html_e('The glass is the part you live with.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Five to choose from, and they share the same core: a low-E coating, argon in the cavity and a warm edge spacer. What changes is how many panes there are, and how the glass behaves if something hits it or the road outside is loud.', 'fenster'); ?></p>
+                <?php /* RETITLED 2026-09-06. Owner, of "The glass is the part
+                         you live with.": "This title is weird. You live with all
+                         of it?" -- and he is right, it was true of every part of
+                         the window and therefore said nothing about the glass.
+
+                         What it should have carried is the thing a buyer needs
+                         before reading five columns: ONE OF THEM IS ALREADY IN
+                         THE PRICE. That is in the data already -- the first
+                         option is captioned "Our standard" -- but nothing above
+                         the row said so, so all five read as equal choices and
+                         the reader had to work out which one they were getting
+                         by default.
+
+                         The lead's opening moved with it, from "Five to choose
+                         from" to "All five", for the same reason: five to choose
+                         from implies a blank slate rather than a standard and
+                         four upgrades. */ ?>
+                <h2 id="fg-glass-makeup-title"><?php esc_html_e('Toughened glass comes as standard. The rest are upgrades.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('All five share the same core: a low-E coating, argon in the cavity and a warm edge spacer. What changes is how many panes there are, and how the glass behaves if something hits it or the road outside is loud.', 'fenster'); ?></p>
             </div>
             <ul class="fg-glass-makeup__row">
                 <?php foreach ($glass_options as $option) : ?>
@@ -1162,7 +1211,22 @@ $faqs = [
             <div class="section-heading section-heading--wide">
                 <p class="eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
                 <h2 id="fg-cas-detail-title"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
+                <?php /* REWRITTEN 2026-09-06. Owner: "Weird sentence."
+
+                         It was "The difference between a replacement window and
+                         one that belongs on the house. All four are priced with
+                         the window, not added afterwards." The first half is a
+                         fragment with no verb, so it lands as an unfinished
+                         thought, and it sets up an opposition that is not true:
+                         a replacement window is not the opposite of one that
+                         belongs on a house, it is what most of these are.
+
+                         The second half was the useful part and is kept, in
+                         plainer words: these are quoted with the window rather
+                         than bolted on later. Note it says QUOTED, not free --
+                         see the note on foil colours in the memory for why that
+                         distinction is not casual on this site. */ ?>
+                <p><?php esc_html_e('These are what make a new window look like it has always been there. All four are quoted with the window rather than added on afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-trio">
                 <?php foreach ($details as $detail) : ?>

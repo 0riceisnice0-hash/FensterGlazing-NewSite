@@ -46,7 +46,22 @@ $colour_heading = (string) ($args['heading'] ?? __('Sixteen colours outside, mat
    left one swatch alone on a third row, so a route carrying a subset can pass a
    modifier and set its own column count. */
 $colour_modifier = (string) ($args['modifier'] ?? '');
-$colour_intro = (string) ($args['intro'] ?? __('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the external face, with the same colour or smooth white on the inside.', 'fenster'));
+/* THE DEFAULT INTRO NO LONGER REPEATS THE DEFAULT HEADING, 2026-09-06. Owner,
+   of "The colour you choose is the external face, with the same colour or
+   smooth white on the inside.": "This sentence seems useless and dumb."
+
+   It was useless because the heading four lines below is "Sixteen colours
+   outside, matched or white inside." -- the identical fact, in fewer words,
+   already sitting directly above it. What is left is the part the heading does
+   NOT carry: that the colour is a bonded foil rather than paint, which is why
+   it has a grain and never needs repainting.
+
+   THE DOORS ROUTE KEEPS ITS VERSION AND SHOULD. `upvc-doors-v2.php` overrides
+   both heading and intro, and its heading is "Thirteen foils, bonded on rather
+   than painted on.", which says nothing about the inside face. There the
+   sentence is the only place a reader learns it, so it is not redundant and was
+   deliberately left alone. */
+$colour_intro = (string) ($args['intro'] ?? __('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting.', 'fenster'));
 ?>
 <section id="upvc-colours" class="fg-upvc-colours <?php echo esc_attr($colour_modifier); ?>" aria-labelledby="fg-upvc-colours-title">
     <div class="container">
@@ -74,7 +89,18 @@ $colour_intro = (string) ($args['intro'] ?? __('A uPVC colour is a foil bonded t
             <?php endforeach; ?>
         </ul>
         <p class="fg-upvc-colours__note">
-            <?php esc_html_e('Availability, lead time and cost depend on the exact profile and the fabricator, so we confirm all three before you order rather than after.', 'fenster'); ?>
+            <?php /* NO SUPPLY CHAIN IN CUSTOMER COPY, 2026-09-06. Owner: "Why
+                     are we bringing fabricators into this? We're a high end
+                     retailer - we don't talk about supply chain stuff like that
+                     to customers."
+
+                     It read "depend on the exact profile and the fabricator",
+                     which tells a buyer who else is involved in their window and
+                     quietly moves the responsibility there. The promise is the
+                     same and it is ours to make: we confirm before you commit.
+                     Say what varies for the reader -- the colour -- not who it
+                     varies because of. */ ?>
+            <?php esc_html_e('Availability, lead time and cost vary by colour, so we confirm all three before you order rather than after.', 'fenster'); ?>
             <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Compare colours across every material', 'fenster'); ?></a>
         </p>
     </div>
