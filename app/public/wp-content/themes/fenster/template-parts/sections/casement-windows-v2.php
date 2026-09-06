@@ -562,7 +562,23 @@ $faqs = [
 
     <?php /* ---------- 01 ENERGYPLUS ---------- */ ?>
     <section class="fg-cas-energy" data-fg-cas-reveal aria-labelledby="fg-cas-energy-title">
-        <div class="container fg-cas-chapter__head">
+        <?php /* ONE COMPOSED SCREEN, then the detail. Owner, 2026-09-06:
+                 "the whole energy part feels a bit like the padding is wrong (as
+                 soon as the title is revealed, it scrolls off of it). comoaring
+                 it to dysons equivalent section, that is all clearly visible."
+
+                 It read as a stack because it was one: a full width head, then a
+                 half width photograph beside a column of figures, then the
+                 accordion. Nothing composed, and the heading was gone by the
+                 time the photograph arrived.
+
+                 The head and the cutaway are now one two column band, the way
+                 the reference sets a claim beside its product, and the three
+                 figures run across underneath it. That whole opening is about
+                 500px, so it is a single readable screen; the accordion is the
+                 layer below it for anyone who wants the detail. */ ?>
+        <div class="container fg-cas-energy__open">
+        <div class="fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true"></span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('EnergyPlus', 'fenster'); ?></p>
@@ -583,12 +599,14 @@ $faqs = [
             </div>
         </div>
 
-        <div class="container fg-cas-energy__grid">
             <figure class="fg-cas-energy__media">
                 <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-c.webp')); ?>"
                     alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
                     loading="lazy" width="1100" height="733">
             </figure>
+        </div>
+
+        <div class="container">
             <?php /* The figures arrive one after another as the chapter is
                      reached, rather than being there already. Owner, 2026-09-05:
                      "then maybe bring the rh figures in on a scroll motion too".
@@ -600,7 +618,7 @@ $faqs = [
                      settling, and a second scrubbed element on the same page is
                      the "toom uch overlapping" the owner pulled the old build
                      up on. It runs once and stops. */ ?>
-            <dl class="fg-cas-stats" data-fg-cas-reveal>
+            <dl class="fg-cas-stats fg-cas-stats--row" data-fg-cas-reveal>
                 <?php foreach ($energy_stats as $i => $stat) : ?>
                     <div style="--fg-stat-index: <?php echo (int) $i; ?>">
                         <dt><span><?php echo esc_html($stat['figure']); ?></span><?php echo esc_html($stat['unit']); ?></dt>

@@ -38630,11 +38630,36 @@ html.fg-blinds-reveal-locked {
    dark band; each one is corrected at its own rule below and marked RETINT.
    Miss one and it renders white on near-white and simply disappears. */
 
-.fg-cas-energy__grid {
+/* The claim and the thing it is about, side by side, which is how the
+   reference sets its sections and what this chapter was missing: a full width
+   head over a half width photograph meant the heading had gone by the time the
+   photograph arrived. About 500px all in, so it reads as one screen. */
+.fg-cas-energy__open {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   align-items: center;
   gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+/* The head keeps its numeral column but stops adding rhythm of its own: inside
+   the band the gap is the grid's. */
+.fg-cas-energy__open .fg-cas-chapter__head {
+  margin-bottom: 0;
+}
+
+/* The three figures run across under the band rather than stacking down beside
+   the photograph, where they made the chapter a screen taller than it needed to
+   be and pushed the heading off the top. */
+.fg-cas-stats--row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+  padding-top: clamp(1.5rem, 3.5vh, 2.25rem);
+  border-top: 1px solid var(--cas-rule);
+}
+
+.fg-cas-stats--row dd {
+  max-width: 28ch;
 }
 
 .fg-cas-energy__media {
@@ -39415,7 +39440,12 @@ html.fg-blinds-reveal-locked {
    forbids for an UNBOUNDED pin: here its range is one screen and it releases,
    which is the case the note's second sentence was written to allow. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned {
-  --fg-cas-reveal: calc(min(46rem, 100svh - var(--site-header-main-height)) + 8vh);
+  /* The opening's own height, so it fully clears, PLUS a hold. The 8vh this
+     started at meant the chapter released the instant it was uncovered, which
+     is the owner's "as soon as the title is revealed, it scrolls off of it".
+     50vh gives about half a screen of stillness with the composition fully
+     visible before anything moves again. */
+  --fg-cas-reveal: calc(min(46rem, 100svh - var(--site-header-main-height)) + 50vh);
 }
 
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
@@ -39824,7 +39854,7 @@ html.fg-blinds-reveal-locked {
   .fg-cas p { max-width: none; }
 
   .fg-cas-section-head,
-  .fg-cas-energy__grid,
+  .fg-cas-energy__open,
   .fg-cas-film__grid,
   .fg-cas-versus__body,
   .fg-cas-combi {
@@ -39862,8 +39892,13 @@ html.fg-blinds-reveal-locked {
 
   .fg-cas-actions .button { flex: 1 1 auto; text-align: center; }
 
-  .fg-cas-energy__grid figure,
+  /* The photograph leads on a phone, as the figures elsewhere here do. */
+  .fg-cas-energy__open figure,
   .fg-cas-film__grid figure { order: -1; }
+
+  /* Three figures across is 100px a column on a phone, which breaks the notes
+     into a ragged stack. They go back to one under another. */
+  .fg-cas-stats--row { grid-template-columns: minmax(0, 1fr); }
 
   .fg-cas-anatomy__toggle { grid-template-columns: 2.4rem minmax(0, 1fr) auto; font-size: 0.98rem; }
   .fg-cas-anatomy__body { padding-left: 3.15rem; }
