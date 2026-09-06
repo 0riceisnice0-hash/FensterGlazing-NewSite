@@ -39877,7 +39877,14 @@ html.fg-blinds-reveal-locked {
    container is already narrower than all of them, so keeping them would break
    the lines twice and leave a ragged column. 760px is the width the rest of
    `.fg-cas-overture--onimage` already breaks at. */
+/* The reference keeps its injected words nearly the size of the frame sentence
+   on a phone (measured at 390px: items 27px against a frame of 28.85px, a ratio
+   of 0.94 where the desktop ratio is 0.87). Ours were 0.72 of the frame at every
+   width, which on a phone left five short benefit words looking like a caption
+   under a headline. 0.82 here, still clearly subordinate. */
 @media (max-width: 760px) {
+  .fg-cas .fg-cas-turn__reel { font-size: 0.82em; }
+
   .fg-cas .fg-cas-turn__line,
   .fg-cas .fg-cas-turn__reel,
   .fg-cas .fg-cas-turn__define,
@@ -40051,8 +40058,14 @@ html.fg-blinds-reveal-locked {
   .fg-cas .fg-cas-display,
   .fg-cas p { max-width: none; }
 
+  /* `.fg-cas-security__grid` WAS MISSING FROM THIS LIST and had never
+     collapsed: on a 390px phone it was still two columns, 145px for the lock
+     and 197px for the list, so the mechanism was a sliver, its caption wrapped
+     to four lines and the copy broke every three words. That is the whole of
+     "the viewports dont work". */
   .fg-cas-section-head,
   .fg-cas-energy__layout,
+  .fg-cas-security__grid,
   .fg-cas-film__grid,
   .fg-cas-versus__body,
   .fg-cas-combi {
@@ -40061,6 +40074,14 @@ html.fg-blinds-reveal-locked {
 
   /* The part leads on a phone, as the figures elsewhere in this section do. */
   .fg-cas-lock__stage { order: -1; }
+
+  /* AND IT STOPS FLYING IN. The arrival slides the mechanism 26% of its own
+     width from the left, which on a desktop happens inside a half width column
+     with room either side. On a 390px phone the part is 366px wide, so 26% is
+     95px and it starts most of a thumb off the edge of the screen: you meet a
+     cropped lock and it uncrops as you scroll. There is nowhere for it to
+     travel here, so it simply arrives in place. */
+  .fg-cas-lock__arrive { transform: none; }
   .fg-cas-lock__art { width: min(76%, 320px); }
 
   /* The comparison stays two-up on a phone: side by side is the whole point,
@@ -40095,7 +40116,15 @@ html.fg-blinds-reveal-locked {
   .fg-cas-energy__aside,
   .fg-cas-film__grid figure { order: -1; }
 
-  .fg-cas-energy__media { position: static; top: auto; }
+  /* Height as well as position. Left at `calc(100svh - header)` the figure was
+     a 768px box on an 844px phone with a 300px photograph floating in the
+     middle of it, which is most of a screen of nothing. It only needs that
+     height to centre itself against a column it no longer has. */
+  .fg-cas-energy__media {
+    position: static;
+    top: auto;
+    height: auto;
+  }
   .fg-cas-energy__screen { min-height: 0; }
 
   /* Three figures across is 100px a column on a phone, which breaks the notes
