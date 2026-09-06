@@ -39819,9 +39819,12 @@ html.fg-blinds-reveal-locked {
        chapter released and completed at scrollY 3384 with the image 0% on
        screen. It finished above the fold, which is precisely what was reported.
 
-       62vh is 523px at 844: 190 for the line, 300 for the sweep, and change.
-       This one genuinely costs page length, which a real pause has to. */
-    --fg-cas-hold: 62vh;
+       62vh was 523px at 844 -- enough for the line and the sweep, and nothing
+       left for the three figures, which then ran UNDERNEATH both of them.
+       120vh is 1,013px: 190 for the line, 300 for the sweep, and ~520 for the
+       figures, which is about 170 of scroll each. This one genuinely costs page
+       length, which a real pause has to. */
+    --fg-cas-hold: 120vh;
   }
 
   .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {

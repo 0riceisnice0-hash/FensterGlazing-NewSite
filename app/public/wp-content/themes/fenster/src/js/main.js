@@ -8941,6 +8941,18 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
    Off the pinned path (a phone, reduced motion, a viewport too short to pin)
    there is no range to read, so it falls back to the block's own travel through
    the viewport. */
+/* How far the lifting plate travels PAST the header before the line has
+   finished typing, and how much further the stacked-layout heat sweep gets
+   after that. Both are plate travel, which is 1:1 with scroll while the chapter
+   is held, so they are also scroll distances.
+
+   DECLARED HERE, ABOVE THE FIGURES, BECAUSE THE FIGURES HAVE TO QUEUE BEHIND
+   BOTH OF THEM. Change one of these and the figures move with it, which is the
+   point: on a phone all three play inside the same hold and the owner's
+   standing note is that each finishes before the next starts. */
+const CAS_TYPE_TRAVEL = 190;
+const CAS_SWEEP_TRAVEL = 300;
+
 const statCycles = [...document.querySelectorAll('[data-fg-cas-cycle]')];
 
 statCycles.forEach((cycle) => {
@@ -8988,7 +9000,28 @@ statCycles.forEach((cycle) => {
         const raw = clamp((offset - panelRect.top) / range, 0, 1);
         /* Where the uncovering ends and the hold begins. */
         const reveal = Math.max(0, -parseFloat(getComputedStyle(panel).marginTop) || 0);
-        const start = clamp(reveal / range, 0, 0.95);
+
+        /* AND THEN THEY QUEUE. Owner: "We're still missing the swipe through
+           0.95/a+/six section on mobile."
+
+           They were not missing and they were not cut off -- measured at
+           390x844 the block is 100% visible for the whole pin. They were
+           UNREADABLE because they ran across the entire hold while the line was
+           typing and the cutaway was sweeping: the first figure held for 1,000px
+           and the other two went by in about 350px at the end, underneath two
+           other animations.
+
+           Two columns can afford that, because there the sweep does not run
+           until the chapter releases, so the figures have the hold to
+           themselves. Stacked, everything happens inside the hold, so the
+           figures wait for the other two to finish. Detected off the media box
+           rather than a breakpoint: it is only sticky in the two-column
+           layout. */
+        const media = panel.querySelector('.fg-cas-energy__media');
+        const stacked = !media || getComputedStyle(media).position !== 'sticky';
+        const queued = stacked ? CAS_TYPE_TRAVEL + CAS_SWEEP_TRAVEL : 0;
+
+        const start = clamp((reveal + queued) / range, 0, 0.95);
         return clamp((raw - start) / Math.max(0.01, 1 - start), 0, 1);
       }
     }
@@ -9067,12 +9100,6 @@ const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .
    and it is what the heat sweep hangs off. */
 const casUnder = casTurnStack && casTurnStack.querySelector('.fg-cas-under');
 
-/* How far the lifting plate travels PAST the header before the line has
-   finished typing, and how much further the stacked-layout heat sweep gets
-   after that. Both are plate travel, which is 1:1 with scroll while the
-   chapter is held, so they are also scroll distances. */
-const CAS_TYPE_TRAVEL = 190;
-const CAS_SWEEP_TRAVEL = 300;
 
 /* The three boxes the sweep's LENGTH is derived from, so it is geometry rather
    than a number somebody picked. See the sweep block for what they mean. */
