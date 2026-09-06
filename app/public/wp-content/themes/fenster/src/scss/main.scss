@@ -38845,11 +38845,30 @@ html.fg-blinds-reveal-locked {
   pointer-events: none;
 }
 
+/* A BAND THAT PASSES, NOT A FILL THAT STAYS. The first version masked
+   everything behind the leading edge, so the colour built up and the profile
+   was left permanently false-coloured once the sweep finished. Two things wrong
+   with that: the photograph of the actual product is what a buyer came to see
+   and it never came back, and a thermal image left standing reads as a
+   measurement rather than as an illustration.
+
+   So the mask is a band with soft shoulders that travels the whole way across
+   and off, leaving the cutaway as itself. "Sweep over it" rather than "colour
+   it in". The band is about a third of the axis wide, which is enough to read
+   as a wash rather than as a stripe. */
 .js .fg-cas-motion-ready .fg-cas-energy__heat {
-  --fg-heat-edge: calc(var(--fg-cas-sweep, 0) * 165% - 55%);
+  --fg-heat-edge: calc(var(--fg-cas-sweep, 0) * 170% - 35%);
   opacity: 1;
-  -webkit-mask-image: linear-gradient(124deg, #000 var(--fg-heat-edge), transparent calc(var(--fg-heat-edge) + 24%));
-  mask-image: linear-gradient(124deg, #000 var(--fg-heat-edge), transparent calc(var(--fg-heat-edge) + 24%));
+  -webkit-mask-image: linear-gradient(124deg,
+    transparent calc(var(--fg-heat-edge) - 30%),
+    #000 calc(var(--fg-heat-edge) - 8%),
+    #000 calc(var(--fg-heat-edge) + 8%),
+    transparent calc(var(--fg-heat-edge) + 30%));
+  mask-image: linear-gradient(124deg,
+    transparent calc(var(--fg-heat-edge) - 30%),
+    #000 calc(var(--fg-heat-edge) - 8%),
+    #000 calc(var(--fg-heat-edge) + 8%),
+    transparent calc(var(--fg-heat-edge) + 30%));
 }
 
 /* With the setting turned on after load the sweep simply is not there. */
