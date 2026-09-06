@@ -899,8 +899,35 @@ $faqs = [
             </figure>
             <div>
                 <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
-                <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
+                <?php /* TRIMMED 2026-09-06, on a sense check of this chapter. The
+                         band said the same thing the lead above it says, then
+                         said it again in a second paragraph, then the closer
+                         below said it a fourth time. Counted across the page,
+                         "made to your opening rather than off a shelf" was
+                         being made five times:
+
+                           the overture   "made to your opening rather than to a
+                                          stock size"
+                           this lead      "in one outer frame, at any size we can
+                                          make"
+                           this paragraph "share one outer frame, in any
+                                          arrangement, at any size we can make"
+                           its last line  "drawn for your opening rather than
+                                          picked from a catalogue"
+                           paragraph two  "no standard size... drawn, made and
+                                          priced for the hole it goes into"
+
+                         What only this paragraph had was the SIX LAYOUTS, which
+                         are concrete and appear nowhere else, so that is what it
+                         keeps. The second paragraph is gone outright: every
+                         clause in it was already on the page, and "one system
+                         covers the whole house" is the chapter heading.
+
+                         Dropping "share one outer frame, in any arrangement"
+                         also gives the closer its job back. It reads "One frame,
+                         any arrangement.", which was an echo of this sentence
+                         and is now the only place that says it. */ ?>
+                <p><?php esc_html_e('This is where the range stops being a list: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
             </div>
         </div>
 
