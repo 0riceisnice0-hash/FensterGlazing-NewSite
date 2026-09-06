@@ -9030,9 +9030,12 @@ const casTurn = document.querySelector('.fg-cas-overture--onimage .fg-cas-turn--
 const casTurnSection = casTurn && casTurn.closest('.fg-cas-overture--onimage');
 const casTurnTrack = casTurnSection && casTurnSection.closest('[data-fg-cas-turn-track]');
 const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chapters]');
-/* The chapter's pay-off line, so the moment it stops being covered can be
-   measured rather than guessed at. */
-const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .fg-cas-turn__land');
+/* The chapter's WHOLE HEAD, not just the pay-off line. The reveal uncovers from
+   the bottom of the screen upwards, so the numeral, the eyebrow and the set-up
+   sentence all clear the plate AFTER the pay-off does. Timing off the pay-off's
+   own top therefore started it typing before the sentence it pays off had been
+   seen at all, which is why it still read as early after the first fix. */
+const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .fg-cas-chapter__head');
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
      single word moves, and rests finished before the section releases. Without
@@ -9186,11 +9189,12 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          still behind the plate, so by the time you could see it, it was already
          half open.
 
-         The opening's bottom edge IS the curtain. While it sits below the
-         line's top the line is covered; once it passes above, the line is
-         wholly clear. So the wipe starts exactly there and runs over the lift
-         that remains, times 1.15 so it is finished a little before the plate
-         has completely gone rather than on the same frame.
+         The opening's bottom edge IS the curtain. The wipe starts where that
+         edge clears the top of the whole chapter head, so the numeral, the
+         eyebrow and the set-up sentence are all on screen before the pay-off
+         begins to type, and runs over the lift that remains, times 1.15 so it
+         is finished a little before the plate has completely gone rather than
+         on the same frame.
 
          Both rects are read while the chapter is pinned, so neither is moving.
 
