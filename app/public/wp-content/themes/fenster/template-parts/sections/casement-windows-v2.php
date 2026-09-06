@@ -769,7 +769,7 @@ $faqs = [
                      The grid puts it in the right hand column regardless. */ ?>
             <span class="fg-cas-energy__aside">
             <figure class="fg-cas-energy__media">
-                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-c.webp')); ?>"
+                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-cut.webp')); ?>"
                     alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
                     loading="lazy" width="1100" height="733">
             </figure>

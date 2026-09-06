@@ -38792,84 +38792,28 @@ html.fg-blinds-reveal-locked {
   background: var(--color-accent-dark);
 }
 
-/* NO PLATE. Owner, 2026-09-06: "can you take the profile image out of it's
-   box?" It sat on a white card with a hairline because the file has no alpha
-   channel: `cas-profile-cutaway-c.webp` is plain lossy VP8, so there is nothing
-   to cut the profile out against and a drop-shadow would just trace the
-   rectangle.
+/* NO PLATE, AND NO BLEND EITHER. Owner, 2026-09-06: "can you take the profile
+   image out of it's box?", then "swap the cutout in".
 
-   `mix-blend-mode: multiply` gets there without touching the asset. The file's
-   background is pure white at every corner (checked), and multiplying white
-   against the ground returns the ground exactly, so the card disappears; the
-   profile is light grey and survives essentially unchanged, and the soft
-   shadow baked into the photograph darkens the ground the way a real one
-   would. It needs a light ground to work, which this chapter has.
+   The first answer was `mix-blend-mode: multiply` against a ground the figure
+   painted itself. It worked, but it cost three attempts to get right, because
+   blending happens against the nearest STACKING CONTEXT and there are two
+   between this image and the panel that carries the colour: `.fg-cas-under` is
+   sticky and `.fg-cas-energy` carries `will-change: opacity`. It also only ever
+   worked on a light ground, since multiply cannot lighten.
 
-   If blending is ever unavailable the white rectangle simply comes back, which
-   is what shipped before this, so there is no broken state.
+   The file has a real alpha channel now. `cas-profile-cutaway-cut.webp` is the
+   same photograph with the background flood filled out from the edges, which is
+   exact here because the studio background is pure 255 white and the profile's
+   brightest faces are 230. No stacking context can break it and it needs no
+   ground painted underneath.
 
-   IT NEEDS A GROUND DIRECTLY BENEATH IT. `mix-blend-mode` blends with the
-   backdrop of the nearest stacking context, and there are two of them between
-   the image and the panel that carries the chapter's colour: `.fg-cas-under` is
-   `position: sticky`, which always makes one, and `.fg-cas-energy` is a reveal
-   target carrying `will-change: opacity`, which makes another. Blending against
-   either of those means blending against nothing, and the white card stayed
-   exactly as it was through two attempts at this.
-
-   So the figure paints the ground itself, taken from `--fg-chapter-ground`,
-   which the panel publishes. A custom property inherits through stacking
-   contexts where a background does not, so this cannot drift from the panel's
-   own colour. */
+   The photograph's own soft shadow is kept rather than cut away. It is a real
+   shadow and it reads correctly on the light grounds this page uses; the only
+   place it would look wrong is on a dark one, which the owner has taken this
+   page away from. */
 .fg-cas-energy__media {
   margin: 0;
-  background-color: var(--fg-chapter-ground, transparent);
-}
-
-/* The pay-off OPENS ITSELF over the last stretch of the uncovering, on the same
-   single-`fr`-track idiom the overture uses for " not just" and for the terms.
-   Owner: "'this one has six' wants to have the almost typewriter animation" and
-   then, on the mechanism: "i meant the same animation as 'its not just a'".
-
-   So this is deliberately not a second device. The track opens from nothing
-   while the text inside is clipped, and the line uncovers left to right at a
-   steady rate, which is what reads as typing.
-
-   No `transition`: the value is scrubbed from the scroll, and a transition on
-   top of a scrubbed value lags behind the wheel. Same reason the overture has
-   none.
-
-   The fallback is `1fr`, so with the property never written the line is simply
-   there, finished. (0,6,0), which clears the shared entrance rule at (0,4,0)
-   that still drives the security chapter's pay-off. */
-.fg-cas-turn__wipe {
-  display: inline-grid;
-  grid-template-columns: 1fr;
-}
-
-.fg-cas-turn__wipe-run {
-  min-width: 0;
-  overflow: hidden;
-  white-space: pre;
-}
-
-.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__land {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__wipe {
-  grid-template-columns: var(--fg-cas-land-cols, 1fr);
-}
-
-/* The detail column stays left rather than running the full width: a 1200px
-   measure puts the plus sign a long way from the name it belongs to. */
-.fg-cas-energy .fg-cas-anatomy {
-  max-width: min(100%, 52rem);
-}
-
-.fg-cas-energy__media img {
-  mix-blend-mode: multiply;
 }
 
 /* The studio files are already framed; letting them keep their own proportion
