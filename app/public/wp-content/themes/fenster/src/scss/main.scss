@@ -38725,25 +38725,30 @@ html.fg-blinds-reveal-locked {
   transform: translate3d(0, calc((1 - var(--fg-cas-uncover, 1)) * -3.25rem), 0);
 }
 
-/* The pay-off TYPES ITSELF IN over the last stretch of the uncovering, instead
-   of sliding up as one block. Owner: "'this one has six' wants to have the
-   almost typewriter animation, not the swipe up that you gave it."
+/* The pay-off OPENS ITSELF over the last stretch of the uncovering, on the same
+   single-`fr`-track idiom the overture uses for " not just" and for the terms.
+   Owner: "'this one has six' wants to have the almost typewriter animation" and
+   then, on the mechanism: "i meant the same animation as 'its not just a'".
 
-   Each character owns a sliver of the progress and the multiplier is large, so
-   a character is either there or it is not: that hard edge is what reads as
-   typing rather than as a fade. `--fg-char` arrives as a fraction from 0 to 1,
-   so this does not need to know how many characters there are.
+   So this is deliberately not a second device. The track opens from nothing
+   while the text inside is clipped, and the line uncovers left to right at a
+   steady rate, which is what reads as typing.
 
-   `white-space: pre` on the spans keeps the spaces, which would otherwise
-   collapse between two inline-blocks and run the words together.
+   No `transition`: the value is scrubbed from the scroll, and a transition on
+   top of a scrubbed value lags behind the wheel. Same reason the overture has
+   none.
 
-   The fallback in `var()` is 1, not 0: with no JavaScript the property is never
-   written, and the line has to read as finished rather than as blank. The whole
-   rule is inside `.js .fg-cas-motion-ready` anyway, so that is belt and braces.
-   (0,6,0), which clears the shared entrance rule at (0,4,0) that still drives
-   the other chapter's pay-off. */
-.fg-cas-turn__char {
-  display: inline-block;
+   The fallback is `1fr`, so with the property never written the line is simply
+   there, finished. (0,6,0), which clears the shared entrance rule at (0,4,0)
+   that still drives the security chapter's pay-off. */
+.fg-cas-turn__wipe {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+}
+
+.fg-cas-turn__wipe-run {
+  min-width: 0;
+  overflow: hidden;
   white-space: pre;
 }
 
@@ -38753,8 +38758,8 @@ html.fg-blinds-reveal-locked {
   transition: none;
 }
 
-.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__char {
-  opacity: calc((var(--fg-cas-uncover, 1) - 0.46 - var(--fg-char, 0) * 0.26) * 55);
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__wipe {
+  grid-template-columns: var(--fg-cas-land-cols, 1fr);
 }
 
 /* The detail column stays left rather than running the full width: a 1200px
@@ -39649,10 +39654,13 @@ html.fg-blinds-reveal-locked {
     transform: none;
   }
 
-  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__land,
-  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__char {
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__land {
     opacity: 1;
     transform: none;
+  }
+
+  .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-energy .fg-cas-turn__wipe {
+    grid-template-columns: 1fr;
   }
 }
 

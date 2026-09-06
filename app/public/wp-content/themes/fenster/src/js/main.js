@@ -9069,7 +9069,20 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
     const uncover = 1 - clamp(
       (openRect.bottom - headerOffset) / Math.max(1, openRect.height), 0, 1
     );
-    if (casTurnStack) casTurnStack.style.setProperty('--fg-cas-uncover', uncover.toFixed(4));
+    if (casTurnStack) {
+      casTurnStack.style.setProperty('--fg-cas-uncover', uncover.toFixed(4));
+      /* The chapter's pay-off line opens on the same `fr` track idiom as the
+         overture, so it needs the same square root: a flex factor below 1 takes
+         that share of the LEFTOVER space, and in an auto-sized grid the painted
+         width comes out as the SQUARE of the factor. Uncompensated the line
+         would crawl and then snap.
+
+         Linear inside the band rather than eased, because a steady rate is what
+         makes it read as typing; an ease-out would race the first half of the
+         words and dawdle over the last. */
+      const land = clamp((uncover - 0.46) / 0.34, 0, 1);
+      casTurnStack.style.setProperty('--fg-cas-land-cols', `${Math.sqrt(land).toFixed(4)}fr`);
+    }
 
     casTurnSection.style.setProperty('--fg-turn', p.toFixed(4));
     casTurnSection.style.setProperty('--fg-turn-squeeze', squeeze.toFixed(4));
