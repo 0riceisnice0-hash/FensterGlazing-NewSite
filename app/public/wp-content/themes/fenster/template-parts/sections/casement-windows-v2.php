@@ -1000,16 +1000,28 @@ $faqs = [
                  arrangement"). The second half is the payoff, in ink against
                  the muted first half, so it has to be the thing worth reading.
 
-                 IT WAS "The rest is how it looks", 2026-09-06. Owner: "the
-                 second sentence doesnt sound right. consdier what a customer
-                 should see." Two things were wrong with it. It described the
-                 rest of the page as appearance, and the very next section is
-                 now Glass make-up, which is about safety, quiet and warmth --
-                 not looks. And it said nothing to the reader. What actually
-                 follows is glass, then the dressings, then colour and handles,
-                 every one of them a decision they make, so the line now names
-                 that: the frame is the given, the rest is theirs. The order
-                 change on the same day is what exposed it.
+                 THIS LINE HAS BEEN WRONG TWICE, 2026-09-06, and both faults
+                 are worth keeping because they are easy to make again.
+
+                 It was "The rest is how it looks", which described everything
+                 below as appearance when the section immediately after it is
+                 now Glass make-up -- safety, quiet and warmth. The order change
+                 on the same day is what exposed it.
+
+                 It was then "The rest is what you choose", and the owner caught
+                 the real trap: "what you choose makes it sound like they dont
+                 choose the layout which is above?" He is right. The paragraph
+                 directly above is nothing BUT choosing -- bays, bows, dormers,
+                 transom and mullion positions drawn for the opening -- so any
+                 "the rest is..." construction quietly files the layout under
+                 things that are not the reader's to pick, which is the opposite
+                 of the argument the whole chapter just made.
+
+                 So it no longer sorts the page into chosen and given. It just
+                 says what comes next, which is what a reader at this point
+                 actually wants: the glass, then the dressings, colour and
+                 handles. Nothing is claimed about who decides what, because by
+                 here the answer is obviously all of it.
 
                  IT CARRIES ITS OWN data-fg-cas-reveal. Hanging it off the
                  section's would fire it when the section TOP crossed the
@@ -1018,7 +1030,7 @@ $faqs = [
         <div class="container">
             <p class="fg-cas-close" data-fg-cas-reveal>
                 <span class="fg-cas-turn__set"><?php esc_html_e('One frame, any arrangement.', 'fenster'); ?></span>
-                <span class="fg-cas-turn__land"><?php esc_html_e('The rest is what you choose.', 'fenster'); ?></span>
+                <span class="fg-cas-turn__land"><?php esc_html_e('Now the glass, and the finish.', 'fenster'); ?></span>
             </p>
         </div>
     </section>
