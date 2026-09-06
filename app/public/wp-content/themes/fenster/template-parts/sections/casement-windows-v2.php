@@ -255,7 +255,13 @@ $security_points = [
        test figures live in the guarantee point; they are Kenrick's figures for a
        mechanism, and the approval point says what belongs to a whole tested
        window. */
-    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Kenrick Excalibur strip runs the length of the sash, and one turn of the handle throws steel shoot bolts into the frame and bi-directional claws into keeps down the sash edge, so the window is held into its seals along its whole length rather than at the handle.'],
+    /* Renamed 2026-09-06, and it lost its opening "Not an upgrade." The chapter
+       heading above this list is now "Multi-point locking is not an upgrade. /
+       It is what we fit.", written FROM this item, so the two were making the
+       identical claim in the identical words about 200px apart. The heading
+       keeps the claim; the item goes back to doing what the others do, which is
+       explain one thing. */
+    ['name' => 'One turn, the whole edge', 'copy' => 'The Kenrick Excalibur strip runs the length of the sash, and one turn of the handle throws steel shoot bolts into the frame and bi-directional claws into keeps down the sash edge, so the window is held into its seals along its whole length rather than at the handle.'],
     /* "The frame it pulls against" WAS HERE AND IS GONE, 2026-09-06. Owner:
        "'The frame it pulls against' mini section is nonsense." He is right, and
        for a reason worth writing down so it does not come back.
@@ -782,7 +788,11 @@ $faqs = [
                     <span class="fg-cas-turn__set"><?php esc_html_e('Multi-point locking is not an upgrade.', 'fenster'); ?></span>
                     <span class="fg-cas-turn__land"><?php esc_html_e('It is what we fit.', 'fenster'); ?></span>
                 </h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, what it pulls against, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
+                <?php /* The list used to have a point about what the lock pulls against and no
+         longer does, so this no longer names one. A lead that enumerates four
+         things over a list of four that does not include one of them is the
+         kind of small wrongness nobody can put their finger on. */ ?>
+                <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
             </div>
         </div>
         <?php /* Images left, copy right, which is the arrangement the owner
