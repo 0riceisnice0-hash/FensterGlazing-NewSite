@@ -36,11 +36,35 @@ if ($logo === '' || $title === '') {
 <section class="fg-tech-banner" aria-label="<?php echo esc_attr($title); ?>">
     <div class="container fg-tech-banner__panel">
         <div class="fg-tech-banner__brand">
+            <?php
+            /* THE MARK MUST CARRY ITS OWN PIXEL SIZE OR IT SHIFTS THE PAGE.
+               Found 2026-09-06 from "seems buggy on mobile, seems to skip
+               around at points": the stylesheet sets `width: clamp(...)` and
+               `height: auto`, so with no intrinsic size the box is 0px tall
+               until the file arrives. It is `loading="lazy"`, so it arrives
+               while the reader is roughly 2,000px above it, and the banner then
+               snapped from 0 to ~40px and pushed EVERYTHING BELOW IT down by
+               40px mid-scroll. Measured on the casement page: the document grew
+               20,567 -> 20,606 and six landmark sections moved together.
+
+               Read rather than hard-coded, because this component takes a
+               different mark on every route -- EnergyPlus, Thermlock, Roseview,
+               Distinction -- and their ratios differ. `fenster_image_dimensions`
+               is the theme's own helper and statically caches per URL. */
+            $logo_dimensions = function_exists('fenster_image_dimensions')
+                ? fenster_image_dimensions($logo)
+                : [];
+            ?>
             <img
                 class="fg-tech-banner__logo"
                 src="<?php echo esc_url(fenster_generated_url($logo)); ?>"
                 alt="<?php echo esc_attr($logo_alt); ?>"
+                <?php if (! empty($logo_dimensions['width']) && ! empty($logo_dimensions['height'])) : ?>
+                    width="<?php echo esc_attr((string) $logo_dimensions['width']); ?>"
+                    height="<?php echo esc_attr((string) $logo_dimensions['height']); ?>"
+                <?php endif; ?>
                 loading="lazy"
+                decoding="async"
             >
         </div>
         <div class="fg-tech-banner__copy">
