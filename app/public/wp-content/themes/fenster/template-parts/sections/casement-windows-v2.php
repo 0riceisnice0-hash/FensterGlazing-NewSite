@@ -609,7 +609,17 @@ $faqs = [
                     <div class="fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true"></span>
             <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('EnergyPlus', 'fenster'); ?></p>
+                <?php /* "Energy efficiency", not "EnergyPlus". Owner, 2026-09-06:
+                         "can change to like energy efficiency or similar - not
+                         as niche as enegyplus (consumer friendly language)".
+
+                         It is also the only eyebrow on the page that was a
+                         trade name: the other two chapters read Security and
+                         Versatility, so a plain noun is what this set already
+                         is. The brand is not lost, it moves into the lead
+                         below where there is room to say whose name it is,
+                         and it still appears a dozen times on this page. */ ?>
+                <p class="fg-cas-eyebrow"><?php esc_html_e('Energy efficiency', 'fenster'); ?></p>
                 <?php /* Both halves are this page's own words, split. The old
                          heading, "Energy efficiency starts in the frame.", was
                          true and carried no number; this one carries two. Both
@@ -644,11 +654,21 @@ $faqs = [
                     <span class="fg-cas-turn__set" aria-hidden="true"><?php echo esc_html($energy_set); ?></span>
                     <span class="fg-cas-turn__land" aria-hidden="true"><span class="fg-cas-turn__wipe"><span class="fg-cas-turn__wipe-run"><?php echo esc_html($energy_land); ?></span></span></span>
                 </h2>
-                <?php /* Not the old lead and not $anatomy[0] verbatim: the
-                         accordion's first item is open by default about 200px
-                         below this line, so quoting it here prints the same
-                         sentence twice on one screen. */ ?>
-                <p class="fg-cas-lead"><?php esc_html_e('The six run the full length of every frame section. It is the profile we fit as standard, not an option on top.', 'fenster'); ?></p>
+                <?php /* Names the profile, since the eyebrow above no longer
+                         does. Owner: "can maybe mention energyplus instead?"
+
+                         "Liniar call that profile EnergyPlus" rather than just
+                         asserting the name, because a reader who has never met
+                         it needs to know it is the manufacturer's word and not
+                         ours.
+
+                         It deliberately does not end "we fit it as standard":
+                         the overture's own resolve line already says exactly
+                         that a screen above, and the page should not make the
+                         same promise twice in two hundred words. "Specify on
+                         every casement we fit" is the same fact in the words
+                         the original lead used. */ ?>
+                <p class="fg-cas-lead"><?php esc_html_e('The six run the full length of every frame section. Liniar call that profile EnergyPlus, and it is the one we specify on every casement we fit.', 'fenster'); ?></p>
             </div>
         </div>
 
