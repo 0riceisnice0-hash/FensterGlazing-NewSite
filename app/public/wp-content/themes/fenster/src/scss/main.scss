@@ -38646,7 +38646,12 @@ html.fg-blinds-reveal-locked {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   gap: clamp(2rem, 6vw, 5rem);
-  align-items: start;
+  /* STRETCH, NOT START. `align-items: start` makes the right hand column only
+     as tall as the photograph in it, which leaves a sticky child a range of
+     exactly zero: it computes as sticky and never sticks, which is precisely
+     what shipped. The column has to fill the row for the profile to have
+     anywhere to travel. */
+  align-items: stretch;
 }
 
 /* The claim and the three figures still get a screen to themselves. The
