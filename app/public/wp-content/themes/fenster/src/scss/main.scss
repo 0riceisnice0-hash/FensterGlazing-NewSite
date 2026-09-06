@@ -38681,9 +38681,9 @@ html.fg-blinds-reveal-locked {
    Its containing block is the layout, so it still releases when the chapter
    ends, bounded by construction.
 
-   The box paints the chapter ground, which the blend beneath needs, and it is
-   the same colour as the panel behind it, so a full screen of it shows
-   nothing. */
+   The box is transparent. It used to paint the chapter ground because the
+   photograph was a multiply blend that needed something to multiply against;
+   the file carries its own alpha now, so there is nothing to paint. */
 .fg-cas-energy__media {
   position: sticky;
   top: var(--site-header-main-height);
@@ -38691,6 +38691,7 @@ html.fg-blinds-reveal-locked {
   align-items: center;
   justify-content: center;
   height: calc(100svh - var(--site-header-main-height));
+  margin: 0;
 }
 
 /* The head keeps its numeral column but stops adding rhythm of its own: inside
@@ -38812,9 +38813,6 @@ html.fg-blinds-reveal-locked {
    shadow and it reads correctly on the light grounds this page uses; the only
    place it would look wrong is on a dark one, which the owner has taken this
    page away from. */
-.fg-cas-energy__media {
-  margin: 0;
-}
 
 /* The studio files are already framed; letting them keep their own proportion
    means nothing is cropped a second time. */
