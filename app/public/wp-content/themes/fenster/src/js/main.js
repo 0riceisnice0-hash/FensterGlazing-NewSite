@@ -9061,9 +9061,18 @@ const casTurnStack = casTurnSection && casTurnSection.closest('[data-fg-cas-chap
    own top therefore started it typing before the sentence it pays off had been
    seen at all, which is why it still read as early after the first fix. */
 const casTurnLand = casTurnStack && casTurnStack.querySelector('.fg-cas-energy .fg-cas-chapter__head');
-/* The cutaway, so the heat sweep can be tied to the plate uncovering it rather
-   than to a number somebody picked. */
-const casHeatSubject = casTurnStack && casTurnStack.querySelector('.fg-cas-energy__profile');
+/* The chapter's own sticky wrapper. While it is pinned its top sits exactly on
+   the header offset; the moment it releases, that number starts falling. That
+   is the instant the copy beside the photograph begins to travel up the screen,
+   and it is what the heat sweep hangs off. */
+const casUnder = casTurnStack && casTurnStack.querySelector('.fg-cas-under');
+
+/* Where "This one ha" falls as a share of the run's painted width, and how much
+   further plate travel the narrow-screen heat sweep gets after the line lands.
+   760px is the breakpoint the stylesheet already changes this layout at. */
+const CAS_LAND_DELAY = 0.6929;
+const CAS_SWEEP_HOLD = 0.75;
+const casNarrow = window.matchMedia('(max-width: 760px)');
 if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   /* Held still at each end of the pin: the statement arrives and sits before a
      single word moves, and rests finished before the section releases. Without
@@ -9230,37 +9239,67 @@ if (casTurnSection && !window.matchMedia('(prefers-reduced-motion: reduce)').mat
          takes that share of the LEFTOVER space, and in an auto-sized grid the
          painted width is the SQUARE of the factor. Linear inside the band
          rather than eased, because a steady rate is what reads as typing. */
-      /* THE SWEEP IS THE UNCOVERING, not a separate animation with its own
-         timing. The plate's bottom edge is the curtain: while it sits below the
-         photograph nothing is coloured, and by the time it has passed the top
-         the profile is fully thermal. Because the photograph sits lower than
-         the chapter head, the sweep finishes before the pay-off line starts to
-         type, which is the order the owner asked for without needing a constant
-         to enforce it. */
-      if (casHeatSubject) {
-        const heatRect = casHeatSubject.getBoundingClientRect();
-        const span = Math.max(1, heatRect.bottom - heatRect.top);
-        /* Gated on the plate having actually started to lift. Without that, the
-           sweep reads 1 during the APPROACH, because the plate's bottom edge is
-           then above the photograph simply by virtue of the photograph being
-           further down the page. The chapter would slide up into view already
-           fully thermal, lose its colour as it went under the plate, and get it
-           back on the way out. Measured before the gate: 1.00 at scrollY 1650,
-           0.00 by 2100, 1.00 again by 2700. */
-        const sweep = uncover <= 0
-          ? 0
-          : clamp((heatRect.bottom - openRect.bottom) / span, 0, 1);
-        casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
-      }
+      /* THE LINE STARTS LATE ON PURPOSE. Owner: "delay the text animation on
+         'This one has six.' starting at the point where it currently says
+         'this one ha'." Measured in the page's own metrics rather than counted
+         off in characters: "This one ha" is 0.6929 of the run's painted width
+         at both 1440 and 390, because the face is the same and scales evenly.
 
+         Subtracting it AFTER the 1.15 is what keeps the pace. The line does not
+         squeeze into what is left of the plate's travel and type faster; the
+         plate's bottom edge keeps falling once it has cleared the screen, so
+         `landRaw` runs on past 1 and the delayed line finishes later at exactly
+         the rate it had before. Compressing instead would have made it quicker,
+         which is the opposite of every note on this animation so far. */
       let land = 1;
+      let landRaw = 2;
       if (casTurnLand) {
         const landRect = casTurnLand.getBoundingClientRect();
         const from = landRect.top;
         const to = headerOffset;
-        land = clamp(((from - openRect.bottom) / Math.max(1, from - to)) * 1.15, 0, 1);
+        landRaw = ((from - openRect.bottom) / Math.max(1, from - to)) * 1.15;
+        land = clamp(landRaw - CAS_LAND_DELAY, 0, 1);
       }
       casTurnStack.style.setProperty('--fg-cas-land-cols', `${Math.sqrt(land).toFixed(4)}fr`);
+
+      /* THE SWEEP STARTS WHEN THE TEXT STARTS TO MOVE, not when the plate
+         starts to lift. Owner: "aniomation starts way too early. it wants to
+         start when the text to the left of it starts to move up."
+
+         It was tied to the plate uncovering the photograph, which happens while
+         the chapter is still pinned and still being read: the colour crossed
+         before anyone had got to the words. The chapter is stationary for the
+         whole of the reveal and the whole of the hold, and the only moment
+         anything on that side of the screen moves is when the sticky wrapper
+         finally releases. Pinned, its top IS the header offset; released, that
+         number falls. So the distance it has travelled upwards is the sweep,
+         over a little over half a screen of it.
+
+         Measured, not assumed: while pinned this reads 0 at every scroll
+         position, which is the thing the previous two versions both got wrong
+         in different ways. */
+      if (casUnder) {
+        let sweep;
+        if (casNarrow.matches) {
+          /* Narrow screens genuinely differ, so they get a different anchor.
+             There is no "text to the left" under 760px -- the photograph sits
+             ABOVE the copy and is in normal flow, so the moment the wrapper
+             releases it climbs away and is off the top within ~345px. Measured:
+             on the release anchor the sweep passed 0.80 with the cutaway
+             already 0% on screen, so the reader never saw it finish.
+
+             The one stretch where the image is both stationary and whole is the
+             tail of the hold, after the line has typed. So it runs there, off
+             the same plate travel the line uses, starting exactly where the line
+             lands: `landRaw` reaches 1 + the delay at that instant. */
+          sweep = clamp((landRaw - (1 + CAS_LAND_DELAY)) / CAS_SWEEP_HOLD, 0, 1);
+        } else {
+          const underRect = casUnder.getBoundingClientRect();
+          const travel = Math.max(1, window.innerHeight * 0.55);
+          sweep = clamp((headerOffset - underRect.top) / travel, 0, 1);
+        }
+        casTurnStack.style.setProperty('--fg-cas-sweep', sweep.toFixed(4));
+      }
     }
 
     casTurnSection.style.setProperty('--fg-turn', p.toFixed(4));
