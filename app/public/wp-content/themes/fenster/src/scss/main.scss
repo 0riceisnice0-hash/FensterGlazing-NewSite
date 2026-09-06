@@ -39427,6 +39427,26 @@ html.fg-blinds-reveal-locked {
   top: var(--site-header-main-height);
 }
 
+/* NO PANEL RHYTHM ON THE TRACK. `.fg-cas-stack__panel:not(:last-child) >
+   *:last-child` adds `padding-bottom: clamp(2rem, 5vh, 4rem)` to whatever a
+   panel ends with, which is ordinary spacing between chapters and completely
+   wrong here: the track's last child IS the track, so it painted 45px of the
+   opening panel's white ground directly under the photograph. Invisible until
+   the lift, then a white band sliding up between the image and the chapter.
+   Measured at 45px, which is exactly that clamp at 900px tall. */
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-overture-track {
+  padding-bottom: 0;
+}
+
+/* The chapter is uncovered from its own top edge, so the section's normal
+   63px of breathing room reads as a gap rather than as rhythm: the heading
+   landed 135px below the pin, which is what "sits too low as it reveals"
+   is. Tightened while it is the thing being revealed. The foot is untouched,
+   so the spacing into the tech banner below is unchanged. */
+.js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-under > .fg-cas-energy {
+  padding-top: clamp(1.35rem, 3vh, 2.25rem);
+}
+
 /* The opening is the layer that moves, and it is on top. Its panel ground is
    opaque, which is what stops the chapter showing through it before the lift. */
 .js .fg-cas-motion-ready.fg-cas-stack.is-turn-pinned .fg-cas-stack__panel--opening {
