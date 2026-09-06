@@ -663,14 +663,16 @@ $faqs = [
                      settling, and a second scrubbed element on the same page is
                      the "toom uch overlapping" the owner pulled the old build
                      up on. It runs once and stops. */ ?>
+            <div class="fg-cas-stats-cycle" data-fg-cas-cycle>
             <dl class="fg-cas-stats fg-cas-stats--row" data-fg-cas-reveal>
                 <?php foreach ($energy_stats as $i => $stat) : ?>
-                    <div style="--fg-stat-index: <?php echo (int) $i; ?>">
+                    <div class="fg-cas-stats__item" data-fg-cas-cycle-item style="--fg-stat-index: <?php echo (int) $i; ?>">
                         <dt><span><?php echo esc_html($stat['figure']); ?></span><?php echo esc_html($stat['unit']); ?></dt>
                         <dd><?php echo esc_html($stat['note']); ?></dd>
                     </div>
                 <?php endforeach; ?>
             </dl>
+            </div>
                 </div>
 
                 <?php /* The detail sits BELOW the fold on purpose. Owner, 2026-09-06:

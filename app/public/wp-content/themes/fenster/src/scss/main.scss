@@ -38668,12 +38668,29 @@ html.fg-blinds-reveal-locked {
   display: block;
 }
 
-/* Sticky, and low enough that it sits against the detail rather than jammed
-   under the header. Its containing block is the layout, so it releases when the
-   chapter ends: bounded by construction, not by a measurement. */
+/* Sticky, and CENTRED rather than hung from a top offset. Owner, 2026-09-06:
+   "centralise the images starting point."
+
+   The figure is a box one screen tall that sticks under the header, and the
+   photograph is centred inside it. So it starts centred against the claim
+   beside it and stays centred as the detail scrolls past, instead of sitting
+   high while the copy sits in the middle.
+
+   Doing it this way means nothing is measured: an offset that centred the
+   photograph would have to know its height, which is a clamp on the viewport.
+   Its containing block is the layout, so it still releases when the chapter
+   ends, bounded by construction.
+
+   The box paints the chapter ground, which the blend beneath needs, and it is
+   the same colour as the panel behind it, so a full screen of it shows
+   nothing. */
 .fg-cas-energy__media {
   position: sticky;
-  top: calc(var(--site-header-main-height) + clamp(1.5rem, 6vh, 4rem));
+  top: var(--site-header-main-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100svh - var(--site-header-main-height));
 }
 
 /* The head keeps its numeral column but stops adding rhythm of its own: inside
@@ -38701,6 +38718,83 @@ html.fg-blinds-reveal-locked {
 
 .fg-cas-stats--row dd {
   max-width: 28ch;
+}
+
+/* ---- one figure at a time ------------------------------------------------
+   Owner: "the 3x spec figures feel bunched up now, can they hold one position
+   and cycle through?"
+
+   They were bunched because they moved into the left hand column when the
+   profile took a column of its own, which halved the room three of them had to
+   share. Holding one position fixes that properly rather than shaving type: the
+   figure gets the whole column and can be set large.
+
+   `is-cycling` is added by main.js and only when motion is allowed, so with no
+   JavaScript, or under reduced motion, none of this applies and all three sit
+   side by side exactly as they did. All three stay in the DOM either way, so a
+   screen reader reads every figure regardless: only the painting cycles.
+
+   Stacking them in ONE grid cell means the row is as tall as the tallest of
+   them and nothing jumps as they change. */
+.fg-cas-stats-cycle.is-cycling .fg-cas-stats--row {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.fg-cas-stats-cycle.is-cycling .fg-cas-stats__item {
+  grid-area: 1 / 1;
+}
+
+/* (0,5,0), which clears the shared entrance rule at (0,4,1): that one fades the
+   three in on a stagger, which is the wrong behaviour once only one shows. */
+.js .fg-cas-motion-ready .fg-cas-stats-cycle.is-cycling .fg-cas-stats__item {
+  opacity: 0;
+  transform: none;
+  transition: opacity 460ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: 0s;
+}
+
+.js .fg-cas-motion-ready .fg-cas-stats-cycle.is-cycling .fg-cas-stats__item.is-current {
+  opacity: 1;
+}
+
+/* With the column to itself the figure can carry the size it should have had. */
+.fg-cas-stats-cycle.is-cycling .fg-cas-stats dt span {
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+}
+
+.fg-cas-stats-cycle.is-cycling .fg-cas-stats dd {
+  max-width: 36ch;
+}
+
+/* Real buttons, not decoration: something that moves on its own needs a way to
+   stop it, and clicking one ends the automatic advance for good. Thin bars
+   rather than dots, so they read as a position in a set of three rather than as
+   a carousel. */
+.fg-cas-stats__dots {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: clamp(1.25rem, 3vh, 1.85rem);
+}
+
+.fg-cas-stats__dot {
+  width: 2.5rem;
+  height: 3px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: var(--cas-rule);
+  cursor: pointer;
+  transition: background-color 260ms ease;
+}
+
+.fg-cas-stats__dot[aria-current="true"] {
+  background: var(--color-accent-dark);
+}
+
+.fg-cas-stats__dot:focus-visible {
+  outline: 2px solid var(--color-accent-dark);
+  outline-offset: 4px;
 }
 
 /* NO PLATE. Owner, 2026-09-06: "can you take the profile image out of it's

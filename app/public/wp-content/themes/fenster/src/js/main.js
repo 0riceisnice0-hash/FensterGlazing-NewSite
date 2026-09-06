@@ -8887,6 +8887,95 @@ if (lockArrive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   updateLockArrive();
 }
 
+/* ---------- The three figures, one at a time -------------------------------
+   Owner, 2026-09-06: "the 3x spec figures feel bunched up now, can they hold
+   one position and cycle through?"
+
+   They were bunched because they moved into the left hand column when the
+   profile took a column of its own, which halved the room three of them had to
+   share. Holding one position fixes that properly rather than shaving type: a
+   single figure gets the whole column and can be set large.
+
+   NOTHING IS HIDDEN FROM ASSISTIVE TECHNOLOGY. All three stay in the DOM and
+   none is `hidden` or `aria-hidden`, so a screen reader still reads all three
+   facts in order; only the painting cycles.
+
+   IT CAN BE STOPPED, which WCAG 2.2.2 requires of anything that moves by itself
+   for more than five seconds beside other content. The dots are real buttons:
+   clicking one selects that figure and ends the automatic advance for good.
+   Hover and focus pause it, and it does not run at all while off screen.
+
+   Under reduced motion the controller returns before adding `is-cycling`, so
+   the CSS leaves all three side by side exactly as they render with no
+   JavaScript at all. */
+const statCycles = [...document.querySelectorAll('[data-fg-cas-cycle]')];
+
+statCycles.forEach((cycle) => {
+  const items = [...cycle.querySelectorAll('[data-fg-cas-cycle-item]')];
+
+  if (items.length < 2) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  cycle.classList.add('is-cycling');
+
+  let index = 0;
+  let timer = null;
+  let stopped = false;
+
+  const show = (next) => {
+    index = next;
+    items.forEach((item, i) => item.classList.toggle('is-current', i === next));
+    buttons.forEach((button, i) => button.setAttribute('aria-current', i === next ? 'true' : 'false'));
+  };
+
+  const pause = () => {
+    if (!timer) return;
+    window.clearInterval(timer);
+    timer = null;
+  };
+
+  const start = () => {
+    if (stopped || timer) return;
+    timer = window.setInterval(() => show((index + 1) % items.length), 3600);
+  };
+
+  const dots = document.createElement('div');
+  dots.className = 'fg-cas-stats__dots';
+
+  const buttons = items.map((item, i) => {
+    const button = document.createElement('button');
+    const term = item.querySelector('dt');
+    button.type = 'button';
+    button.className = 'fg-cas-stats__dot';
+    button.setAttribute('aria-label', term ? term.textContent.trim() : String(i + 1));
+    button.addEventListener('click', () => {
+      stopped = true;
+      pause();
+      show(i);
+    });
+    dots.appendChild(button);
+    return button;
+  });
+
+  cycle.appendChild(dots);
+  show(0);
+
+  cycle.addEventListener('pointerenter', pause);
+  cycle.addEventListener('focusin', pause);
+  cycle.addEventListener('pointerleave', start);
+  cycle.addEventListener('focusout', start);
+
+  /* Off screen it does nothing at all, so the page is not running a timer
+     against something nobody is looking at. */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => (entry.isIntersecting ? start() : pause()));
+    }, { threshold: 0.35 }).observe(cycle);
+  } else {
+    start();
+  }
+});
+
 /* ---------- The casement opening sentence, scrolled -----------------------
    Owner, 2026-09-05: "it needs some work on the title animation. it moves too
    quick, look at it from a human perspective, it should link to the scroll."
