@@ -1211,7 +1211,22 @@ $faqs = [
             <div class="section-heading section-heading--wide">
                 <p class="eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
                 <h2 id="fg-cas-detail-title"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
+                <?php /* REWRITTEN 2026-09-06. Owner: "Weird sentence."
+
+                         It was "The difference between a replacement window and
+                         one that belongs on the house. All four are priced with
+                         the window, not added afterwards." The first half is a
+                         fragment with no verb, so it lands as an unfinished
+                         thought, and it sets up an opposition that is not true:
+                         a replacement window is not the opposite of one that
+                         belongs on a house, it is what most of these are.
+
+                         The second half was the useful part and is kept, in
+                         plainer words: these are quoted with the window rather
+                         than bolted on later. Note it says QUOTED, not free --
+                         see the note on foil colours in the memory for why that
+                         distinction is not casual on this site. */ ?>
+                <p><?php esc_html_e('These are what make a new window look like it has always been there. All four are quoted with the window rather than added on afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-trio">
                 <?php foreach ($details as $detail) : ?>
