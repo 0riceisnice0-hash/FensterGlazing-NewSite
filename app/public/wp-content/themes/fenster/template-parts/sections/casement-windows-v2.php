@@ -265,8 +265,17 @@ $anatomy = [
        decided on this system, and the whole point of the security note below is
        that inventing one is worse than saying nothing. THE ACCORDION READS
        FINE AT FOUR: the numbers are printed from the loop index, so they close
-       up on their own. Ask the owner before any reinforcement claim returns,
-       here or in the FAQs, which still mention it three times. */
+       up on their own.
+
+       THE THREE FAQ MENTIONS ARE GONE TOO, 2026-09-06: "fix the reinforcement
+       mentions in the faqs." Two listed reinforcement among the things we
+       confirm or that move the U-value, which is the same claim this item was
+       removed for making; a third offered "reinforced frames" as a security
+       option. That last one also disagreed with the security chapter's own
+       heading -- "Multi-point locking is not an upgrade. / It is what we fit."
+       -- by listing the lock as something to be specified, so it now says what
+       the chapter says. Ask the owner before any reinforcement claim returns
+       anywhere on this page. */
     ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm edge spacer decide most of the whole window figure. A 28mm double or a 36mm triple, with the triple reaching 0.95 W/m²K. The number we agree follows your glass rather than a brochure.'],
     ['name' => 'The installation', 'copy' => 'Fixing, sealing and finishing are what connect a tested window to your actual wall. Our own installers do it, which is why the ten year guarantee on the work is ours to give.'],
 ];
@@ -341,7 +350,7 @@ $gallery = [
 $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
     ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed panes matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
-    ['question' => 'Which Liniar system do you fit?', 'answer' => 'The 70mm Liniar EnergyPlus system in the sculptured profile, a six-chamber uPVC platform used for both replacement and new-build work. Glass, reinforcement and hardware are confirmed for your individual job.'],
+    ['question' => 'Which Liniar system do you fit?', 'answer' => 'The 70mm Liniar EnergyPlus system in the sculptured profile, a six-chamber uPVC platform used for both replacement and new-build work. Glass and hardware are confirmed for your individual job.'],
     /* WHY THIS SYSTEM, and deliberately NOT a comparison. Owner decision,
        2026-08-15: drop competitor copy where it does not flatter us. The right
        way to act on that is to drop the comparison whole rather than keep the
@@ -362,8 +371,8 @@ $faqs = [
 
        Every figure below is already stated elsewhere on this route. */
     ['question' => 'Why do you fit Liniar?', 'answer' => 'The 70mm EnergyPlus frame carries six chambers, sculptured rather than chamfered, and welded at the corners rather than screwed. Triple glazed it reaches 0.95 W/m²K, and the profile is lead-free. Liniar guarantee the frame for ten years and we guarantee the installation for ten, which are two different things and both worth having.'],
-    ['question' => 'What U-value can an EnergyPlus casement reach?', 'answer' => '0.95 W/m²K, with the 36mm triple glazed unit, which makes it an A+ window. Size, layout, glass and reinforcement all move the complete-window figure, so the number we agree follows your final specification rather than a brochure.'],
-    ['question' => 'Are casement windows secure?', 'answer' => 'They can be specified with reinforced frames, multi-point locking and PAS 24 or Secured by Design options. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we will specify to it. Those approvals belong to a tested complete window rather than to the profile name, so we confirm what applies to your configuration.'],
+    ['question' => 'What U-value can an EnergyPlus casement reach?', 'answer' => '0.95 W/m²K, with the 36mm triple glazed unit, which makes it an A+ window. Size, layout and glass all move the complete-window figure, so the number we agree follows your final specification rather than a brochure.'],
+    ['question' => 'Are casement windows secure?', 'answer' => 'Multi-point locking is what we fit as standard, not an upgrade, and PAS 24 or Secured by Design can be specified on top. Part Q asks for PAS 24 on new dwellings and some extensions, so tell us at survey if yours is covered and we will specify a complete window tested to it.'],
     ['question' => 'Can I have triple glazing?', 'answer' => 'Yes. The 70mm frame takes a 28mm double glazed unit or a 36mm triple. Whether triple is worth it depends on the sash size, the weight and what you are actually trying to improve, so we will compare it with you rather than treating it as an automatic upgrade.'],
     ['question' => 'Will new casements make the house quieter?', 'answer' => 'They can, when the whole specification is designed for it. Liniar publish around 33 decibels for a standard double glazed unit and up to 37 decibels, rated 37 (-2;-5), where the window is built for acoustics. Reaching the higher figure is the glass doing the work rather than the frame. Pane thicknesses, frame seals and the ventilation path all affect the result, and the ventilation path is the one people forget.'],
     ['question' => 'How many colours are there?', 'answer' => 'Sixteen foils, plus smooth white as the unfoiled profile. The colour you pick is the external face, with the same colour or smooth white on the inside. Liniar publish a wider foil catalogue, but availability, lead time and cost depend on the exact profile and the fabricator, so we confirm before you order.'],
