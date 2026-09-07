@@ -59,6 +59,26 @@ homepage is the rightmove style thing on a outdated branch i think."*
 - Live untouched at `b389183d`. Docs: `HOMEPAGE-30.md` added; `LIVECHANGES.md`,
   `HANDOVER.md` and `AI.md` updated.
 
+## 2026-09-07 — Sliding sash: the thermal camera comparison is removed (LIVE as `ed38fcf9`)
+
+Owner: *"get the thermal bit off of live. ive decided i dont like it."*
+
+- **It had reached live**, in the other session's release of 6 September, so
+  this was a removal rather than a gate: the section from
+  `generated-page.php`, its block from `main.scss`, its controller from
+  `main.js`, and both bundles. All three source diffs are deletion-only.
+- **Cut from live, not from `main`.** `main` was 98 commits ahead of the
+  live release line, so shipping it would have carried all of them. The
+  removal went to `main` first (`52d4b5d6`), then the same change was
+  applied to live `9e59fd88` as `ed38fcf9`, tagged
+  `live-sash-thermal-2026-09-07`. The build was proved deterministic first:
+  live's own source rebuilt to live's committed bundles byte for byte.
+- **Five files, zero deletions, residual 0**, backup taken and the backup
+  directory pruned to three, socket purge `msg:OK`, `x-proxy-cache: MISS`.
+- **The page is back to eleven sections** and the stage, gallery and lock
+  selector are untouched. The work is on `main` at `08c44a33` with its
+  reasoning below, so it can come back with a revert.
+
 ## 2026-09-04 — Sliding sash: the thermal camera comparison (ON TEST as `08c44a33`, NOT LIVE)
 
 Owner: *"i did this thing with claude design. make it good on the website.
