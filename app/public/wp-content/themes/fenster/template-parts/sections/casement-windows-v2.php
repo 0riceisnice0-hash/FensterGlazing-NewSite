@@ -1434,7 +1434,24 @@ $faqs = [
         <div class="container fg-product-faq__grid">
             <div>
                 <p class="eyebrow"><?php esc_html_e('Casement window questions', 'fenster'); ?></p>
-                <h2 id="fg-cas-faq-title"><?php esc_html_e('The details worth settling before you order.', 'fenster'); ?></h2>
+                <?php /* RETITLED 2026-09-07. Owner: "Weird title when they're
+                         faqs as basic as what is a window."
+
+                         It was "The details worth settling before you order.",
+                         which frames the list as fine print to nail down at
+                         order stage. It is not that. The thirteen questions
+                         under it open with "What is a casement window?" and run
+                         through triple glazing, colours, noise, the guarantee
+                         and whether the frames are recyclable -- general
+                         questions somebody asks while deciding, most of them
+                         long before an order exists.
+
+                         The eyebrow directly above already says "Casement
+                         window questions", so this does not say questions
+                         again. It sets the expectation instead: the answers are
+                         plain and they start from the beginning, which is a
+                         promise the first item has to keep anyway. */ ?>
+                <h2 id="fg-cas-faq-title"><?php esc_html_e('Plain answers, starting with the basics.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('All of these refer to the 70mm Liniar EnergyPlus system on this page.', 'fenster'); ?></p>
             </div>
             <div class="fg-product-faq__items">
