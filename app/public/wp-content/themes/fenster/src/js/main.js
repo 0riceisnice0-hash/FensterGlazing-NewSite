@@ -1649,51 +1649,6 @@ document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   updatePreview();
 });
 
-/* THE THERMAL CAMERA COMPARISON on /sliding-sash-windows/. The range input over
-   the picture drives one custom property, `--fg-thermal-split`, which both the
-   warm view's clip and the divider read; the three model buttons rewrite the
-   figures beside it from their own data attributes. PHP has already rendered
-   the first model's figures and holds the units, so without JavaScript the
-   section still reads correctly, it just does not switch. */
-document.querySelectorAll('[data-fg-sash-thermal]').forEach((section) => {
-  const range = section.querySelector('[data-fg-thermal-range]');
-  const models = [...section.querySelectorAll('[data-fg-thermal-model]')];
-
-  if (range) {
-    const setSplit = () => {
-      section.style.setProperty('--fg-thermal-split', `${range.value}%`);
-    };
-    range.addEventListener('input', setSplit);
-    setSplit();
-  }
-
-  if (!models.length) return;
-
-  /* Each slot is a data attribute on the button and a matching attribute on
-     every element that shows it. The glass temperature appears twice, bare on
-     the picture's tag and as a phrase in the figures. */
-  const slots = [
-    ['name', 'name'],
-    ['glass', 'glass'],
-    ['glassFull', 'glass-full'],
-    ['wattsFull', 'watts-full'],
-    ['costFull', 'cost-full'],
-  ];
-
-  models.forEach((button) => {
-    button.addEventListener('click', () => {
-      models.forEach((item) => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
-      slots.forEach(([key, attribute]) => {
-        const value = button.dataset[key];
-        if (value === undefined) return;
-        section.querySelectorAll(`[data-fg-thermal-${attribute}]`).forEach((slot) => {
-          slot.textContent = value;
-        });
-      });
-    });
-  });
-});
-
 /* THE SASH LOCK SELECTOR on /sliding-sash-windows/. Two style tiles, a row of
    finish chips per style, thirteen photographs sharing one stage. Picking a
    style shows that style's finishes and its first finish; picking a finish
