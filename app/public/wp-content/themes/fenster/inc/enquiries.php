@@ -723,7 +723,9 @@ function fenster_process_enquiry(): array|WP_Error
     }
 
     /*
-     * Honeypot. `company_website` is rendered inside an aria-hidden wrapper with
+     * Honeypot. `fg_check_1a` (was `company_website` until 2026-09-07, which
+     * browser autofill filled on two real customers and no bots) is rendered
+     * inside an aria-hidden wrapper with
      * tabindex="-1" (template-parts/components/enquiry-form.php:318-323), so no
      * visitor can reach it, including one using a screen reader; something
      * automated filling the form is what puts a value there.
@@ -735,7 +737,7 @@ function fenster_process_enquiry(): array|WP_Error
      * judge it themselves. The response returned below is the same either way,
      * so a bot learns nothing from being caught.
      */
-    $data['spam_suspected'] = sanitize_text_field(wp_unslash($_POST['company_website'] ?? '')) !== '';
+    $data['spam_suspected'] = sanitize_text_field(wp_unslash($_POST['fg_check_1a'] ?? '')) !== '';
 
     if (! is_email($data['email'])) {
         return fenster_enquiry_error('bad_email', 'Please enter a valid email address.');

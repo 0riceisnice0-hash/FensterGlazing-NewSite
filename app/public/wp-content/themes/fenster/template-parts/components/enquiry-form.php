@@ -315,10 +315,18 @@ $notices = [
     </div>
     <?php endif; ?>
 
+    <?php /* THE TRAP MUST NOT LOOK LIKE A FIELD A BROWSER KNOWS HOW TO FILL. It was
+             `company_website` under a "Company website" label, and Chrome and
+             Safari fill fields by name and label semantics whatever `autocomplete`
+             says, `aria-hidden` or not. Result by 2026-09-07: two enquiries ever
+             flagged, both real customers (Chris Brookes 3 Sep, Neil Francis 6 Sep)
+             whose browsers autofilled it alongside their name and phone, and zero
+             bots. The name and label are now meaningless to an autofill
+             classifier. The wrapper, tabindex and aria-hidden are unchanged. */ ?>
     <div class="fg-enquiry-form__trap" aria-hidden="true">
         <label>
-            <span><?php esc_html_e('Company website', 'fenster'); ?></span>
-            <input type="text" name="company_website" tabindex="-1" autocomplete="off">
+            <span><?php esc_html_e('Leave this empty', 'fenster'); ?></span>
+            <input type="text" name="fg_check_1a" tabindex="-1" autocomplete="off">
         </label>
     </div>
     <input type="hidden" name="action" value="fenster_submit_enquiry">
