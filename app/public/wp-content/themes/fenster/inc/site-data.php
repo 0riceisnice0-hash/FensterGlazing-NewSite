@@ -20,18 +20,30 @@ function fenster_site_data(): array
             'tagline' => 'Windows, doors, glazing, repairs and project support for homes and businesses.',
             'phone' => '01908 429200',
             'email' => 'info@fensterglazing.com',
-            /* THE COMMERCIAL PAGES SHOW THIS ONE, owner-confirmed 2026-08-12.
-               `info@` stays the residential and general address and is still where
-               the enquiry FORM delivers on every route — see the note in
-               `inc/enquiries.php` and the Shared Form Rule. This key only changes
-               the address a commercial visitor is shown and can click.
+            /* THE COMMERCIAL PAGES SHOW THIS ONE, owner-confirmed 2026-08-12,
+               AND THE ENQUIRY FORM NOW DELIVERS TO IT TOO, owner instruction
+               2026-09-08. `info@` remains the residential and general address.
 
-               So a commercial buyer who emails goes to `commercial@` and one who
-               submits the form goes to `info@`. That split is deliberate for now
-               because form routing is an email-delivery change rather than a copy
-               one, and `fenster_enquiry_recipient()` is owner-confirmed on `info@`
-               with no override on live. If commercial form leads should follow the
-               address, that is a separate decision and a separate release. */
+               This key is now read in two places and they must not be allowed to
+               disagree: the commercial pages render it as a `mailto:`, and
+               `fenster_enquiry_recipient()` in `inc/enquiries.php` delivers a
+               commercial lead to it. Change it here and both follow.
+
+               ~~So a commercial buyer who emails goes to `commercial@` and one
+               who submits the form goes to `info@`. That split is deliberate for
+               now ... If commercial form leads should follow the address, that is
+               a separate decision and a separate release.~~ SUPERSEDED 2026-09-08,
+               which is the separate decision that note anticipated. Struck rather
+               than deleted so the split reads as a decision that was taken and
+               then reversed, not as drift.
+
+               WHAT DID NOT CHANGE, AND MUST NOT: the address mail is sent FROM.
+               `commercial@` is a recipient only. The Brevo verified sender is
+               `info@`, and sending as an unverified address is accepted over SMTP
+               and rejected afterwards with nothing in WordPress showing a failure
+               — the fault that lost four days of website email in September 2026.
+               Adding `commercial@` as a Brevo verified sender is the prerequisite
+               for ever changing that, and it has not been done. */
             'commercial_email' => 'commercial@fensterglazing.com',
             'address' => [
                 '98 Alston Drive',
