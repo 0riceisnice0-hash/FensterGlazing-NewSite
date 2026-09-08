@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-## Current state, 2026-09-04 — read this before touching either environment
+## Current state, 2026-09-08 — read this before touching either environment
 
 **Read in this order if you are picking this up cold:** this section, then the
 Current Truth section of `LIVECHANGES.md` (the only authority on what is live
@@ -9,12 +9,18 @@ carries the standing rules, including the Configuration Page Rule that governs
 three of the routes touched most recently.
 
 
-**LIVE IS `b389183d`**, tag `live-casestudy-2026-09-04`, verified by
+**LIVE IS `74d02fec`**, tag `live-commercial-routing-2026-09-08`, verified by
 checksum rather than copied from a document. **It is NOT an ancestor of `main`.**
+
+**This head was four releases stale until 2026-09-08 and said `b389183d`.**
+`LIVECHANGES.md` is the only authority on what is live and it carried every
+one of them; this file is a summary that goes out of date between sessions.
+**Re-establish live by checksum before any deploy rather than trusting the
+table below.**
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `b389183d` (tag `live-casestudy-2026-09-04`) | `76d5b4a5` |
+| live | `74d02fec` (tag `live-commercial-routing-2026-09-08`) | see note |
 | test | `9d2b73d4` | `945e29c3` |
 | `main` | `9d2b73d4` | `945e29c3` |
 
