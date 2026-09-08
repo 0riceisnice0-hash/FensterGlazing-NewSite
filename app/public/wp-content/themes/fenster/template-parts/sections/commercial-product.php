@@ -133,14 +133,15 @@ $is_louvre = $slug === 'louvre-vents';
                          email sits with the phone where a specifier expects to find
                          it — most of them would rather send drawings than call.
 
-                         THE EMAIL IS `info@`, WHICH MAY NOT BE THE RIGHT ONE. There
-                         is no commercial-specific address anywhere in this theme,
-                         and inventing one would bounce real enquiries into nothing.
-                         `info@fensterglazing.com` is the owner-confirmed office
-                         recipient (2026-08-10), so it is the only defensible choice
-                         until a commercial address is supplied. One swap in
-                         `brand.email` or a new `brand.commercial_email` changes it
-                         everywhere. */ ?>
+                         THE EMAIL IS `brand.commercial_email`, AND SO IS THE FORM'S
+                         DESTINATION. This comment said `info@` "may not be the right
+                         one" and that no commercial address existed; the owner
+                         supplied `commercial@` on 2026-08-12, which this hero has
+                         rendered since, and on 2026-09-08 the enquiry form began
+                         delivering commercial leads there too. So a specifier who
+                         mails the address above and one who submits the form below
+                         now reach the same inbox. `fenster_enquiry_recipient()` in
+                         `inc/enquiries.php` owns the delivery half. */ ?>
                 <div class="fg-commercial-product-hero__actions">
                     <a class="button button--light" href="#commercial-product-enquiry"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                     <a class="fg-commercial-product-hero__phone" href="tel:<?php echo esc_attr($phone_href); ?>">

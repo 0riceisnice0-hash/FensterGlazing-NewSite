@@ -173,13 +173,75 @@ function fenster_render_enquiry_admin_column(string $column, int $post_id): void
     }
 }
 
-function fenster_enquiry_recipient(): string
+/**
+ * Is this enquiry a commercial one?
+ *
+ * ONE DEFINITION, TWO CALLERS. The office subject line has drawn this
+ * distinction since launch and the recipient now draws the same one, so there
+ * is no way for a lead to be titled "New Commercial Enquiry" and delivered to
+ * the residential inbox. `AI.md` records the cost of the opposite arrangement:
+ * when a rule lives in more than one helper, one of them gets missed.
+ *
+ * The test is `project_type`, because that is the field the form actually sets.
+ * A commercial route locks it to `Commercial glazing` or
+ * `Commercial glazing project` via `lock_project_type`, and the audience gate's
+ * `Business` button sets `Commercial glazing` from ANY page, which is the whole
+ * point of the gate: a contractor who lands on a residential page and says so
+ * is a commercial lead wherever they started.
+ *
+ * A consultation request is never commercial. It is checked first in the
+ * subject line and its `project_type` is the hardcoded `Consultation request`,
+ * so it cannot match here either.
+ */
+function fenster_enquiry_is_commercial(array $data): bool
+{
+    $project = strtolower((string) ($data['project_type'] ?? ''));
+
+    return $project !== '' && str_contains($project, 'commercial');
+}
+
+/**
+ * The office address an enquiry is delivered to.
+ *
+ * COMMERCIAL LEADS GO TO `commercial@`. Owner instruction, 2026-09-08. This is
+ * the decision the note in `inc/site-data.php` parked on 2026-08-12: the
+ * commercial pages have shown and linked `commercial@` since then, so a
+ * commercial buyer who emailed reached that inbox while one who submitted the
+ * form reached `info@`. The address now follows the lead, and the two halves
+ * agree.
+ *
+ * THE ADDRESS IS READ FROM `brand`, NEVER TYPED. `brand.commercial_email` is
+ * the same value the commercial pages render as a `mailto:`, so the inbox the
+ * page invites somebody to write to cannot drift from the inbox their form
+ * submission lands in. Address And Contact Detail Rule, `AI.md`.
+ *
+ * `FENSTER_ENQUIRY_EMAIL` still overrides everything, including this. It is the
+ * "send every enquiry here" switch a server sets deliberately, and a split
+ * would make it a liar.
+ *
+ * @param array<string, mixed> $data Submitted enquiry data. Empty for a general
+ *                                   lookup, which returns the residential address.
+ */
+function fenster_enquiry_recipient(array $data = []): string
 {
     if (defined('FENSTER_ENQUIRY_EMAIL') && is_email((string) FENSTER_ENQUIRY_EMAIL)) {
         return (string) FENSTER_ENQUIRY_EMAIL;
     }
 
-    return (string) apply_filters('fenster_enquiry_recipient', 'Fenster Glazing <info@fensterglazing.com>');
+    $recipient = 'Fenster Glazing <info@fensterglazing.com>';
+
+    if (fenster_enquiry_is_commercial($data)) {
+        $brand = fenster_site_data()['brand'] ?? [];
+        $commercial = (string) ($brand['commercial_email'] ?? '');
+        // A missing or malformed value falls through to `info@` rather than to
+        // nothing. A commercial lead in the wrong inbox is a nuisance; a
+        // commercial lead in no inbox is a lost job.
+        if (is_email($commercial)) {
+            $recipient = 'Fenster Commercial <' . $commercial . '>';
+        }
+    }
+
+    return (string) apply_filters('fenster_enquiry_recipient', $recipient, $data);
 }
 
 function fenster_mail_config_value(string $key, string $default = ''): string
@@ -212,8 +274,7 @@ function fenster_enquiry_office_subject(array $data): string
         return $prefix . sprintf('New Consultation Request from %s', $data['name']);
     }
 
-    $project = strtolower((string) ($data['project_type'] ?? ''));
-    if (str_contains($project, 'commercial')) {
+    if (fenster_enquiry_is_commercial($data)) {
         return $prefix . sprintf('New Commercial Enquiry from %s', $data['name']);
     }
 
@@ -587,13 +648,33 @@ function fenster_enquiry_customer_email(array $data): string
         ? '<div style="padding:18px;border-radius:10px;background:#f3f8f7;color:#06212a;font-size:15px;line-height:1.6;">' . nl2br(esc_html($data['message'])) . '</div>'
         : '';
 
+    /*
+     * WHERE TO SEND FOLLOW-UP FILES FOLLOWS THE LEAD, and on a commercial one
+     * that is `commercial@`. A contractor told to send their schedules to
+     * `info@` while their enquiry sat in `commercial@` splits one job across two
+     * inboxes, which is the arrangement this change exists to close.
+     *
+     * Both addresses come from `brand` rather than being typed, per the Address
+     * And Contact Detail Rule. THIS IS THE `To:` OF A REPLY THE CUSTOMER SENDS,
+     * NOT THE `From:` OF THIS MESSAGE. The confirmation is still sent as
+     * `info@`, which is the Brevo verified sender; sending it as `commercial@`
+     * would be rejected after SMTP accepted it, exactly as `info@` was between
+     * 3 and 7 September 2026.
+     */
+    $brand = fenster_site_data()['brand'] ?? [];
+    $general_email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
+    $commercial_email = (string) ($brand['commercial_email'] ?? '');
+    $files_email = fenster_enquiry_is_commercial($data) && is_email($commercial_email)
+        ? $commercial_email
+        : $general_email;
+
     return '<!doctype html>
 <html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#edf4f2;font-family:Arial,Helvetica,sans-serif;color:#06212a;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:28px 12px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;">
 <tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td></tr>
-<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of our team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to info@fensterglazing.com.</p>' . $message_panel . '</td></tr>
+<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of our team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to ' . esc_html($files_email) . '.</p>' . $message_panel . '</td></tr>
 <tr><td style="padding:20px 28px;background:#f3f8f7;color:#60727a;font-size:13px;line-height:1.6;"><strong style="color:#06212a;">Fenster Glazing</strong><br>01908 429200 · info@fensterglazing.com</td></tr>
 </table></td></tr></table></body></html>';
 }
@@ -847,7 +928,7 @@ function fenster_process_enquiry(): array|WP_Error
         ));
     }
 
-    $recipient = fenster_enquiry_recipient();
+    $recipient = fenster_enquiry_recipient($data);
     $office_headers = [
         'Content-Type: text/html; charset=UTF-8',
         'From: WordPress <wordpress@fensterglazing.com>',
