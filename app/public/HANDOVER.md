@@ -7,8 +7,14 @@ Current Truth section of `LIVECHANGES.md` (the only authority on what is live
 and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
 carries the standing rules, including the Configuration Page Rule.
 
-**LIVE IS `d88cb83d`**, tag `live-secondary-glazing-2026-09-09`, the
-thirty-fourth isolated release — the `/secondary-glazing/` style sections.
+**LIVE IS `8991a3aa`**, tag `live-secondary-glazing-fixes-2026-09-09`, the
+thirty-fifth isolated release — the `/secondary-glazing/` style sections, with
+the vertical slider's edge-to-glass figure corrected to 56 and the mobile order
+and label spacing fixed. **The socket purge command is finally recorded**, in
+the 2026-09-09 Current Truth entry of `LIVECHANGES.md`.
+
+Superseded: `d88cb83d`, tag `live-secondary-glazing-2026-09-09`, the
+thirty-fourth isolated release.
 **Verified by a full 2,344-file manifest against the live server both before
 and after the deploy**, not copied from a document. It is NOT an ancestor of
 `main`. The Distinction strand is still held back and `/why-distinction/` still
