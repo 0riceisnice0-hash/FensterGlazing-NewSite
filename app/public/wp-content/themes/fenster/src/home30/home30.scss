@@ -240,6 +240,22 @@
    HERO AND PRODUCT FINDER
    ========================================================================== */
 
+/* A VERY SHORT WINDOW CANNOT HOLD THE HERO AT THE NORMAL RHYTHM. Measured at
+   1440x650 -- about the floor for a real browser window -- the hero needed
+   588px against a 577px budget. The `min()` on `.fg-h30-hero` had already given
+   way to the viewport; it was the CONTENT that would not compress, so a cap
+   alone cannot fix this case.
+
+   The stack gap is the compressible part: the type, the buttons and the search
+   box all have to stay their own size. Halving it buys 24px, which is more than
+   the 11 needed. Declared on `.fg-h30-hero__inner` because that is where the
+   token lives, so both gaps shrink together and stay equal to each other --
+   which is the whole point of there being one token. */
+@media (max-height: 700px) {
+  .fg-h30-hero__inner { --h30-hero-stack-gap: 1rem; }
+}
+
+
 
 .fg-h30 [hidden] { display: none !important; }
 
