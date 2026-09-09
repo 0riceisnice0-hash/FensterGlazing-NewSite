@@ -234,7 +234,7 @@
   display: flex;
   flex-direction: column;
   gap: clamp(.75rem, 1.4vw, 1.125rem);
-  min-height: calc(100svh - var(--site-header-main-height, 72px));
+  min-height: calc(100svh - var(--site-header-total-height, 73px));
   padding: clamp(.75rem, 1.5vw, 1.25rem) var(--h30-gutter) clamp(1rem, 2vw, 1.5rem);
   background: #fff;
 }
@@ -1218,7 +1218,7 @@ a.fg-h30-proof__media--crew > img {
 
   position: relative;
   display: flex;
-  min-height: calc(100svh - var(--site-header-main-height, 72px));
+  min-height: calc(100svh - var(--site-header-total-height, 73px));
   padding: var(--h30-areas-pad) var(--h30-gutter);
   background: var(--h30-panel);   /* the grey margin around the map */
   isolation: isolate;
