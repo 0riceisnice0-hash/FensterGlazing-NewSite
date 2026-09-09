@@ -41823,6 +41823,298 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+
+/* ==========================================================================
+   Secondary glazing â€” the five styles and their sections
+   ========================================================================== */
+
+/* Built 2026-09-09. The five styles were a flat `<ul>` of names and sentences
+   with nothing to look at. They are now a row you read across, with the
+   manufacturer's own jamb section behind each one, both fixing methods shown.
+
+   ICON BESIDE THE NAME AND NO BOX ROUND IT, owner instruction. The first pass
+   put each style in a bordered tile and he was right that it read as boxy;
+   STYLE.md says the same thing three ways, that a border is usually doing the
+   job type, rule and space should do. So the picker is two hairlines and a row,
+   and the selected one is marked in green with a rule under it.
+
+   THE DRAWINGS SHARE ONE SCALE THROUGH `--sg-mm`. Each `<img>` carries its own
+   true width in millimetres as `--mm-w` and the width is the product of the two,
+   so every drawing on the page is at the same scale and a fixed panel is
+   genuinely about a third the width of a hinged frame. Change `--sg-mm` and the
+   whole set rescales together; never set a width on one drawing alone, which is
+   exactly how the bifold renders came to publish a seven pane door shorter than
+   a three pane one.
+
+   `height: auto` ON THE DRAWINGS IS LOAD-BEARING. They carry width and height
+   attributes so the browser can reserve the space, and those attributes map to
+   CSS width and height, so without this the attribute height beats the width the
+   calc sets. Same trap the composite glass door renders hit at 1,103px tall.
+
+   BOTH `[hidden]` GUARDS ARE DELIBERATE. This component sets `display` on the
+   picker and on the panels, and an author rule outranks the UA sheet's
+   `[hidden] { display: none }`. Without them the picker shows before the
+   controller runs and every panel stays open after it.
+
+   MOBILE RULES LIVE AT THE END OF THIS BLOCK. A desktop rule written after its
+   own media query wins at every width, which has cost this project height on a
+   phone three separate times in one day. Add to the block at the bottom. */
+.fg-sgs {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
+
+.fg-sgs__head {
+  max-width: 64ch;
+}
+
+.fg-sgs__head h2 {
+  margin: 0.35rem 0 0;
+}
+
+.fg-sgs__head p {
+  margin: 0.85rem 0 0;
+  color: var(--color-muted);
+}
+
+.fg-sgs__picker {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-sgs__picker[hidden] {
+  display: none !important;
+}
+
+.fg-sgs__tab {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 0.8rem 0.85rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-steel);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.fg-sgs__tab + .fg-sgs__tab {
+  box-shadow: inset 1px 0 0 var(--color-line);
+}
+
+.fg-sgs__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--color-muted);
+  transition: color 0.18s ease;
+}
+
+.fg-sgs__tab:hover {
+  color: var(--color-accent-dark);
+}
+
+.fg-sgs__tab:hover .fg-sgs__icon {
+  color: var(--color-steel-90);
+}
+
+.fg-sgs__tab[aria-selected="true"] {
+  color: var(--color-accent-dark);
+  border-bottom-color: var(--color-accent);
+}
+
+.fg-sgs__tab[aria-selected="true"] .fg-sgs__icon {
+  color: var(--color-accent-dark);
+}
+
+.fg-sgs__tab:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -3px;
+}
+
+.fg-sgs__panels {
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.fg-sgs__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+  align-items: start;
+}
+
+.fg-sgs__panel[hidden] {
+  display: none !important;
+}
+
+/* Only while the controller has not run. With it running exactly one panel is
+   visible, and an adjacent-sibling rule would otherwise put a rule above it. */
+.fg-sgs:not(.is-enhanced) .fg-sgs__panel + .fg-sgs__panel {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-sgs__copy h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+  color: var(--color-steel);
+}
+
+.fg-sgs__copy p {
+  margin: 0.7rem 0 0;
+  max-width: 46ch;
+}
+
+.fg-sgs__keys {
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  display: grid;
+  border-top: 1px solid var(--color-line);
+  max-width: 26rem;
+}
+
+.fg-sgs__keys > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-sgs__keys dt {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.fg-sgs__keys dd {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-steel);
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-sgs__dwgs {
+  --sg-mm: 3.05px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: flex-end;
+}
+
+.fg-sgs__dwg {
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+}
+
+.fg-sgs__dwg img {
+  display: block;
+  width: calc(var(--sg-mm) * var(--mm-w));
+  height: auto;
+}
+
+.fg-sgs__dwg figcaption {
+  display: grid;
+  gap: 0.15rem;
+  max-width: 22ch;
+}
+
+.fg-sgs__fix {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-steel);
+}
+
+.fg-sgs__dims {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-sgs__fixnote {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
+.fg-sgs__note {
+  margin: clamp(1.75rem, 3.5vw, 2.5rem) 0 0;
+  padding-top: clamp(1rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--color-line);
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  max-width: 66ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-sgs__tab,
+  .fg-sgs__icon {
+    transition: none;
+  }
+}
+
+/* Mobile. The picker becomes a swipe rail on the owner's instruction, 2026-09-09.
+   THE SCROLLER IS THE GRID RATHER THAN CONTAINING ONE: a grid nested inside a
+   separate overflow container resolves its columns against the parent width and
+   collapses them, which is what made the bifold rail 2px wide on a phone.
+   No scroll snap and no `scroll-behavior` here either, both for the reasons that
+   rail records: Chrome applies smooth behaviour to user scrolling as well as to
+   scripted scrolls, and proximity snap springs a small push back where it
+   started. `42vw` columns leave the next tab visibly clipped, which is the
+   affordance STYLE.md asks for. */
+@media (max-width: 860px) {
+  .fg-sgs__picker {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(9rem, 42vw);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .fg-sgs__picker::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fg-sgs__tab {
+    padding: 0.9rem 0.75rem 0.8rem;
+  }
+
+  .fg-sgs__panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-sgs__dwgs {
+    --sg-mm: 2.35px;
+  }
+
+  .fg-sgs__dwg figcaption {
+    max-width: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-sgs__dwgs {
+    --sg-mm: 2.05px;
+  }
+}
 /* ==========================================================================
    Aluminium flush windows â€” /aluminium-flush-windows/
    ========================================================================== */
