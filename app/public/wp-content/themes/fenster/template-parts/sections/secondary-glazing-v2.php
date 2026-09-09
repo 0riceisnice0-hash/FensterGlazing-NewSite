@@ -174,8 +174,8 @@ $styles = [
         'name' => __('Vertical slider', 'fenster'),
         'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 167.9, 'mm_h' => 56.3, 'dpos' => [1.5, 44.7], 'spos' => [18.21, 95.52]],
-            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 144.6, 'mm_h' => 68.4, 'dpos' => [1.74, 42.44], 'spos' => [21.14, 96.31]],
+            'face' => ['depth' => 39, 'span' => 56, 'mm_w' => 167.9, 'mm_h' => 56.3, 'dpos' => [1.5, 44.7], 'spos' => [22.09, 95.52]],
+            'reveal' => ['depth' => 55, 'span' => 56, 'mm_w' => 144.6, 'mm_h' => 68.4, 'dpos' => [1.74, 42.44], 'spos' => [25.65, 96.31]],
         ],
     ],
     [
