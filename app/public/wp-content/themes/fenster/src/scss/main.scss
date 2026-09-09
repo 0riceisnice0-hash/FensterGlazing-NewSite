@@ -41948,7 +41948,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-sgs__panel {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: clamp(1.5rem, 4vw, 3.25rem);
   align-items: start;
 }
@@ -42006,7 +42006,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-sgs__dwgs {
-  --sg-mm: 3.05px;
+  --sg-mm: 2.8px;
   display: flex;
   flex-wrap: wrap;
   gap: clamp(1.25rem, 3vw, 2.5rem);
