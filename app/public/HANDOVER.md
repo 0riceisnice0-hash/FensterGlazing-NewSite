@@ -31,9 +31,13 @@ Superseded: `caf75c2e` (thirty-third, the homepage lead work), then `cc911eb0`
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `d88cb83d` (tag `live-secondary-glazing-2026-09-09`) | cut from `cc911eb0` |
-| test | `569c9b83` | `main` |
-| `main` | `569c9b83` | — |
+| live | `8991a3aa` (tag `live-secondary-glazing-fixes-2026-09-09`) | cut from `d88cb83d` |
+| test | `e58f4e2c` | `main` |
+| `main` | `e58f4e2c` | — |
+
+**This table was stale again when `8991a3aa` shipped**, still naming the release
+before it while the head of this section named the right one. It is now the
+third time. Update it in the same edit as the head, or delete it.
 
 > **The section below this one has a correct head and a stale body.** On
 > 2026-09-08 its live SHA was fixed but its table, its file counts and its tag

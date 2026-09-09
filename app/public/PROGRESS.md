@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-09 — Secondary glazing: the five styles get section drawings (LIVE as `d88cb83d`)
+## 2026-09-09 — Secondary glazing: the five styles get section drawings (LIVE as `8991a3aa`, two follow-ups ON TEST as `e58f4e2c`)
 
 Owner: make the opening styles visual, a graphic each, and a section drawing
 behind each one showing the size. Then, over several rounds: *"put the dims
@@ -61,7 +61,27 @@ and finally *"fix that and push it live"*.
   plausible; reading the rendered numbers per style is the only reason it did
   not ship.
 - Live release cut from live `cc911eb0`, base proven by a 2,335-file manifest,
-  the Distinction hold-back untouched and re-hashed after the deploy.
+  the Distinction hold-back untouched and re-hashed after the deploy. A second
+  release, `8991a3aa`, followed the same day with the vertical slider's
+  edge-to-glass figure corrected to 56, the image moved above the spec text on
+  mobile and the label spacing fixed.
+- **TWO FOLLOW-UPS ARE ON TEST AND NOT LIVE**, `02769c0c` and `e58f4e2c`.
+  Owner: *"Don't like the 'the catch on a slider' pic. Use attached instead"*
+  and *"You missed the glass bit of the diagram on the new lift out reveal fix
+  bit."*
+- **The lift-out reveal drawing was built without the absorb pass its own face
+  fix uses.** That pass merges small clusters neighbouring the jamb, and for
+  lift-out the pane and its gasket are a separate cluster, so the reveal section
+  drew frame and no glass while the face fix beside it drew both. The two are
+  extracted by the same function from the same sheet, one line apart in the job
+  list, and the flag differed between them. **When two drawings come off one
+  page, diff their build arguments, not just their output.** Rebuilt, the box
+  goes 41.7mm to 52.8mm because the pane is now inside it, and both label
+  positions move with it.
+- The catch photograph was replaced with a leaded window set back in a painted
+  reveal. Checked before it shipped to test: no EXIF, no GPS, 1200x1500 matching
+  its own `width`/`height`, and nothing identifying through the glass — two cars
+  with no plate visible, no house number, no street sign.
 
 ## 2026-09-04 — Homepage 3.0: the Rightmove-UX homepage on test, host gated (ON TEST as `9d2b73d4`, NOT LIVE)
 
