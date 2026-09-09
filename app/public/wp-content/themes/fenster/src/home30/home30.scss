@@ -1474,6 +1474,22 @@ a.fg-h30-proof__media--crew > img {
 }
 
 @media (max-width: 720px) {
+
+  /* On a phone the pair wrapped to two lines at 170px and 173px wide -- two
+     different widths, centred, which reads as an accident rather than a pair.
+     Stacked and full width to a sensible cap is the deliberate version, and it
+     gives both a full-width tap target. */
+  .fg-h30-hero__actions {
+    width: min(20rem, 100%);
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fg-h30-hero__actions .fg-h30-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .fg-h30-hero__title {
     max-width: none;
   }
