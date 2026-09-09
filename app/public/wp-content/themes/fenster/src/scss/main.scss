@@ -42023,9 +42023,11 @@ html.fg-blinds-reveal-locked {
 .fg-sgs__dwg {
   margin: 0;
   display: grid;
-  /* the bottom number hangs below the drawing box, so this gap clears the
-     NUMBER rather than the drawing; at 0.6rem the caption sat about 6px under it */
-  gap: 1.25rem;
+  /* THE BOTTOM NUMBER HANGS BELOW THE DRAWING BOX, so this gap has to clear the
+     NUMBER rather than the drawing, and raising the number's own top padding
+     pushes its bottom down just as fast. Measured on the page: 0.6rem left 6px
+     of clearance, 1.25rem left 3px, 1.95rem leaves about 14px. */
+  gap: 1.95rem;
   justify-items: center;
   text-align: center;
   /* room for the two numbers, which sit outside the drawing box */
@@ -42070,7 +42072,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-sgs__num--h {
   transform: translate(-50%, 0);
-  padding-top: 0.45rem;
+  padding-top: 0.4rem;
 }
 
 .fg-sgs__dwg figcaption {
