@@ -25,7 +25,7 @@
  *
  * The order is the order the questions arrive in:
  *   what even is it        -> most people have never had it explained
- *   why would I have it    -> the three reasons, and the USP is the first
+ *   why would I have it    -> ONE reason, and two things that follow from it
  *   can I still open it    -> the objection everybody has, answered with a photo
  *   what glass, what colour-> the two things left to choose
  *
@@ -72,20 +72,29 @@ $base = '/wp-content/themes/fenster/assets/images/products/secondary-glazing/';
 $quote_url = (string) ($args['quote_url'] ?? '');
 $case_study = home_url('/case-studies/secondary-glazing-winslow/');
 
-/* Three cards, and the order is the order they matter in. "The windows have to
-   stay" is the USP and leads. */
+/* ONE REASON, THEN TWO THINGS THAT FOLLOW. Owner, 2026-09-09, on the heading
+   that used to sit above these: *"Three reasons, and usually two at once. This
+   is dumb too. It's always because the windows have to stay."*
+
+   He is right and the cards were built on the wrong idea. Nobody rings up
+   wanting a second window; they ring up because the first one is not theirs to
+   replace. Quieter and warmer are what they get afterwards, which is why the
+   two now open with "Then" and the heading says there is one reason.
+
+   Do not restore the three-reasons framing, and do not reorder these: the
+   constraint has to come first or the two below it read as a menu. */
 $reasons = [
     [
         'name' => __('The windows have to stay', 'fenster'),
         'copy' => __('A listed building, a conservation area, or a flat where the windows are not yours to change. Original leaded lights or stained glass worth keeping is the other one. Secondary glazing goes on the inside and takes nothing out, so what is there stays there.', 'fenster'),
     ],
     [
-        'name' => __('The road is loud', 'fenster'),
-        'copy' => __('Two separate windows with a run of air between them is a different thing from one sealed unit, and the air gap is what slows sound down. If noise is the reason you are calling, say so early, because it changes the glass we would put in.', 'fenster'),
+        'name' => __('Then the road gets quieter', 'fenster'),
+        'copy' => __('Two separate windows with a run of air between them is a different thing from one sealed unit, and the air gap is what slows sound down. If noise is the part you most want dealt with, say so early, because it changes the glass we would put in.', 'fenster'),
     ],
     [
-        'name' => __('The room is cold', 'fenster'),
-        'copy' => __('Single glazing loses heat and old frames let draughts through around the edges. A second glazed layer on the inside slows both of those down, and it does it without anybody touching the original window.', 'fenster'),
+        'name' => __('Then the room gets warmer', 'fenster'),
+        'copy' => __('Single glazing loses heat and old frames let draughts through around the edges. A second glazed layer on the inside slows both of those down, in a room where the usual fix was never available.', 'fenster'),
     ],
 ];
 
@@ -247,9 +256,9 @@ $sg_fixings = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('What it is', 'fenster'); ?></p>
-                <h2 id="fg-sg-what-title"><?php esc_html_e('A second window, on the inside of the one you have.', 'fenster'); ?></h2>
+                <h2 id="fg-sg-what-title"><?php esc_html_e('The original window stays. This goes in front of it.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('A slim frame is fitted into the reveal in front of your existing window. The original is not touched: same glass, same frame, same view of the house from the street. What changes is that there are now two windows with a run of air between them, and that gap is the part doing the work.', 'fenster'); ?></p>
-                <p><?php esc_html_e('It is the answer when replacing the window is not on the table, and it is reversible, which is usually the point. Nothing is cut, nothing is removed, and the original window is still there behind it doing what it always did.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Nothing is cut and nothing is removed, so it can come back out and leave the window as it was. That is usually the point in a listed home: what is there stays there, and the one change made to the room is a change you could undo.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Nothing comes out, and the outside of the house does not change', 'fenster'); ?></li>
                     <li><?php esc_html_e('Slim aluminium frames in white, brown or any RAL colour', 'fenster'); ?></li>
@@ -278,9 +287,9 @@ $sg_fixings = [
             <div class="fg-sg-band__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Why people have it', 'fenster'); ?></p>
-                    <h2 id="fg-sg-why-title"><?php esc_html_e('Three reasons, and usually two at once.', 'fenster'); ?></h2>
+                    <h2 id="fg-sg-why-title"><?php esc_html_e('There is really only one reason.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('Almost nobody comes to secondary glazing first. They come to it because replacing the window turned out to be off the table, or because they tried everything else on the noise.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Almost nobody comes to secondary glazing first. They come to it because replacing the window turned out not to be an option. The quiet and the warmth are what they find afterwards, and are not what got them on the phone.', 'fenster'); ?></p>
             </div>
             <dl class="fg-sg-list">
                 <?php foreach ($reasons as $item) : ?>
@@ -482,8 +491,8 @@ $sg_fixings = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Glass and finish', 'fenster'); ?></p>
-                <h2 id="fg-sg-glass-title"><?php esc_html_e('If noise is the reason, the glass is the decision.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Standard glass is enough where the job is warmth and draughts. Laminated glass is the upgrade, two sheets bonded around an interlayer, and it is the one to take if traffic or a flight path is the whole reason you are doing this. It is worth saying so on the phone, because it is specified at the start rather than added later.', 'fenster'); ?></p>
+                <h2 id="fg-sg-glass-title"><?php esc_html_e('If noise is what you want dealt with, the glass is the decision.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Standard glass is enough where the job is warmth and draughts. Laminated glass is the upgrade, two sheets bonded around an interlayer, and it is the one to take if traffic or a flight path is the thing you most want quietened. It is worth saying so on the phone, because it is specified at the start rather than added later.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The frames are slim aluminium and sit inside the reveal, which is what stops a second window looking like one. White and brown are the two standard colours, and any RAL can be matched where a frame needs to disappear into a dark reveal or pick up something already in the room.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Laminated glass upgrade where noise is the priority', 'fenster'); ?></li>

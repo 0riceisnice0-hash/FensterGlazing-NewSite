@@ -401,6 +401,21 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Roof Lanterns & Roof Lights Milton Keynes | Sheerline S1',
             'meta_description' => 'Sheerline S1 aluminium roof lanterns and roof lights in Milton Keynes, with 13 layouts, frame colours, glass and ventilation specified before installation.',
         ],
+        'secondary-glazing' => [
+            /* ADDED 2026-09-09. This route had NO entry, so it fell through to
+               the imported description, which read "High-Quality Incarnation
+               Secondary Glazing". `Incarnation` is a supplier's system name off
+               the old scraped page, and this page is written around a generic
+               system the owner has ruled must not be named. It was also the one
+               line on the route that never mentioned a listed building.
+
+               Owner, 2026-09-09: the market is people in old houses who cannot
+               change the windows because they are listed. The description says
+               that in the first six words, because that is the phrase the
+               searcher recognises as their own situation. */
+            'title_tag' => 'Secondary Glazing Milton Keynes | Listed & Period Homes',
+            'meta_description' => 'Secondary glazing for listed and period homes across Milton Keynes and Buckinghamshire. The original window stays exactly as it is. Price it online in minutes.',
+        ],
         'french-casement-windows' => [
             /* Title matches the imported one that already ranks and is NOT
                touched: this route carries the head phrase people search.
