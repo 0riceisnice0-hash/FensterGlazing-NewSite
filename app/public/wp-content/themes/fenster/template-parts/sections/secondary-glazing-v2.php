@@ -201,7 +201,7 @@ $styles = [
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
             'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 51.2, 'mm_h' => 38.6, 'dpos' => [3.99, 42.04], 'spos' => [59.76, 94.7]],
-            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 41.7, 'mm_h' => 57.6, 'dpos' => [8.85, 44.68], 'spos' => [50.0, 96.45]],
+            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 52.8, 'mm_h' => 57.6, 'dpos' => [3.87, 44.68], 'spos' => [60.54, 96.45]],
         ],
     ],
 ];
