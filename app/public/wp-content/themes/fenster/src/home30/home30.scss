@@ -331,6 +331,11 @@
   /* Sits in the upper part of the frame so everything below the panel is free
      for the product list to open into. */
   padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 3vw, 2rem) 0;
+  /* ONE GAP, USED ABOVE AND BELOW THE CTA PAIR. Owner, 2026-09-09: the space
+     from the typed line down to the buttons and from the buttons down to the
+     search box have to match. Declared once here and read by both rules, so
+     they cannot drift apart when either is next touched. */
+  --h30-hero-stack-gap: clamp(1.75rem, 4.5vh, 3rem);
 }
 
 .fg-h30-hero__intro {
@@ -359,10 +364,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: .75rem;
-  /* Sits low enough to read as its own beat rather than as part of the typed
-     line. `6vh` keeps that relationship on a short window instead of pinning it
-     to a pixel gap that closes up at 780. */
-  margin: clamp(2.25rem, 6vh, 3.25rem) 0 0;
+  margin: var(--h30-hero-stack-gap) 0 0;
 }
 
 /* Scoped under `.fg-h30` to outrank the shared heading rule at the top of this
@@ -383,11 +385,19 @@
   letter-spacing: -0.032em; text-wrap: balance;
   /* Two lines are reserved whatever is being typed. The hero is fitted to one
      screen, so a heading that grew and shrank would walk the search box up and
-     down the page every few seconds. A line that only needs one of those two
-     sits in the middle of the box rather than hanging from the top of it. */
+     down the page every few seconds.
+
+     THE LINE HANGS FROM THE BOTTOM OF THAT BOX, NOT THE MIDDLE. Centred, a
+     one-line phrase left 19px of reserved emptiness underneath it, so the
+     measured gap down to the buttons was 66px against 27px on the other side
+     of them -- the same nominal margin reading as two different spaces. End
+     alignment makes the gap below the text the margin and nothing else, at any
+     line count, and a phrase that needs the second line now grows UPWARD into
+     the space above rather than pushing the buttons and the search box down.
+     Owner, 2026-09-09: "when goes to two lines it needs to move up". */
   min-height: 2.08em;
   display: grid;
-  align-content: center;
+  align-content: end;
 }
 
 .fg-h30-hero__typed {
@@ -423,7 +433,7 @@
 
 .fg-h30-finder {
   position: relative; z-index: 3; flex: none;
-  margin: clamp(1.5rem, 3.5vh, 2.5rem) auto 0;
+  margin: var(--h30-hero-stack-gap) auto 0;
   width: min(44rem, 100%); border-radius: 16px;
   background: var(--h30-ink); color: #fff; border: 0;
   box-shadow: 0 18px 44px -18px rgba(0,45,58,.55);
