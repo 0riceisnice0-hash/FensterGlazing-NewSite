@@ -338,7 +338,7 @@ $sg_fixings = [
         <div class="container">
             <div class="fg-sgs__head">
                 <p class="eyebrow"><?php esc_html_e('The five styles', 'fenster'); ?></p>
-                <h2 id="fg-sg-styles-title"><?php esc_html_e('Five ways it opens, and how much room each one takes.', 'fenster'); ?></h2>
+                <h2 id="fg-sg-styles-title"><?php esc_html_e('Five ways it opens, and how slim the frames are.', 'fenster'); ?></h2>
                 <?php /* Two numbers, said once, in the order somebody stood in
                          their own room would ask them. The first draft explained
                          the drawings instead of the windows and talked about how
