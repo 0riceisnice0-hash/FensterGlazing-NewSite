@@ -42028,10 +42028,31 @@ html.fg-blinds-reveal-locked {
   text-align: center;
 }
 
-.fg-sgs__dwg img {
+/* The stage carries the width so the number spans can be positioned against the
+   drawing box. One CSS font size for all nine: the labels are HTML rather than
+   SVG text precisely so they do not scale with the drawing. */
+.fg-sgs__stage {
+  position: relative;
   display: block;
   width: calc(var(--sg-mm) * var(--mm-w));
+}
+
+.fg-sgs__dwg img {
+  display: block;
+  width: 100%;
   height: auto;
+}
+
+.fg-sgs__num {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-accent-dark);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .fg-sgs__dwg figcaption {

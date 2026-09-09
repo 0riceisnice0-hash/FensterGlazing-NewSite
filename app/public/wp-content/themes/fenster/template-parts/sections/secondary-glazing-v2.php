@@ -165,8 +165,8 @@ $styles = [
         'name' => __('Horizontal slider', 'fenster'),
         'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 74.6, 'mm_h' => 61.2],
-            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 74.6, 'mm_h' => 80.3],
+            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 75.8, 'mm_h' => 62.2, 'dpos' => [12.31, 33.71], 'spos' => [67.07, 90.52]],
+            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 75.8, 'mm_h' => 81.3, 'dpos' => [12.31, 36.58], 'spos' => [67.3, 92.74]],
         ],
     ],
     [
@@ -174,8 +174,8 @@ $styles = [
         'name' => __('Vertical slider', 'fenster'),
         'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 175.7, 'mm_h' => 61.4],
-            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 152.4, 'mm_h' => 73.4],
+            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 177.0, 'mm_h' => 62.4, 'dpos' => [5.42, 40.37], 'spos' => [22.41, 90.3]],
+            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 153.7, 'mm_h' => 74.4, 'dpos' => [6.24, 38.99], 'spos' => [25.8, 91.86]],
         ],
     ],
     [
@@ -183,8 +183,8 @@ $styles = [
         'name' => __('Hinged', 'fenster'),
         'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 100.7, 'mm_h' => 58.3],
-            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 100.7, 'mm_h' => 74.5],
+            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 102.2, 'mm_h' => 59.6, 'dpos' => [11.58, 35.88], 'spos' => [56.14, 87.45]],
+            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 102.3, 'mm_h' => 75.8, 'dpos' => [11.57, 37.98], 'spos' => [56.22, 90.13]],
         ],
     ],
     [
@@ -192,7 +192,7 @@ $styles = [
         'name' => __('Fixed', 'fenster'),
         'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 33.0, 'mm_h' => 22.5],
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 58.6, 'mm_h' => 43.5, 'dpos' => [13.26, 37.3], 'spos' => [64.81, 88.72]],
         ],
     ],
     [
@@ -200,8 +200,8 @@ $styles = [
         'name' => __('Lift-out', 'fenster'),
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 57.5, 'mm_h' => 42.7],
-            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 46.4, 'mm_h' => 61.7],
+            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 33.9, 'mm_h' => 23.2, 'dpos' => [19.87, 29.43], 'spos' => [67.25, 81.67]],
+            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 47.4, 'mm_h' => 62.5, 'dpos' => [16.39, 41.17], 'spos' => [56.03, 92.15]],
         ],
     ],
 ];
@@ -422,23 +422,41 @@ $sg_fixings = [
                                 }
                                 ?>
                                 <figure class="fg-sgs__dwg">
-                                    <?php /* `height: auto` is set in the stylesheet against these
-                                             dimension attributes. An `<img>` height attribute maps
-                                             to CSS height and would otherwise beat the width the
+                                    <?php /* THE NUMBERS ARE HTML ON TOP OF THE DRAWING, NOT TEXT
+                                             INSIDE IT. The drawings are sized in millimetres so they
+                                             stay true to each other, which means anything measured in
+                                             the SVG's own units scales with the drawing: the same
+                                             label rendered at about 6px on the fixed panel and 10px
+                                             on the hinged frame. Strokes escape that through
+                                             `vector-effect`; text has no equivalent. Positioned as a
+                                             percentage of the drawing box, one CSS font size covers
+                                             all nine at every breakpoint.
+
+                                             `height: auto` is set in the stylesheet against the
+                                             dimension attributes below. An `<img>` height attribute
+                                             maps to CSS height and would otherwise beat the width the
                                              calc sets, which is the trap the composite glass door
-                                             renders hit at 1,103px tall. The attributes are here
-                                             for the aspect ratio and the reserved space only. */ ?>
+                                             renders hit at 1,103px tall. */ ?>
+                                    <span class="fg-sgs__stage" style="--mm-w: <?php echo esc_attr((string) $fix['mm_w']); ?>">
+                                        <span class="fg-sgs__num" aria-hidden="true"
+                                            style="left: <?php echo esc_attr((string) $fix['dpos'][0]); ?>%; top: <?php echo esc_attr((string) $fix['dpos'][1]); ?>%"><?php
+                                            echo esc_html((string) $fix['depth']); ?></span>
+                                        <span class="fg-sgs__num" aria-hidden="true"
+                                            style="left: <?php echo esc_attr((string) $fix['spos'][0]); ?>%; top: <?php echo esc_attr((string) $fix['spos'][1]); ?>%"><?php
+                                            echo esc_html((string) $fix['span']); ?></span>
                                     <img src="<?php echo esc_url($src); ?>"
                                         width="<?php echo esc_attr((string) round($fix['mm_w'] * 10)); ?>"
                                         height="<?php echo esc_attr((string) round($fix['mm_h'] * 10)); ?>"
-                                        style="--mm-w: <?php echo esc_attr((string) $fix['mm_w']); ?>"
                                         loading="lazy" decoding="async"
                                         alt="<?php echo esc_attr(sprintf(
-                                            /* translators: 1: style name, 2: fixing method. */
-                                            __('Scale section through the frame of a %1$s, %2$s', 'fenster'),
+                                            /* translators: 1: style, 2: fixing, 3: depth, 4: frame edge to glass. */
+                                            __('Scale section through the frame of a %1$s, %2$s: %3$dmm edge to edge, %4$dmm from the outer edge to the glass', 'fenster'),
                                             strtolower($style['name']),
-                                            strtolower($sg_fixings[$fix_key]['label'])
+                                            strtolower($sg_fixings[$fix_key]['label']),
+                                            $fix['depth'],
+                                            $fix['span']
                                         )); ?>">
+                                    </span>
                                     <figcaption>
                                         <span class="fg-sgs__fix"><?php echo esc_html($sg_fixings[$fix_key]['label']); ?></span>
                                         <span class="fg-sgs__fixnote"><?php echo esc_html($sg_fixings[$fix_key]['note']); ?></span>
