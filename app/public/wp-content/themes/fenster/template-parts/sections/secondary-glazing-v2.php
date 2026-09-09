@@ -175,7 +175,7 @@ $styles = [
         'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
         'fixings' => [
             'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 175.7, 'mm_h' => 61.4],
-            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 152.6, 'mm_h' => 73.4],
+            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 152.4, 'mm_h' => 73.4],
         ],
     ],
     [
@@ -200,7 +200,7 @@ $styles = [
         'name' => __('Lift-out', 'fenster'),
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 53.7, 'mm_h' => 42.7],
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 57.5, 'mm_h' => 42.7],
             'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 46.4, 'mm_h' => 61.7],
         ],
     ],

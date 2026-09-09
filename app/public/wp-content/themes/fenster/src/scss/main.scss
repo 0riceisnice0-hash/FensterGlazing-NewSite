@@ -41950,7 +41950,7 @@ html.fg-blinds-reveal-locked {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: clamp(1.5rem, 4vw, 3.25rem);
-  align-items: start;
+  align-items: center;
 }
 
 .fg-sgs__panel[hidden] {
@@ -42005,19 +42005,27 @@ html.fg-blinds-reveal-locked {
   font-variant-numeric: tabular-nums;
 }
 
+/* The drawings sit in the middle of their half rather than in the top left
+   corner of it. They are small objects in a wide column and the owner called it:
+   left-aligned they read as an afterthought against a field of white. */
 .fg-sgs__dwgs {
   --sg-mm: 1.85px;
   display: flex;
   flex-wrap: wrap;
   gap: clamp(1.25rem, 3vw, 2.5rem);
   align-items: flex-end;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
 }
 
 .fg-sgs__dwg {
   margin: 0;
   display: grid;
   gap: 0.6rem;
-  justify-items: start;
+  justify-items: center;
+  text-align: center;
 }
 
 .fg-sgs__dwg img {
