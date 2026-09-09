@@ -338,6 +338,24 @@
   text-align: center; color: #fff; pointer-events: none;
 }
 
+/* THE HERO'S PRICE ASK. Centred under the typed line and above the finder, so
+   the first thing offered is a price rather than a category to browse. It is a
+   SIBLING of `.fg-h30-hero__intro` rather than a child: that block is
+   `pointer-events: none` so it does not swallow clicks meant for the
+   photograph, and a button inside it could not be pressed.
+
+   Both classes are in the `cta_click` selector as of 2026-09-09, so unlike the
+   rest of this hero these two are measurable. */
+.fg-h30-hero__actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+  margin: 1.5rem 0 0;
+}
+
 /* Scoped under `.fg-h30` to outrank the shared heading rule at the top of this
    file. It is an <h1> now, so it inherits that rule's dark ink and tight
    tracking, and neither belongs on a line sitting over a photograph. */

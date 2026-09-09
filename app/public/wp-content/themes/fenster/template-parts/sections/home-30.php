@@ -93,6 +93,28 @@ $h30_case_url = static function (string $slug): string {
                     </p>
                 </div>
 
+                <!-- THE PRICE ASK, ABOVE THE FOLD. Until 2026-09-09 the first
+                     in-content price CTA on this page sat at 58% depth, directly
+                     above the embedded quote tool -- and `/online-quote/`, which
+                     produces very nearly every lead this site gets, lost 69% of
+                     its traffic in the days after this homepage shipped. The
+                     finder below is for somebody browsing; this pair is for
+                     somebody who already knows they want a price.
+
+                     A SIBLING OF `__intro`, NOT A CHILD. That block is
+                     `pointer-events: none` so it cannot swallow clicks meant for
+                     the photograph behind it, and buttons inside it would be
+                     unclickable.
+
+                     The labels are the ones the instant-quote band lower down
+                     already uses, so the same action does not gain a fourth
+                     name; `FULL-SITE-AUDIT-2026-08-13.md` records "one action
+                     carrying three different labels" as an open finding. -->
+                <p class="fg-h30-hero__actions">
+                    <a class="fg-h30-btn fg-h30-btn--primary" href="<?php echo esc_url($h30_quote_url); ?>">Start your price</a>
+                    <a class="fg-h30-btn fg-h30-btn--ghost" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">Book a free visit</a>
+                </p>
+
                 <div class="fg-h30-finder" id="fg-h30-finder" data-h30-finder>
                                                             <nav class="fg-h30-finder__tabs" aria-label="Choose what to change">
                                                                 <?php foreach ($h30_groups as $h30_key => $h30_group) : ?>
