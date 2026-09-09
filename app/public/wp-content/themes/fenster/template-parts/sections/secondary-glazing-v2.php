@@ -494,11 +494,31 @@ $sg_fixings = [
                     <a class="fg-cw-link" href="<?php echo esc_url($case_study); ?>"><?php esc_html_e('See a listed home in Winslow', 'fenster'); ?></a>
                 </p>
             </div>
-            <figure class="fg-cw-media fg-cw-media--4x3">
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'sg-slider-catch-4x3.jpg')); ?>"
-                    alt="<?php esc_attr_e('The catch on a secondary glazing slider, with the original leaded light immediately behind it', 'fenster'); ?>"
-                    loading="lazy" width="1200" height="900">
-                <figcaption><?php esc_html_e('The catch on a slider', 'fenster'); ?></figcaption>
+            <?php /* PORTRAIT, SO THE BOX IS 4:5 RATHER THAN 4:3. The source is a
+                     1200x1600 phone shot and the window with its architrave runs
+                     1,340px of that, so a 4:3 crop cannot contain it at any
+                     position: full width caps the height at 900. All three
+                     candidates cut the head or the sill off. `--4x5` is the shape
+                     this site already uses for portrait install shots and the
+                     crop loses 100px. Crop the box to the picture, never the
+                     picture to the box.
+
+                     CHECKED BEFORE PUBLISHING, because this is a photograph taken
+                     inside somebody's home looking out at a street: no number
+                     plate, no house number and no street sign is legible at full
+                     resolution, and the EXIF is stripped. Both cars are seen from
+                     above with no plate in frame.
+
+                     The caption describes what is in the photograph and claims no
+                     installation. Every other picture on this route is captioned
+                     as ours because the owner confirmed each one; this one has not
+                     been confirmed, and this project does not caption a photograph
+                     as ours on an assumption. */ ?>
+            <figure class="fg-cw-media fg-cw-media--4x5">
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'sg-leaded-reveal-4x5.jpg')); ?>"
+                    alt="<?php esc_attr_e('Secondary glazing fitted inside a painted brick reveal, its slim white frame set back from the room, with the original leaded diamond window immediately behind the new pane', 'fenster'); ?>"
+                    loading="lazy" width="1200" height="1500">
+                <figcaption><?php esc_html_e('Slim frame, set back in the reveal', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>
