@@ -353,7 +353,10 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: .75rem;
-  margin: 1.5rem 0 0;
+  /* Sits low enough to read as its own beat rather than as part of the typed
+     line. `6vh` keeps that relationship on a short window instead of pinning it
+     to a pixel gap that closes up at 780. */
+  margin: clamp(2.25rem, 6vh, 3.25rem) 0 0;
 }
 
 /* Scoped under `.fg-h30` to outrank the shared heading rule at the top of this
