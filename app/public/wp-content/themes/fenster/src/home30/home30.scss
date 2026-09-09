@@ -346,7 +346,13 @@
 
    Both classes are in the `cta_click` selector as of 2026-09-09, so unlike the
    rest of this hero these two are measurable. */
-.fg-h30-hero__actions {
+/* SCOPED UNDER `.fg-h30` TO OUTRANK `.fg-h30 p { margin: 0 }`, the same reason
+   `.fg-h30-hero__eyebrow` below is scoped. This row is a <p>, and that shared
+   reset is (0,1,1) where a bare `.fg-h30-hero__actions` is (0,1,0) -- so the
+   margin below was silently computing to 0 and the pair sat tight under the
+   typed line no matter what was written here. Verified in the browser, not
+   assumed: the served rule was correct and the computed value was 0px. */
+.fg-h30 .fg-h30-hero__actions {
   position: relative;
   z-index: 2;
   display: flex;
@@ -1482,13 +1488,13 @@ a.fg-h30-proof__media--crew > img {
      different widths, centred, which reads as an accident rather than a pair.
      Stacked and full width to a sensible cap is the deliberate version, and it
      gives both a full-width tap target. */
-  .fg-h30-hero__actions {
+  .fg-h30 .fg-h30-hero__actions {
     width: min(20rem, 100%);
     flex-direction: column;
     align-items: stretch;
   }
 
-  .fg-h30-hero__actions .fg-h30-btn {
+  .fg-h30 .fg-h30-hero__actions .fg-h30-btn {
     width: 100%;
     justify-content: center;
   }
