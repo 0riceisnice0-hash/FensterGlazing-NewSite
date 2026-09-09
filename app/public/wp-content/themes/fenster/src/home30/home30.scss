@@ -585,7 +585,10 @@
 
 .fg-h30-price__panel {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  /* THE TOOL GETS THE WIDER HALF. It used to be 1.05/.95 in the copy's favour,
+     which left the designer narrower than the paragraph describing it -- the
+     thing you can actually get a price from was the smaller of the two. */
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   gap: clamp(2rem, 4vw, 4rem);
   align-items: center;
   padding: clamp(1.75rem, 4vw, 3.5rem);
@@ -617,14 +620,24 @@
   margin-top: 1.75rem;
 }
 
-/* THE PRICING FRAME. It takes the exact footprint the three numbered steps
-   held: stretched to the row, with a floor of 280px, which is what those
-   steps measured. The row height is still whatever the copy beside it needs,
-   so the band is the same size as before. */
+/* THE PRICING FRAME IS SQUARE AND SIZED ON ITS OWN TERMS.
+
+   It used to be `align-self: stretch` with a 280px floor, inherited from the
+   three numbered steps it replaced -- so its height was whatever the paragraph
+   beside it happened to need, and WindowCAD got a short, wide letterbox to
+   render a tall product configurator into. That is the shape the owner called
+   "way too narrow" on 2026-09-09.
+
+   A square is the right frame because the designer's own canvas is roughly
+   square: product tiles, then a drawing with size fields under it. `width` is
+   capped rather than the height, because capping height with `aspect-ratio`
+   set is what silently stops it being a square. */
 .fg-h30-price__quote {
   position: relative;
-  align-self: stretch;
-  min-height: 280px;
+  align-self: center;
+  width: min(100%, 620px);
+  margin-inline: auto;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border: 1px solid #dceae2;
   border-radius: var(--h30-radius);
@@ -1411,9 +1424,14 @@ a.fg-h30-proof__media--crew > img {
   .fg-h30-price__panel {
     grid-template-columns: minmax(0, 1fr);
   }
-  /* Stacked, the frame carries the height the three steps used to, so the
-     band stays exactly as tall as it was. */
-  .fg-h30-price__quote { min-height: 324px; }
+  /* Stacked, it stays square up to the panel width, with a floor so a narrow
+     phone still gets a tool tall enough to configure something in rather than
+     a 340px slot. Taller than square is fine here; shorter is not. */
+  .fg-h30-price__quote {
+    width: 100%;
+    max-width: 620px;
+    min-height: 420px;
+  }
 
 }
 
