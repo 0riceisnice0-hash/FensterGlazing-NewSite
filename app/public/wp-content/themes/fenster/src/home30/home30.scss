@@ -406,12 +406,20 @@
      test. */
   flex: 1 1 auto;
   justify-content: flex-end;
-  padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 3vw, 2rem) var(--h30-hero-stack-gap);
+  /* `vw` on the top, never `vh`, for the same reason as the gap token above.
+     With `justify-content: flex-end` the slack in the fixed band collects here
+     anyway, so this only sets the minimum breathing room above the eyebrow. */
+  padding: clamp(2rem, 3vw, 2.75rem) clamp(1rem, 3vw, 2rem) var(--h30-hero-stack-gap);
   /* ONE GAP, USED ABOVE AND BELOW THE CTA PAIR. Owner, 2026-09-09: the space
      from the typed line down to the buttons and from the buttons down to the
      search box have to match. Declared once here and read by both rules, so
      they cannot drift apart when either is next touched. */
-  --h30-hero-stack-gap: clamp(1.75rem, 4.5vh, 3rem);
+  /* NOT `vh`. A gap measured against the window height makes the hero's content
+     taller on a taller monitor, which pushed the band back to 687px at 1200
+     after it had been fixed at 640 -- the height and the rhythm were fighting.
+     A flat value keeps all three gaps equal AND the band constant; the short
+     window case is handled once, at the foot of this file. */
+  --h30-hero-stack-gap: 2.25rem;
 }
 
 .fg-h30-hero__intro {
