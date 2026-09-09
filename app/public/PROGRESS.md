@@ -14,6 +14,40 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-09 — Secondary glazing: the page gets written to the people who cannot change their windows (ON TEST as `ce255651`, NOT LIVE)
+
+Owner, on the opening H2: *"A second window, on the inside of the one you have.
+This sounds dumb. Target market for this page is people in old af houses where
+you can't change the windows because they're listed or something."* Then, on the
+band under it: *"Three reasons, and usually two at once. This is dumb too. It's
+always because the windows have to stay."* Then: *"Have a look through the whole
+page and make sure the copy aligns with that."*
+
+- **THE SECOND NOTE IS STRUCTURAL, NOT A HEADLINE FIX.** The band offered three
+  reasons as a menu a reader might pick from. Nobody picks. They arrive with the
+  window already fixed in place and no other option, and the quiet and the
+  warmth are what they find afterwards. It is now one reason and two things that
+  follow, and the two cards open with "Then" so the hierarchy is on the page
+  rather than only in the heading.
+- **THE ROUTE HAD NO ENTRY IN `fenster_gsc_seo_overrides()`**, so the description
+  Google shows was still the imported one: *"High-Quality Incarnation Secondary
+  Glazing."* `Incarnation` is a supplier's system name off the old scraped page,
+  on a route written around a generic system the owner has ruled must not be
+  named. Every other product slug has an entry; this one was simply missed.
+- **THE HERO'S LEAD PARAGRAPH DOES NOT RENDER AND THE COPY REWRITE ALONE WOULD
+  HAVE CHANGED NOTHING ABOVE THE FOLD.** `.fg-hero--compact` sets
+  `.fg-hero__intro { display: none }`, so the H1 and the eyebrow are the only
+  words in the hero. **Check that before writing a hero paragraph on any compact
+  route.** The eyebrow is the slot, which is what roofline concluded in August
+  for the same reason; it now reads "For listed and period homes".
+- Two FAQ answers still carried the old framing after the sections above them
+  were rewritten, one calling it *"one of the main reasons"* and one saying
+  *"if noise is the whole reason"*. **A copy pass is not finished at the bottom
+  of the template**: the FAQs and the hero standfirst live in `site-data.php`
+  and the meta description in `generated-pages.php`.
+- Live untouched at `8991a3aa`. Four commits on test, `a5061f57` through
+  `ce255651`, with `02769c0c` and `e58f4e2c` from earlier the same day.
+
 ## 2026-09-09 — Secondary glazing: the five styles get section drawings (LIVE as `8991a3aa`, two follow-ups ON TEST as `e58f4e2c`)
 
 Owner: make the opening styles visual, a graphic each, and a section drawing
