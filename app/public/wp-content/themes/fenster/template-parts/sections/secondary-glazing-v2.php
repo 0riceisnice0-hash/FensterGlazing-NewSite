@@ -119,7 +119,14 @@ $reasons = [
    happens when a part is drawn from imagination: every one came back corrected.
 
    EVERY DRAWING IS AT ONE TRUE SCALE ACROSS ALL FIVE STYLES, so the fixed panel
-   really is about a third the width of the hinged frame on screen. `mm_w` is the
+   really is about a third the width of the hinged frame on screen. **The scale of
+   each source drawing was MEASURED off that drawing's own dimension lines** --
+   find the tick pair whose midpoint sits on a numeric label, divide the span by
+   the stated millimetres, and take the consensus of the dozens that agree. An
+   earlier pass derived it from the face/reveal depth difference instead, which is
+   right only if nothing but the depth changes between the two frames. It was out
+   by 10% on the horizontal slider and by a THIRD on the vertical. Do not derive
+   this figure; measure it. `mm_w` is the
    drawing's true width in millimetres and the stylesheet multiplies it by
    `--sg-mm`, so that one custom property rescales the whole set and cannot break
    the relationship between them. This is the rule the bifold configuration rail
@@ -158,8 +165,8 @@ $styles = [
         'name' => __('Horizontal slider', 'fenster'),
         'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 71.3, 'mm_h' => 61.5],
-            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 63.0, 'mm_h' => 78.5],
+            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 86.8, 'mm_h' => 76.0],
+            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 77.7, 'mm_h' => 94.8],
         ],
     ],
     [
@@ -167,8 +174,8 @@ $styles = [
         'name' => __('Vertical slider', 'fenster'),
         'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 56, 'mm_w' => 121.1, 'mm_h' => 63.6],
-            'reveal' => ['depth' => 55, 'span' => 56, 'mm_w' => 90.5, 'mm_h' => 79.6],
+            'face' => ['depth' => 39, 'span' => 56, 'mm_w' => 99.0, 'mm_h' => 55.7],
+            'reveal' => ['depth' => 55, 'span' => 56, 'mm_w' => 76.0, 'mm_h' => 67.8],
         ],
     ],
     [
@@ -176,8 +183,8 @@ $styles = [
         'name' => __('Hinged', 'fenster'),
         'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 79.4, 'mm_h' => 41.0],
-            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 79.5, 'mm_h' => 57.0],
+            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 87.9, 'mm_h' => 49.0],
+            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 88.0, 'mm_h' => 65.2],
         ],
     ],
     [
@@ -185,7 +192,7 @@ $styles = [
         'name' => __('Fixed', 'fenster'),
         'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 21.3, 'mm_h' => 10.5],
+            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 31.7, 'mm_h' => 19.9],
         ],
     ],
     [
@@ -193,8 +200,8 @@ $styles = [
         'name' => __('Lift-out', 'fenster'),
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 45.4, 'mm_h' => 31.6],
-            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 45.8, 'mm_h' => 50.6],
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 53.8, 'mm_h' => 40.0],
+            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 54.2, 'mm_h' => 59.0],
         ],
     ],
 ];
@@ -331,8 +338,13 @@ $sg_fixings = [
         <div class="container">
             <div class="fg-sgs__head">
                 <p class="eyebrow"><?php esc_html_e('The five styles', 'fenster'); ?></p>
-                <h2 id="fg-sg-styles-title"><?php esc_html_e('Five ways it opens, and what each one takes up.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Each drawing is a section through the frame, cut the way a surveyor would look at it. They are all at one scale, so a fixed panel really is slimmer on screen than a hinged one. Two measurements: how far the frame stands into the room, and how much of it you see before the glass starts.', 'fenster'); ?></p>
+                <h2 id="fg-sg-styles-title"><?php esc_html_e('Five ways it opens, and how much room each one takes.', 'fenster'); ?></h2>
+                <?php /* Two numbers, said once, in the order somebody stood in
+                         their own room would ask them. The first draft explained
+                         the drawings instead of the windows and talked about how
+                         things looked "on screen", which is the page describing
+                         itself rather than telling anybody anything. */ ?>
+                <p><?php esc_html_e('Two numbers matter on any of them: how far the frame stands into the room, and how much of it you see before the glass starts. They are drawn to one scale, so you can compare them.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-sgs__picker" role="tablist" aria-label="<?php esc_attr_e('Secondary glazing styles', 'fenster'); ?>" hidden>
@@ -369,31 +381,19 @@ $sg_fixings = [
                         <div class="fg-sgs__copy">
                             <h3><?php echo esc_html($style['name']); ?></h3>
                             <p><?php echo esc_html($style['copy']); ?></p>
-                            <dl class="fg-sgs__keys">
-                                <div>
-                                    <dt><?php esc_html_e('Front to back', 'fenster'); ?></dt>
-                                    <dd><?php
-                                        echo $reveal
-                                            ? esc_html(sprintf(
-                                                /* translators: 1: face fix depth, 2: reveal fix depth, both millimetres. */
-                                                __('%1$dmm face fix, %2$dmm reveal fix', 'fenster'),
-                                                $face['depth'],
-                                                $reveal['depth']
-                                            ))
-                                            : esc_html(sprintf(__('%dmm', 'fenster'), $face['depth']));
-                                    ?></dd>
-                                </div>
-                                <div>
-                                    <dt><?php esc_html_e('Outer frame edge to glass', 'fenster'); ?></dt>
-                                    <dd><?php echo esc_html(sprintf(__('%dmm', 'fenster'), $face['span'])); ?></dd>
-                                </div>
-                                <div>
-                                    <dt><?php esc_html_e('Fixing', 'fenster'); ?></dt>
-                                    <dd><?php echo $reveal
-                                        ? esc_html__('Face or reveal', 'fenster')
-                                        : esc_html__('Face fix only', 'fenster'); ?></dd>
-                                </div>
-                            </dl>
+                            <?php /* THE FRAME-TO-GLASS FIGURE IS SAID ONCE, HERE,
+                                     because it is a property of the style and does
+                                     not change with the fixing method. It used to
+                                     print under both drawings and again in a
+                                     specification list beside them, so the same
+                                     number appeared three times in one panel.
+                                     Each drawing now carries only the figure that
+                                     is actually its own, which is the depth. */ ?>
+                            <p class="fg-sgs__span"><?php echo esc_html(sprintf(
+                                /* translators: %d: millimetres of frame before the glass. */
+                                __('You see %dmm of frame before the glass starts, whichever way it fixes.', 'fenster'),
+                                $face['span']
+                            )); ?></p>
                         </div>
                         <div class="fg-sgs__dwgs">
                             <?php foreach ($fixings as $fix_key => $fix) :
@@ -423,10 +423,9 @@ $sg_fixings = [
                                     <figcaption>
                                         <span class="fg-sgs__fix"><?php echo esc_html($sg_fixings[$fix_key]['label']); ?></span>
                                         <span class="fg-sgs__dims"><?php echo esc_html(sprintf(
-                                            /* translators: 1: depth, 2: frame edge to glass, both millimetres. */
-                                            __('%1$dmm deep, %2$dmm to the glass', 'fenster'),
-                                            $fix['depth'],
-                                            $fix['span']
+                                            /* translators: %d: millimetres the frame stands into the room. */
+                                            __('%dmm into the room', 'fenster'),
+                                            $fix['depth']
                                         )); ?></span>
                                         <span class="fg-sgs__fixnote"><?php echo esc_html($sg_fixings[$fix_key]['note']); ?></span>
                                     </figcaption>
