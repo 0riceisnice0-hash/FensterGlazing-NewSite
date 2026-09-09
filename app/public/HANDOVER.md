@@ -1,6 +1,197 @@
 # Fenster Glazing Handover
 
-## Current state, 2026-09-08 — read this before touching either environment
+## Current state, 2026-09-09 — read this before touching either environment
+
+**Read in this order if you are picking this up cold:** this section, then the
+Current Truth section of `LIVECHANGES.md` (the only authority on what is live
+and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
+carries the standing rules, including the Configuration Page Rule.
+
+**LIVE IS `74d02fec`**, tag `live-commercial-routing-2026-09-08`, the
+thirty-second isolated release. **Verified for this handover by a full
+2,336-file manifest taken off the live server, not copied from a document.** It
+is NOT an ancestor of `main`.
+
+| | SHA | theme tree |
+| --- | --- | --- |
+| live | `74d02fec` (tag `live-commercial-routing-2026-09-08`) | `2a2f23e1` |
+| test | `5d7c636b` | `4a814653` |
+| `main` | `5d7c636b` | `4a814653` |
+
+> **The section below this one has a correct head and a stale body.** On
+> 2026-09-08 its live SHA was fixed but its table, its file counts and its tag
+> list were left at 2026-08-30 values. It is kept for the history in it. Do not
+> read its numbers.
+
+### The two lines have almost converged
+
+The 2026-09-04 handover said 308 theme files differed between `main` and live.
+**It is now five.** Seventeen releases between 2026-09-04 and 2026-09-08 drained
+the rest.
+
+```
+inc/generated-pages.php                              28 +-
+inc/site-data.php                                     4 +-
+template-parts/layout/site-footer.php                 8 +-
+template-parts/sections/composite-doors-v2.php      514 +++---
+template-parts/sections/generated-page.php          157 +--
+```
+
+**Those five are the Distinction strand and nothing else** — the composite doors
+V2 overhaul, the `/why-distinction/` footer link and the generated-page wiring
+that carries them. They have been held off live deliberately since `1a23b122`
+and have never been approved. Test and `main` are byte-identical to each other
+apart from a stray `.DS_Store` in the theme, which cannot be gitignored here
+(`.gitignore:18` re-includes the whole theme folder) and is worth sweeping.
+
+A release is therefore a small, legible job again: take `main`, put those five
+files back, deploy. That is nothing like the hunk-by-hunk splicing the
+2026-08-30 arrangement needed, and it is only true because the backlog is gone.
+
+### THE HOLD-BACK BASELINE CHANGED ON 2026-09-07. READ THIS BEFORE CUTTING A RELEASE.
+
+Every release from `9921fda2` to `d2cc38d1` restored those five files **from the
+fixed SHA `ca9793c2`**. That is now wrong and will cause damage.
+
+A parallel session shipped `ed38fcf9` on 2026-09-07 and it changed
+`generated-page.php`. Live is `8f5b168a` on that file where `ca9793c2` is
+`3438291a`. **Restoring from `ca9793c2` would silently revert another session's
+shipped work on a page your release has nothing to do with.**
+
+> **Restore the five from CURRENT LIVE, never from a fixed old SHA.** It
+> preserves whatever is live and holds back only what is new and unapproved on
+> `main`. Verify all five byte-identical to live before committing the release.
+
+`d2cc38d1` was the first release cut this way and is the pattern to copy.
+
+### Two sessions share `main`. A rejected push is the guard working.
+
+This happened twice in two days: `git push` refused because `main` had moved
+under a parallel session. **Do not force it and do not assume either way.** Read
+what the other session shipped, then verify by string or checksum that your own
+live work survived their releases. On 2026-09-07 it had — but that was checked,
+not hoped. Their releases were the enquiry honeypot rename, the sash thermal
+comparison, and commercial routing.
+
+### The release tags, newest last. Only the newest is live.
+
+**NEVER cut a release from a superseded tag.** Building on an older one silently
+reverts everything that shipped after it — the "release branch became a loaded
+gun" failure `LIVECHANGES.md` records from 2026-08-05. The list in the
+superseded section below ends at `b389183d` and wrongly marks it LIVE; these are
+the sixteen that followed it.
+
+```
+live-homepage-2026-09-04            9921fda2   superseded
+live-quote-tracking-2026-09-05      ca9793c2   superseded
+live-casement-2026-09-06            96e3815a   superseded
+live-casement-faq-2026-09-06        17a75ce9   superseded
+live-casement-resize-2026-09-06     a13caf81   superseded
+live-casement-stack-2026-09-06      318787ac   superseded
+live-casement-pinguard-2026-09-06   5bd25d18   superseded
+live-casement-unpinned-2026-09-06   426b90c0   superseded
+live-casement-pinlife-2026-09-06    78b8032d   superseded
+live-casement-figures-2026-09-06    56cdbfb8   superseded
+live-casement-figvis-2026-09-06     3289ee44   superseded
+live-casement-copy-2026-09-06       f51ed805   superseded
+live-honeypot-2026-09-07            9e59fd88   superseded
+live-sash-thermal-2026-09-07        ed38fcf9   superseded
+live-casement-faqtitle-2026-09-07   d2cc38d1   superseded
+live-commercial-routing-2026-09-08  74d02fec   LIVE
+```
+
+### What shipped since 2026-09-04
+
+Seventeen releases. Eleven are one job — the `/casement-windows/` rebuild,
+through eleven rounds of owner review. `LIVECHANGES.md` has each. What the page
+now does:
+
+- an opening panel that pins while its sentence turns, then lifts to reveal the
+  energy chapter already in place behind it;
+- inside that chapter, four beats in fixed order: the line types, the thermal
+  sweep crosses the cutaway, then the three spec figures cycle;
+- four swipe rails on mobile — glass, detail, colours, handles — replacing
+  stacked lists that ran to 3,196px;
+- a copy pass driven almost entirely by owner corrections.
+
+The other six: the Merchant Taylors' case study, Homepage 3.0's quote tracking,
+the enquiry honeypot (website email had been rejected by Brevo for four days
+with no signal), the sash thermal comparison removed, and commercial enquiries
+routed to `commercial@`.
+
+### Traps this rebuild paid for, all written up in `LIVECHANGES.md`
+
+Several cost multiple releases each. None is casement-specific.
+
+1. **Screenshot the element before you retime it.** Three consecutive releases
+   retimed spec figures that were never on screen. Every measurement said "100%
+   visible" because it clipped against the element's own box, never asked
+   whether a fixed overlay sat on top, and only tested 844-tall viewports.
+2. **`.legend-assistant` owns the bottom ~116px of every mobile screen**, at
+   `z-index: 1100`. A full-screen composed layout on a phone actually has
+   `100svh - 76 - 116` to work in. No layout on the site knows that.
+3. **Settle the scroll before reading it.** Sampling 70–150ms after `scrollTo`
+   reads mid-flight while Lenis is animating. One run reported "the sweep never
+   ran" at four viewports where a settled sampler showed it perfect.
+4. **Check the computed property the effect depends on, not the variable feeding
+   it.** A controller published its custom property flawlessly while the CSS
+   rule consuming it never matched, because that rule required a class the
+   layout only gets when it pins.
+5. **A guard whose input is changed by the thing it gates must be evaluated at
+   rest.** The pin test measured a section the animation makes 20px taller, and
+   un-pinned the chapter mid-animation.
+6. **Chrome's device emulation cannot produce an `svh` vs `window.innerHeight`
+   disagreement**, because it makes them equal. Anything comparing a CSS
+   viewport unit against a JS viewport number is untestable here.
+7. **esbuild drops the leading zero**, so the documented "grep a numeric
+   literal" deploy check returns 0 on a good deploy. Hash the served asset
+   instead.
+
+### Verified condition, 2026-09-09
+
+- Live `200` on `/`, `/casement-windows/`, `/sliding-sash-windows/`,
+  `/composite-doors/`, `/upvc-doors/`, `/online-quote/`, `/contact/`.
+- Test still gated: `401` unauthenticated, `200` with `fenster:Fenster`.
+- Live `robots.txt` serving normally. It is a **static file in the Bedrock
+  root**, not theme-generated, so theme robots changes deploy cleanly and do
+  nothing.
+
+### Open, and waiting on the owner
+
+- **Approve or retire the isolated line.** The only thing between `main` and
+  live is the Distinction strand. Approving it would let the two lines rejoin
+  and end the splicing; refusing it means every future release keeps holding
+  five files back. **This is the single decision that most affects how much
+  work every future release costs.**
+- **The composite doors V2 overhaul has been on test since 2026-08-27** and has
+  never been approved for live. It is the bulk of the five held-back files.
+- **Reinforcement.** Every claim was removed from `/casement-windows/` on
+  2026-09-06 — the owner's position is that we do not specify it. Ask before any
+  of it returns (`casement-windows-v2.php:277`).
+- **What the lock's keeps are fixed into.** A security point was withdrawn
+  because nothing on the site states it; the slot is commented in place at
+  `casement-windows-v2.php:316`. A good point that needs a real answer.
+- **The acoustic figure** for the 70mm EnergyPlus casement is unconfirmed, so
+  the page claims no noise figure.
+- **Five commercial spec figures** remain blocked, unchanged since 2026-08-15.
+- **Two consent decisions** are the owner's, at `inc/consent.php:257` and `:795`.
+- **Case study photo licence** for our own marketing is unconfirmed
+  (`inc/case-studies-data.php:453`).
+- **The `/bow-bay-windows/` related band** repeats its seven product thumbnails.
+  Raised and left alone: a navigation change, not a bug.
+
+### One live tension worth knowing about
+
+On 2026-08-30 the owner said, of the obscured glass picker: *"i dont like that
+you have to swipe on mobile for the glass options when theres more than 4"*, and
+the stylesheet records the reasoning — a sideways rail suits a gallery you
+browse, not a set of options you are choosing between. On 2026-09-06 he asked
+for the opposite on `/casement-windows/`: *"all the optional bits shouldnt list
+on mobiel, they should swipe."* Both are implemented as asked, on their own
+pages. If a third page needs the decision, that is the conflict to raise rather
+than silently pick one.
+
+## Superseded: head corrected, body left at 2026-08-30 values — 2026-09-08
 
 **Read in this order if you are picking this up cold:** this section, then the
 Current Truth section of `LIVECHANGES.md` (the only authority on what is live
