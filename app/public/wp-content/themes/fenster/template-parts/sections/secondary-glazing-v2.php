@@ -381,19 +381,38 @@ $sg_fixings = [
                         <div class="fg-sgs__copy">
                             <h3><?php echo esc_html($style['name']); ?></h3>
                             <p><?php echo esc_html($style['copy']); ?></p>
-                            <?php /* THE FRAME-TO-GLASS FIGURE IS SAID ONCE, HERE,
-                                     because it is a property of the style and does
-                                     not change with the fixing method. It used to
-                                     print under both drawings and again in a
-                                     specification list beside them, so the same
-                                     number appeared three times in one panel.
-                                     Each drawing now carries only the figure that
-                                     is actually its own, which is the depth. */ ?>
-                            <p class="fg-sgs__span"><?php echo esc_html(sprintf(
-                                /* translators: %d: millimetres of frame before the glass. */
-                                __('You see %dmm of frame before the glass starts, whichever way it fixes.', 'fenster'),
-                                $face['span']
-                            )); ?></p>
+                            <?php /* THE FIGURES LIVE HERE AND NOWHERE ELSE ON THE
+                                     PANEL. They were briefly printed under each
+                                     drawing as well, which put the frame-to-glass
+                                     number on screen three times, and the owner
+                                     called it: it reads fine at the side, so at
+                                     the side is where it stays. The captions under
+                                     the drawings name the fixing method only. */ ?>
+                            <dl class="fg-sgs__keys">
+                                <div>
+                                    <dt><?php esc_html_e('Front to back', 'fenster'); ?></dt>
+                                    <dd><?php
+                                        echo $reveal
+                                            ? esc_html(sprintf(
+                                                /* translators: 1: face fix depth, 2: reveal fix depth, both millimetres. */
+                                                __('%1$dmm face fix, %2$dmm reveal fix', 'fenster'),
+                                                $face['depth'],
+                                                $reveal['depth']
+                                            ))
+                                            : esc_html(sprintf(__('%dmm', 'fenster'), $face['depth']));
+                                    ?></dd>
+                                </div>
+                                <div>
+                                    <dt><?php esc_html_e('Outer frame edge to glass', 'fenster'); ?></dt>
+                                    <dd><?php echo esc_html(sprintf(__('%dmm', 'fenster'), $face['span'])); ?></dd>
+                                </div>
+                                <div>
+                                    <dt><?php esc_html_e('Fixing', 'fenster'); ?></dt>
+                                    <dd><?php echo $reveal
+                                        ? esc_html__('Face or reveal', 'fenster')
+                                        : esc_html__('Face fix only', 'fenster'); ?></dd>
+                                </div>
+                            </dl>
                         </div>
                         <div class="fg-sgs__dwgs">
                             <?php foreach ($fixings as $fix_key => $fix) :
@@ -422,11 +441,6 @@ $sg_fixings = [
                                         )); ?>">
                                     <figcaption>
                                         <span class="fg-sgs__fix"><?php echo esc_html($sg_fixings[$fix_key]['label']); ?></span>
-                                        <span class="fg-sgs__dims"><?php echo esc_html(sprintf(
-                                            /* translators: %d: millimetres the frame stands into the room. */
-                                            __('%dmm into the room', 'fenster'),
-                                            $fix['depth']
-                                        )); ?></span>
                                         <span class="fg-sgs__fixnote"><?php echo esc_html($sg_fixings[$fix_key]['note']); ?></span>
                                     </figcaption>
                                 </figure>

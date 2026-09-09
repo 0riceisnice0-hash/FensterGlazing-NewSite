@@ -41976,16 +41976,33 @@ html.fg-blinds-reveal-locked {
   max-width: 46ch;
 }
 
-/* One line, not a specification list. The frame-to-glass figure belongs to the
-   style rather than to a fixing method, so it is stated here once instead of
-   under both drawings and again in a list beside them. */
-.fg-sgs__span {
-  margin: clamp(1rem, 2vw, 1.35rem) 0 0;
-  padding-top: clamp(0.85rem, 1.6vw, 1.1rem);
+.fg-sgs__keys {
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  display: grid;
   border-top: 1px solid var(--color-line);
-  max-width: 34ch;
+  max-width: 26rem;
+}
+
+.fg-sgs__keys > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-sgs__keys dt {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.fg-sgs__keys dd {
+  margin: 0;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-steel);
+  font-variant-numeric: tabular-nums;
 }
 
 .fg-sgs__dwgs {
