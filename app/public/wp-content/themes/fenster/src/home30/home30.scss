@@ -290,6 +290,11 @@
 .fg-h30-hero__stage {
   position: relative;
   isolation: isolate;
+  /* A column, so `__inner` can be told to fill it and sit at the bottom. The
+     photo and the caption are absolutely positioned and out of flow, so this
+     changes nothing about them. */
+  display: flex;
+  flex-direction: column;
   /* `width: 100%` is load-bearing. As a column flex item with auto inline
      margins the stage shrinks to its content, and every child here is
      absolutely positioned, so its content width is zero and the banner
@@ -384,9 +389,24 @@
 .fg-h30-hero__inner {
   position: relative; z-index: 2;
   display: flex; flex-direction: column; align-items: center;
-  /* Sits in the upper part of the frame so everything below the panel is free
-     for the product list to open into. */
-  padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 3vw, 2rem) 0;
+  /* THE SPACE UNDER THE SEARCH BOX IS THE SAME GAP AS THE ONE ABOVE THE
+     BUTTONS. Owner, 2026-09-09. It reads as one rhythm down the middle of the
+     hero -- text, gap, buttons, gap, search box, gap, edge -- rather than three
+     spaces that happen to be near each other.
+
+     The block fills the stage and hangs from the BOTTOM of it, so that bottom
+     gap is exactly the token at every window height and whatever slack the
+     fixed 640px band has left over collects above the eyebrow, where there is
+     photograph to spare. Sizing the stage to the content instead would have
+     given the same gap and taken the constant height back out.
+
+     The previous comment here said the space below was kept free "for the
+     product list to open into". It is not: `.fg-h30-finder__panel` is
+     `position: static` and already inside the finder's own height, measured on
+     test. */
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 3vw, 2rem) var(--h30-hero-stack-gap);
   /* ONE GAP, USED ABOVE AND BELOW THE CTA PAIR. Owner, 2026-09-09: the space
      from the typed line down to the buttons and from the buttons down to the
      search box have to match. Declared once here and read by both rules, so
