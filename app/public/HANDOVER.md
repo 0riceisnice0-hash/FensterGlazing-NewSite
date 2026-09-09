@@ -7,7 +7,14 @@ Current Truth section of `LIVECHANGES.md` (the only authority on what is live
 and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
 carries the standing rules, including the Configuration Page Rule.
 
-**LIVE IS `74d02fec`**, tag `live-commercial-routing-2026-09-08`, the
+**LIVE IS `caf75c2e`**, tag `live-homepage-2026-09-09`, the thirty-third
+isolated release — the homepage lead work, cut as `main` plus the Distinction
+hold-back restored from the running site. **That commit was made AFTER the
+deploy so live has a SHA at all**: the tree that went out was not a committed
+state, and "cut from current live" needs something to point at. Read the
+2026-09-09 entry in `LIVECHANGES.md` before the next release.
+
+Superseded: **LIVE WAS `74d02fec`**, tag `live-commercial-routing-2026-09-08`, the
 thirty-second isolated release. **Verified for this handover by a full
 2,336-file manifest taken off the live server, not copied from a document.** It
 is NOT an ancestor of `main`.
