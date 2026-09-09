@@ -2741,10 +2741,23 @@ document.addEventListener('click', (event) => {
   } catch (_error) {}
 });
 
-// Commercial CTA interactions are distinct from ordinary navigation. Labels
-// and destinations only: never form values or other customer-entered data.
+/* Commercial CTA interactions are distinct from ordinary navigation. Labels
+   and destinations only: never form values or other customer-entered data.
+
+   THIS SELECTOR IS A LIST OF EVERY CTA CLASS THE SITE ACTUALLY USES, AND
+   KEEPING IT COMPLETE IS THE WHOLE JOB. It read `a.button, button.button` only
+   until 2026-09-09, and Homepage 3.0 shipped its buttons as `.fg-h30-btn` --
+   so from the day the new homepage went live, `cta_click` on `/` was EXACTLY
+   ZERO. Not low: zero. When the homepage's lead volume was investigated, "are
+   people clicking the CTAs" could not be answered at all, and the nav's
+   `.site-nav__mega-cta` had never been counted anywhere either.
+
+   A CTA class that is not in here is a button nobody can prove is working.
+   Add to this list in the same commit that adds a new button style. */
 document.addEventListener('click', (event) => {
-  const action = event.target.closest('a.button, button.button, [data-fg-audience-choice]');
+  const action = event.target.closest(
+    'a.button, button.button, .fg-h30-btn, .site-nav__mega-cta, [data-fg-audience-choice]'
+  );
   if (!action || action.closest('[data-fg-cookie-consent]') || action.matches('[type="submit"]')) return;
   const label = (action.textContent || action.getAttribute('aria-label') || 'Website action').trim().replace(/\s+/g, ' ').slice(0, 120);
   let target = '';
