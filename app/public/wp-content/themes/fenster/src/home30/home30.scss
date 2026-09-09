@@ -262,7 +262,27 @@
   display: flex;
   flex-direction: column;
   gap: clamp(.75rem, 1.4vw, 1.125rem);
-  min-height: calc(100svh - var(--site-header-total-height, 73px));
+  /* A FIXED BAND, NOT A VIEWPORT. Owner, 2026-09-09, comparing against
+     Rightmove: their hero is the same height whatever the window is, and ours
+     grew with it.
+
+     `calc(100svh - header)` meant the hero was as tall as the screen allowed
+     rather than as tall as it needed. Measured on test: at 1440x780 it rendered
+     707px for 578px of content; at 1440x1200 it rendered 1127px for 621px --
+     506px of nothing, with 582px of dead photograph below the search box. The
+     taller the monitor, the further the rest of the page was pushed off screen,
+     which is the opposite of what a tall monitor should buy you.
+
+     640px holds the content at every height measured (578 at 780, 621 at 1200,
+     the difference being vh-based padding inside it) with room to spare, and it
+     leaves the next section visible underneath, which is the scroll cue
+     Rightmove gets from the same decision.
+
+     THE `min()` IS THE ONE-VIEWPORT RULE, NOT DECORATION. On any window taller
+     than about 713px the hero is a flat 640. On a shorter one it gives way and
+     tracks the viewport instead, so it can never exceed the budget in STYLE.md
+     -- a hard 640 would break that rule on a 600px-tall laptop. */
+  min-height: min(640px, calc(100svh - var(--site-header-total-height, 73px)));
   padding: clamp(.75rem, 1.5vw, 1.25rem) var(--h30-gutter) clamp(1rem, 2vw, 1.5rem);
   background: #fff;
 }
