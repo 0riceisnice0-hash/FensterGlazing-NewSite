@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-09 — Secondary glazing: the page gets written to the people who cannot change their windows (ON TEST as `ce255651`, NOT LIVE)
+## 2026-09-09 — Secondary glazing: the page gets written to the people who cannot change their windows (LIVE as `72a46614`)
 
 Owner, on the opening H2: *"A second window, on the inside of the one you have.
 This sounds dumb. Target market for this page is people in old af houses where
@@ -45,8 +45,16 @@ page and make sure the copy aligns with that."*
   *"if noise is the whole reason"*. **A copy pass is not finished at the bottom
   of the template**: the FAQs and the hero standfirst live in `site-data.php`
   and the meta description in `generated-pages.php`.
-- Live untouched at `8991a3aa`. Four commits on test, `a5061f57` through
-  `ce255651`, with `02769c0c` and `e58f4e2c` from earlier the same day.
+- **Shipped as the thirty-sixth isolated release, `72a46614`**, cut from live
+  `8991a3aa` (re-established by a 2,344-file manifest with zero differences)
+  plus the five cherry-picks: `02769c0c`, `e58f4e2c`, `a5061f57`, `78a63996`,
+  `ce255651`. One file added, five changed, zero deletions, residual 0, backup
+  proven by extraction, socket purge `msg:OK`. Owner: *"Push live"*.
+- The Distinction hold-back needed no restoration because the release was cut
+  from live, and the two held-back files this release touches had their diffs
+  read line by line: three copy strings and one `elseif`, no Distinction lines.
+- Test was reset back onto `main` afterwards, because a live release moves the
+  shared server checkout off it.
 
 ## 2026-09-09 — Secondary glazing: the five styles get section drawings (LIVE as `8991a3aa`, two follow-ups ON TEST as `e58f4e2c`)
 
