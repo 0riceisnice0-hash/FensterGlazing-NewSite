@@ -1017,6 +1017,18 @@ if ($is_commercial) {
        qualifier on three other routes. It renders directly above the H1, so the
        plain-English words are the first thing read. */
     $hero_eyebrow = 'Fascias, soffits and guttering';
+} elseif ($slug === 'secondary-glazing') {
+    /* Owner, 2026-09-09: *"Target market for this page is people in old af
+       houses where you can't change the windows because they're listed or
+       something."*
+
+       Same slot and the same reason as roofline directly above. The hero's own
+       lead paragraph is written and is good, and `.fg-hero--compact` sets
+       `.fg-hero__intro { display: none }`, so on this route the H1 and this
+       eyebrow are the only words above the fold. "Secondary Glazing" alone does
+       not tell a listed-home owner that this page is for them; the eyebrow
+       does, and it reads directly above the H1. */
+    $hero_eyebrow = 'For listed and period homes';
 }
 $instant_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $instant_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
