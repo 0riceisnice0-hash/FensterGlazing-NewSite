@@ -165,8 +165,8 @@ $styles = [
         'name' => __('Horizontal slider', 'fenster'),
         'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 75.8, 'mm_h' => 62.2, 'dpos' => [12.31, 33.71], 'spos' => [67.07, 90.52]],
-            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 75.8, 'mm_h' => 81.3, 'dpos' => [12.31, 36.58], 'spos' => [67.3, 92.74]],
+            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 67.0, 'mm_h' => 56.3, 'dpos' => [3.67, 37.24], 'spos' => [62.72, 95.64]],
+            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 67.0, 'mm_h' => 75.4, 'dpos' => [3.67, 39.44], 'spos' => [62.98, 96.74]],
         ],
     ],
     [
@@ -174,8 +174,8 @@ $styles = [
         'name' => __('Vertical slider', 'fenster'),
         'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 177.0, 'mm_h' => 62.4, 'dpos' => [5.42, 40.37], 'spos' => [22.41, 90.3]],
-            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 153.7, 'mm_h' => 74.4, 'dpos' => [6.24, 38.99], 'spos' => [25.8, 91.86]],
+            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 167.9, 'mm_h' => 56.3, 'dpos' => [1.5, 44.7], 'spos' => [18.21, 95.52]],
+            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 144.6, 'mm_h' => 68.4, 'dpos' => [1.74, 42.44], 'spos' => [21.14, 96.31]],
         ],
     ],
     [
@@ -183,8 +183,8 @@ $styles = [
         'name' => __('Hinged', 'fenster'),
         'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 102.2, 'mm_h' => 59.6, 'dpos' => [11.58, 35.88], 'spos' => [56.14, 87.45]],
-            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 102.3, 'mm_h' => 75.8, 'dpos' => [11.57, 37.98], 'spos' => [56.22, 90.13]],
+            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 91.0, 'mm_h' => 52.1, 'dpos' => [3.42, 41.03], 'spos' => [50.74, 94.02]],
+            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 91.1, 'mm_h' => 68.3, 'dpos' => [3.42, 42.14], 'spos' => [50.83, 95.44]],
         ],
     ],
     [
@@ -192,7 +192,7 @@ $styles = [
         'name' => __('Fixed', 'fenster'),
         'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 33.9, 'mm_h' => 23.2, 'dpos' => [19.87, 29.43], 'spos' => [67.25, 81.67]],
+            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 27.5, 'mm_h' => 18.9, 'dpos' => [6.44, 36.04], 'spos' => [59.66, 90.65]],
         ],
     ],
     [
@@ -200,8 +200,8 @@ $styles = [
         'name' => __('Lift-out', 'fenster'),
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 58.6, 'mm_h' => 43.5, 'dpos' => [13.26, 37.3], 'spos' => [64.81, 88.72]],
-            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 47.4, 'mm_h' => 62.5, 'dpos' => [16.39, 41.17], 'spos' => [56.03, 92.15]],
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 51.2, 'mm_h' => 38.6, 'dpos' => [3.99, 42.04], 'spos' => [59.76, 94.7]],
+            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 41.7, 'mm_h' => 57.6, 'dpos' => [8.85, 44.68], 'spos' => [50.0, 96.45]],
         ],
     ],
 ];
@@ -438,10 +438,10 @@ $sg_fixings = [
                                              calc sets, which is the trap the composite glass door
                                              renders hit at 1,103px tall. */ ?>
                                     <span class="fg-sgs__stage" style="--mm-w: <?php echo esc_attr((string) $fix['mm_w']); ?>">
-                                        <span class="fg-sgs__num" aria-hidden="true"
+                                        <span class="fg-sgs__num fg-sgs__num--v" aria-hidden="true"
                                             style="left: <?php echo esc_attr((string) $fix['dpos'][0]); ?>%; top: <?php echo esc_attr((string) $fix['dpos'][1]); ?>%"><?php
                                             echo esc_html((string) $fix['depth']); ?></span>
-                                        <span class="fg-sgs__num" aria-hidden="true"
+                                        <span class="fg-sgs__num fg-sgs__num--h" aria-hidden="true"
                                             style="left: <?php echo esc_attr((string) $fix['spos'][0]); ?>%; top: <?php echo esc_attr((string) $fix['spos'][1]); ?>%"><?php
                                             echo esc_html((string) $fix['span']); ?></span>
                                     <img src="<?php echo esc_url($src); ?>"

@@ -42026,6 +42026,8 @@ html.fg-blinds-reveal-locked {
   gap: 0.6rem;
   justify-items: center;
   text-align: center;
+  /* room for the two numbers, which sit outside the drawing box */
+  padding: 0 0 1.15rem 1.7rem;
 }
 
 /* The stage carries the width so the number spans can be positioned against the
@@ -42043,9 +42045,13 @@ html.fg-blinds-reveal-locked {
   height: auto;
 }
 
+/* Each number is anchored ON its rule and then pushed clear of it here, in
+   pixels. It cannot be nudged clear inside the SVG: that offset would be in page
+   units and would scale with the drawing while the label does not, so it sat
+   beside the rule on the hinged frame and straight through it on the fixed
+   panel. The figure carries the padding these overflow into. */
 .fg-sgs__num {
   position: absolute;
-  transform: translate(-50%, -50%);
   font-size: 0.8rem;
   font-weight: 700;
   line-height: 1;
@@ -42053,6 +42059,16 @@ html.fg-blinds-reveal-locked {
   font-variant-numeric: tabular-nums;
   pointer-events: none;
   white-space: nowrap;
+}
+
+.fg-sgs__num--v {
+  transform: translate(-100%, -50%);
+  padding-right: 0.35rem;
+}
+
+.fg-sgs__num--h {
+  transform: translate(-50%, 0);
+  padding-top: 0.3rem;
 }
 
 .fg-sgs__dwg figcaption {
