@@ -190,6 +190,20 @@
 .fg-h30-btn--primary {
   background: var(--h30-green);
   color: #fff;
+  /* A HAIRLINE OF INK ROUND THE LETTERS. White on `--h30-green` measures
+     2.91:1, and the label sits on the lightest part of the brand palette.
+     `paint-order` puts the stroke BEHIND the fill, so the letterform keeps its
+     full weight and only gains an edge -- without it a stroke is painted over
+     the glyph and thins 600-weight text at 16px until it looks lighter, not
+     darker.
+
+     BE HONEST ABOUT WHAT THIS DOES. It improves how cleanly the label reads
+     against the fill. It does NOT change the computed contrast ratio, which is
+     measured from the two flat colours and stays 2.91:1, so an automated
+     accessibility check will still flag this button. Only a darker green moves
+     that number. Owner instruction, 2026-09-09. */
+  paint-order: stroke fill;
+  -webkit-text-stroke: 0.5px rgba(0, 45, 58, 0.55);
 }
 
 .fg-h30-btn--primary:hover {
