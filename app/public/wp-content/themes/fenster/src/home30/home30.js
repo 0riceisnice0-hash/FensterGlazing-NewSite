@@ -134,8 +134,12 @@ import {initHeadline} from './typewriter.js';
             var link = event.target.closest('[data-h30-option] a');
             if (link) show(link);
         });
+        /* Same null-`relatedTarget` guard as the hero handler below, for the
+           same reason. Harmless on iOS today because `pointerover` ignores
+           touch and no preview is ever shown there, but leaving one of a pair
+           of identical tests wrong is how the next person loses an afternoon. */
         panel.addEventListener('focusout', function (event) {
-            if (!hero.contains(event.relatedTarget)) restore();
+            if (event.relatedTarget && !hero.contains(event.relatedTarget)) restore();
         });
         previews.set(panel, {restore: restore, show: show});
     }
@@ -256,8 +260,21 @@ import {initHeadline} from './typewriter.js';
     document.addEventListener('pointerdown', function (event) {
         if (!finder.contains(event.target) && !photo.contains(event.target)) openResults(false);
     });
+    /* A NULL `relatedTarget` IS NOT A REASON TO CLOSE, AND ON iOS IT IS THE
+       NORMAL CASE. Safari does not focus a link on tap, so tapping a search
+       result fires `focusout` from the input with `relatedTarget === null`.
+       This handler read that as "focus left the hero", set the results
+       `hidden`, and removed the anchor from the page BETWEEN touchend and
+       click -- so the tap landed on nothing and the result was unclickable on
+       every iPhone. Desktop never showed it because a mouse click DOES focus
+       the anchor, so `relatedTarget` was the link and the test passed.
+
+       Requiring a real element is safe because nothing else depends on this
+       branch: a tap outside is already closed by the `document` `pointerdown`
+       listener above, Escape is handled in the panel's `keydown`, and tabbing
+       away still delivers the next focused element here. */
     hero.addEventListener('focusout', function (event) {
-        if (!hero.contains(event.relatedTarget)) openResults(false);
+        if (event.relatedTarget && !hero.contains(event.relatedTarget)) openResults(false);
     });
     hero.addEventListener('pointerleave', function () {
         if (!hero.contains(document.activeElement)) previews.get(active).restore();
