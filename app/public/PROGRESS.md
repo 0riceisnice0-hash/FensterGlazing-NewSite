@@ -14,6 +14,55 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-09 — Secondary glazing: the five styles get section drawings (LIVE as `d88cb83d`)
+
+Owner: make the opening styles visual, a graphic each, and a section drawing
+behind each one showing the size. Then, over several rounds: *"put the dims
+measuring out on the image like a proper tech drawing"*, *"edge to edge (left)
+and edge to glass (bottom)"*, *"dont scale the numbers font to the diagram"*,
+and finally *"fix that and push it live"*.
+
+- **The drawings are the manufacturer's own geometry, extracted rather than
+  redrawn.** The section pages of the five technical PDFs are vector, and that
+  document draws its profiles in near-black and its dimension lines in its own
+  blue, so the profile survives a colour filter and the dimensions drop out.
+  Clip paths are preserved, or the vertical slider's balance-spiral hatching
+  overshoots its profile.
+- **THREE BUGS IN THE EXTRACTION, ALL SILENT.** Each `<path>` carries its own
+  transform and wrapping them in another applied it twice; the fixed sheet uses
+  four transform matrices where every other page uses one, so its drawings
+  landed off-page; and the vertical slider splits face from reveal left-to-right
+  where the other four split top-to-bottom, so the first pass extracted a catch
+  detail instead of a jamb.
+- **THE SCALE MUST BE MEASURED, NOT DERIVED.** Deriving it from the difference
+  in bounding-box height between the face fix and reveal fix drawings assumes
+  nothing but the depth changes between them. More does. Measured against each
+  drawing's own dimension lines the error was 10% on the horizontal slider and a
+  third on the vertical, so "all at one scale" was false for three of the five
+  while the page claimed it.
+- **THE OWNER'S FIGURES ARE WHAT FOUND THE WRONG DRAWING.** His hinged pair
+  verified against the geometry to a tenth of a millimetre; the four pairs read
+  off screenshots did not verify against any drawing on their pages. Given his
+  corrected horizontal pair, the section carrying both is the opposite jamb of
+  the mirrored pair, which is the diagram he had already said was wrong.
+- **Lift-out face is the middle jamb**, the one the sheet dimensions with both
+  the 30 and the 40. Its 40 is the left jamb's own line mirrored across, exact
+  because a mirror about a vertical axis preserves every horizontal span.
+- **THE NUMBERS ARE HTML, NOT SVG TEXT.** The drawings are sized in millimetres
+  so they stay true to each other, so anything in the SVG's own units scales
+  with the drawing: one label rendered at 6px on the fixed panel and 10px on the
+  hinged frame. Strokes escape through `vector-effect`; text has no equivalent.
+  Positioned as a percentage of the drawing box and drawn on top, one CSS size
+  covers all nine at every breakpoint.
+- **A swapped pair caught by measuring rather than by looking.** The script that
+  wrote the label positions into the data replaced the first matching entry in
+  the file rather than the one belonging to each style, so fixed and lift-out
+  wore each other's face-fix figures. Nothing errored and both drawings looked
+  plausible; reading the rendered numbers per style is the only reason it did
+  not ship.
+- Live release cut from live `cc911eb0`, base proven by a 2,335-file manifest,
+  the Distinction hold-back untouched and re-hashed after the deploy.
+
 ## 2026-09-04 — Homepage 3.0: the Rightmove-UX homepage on test, host gated (ON TEST as `9d2b73d4`, NOT LIVE)
 
 Owner: *"ive made a new homepage, read all docs, and see how you can put this
