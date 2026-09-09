@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-09-02
+Last updated: 2026-09-09
 
 This file is the source of truth for how the site should look and feel.
 
@@ -43,7 +43,7 @@ Two cautions before copying from them:
 
 - **NO DARK BACKGROUND ON ANYTHING BIGGER THAN HALF A VIEWPORT, AND WOW IS LIGHT.** Owner instruction, 2026-09-02, given after the sliding sash comparison was built as a full-viewport dark steel band and pulled the same day. Full rule under Colour And Tone below. It is the second dark band pulled on this project; the bifold configuration rail's was the first, 2026-08-21.
 - **STEPS AND CHOICES ARE NOT NUMBERED.** Owner instruction, 2026-09-03, on the sliding sash lock selector, whose two steps had shipped as "01 Style" and "02 Finish": *"get rid of the numbers ... nothing needs to be numbered like 1 style 2 finish."* A label says what the choice is; a number says the reader is filling in a form. The same applies to option cards, configurator steps and section eyebrows: no `01 / 02 / 03`, no "Step 1". The one place a number belongs is where it is the product fact (a rail width, a U-value, a count of finishes).
-- **EVERY SECTION OF A PAGE FITS ONE DESKTOP VIEWPORT.** Owner instruction, 2026-09-03, on /sliding-sash-windows/: *"every section of this page needs to be contained in one view port. every section."* Given for that page and applied there (see PROGRESS, same date); treat it as the standard for any page he reviews next. Under the header that is 827px at 1440x900 and 791px at 1536x864 — but check the window the reviewer actually uses: on 2026-09-03 the owner called a 740px section too tall at a stated 827px budget, because his own window is nearer 780px tall, where the budget is 707px. The things that break it are always the same: section padding over 3rem, display headings that wrap to three or four lines, a form that stacks short fields, a copy panel that sets the height of the component beside it. Measure with a script over every top-level section, not by scrolling and guessing.
+- **EVERY SECTION OF EVERY PAGE FITS ONE DESKTOP VIEWPORT. THIS IS SITE-WIDE, NOT PER-PAGE.** Owner instruction, 2026-09-03, on /sliding-sash-windows/: *"every section of this page needs to be contained in one view port. every section."* **Generalised on the owner's instruction 2026-09-09** — *"needs to be in one VP. add into style.md that things should be able to be viewed in one VP"* — after the homepage's instant-quote band shipped at **937px against a 707px budget**. The 2026-09-03 wording scoped it to one page and said to treat it as the standard "for any page he reviews next", and that hedge is exactly how a 937px band got shipped on the homepage six days later. **There is no page this does not apply to.** Full rule under One Viewport Per Section below. Under the header that is 827px at 1440x900 and 791px at 1536x864 — but check the window the reviewer actually uses: on 2026-09-03 the owner called a 740px section too tall at a stated 827px budget, because his own window is nearer 780px tall, where the budget is 707px. The things that break it are always the same: section padding over 3rem, display headings that wrap to three or four lines, a form that stacks short fields, a copy panel that sets the height of the component beside it. Measure with a script over every top-level section, not by scrolling and guessing.
 - **A REAL-WORLD DETAIL THAT IS NOT ALREADY IN THE REPO IS A GUESS, NOT KNOWLEDGE.** A showroom photograph was captioned with an invented street and district on 2026-08-27 and shipped to test. **Grep before writing any address, phone number, opening time or place name**, and pull it from `brand` rather than typing it, so one correction fixes every surface. See the Address And Contact Detail Rule in `AI.md`.
 - **A PAGE WHERE EVERY SECTION IS A BORDERED WHITE RECTANGLE READS AS UNSTYLED, AND THIS FILE ALREADY SAYS SO.** `/why-distinction/` was rebuilt on 2026-08-27 with the boxes taken off: the structure is a hairline and a type scale, and only the framed tool and the form keep a panel. **When a page is called unstyled, count the borders before adding anything.** The fault is usually that a border is doing the job type, rule and space should be doing.
 - **THERE WAS A THIRD BLANKET `!important` HEADING RULE, ON `h3`, AND IT SURVIVED THE FIRST CLEAR-OUT.** It sat twelve lines below the `h2` rule that was fixed, and it forced all twenty-eight h3s on `/composite-doors/` to one size. **When you find a blanket `!important` heading rule, read the whole block it lives in before assuming it is alone.** The expensive case was a quiz built around a large question where the question rendered smaller than the standfirst above it.
@@ -165,6 +165,68 @@ Fenster pages should feel considered, local and quietly expensive — strong Gib
 - a long page made from repeated proof, process and CTA blocks.
 
 When in doubt, remove the weaker section, make the primary task clearer, use the better image once, and let the page end earlier.
+
+## One Viewport Per Section
+
+**Every top-level section fits in one desktop viewport, under the header.** Owner
+instruction, 2026-09-03, generalised site-wide 2026-09-09. It is not a guideline
+and it is not per-page: **1px over counts.**
+
+### The budget
+
+Measure against the window the reviewer actually uses, not a round number.
+
+| viewport | sticky header | budget |
+| --- | --- | --- |
+| **1440x780** — the owner's real window, use this one | 73px | **707px** |
+| 1440x900 | 73px | 827px |
+| 1536x864 | 73px | 791px |
+
+On 2026-09-03 a 740px section was called too tall against a stated 827px budget,
+because his window is nearer 780. **Measure at 1440x780 unless told otherwise.**
+
+### How to measure
+
+With a script, over every top-level section, reading
+`getBoundingClientRect().height` off the live page — not by scrolling and
+guessing, and not from the markup. `scripts/shot.mjs` and the Browser pane both
+do this; the pane is the faster of the two for numbers.
+
+### What breaks it, every time
+
+The same four things, in rough order of frequency:
+
+- section padding over 3rem;
+- display headings that wrap to three or four lines;
+- a form that stacks short fields;
+- **a copy panel that sets the height of the component beside it** — or the
+  reverse, a component sized independently of the copy. The homepage
+  instant-quote band on 2026-09-09 was both faults in sequence: the frame was
+  `align-self: stretch` so the paragraph dictated its height, and when that was
+  fixed to a square the square then dictated the band's, taking it to 937px.
+
+### Sizing a component that must stay a fixed shape
+
+If a component has to hold an aspect ratio, **derive its size from the viewport,
+not from a fixed pixel value**, and subtract everything else in the section:
+
+```scss
+/* header 73 + band padding 96 + panel padding 64 + slack */
+height: clamp(360px, calc(100svh - 244px), 620px);
+aspect-ratio: 1 / 1;
+width: auto;          /* height leads, aspect-ratio derives the width */
+max-width: 100%;
+```
+
+Cap the **width** and let height lead. Capping the height while `aspect-ratio`
+is set is what silently stops a square being square.
+
+### Where it cannot hold
+
+**A stacked mobile layout usually cannot fit copy plus a real component in one
+viewport**, and squeezing the component until it does makes it unusable. The
+rule is a desktop rule. On mobile, keep the component usable and let the section
+run — but say so, rather than shipping a 250px-tall configurator nobody can use.
 
 ## Site-Wide Background Rule
 

@@ -580,7 +580,11 @@
    ========================================================================== */
 
 .fg-h30-price {
-  padding-block: var(--h30-band);
+  /* ONE VIEWPORT. The band is tightened from `--h30-band` (108px a side) so the
+     pricing tool can have that space instead. Budget at 1440x780 under the 73px
+     sticky header is 707px; this section had shipped at 937. See One Viewport
+     Per Section in STYLE.md. */
+  padding-block: clamp(2.5rem, 4vw, 3rem);
 }
 
 .fg-h30-price__panel {
@@ -591,7 +595,9 @@
   grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   gap: clamp(2rem, 4vw, 4rem);
   align-items: center;
-  padding: clamp(1.75rem, 4vw, 3.5rem);
+  /* Was clamp(1.75rem, 4vw, 3.5rem) = 56px a side. Half of that goes back to
+     the frame; the panel still reads as a panel at 32px. */
+  padding: clamp(1.5rem, 2.4vw, 2rem);
   border: 1px solid #dceae2;
   border-radius: var(--h30-radius-lg);
   background: var(--h30-mint);
@@ -635,7 +641,16 @@
 .fg-h30-price__quote {
   position: relative;
   align-self: center;
-  width: min(100%, 620px);
+  /* HEIGHT LEADS AND `aspect-ratio` DERIVES THE WIDTH. Sizing this off a fixed
+     620px made the square dictate the band's height and took the section to
+     937px against a 707px budget -- the same fault as the letterbox it
+     replaced, just in the other axis. The subtraction is the rest of the
+     section: 73px header + 96px band + 64px panel padding, plus slack.
+     Capping the HEIGHT while `aspect-ratio` is set is what silently stops it
+     being square, so the cap is on width. */
+  height: clamp(360px, calc(100svh - 244px), 620px);
+  width: auto;
+  max-width: 100%;
   margin-inline: auto;
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -1427,7 +1442,12 @@ a.fg-h30-proof__media--crew > img {
   /* Stacked, it stays square up to the panel width, with a floor so a narrow
      phone still gets a tool tall enough to configure something in rather than
      a 340px slot. Taller than square is fine here; shorter is not. */
+  /* Stacked, one viewport cannot hold the copy AND a usable configurator, and
+     squeezing the tool to make it fit is worse than a taller band. STYLE.md
+     says so explicitly under One Viewport Per Section: the rule is a desktop
+     rule. Height goes back to the aspect ratio with a floor. */
   .fg-h30-price__quote {
+    height: auto;
     width: 100%;
     max-width: 620px;
     min-height: 420px;
