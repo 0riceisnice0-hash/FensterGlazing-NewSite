@@ -7,23 +7,27 @@ Current Truth section of `LIVECHANGES.md` (the only authority on what is live
 and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
 carries the standing rules, including the Configuration Page Rule.
 
-**LIVE IS `caf75c2e`**, tag `live-homepage-2026-09-09`, the thirty-third
-isolated release — the homepage lead work, cut as `main` plus the Distinction
-hold-back restored from the running site. **That commit was made AFTER the
-deploy so live has a SHA at all**: the tree that went out was not a committed
-state, and "cut from current live" needs something to point at. Read the
-2026-09-09 entry in `LIVECHANGES.md` before the next release.
+**LIVE IS `d88cb83d`**, tag `live-secondary-glazing-2026-09-09`, the
+thirty-fourth isolated release — the `/secondary-glazing/` style sections.
+**Verified by a full 2,344-file manifest against the live server both before
+and after the deploy**, not copied from a document. It is NOT an ancestor of
+`main`. The Distinction strand is still held back and `/why-distinction/` still
+`404`s.
 
-Superseded: **LIVE WAS `74d02fec`**, tag `live-commercial-routing-2026-09-08`, the
-thirty-second isolated release. **Verified for this handover by a full
-2,336-file manifest taken off the live server, not copied from a document.** It
-is NOT an ancestor of `main`.
+**The head of this section was a release behind when that was checked.** It
+named `caf75c2e` while `LIVECHANGES.md` named `cc911eb0`, the homepage revert
+that shipped after it, and the manifest agreed with `LIVECHANGES.md`. The table
+under it was two releases further behind again. **This file is not an authority
+on the live SHA; `LIVECHANGES.md` is, and a checksum beats both.**
+
+Superseded: `caf75c2e` (thirty-third, the homepage lead work), then `cc911eb0`
+(the homepage reverted at the gate), then this one.
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `74d02fec` (tag `live-commercial-routing-2026-09-08`) | `2a2f23e1` |
-| test | `5d7c636b` | `4a814653` |
-| `main` | `5d7c636b` | `4a814653` |
+| live | `d88cb83d` (tag `live-secondary-glazing-2026-09-09`) | cut from `cc911eb0` |
+| test | `569c9b83` | `main` |
+| `main` | `569c9b83` | — |
 
 > **The section below this one has a correct head and a stale body.** On
 > 2026-09-08 its live SHA was fixed but its table, its file counts and its tag
