@@ -1981,6 +1981,13 @@ const aggregateStatEvents = new Set([
   'form_submitted',
   'phone_click',
   'email_click',
+  /* Reported from inside the WindowCAD iframe by its own Analytics JavaScript
+     and relayed by the bridge below. Counted in the aggregate too, or the only
+     view of what happens inside the tool would be consenter-only -- the exact
+     half-truth the 2026-08-12 rebuild was for. */
+  'quote_tool_engaged',
+  'quote_step',
+  'quote_tool_left',
 ]);
 const journeyStorageKey = 'fenster_quote_journey_ref';
 const visitorStorageKey = 'fenster_website_visitor_id';
@@ -8721,6 +8728,83 @@ document.querySelectorAll('[data-fullscreen-quote]').forEach((quoteFullscreenBut
       window.open(quoteUrl, '_blank', 'noopener');
     }
   });
+});
+
+/* WindowCAD step bridge.
+
+   The quote tool is a third-party iframe on another origin, so nothing that
+   happens inside it is visible from this page. WindowCAD's own "Analytics
+   JavaScript" field runs a small script that postMessages screen changes out;
+   this is the only thing that listens to it.
+
+   WHY IT EXISTS: between `quote_iframe_loaded` and `quote_completed` there was
+   nothing at all, so a funnel that loses people INSIDE the tool looked exactly
+   like one nobody opened. On 2026-09-05 that gap was the difference between
+   "the homepage embed is broken" and "the homepage embed is ignored", and it
+   could not be settled from any data we held.
+
+   EVERYTHING HERE TREATS THE MESSAGE AS UNTRUSTED INPUT FROM ANOTHER ORIGIN.
+   The origin is compared exactly, the event name is checked against a fixed
+   set, the label is truncated, and no numeric value from inside the tool is
+   ever forwarded as a price. A step label is a screen name, not an answer a
+   customer gave. */
+const WINDOWCAD_BRIDGE_ORIGIN = 'https://www.windowsoftware.co.uk';
+const windowCadBridgeEvents = new Set([
+  'quote_tool_engaged',
+  'quote_step',
+  'quote_tool_left',
+]);
+const windowCadBridgeSeen = new Set();
+
+window.addEventListener('message', (messageEvent) => {
+  /* An exact origin match, not `endsWith` — `notwindowsoftware.co.uk` would
+     pass a suffix test and this listener writes into the lead funnel. */
+  if (messageEvent.origin !== WINDOWCAD_BRIDGE_ORIGIN) return;
+
+  const message = messageEvent.data;
+  if (!message || typeof message !== 'object') return;
+  if (message.source !== 'fenster-windowcad') return;
+  if (!windowCadBridgeEvents.has(message.event)) return;
+
+  const label = typeof message.label === 'string'
+    ? message.label.replace(/\s+/g, ' ').trim().slice(0, 80)
+    : '';
+
+  /* One row per step per page view. The designer re-renders constantly and the
+     bridge is debounced but not deduplicated across a session; a repeated step
+     is noise, and noise in this table is what makes a funnel unreadable. */
+  const seenKey = `${message.event}|${label}`;
+  if (windowCadBridgeSeen.has(seenKey)) return;
+  windowCadBridgeSeen.add(seenKey);
+
+  /* Somebody is now part way through a quote, so protect the half-built job.
+     `restampQuoteFrame` reloads a frame when consent changes, which throws away
+     whatever has been configured in it. `engagedQuoteFrames` is what holds it
+     back, and until now it was only set by our own load and expand buttons —
+     an autoloaded frame someone started using was never marked at all.
+
+     Matched on `contentWindow`, so only the frame that actually sent the
+     message is marked. Same priority as everywhere else in this file: losing an
+     attribution row costs a row, losing the lead costs the job. */
+  if (message.event === 'quote_tool_engaged' || message.event === 'quote_step') {
+    document.querySelectorAll('[data-quote-frame-wrap]').forEach((frameWrap) => {
+      const frame = frameWrap.querySelector('iframe');
+      if (frame && frame.contentWindow === messageEvent.source) {
+        engagedQuoteFrames.add(frameWrap);
+      }
+    });
+  }
+
+  /* Consent, bot filtering, the aggregate fallback and the FG2 journey
+     reference are all `trackWebsiteEvent`'s job already, so the bridge does not
+     repeat any of it.
+
+     `message.tracking` is DELIBERATELY IGNORED. The frame echoes back the
+     reference we stamped on it, which is useful when reading a session by hand,
+     but taking it as identity here would let anything that can post a message
+     write a step into a journey of its own choosing. The journey always comes
+     from this page's own storage. */
+  trackWebsiteEvent(message.event, { cta: label });
 });
 
 const pageGradientMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
