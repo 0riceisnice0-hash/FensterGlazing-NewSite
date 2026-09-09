@@ -192,7 +192,7 @@ $styles = [
         'name' => __('Fixed', 'fenster'),
         'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 58.6, 'mm_h' => 43.5, 'dpos' => [13.26, 37.3], 'spos' => [64.81, 88.72]],
+            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 33.9, 'mm_h' => 23.2, 'dpos' => [19.87, 29.43], 'spos' => [67.25, 81.67]],
         ],
     ],
     [
@@ -200,7 +200,7 @@ $styles = [
         'name' => __('Lift-out', 'fenster'),
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 33.9, 'mm_h' => 23.2, 'dpos' => [19.87, 29.43], 'spos' => [67.25, 81.67]],
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 58.6, 'mm_h' => 43.5, 'dpos' => [13.26, 37.3], 'spos' => [64.81, 88.72]],
             'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 47.4, 'mm_h' => 62.5, 'dpos' => [16.39, 41.17], 'spos' => [56.03, 92.15]],
         ],
     ],
