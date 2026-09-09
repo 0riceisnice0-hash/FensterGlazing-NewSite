@@ -106,12 +106,133 @@ $reasons = [
    `display: grid` with a gap and no `grid-template-columns`, no column count
    and no `nth-child` rule anywhere against it. A fifth entry adds a row and
    nothing else, and no card grid is involved. */
+/* SECTION DRAWINGS ADDED 2026-09-09, on the owner's instruction to make the
+   styles visual and put a section drawing behind each one.
+
+   THE DRAWINGS ARE THE MANUFACTURER'S OWN GEOMETRY AND ARE NOT REDRAWN. Each is
+   the jamb section, lifted out of the manufacturer's technical PDF by keeping
+   the profile paths and dropping the dimension lines, which that document draws
+   in a different colour. Clip paths are preserved, or the balance-spiral
+   hatching on the vertical slider overshoots its profile. **Do not redraw one by
+   hand.** The owner's instruction was that these are technical drawings rather
+   than a rough guide, and AI.md's Repair Schematic Rule already records what
+   happens when a part is drawn from imagination: every one came back corrected.
+
+   EVERY DRAWING IS AT ONE TRUE SCALE ACROSS ALL FIVE STYLES, so the fixed panel
+   really is about a third the width of the hinged frame on screen. **The scale of
+   each source drawing was MEASURED off that drawing's own dimension lines** --
+   find the tick pair whose midpoint sits on a numeric label, divide the span by
+   the stated millimetres, and take the consensus of the dozens that agree. An
+   earlier pass derived it from the face/reveal depth difference instead, which is
+   right only if nothing but the depth changes between the two frames. It was out
+   by 10% on the horizontal slider and by a THIRD on the vertical. Do not derive
+   this figure; measure it. `mm_w` is the
+   drawing's true width in millimetres and the stylesheet multiplies it by
+   `--sg-mm`, so that one custom property rescales the whole set and cannot break
+   the relationship between them. This is the rule the bifold configuration rail
+   already carries: renders used at different scales publish a lie.
+
+   TWO FIGURES ONLY, on the owner's instruction: front to back, and outer frame
+   edge to glass. Both are the manufacturer's own, read off the source documents.
+   The depth is the one that changes with the fixing method, which is what makes
+   the pair self-checking: the difference between the two depths on one axis is
+   what established the drawing scale in the first place.
+
+   THE SUPPLIER IS NOT NAMED, AND NOR IS THE RANGE. Owner, 2026-09-09: "it's a
+   generic system so do not name it." The five styles come from three separate
+   ranges in the source documents; none of those names, and none of the part
+   codes, appears here or in these filenames. Same position as the louvre and
+   roofline routes, where figures are the manufacturer's and are attributed as
+   theirs and nothing else.
+
+   FIXED IS FACE FIX ONLY, owner-confirmed. There is no reveal fix section for it
+   because it is not offered that way. Do not invent one. */
+$sg_drawing = static function (string $slug): string {
+    $rel = '/assets/images/products/secondary-glazing/sections/sg-section-' . $slug . '.svg';
+    $abs = get_template_directory() . $rel;
+
+    /* Versioned on filemtime for the same reason the composite door line art is:
+       these are generated files that will be regenerated, theme image URLs carry
+       no version string otherwise, and a replaced drawing would then be live,
+       correct on the server and invisible to anyone who had already loaded the
+       page. See the Asset And Cache Rules in AI.md. */
+    return file_exists($abs) ? FENSTER_THEME_URI . $rel . '?v=' . filemtime($abs) : '';
+};
+
 $styles = [
-    ['name' => __('Horizontal slider', 'fenster'), 'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster')],
-    ['name' => __('Vertical slider', 'fenster'), 'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster')],
-    ['name' => __('Hinged', 'fenster'), 'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster')],
-    ['name' => __('Fixed', 'fenster'), 'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster')],
-    ['name' => __('Lift-out', 'fenster'), 'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster')],
+    [
+        'slug' => 'horizontal',
+        'name' => __('Horizontal slider', 'fenster'),
+        'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster'),
+        'fixings' => [
+            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 67.0, 'mm_h' => 56.3, 'dpos' => [3.67, 37.24], 'spos' => [62.72, 95.64]],
+            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 67.0, 'mm_h' => 75.4, 'dpos' => [3.67, 39.44], 'spos' => [62.98, 96.74]],
+        ],
+    ],
+    [
+        'slug' => 'vertical',
+        'name' => __('Vertical slider', 'fenster'),
+        'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
+        'fixings' => [
+            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 167.9, 'mm_h' => 56.3, 'dpos' => [1.5, 44.7], 'spos' => [18.21, 95.52]],
+            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 144.6, 'mm_h' => 68.4, 'dpos' => [1.74, 42.44], 'spos' => [21.14, 96.31]],
+        ],
+    ],
+    [
+        'slug' => 'hinged',
+        'name' => __('Hinged', 'fenster'),
+        'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster'),
+        'fixings' => [
+            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 91.0, 'mm_h' => 52.1, 'dpos' => [3.42, 41.03], 'spos' => [50.74, 94.02]],
+            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 91.1, 'mm_h' => 68.3, 'dpos' => [3.42, 42.14], 'spos' => [50.83, 95.44]],
+        ],
+    ],
+    [
+        'slug' => 'fixed',
+        'name' => __('Fixed', 'fenster'),
+        'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster'),
+        'fixings' => [
+            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 27.5, 'mm_h' => 18.9, 'dpos' => [6.44, 36.04], 'spos' => [59.66, 90.65]],
+        ],
+    ],
+    [
+        'slug' => 'liftout',
+        'name' => __('Lift-out', 'fenster'),
+        'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
+        'fixings' => [
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 51.2, 'mm_h' => 38.6, 'dpos' => [3.99, 42.04], 'spos' => [59.76, 94.7]],
+            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 41.7, 'mm_h' => 57.6, 'dpos' => [8.85, 44.68], 'spos' => [50.0, 96.45]],
+        ],
+    ],
+];
+
+/* The icons are the standard glazing elevation convention rather than drawn
+   symbols: two panes and a pair of arrows for each slider, the hinge triangle
+   with its apex on the hinged edge, a plain glazed rectangle for fixed, and a
+   dashed pane lifting clear for lift-out. A specifier reads them immediately and
+   a homeowner reads them as pictures, which is the point of using the real
+   convention rather than inventing one. */
+$sg_icons = [
+    'horizontal' => '<rect x="4" y="8" width="40" height="32"/><path d="M24 8v32"/><path d="M9 24h9m-9 0 3-2.5M9 24l3 2.5m27-.5h-9m9 0-3-2.5m3 2.5-3 2.5"/>',
+    'vertical' => '<rect x="8" y="4" width="32" height="40"/><path d="M8 24h32"/><path d="M24 9v9m0-9-2.5 3M24 9l2.5 3m-2.5 27v-9m0 9-2.5-3m2.5 3 2.5-3"/>',
+    'hinged' => '<rect x="8" y="6" width="32" height="36"/><path d="M40 6 8 24l32 18"/>',
+    'fixed' => '<rect x="8" y="6" width="32" height="36"/><rect x="14" y="12" width="20" height="24"/>',
+    'liftout' => '<rect x="8" y="14" width="32" height="28"/><rect x="13" y="5" width="22" height="20" stroke-dasharray="3 2.5"/><path d="M18 33v-6m0 0-2 2.5m2-2.5 2 2.5M32 33v-6m0 0-2 2.5m2-2.5 2 2.5"/>',
+];
+
+/* Face fix and reveal fix are the words the surveyor uses on the day, so the
+   customer meets them anyway and the page may as well be the place they learn
+   them. Each carries one plain line saying what it means rather than being left
+   as trade shorthand. Which one an opening gets is settled at survey. */
+$sg_fixings = [
+    'face' => [
+        'label' => __('Face fix', 'fenster'),
+        'note' => __('The frame sits on the wall face around the opening.', 'fenster'),
+    ],
+    'reveal' => [
+        'label' => __('Reveal fix', 'fenster'),
+        'note' => __('The frame sits inside the opening, against the reveal.', 'fenster'),
+    ],
 ];
 ?>
 
@@ -190,17 +311,166 @@ $styles = [
                 <h2 id="fg-sg-open-title"><?php esc_html_e('You can still open the window behind it.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('This is the question we get asked first, and the answer is yes on everything except the fixed and lift-out panels. You open the secondary glazing, reach the original catch, open the window itself, and close both again. The photograph is one of ours with the original casement wide open behind the glazing.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Which of the five suits an opening depends on the window behind it and on what is in front of it in the room. We work that out at survey rather than asking you to.', 'fenster'); ?></p>
-                <ul class="fg-cw-facts">
-                    <?php /* No separator between the name and the copy. The name
-                             is `display: block` in the stylesheet, so a ". "
-                             joining them rendered as a stray full stop at the
-                             start of every second line. Caught by looking at the
-                             page; it reads perfectly well in the markup. */ ?>
-                    <?php foreach ($styles as $style) : ?>
-                        <li><strong><?php echo esc_html($style['name']); ?></strong><?php echo esc_html($style['copy']); ?></li>
-                    <?php endforeach; ?>
-                </ul>
             </div>
+        </div>
+    </section>
+
+    <?php /* ---------- The five styles, with their sections ---------------------
+             The five used to be a flat `<ul>` inside the section above: five
+             names and five sentences, nothing to look at, and no answer to the
+             question a customer actually asks next, which is how far the thing
+             stands into the room.
+
+             PROGRESSIVE ENHANCEMENT RUNS IN THE HONEST DIRECTION. Every panel
+             ships open and every drawing ships in the markup, and the picker
+             ships `hidden` for the controller to reveal. With no JavaScript the
+             visitor gets all five styles and all nine drawings stacked, which is
+             complete rather than broken. That is the bargain the bifold
+             configuration rail already makes.
+
+             The `[hidden]` guard in the stylesheet is deliberate and is not
+             tidy-up: this component sets `display` on the picker and the panels,
+             and an author rule outranks the UA sheet's `[hidden] { display:
+             none }`. Without it the picker renders before the controller runs
+             and every panel stays open after it. That exact fault shipped both
+             repairs drawings at once once already. */ ?>
+    <section class="fg-sgs" aria-labelledby="fg-sg-styles-title" data-fg-sg-styles>
+        <div class="container">
+            <div class="fg-sgs__head">
+                <p class="eyebrow"><?php esc_html_e('The five styles', 'fenster'); ?></p>
+                <h2 id="fg-sg-styles-title"><?php esc_html_e('Five ways it opens, and how slim the frames are.', 'fenster'); ?></h2>
+                <?php /* Two numbers, said once, in the order somebody stood in
+                         their own room would ask them. The first draft explained
+                         the drawings instead of the windows and talked about how
+                         things looked "on screen", which is the page describing
+                         itself rather than telling anybody anything. */ ?>
+                <p><?php esc_html_e('Two numbers matter on any of them: how far the frame stands into the room, and how much of it you see before the glass starts. They are drawn to one scale, so you can compare them.', 'fenster'); ?></p>
+            </div>
+
+            <div class="fg-sgs__picker" role="tablist" aria-label="<?php esc_attr_e('Secondary glazing styles', 'fenster'); ?>" hidden>
+                <?php foreach ($styles as $i => $style) : ?>
+                    <button type="button"
+                        class="fg-sgs__tab"
+                        role="tab"
+                        id="fg-sgs-tab-<?php echo esc_attr($style['slug']); ?>"
+                        aria-controls="fg-sgs-panel-<?php echo esc_attr($style['slug']); ?>"
+                        aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                        tabindex="<?php echo $i === 0 ? '0' : '-1'; ?>"
+                        data-fg-sg-tab="<?php echo esc_attr($style['slug']); ?>">
+                        <svg class="fg-sgs__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                            <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                                <?php echo $sg_icons[$style['slug']]; // phpcs:ignore WordPress.Security.EscapeOutput -- fixed inline SVG geometry defined above, no user input ?>
+                            </g>
+                        </svg>
+                        <span><?php echo esc_html($style['name']); ?></span>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="fg-sgs__panels">
+                <?php foreach ($styles as $style) :
+                    $fixings = $style['fixings'];
+                    $face = $fixings['face'];
+                    $reveal = $fixings['reveal'] ?? null;
+                    ?>
+                    <article class="fg-sgs__panel"
+                        id="fg-sgs-panel-<?php echo esc_attr($style['slug']); ?>"
+                        role="tabpanel"
+                        aria-labelledby="fg-sgs-tab-<?php echo esc_attr($style['slug']); ?>"
+                        data-fg-sg-panel="<?php echo esc_attr($style['slug']); ?>">
+                        <div class="fg-sgs__copy">
+                            <h3><?php echo esc_html($style['name']); ?></h3>
+                            <p><?php echo esc_html($style['copy']); ?></p>
+                            <?php /* THE FIGURES LIVE HERE AND NOWHERE ELSE ON THE
+                                     PANEL. They were briefly printed under each
+                                     drawing as well, which put the frame-to-glass
+                                     number on screen three times, and the owner
+                                     called it: it reads fine at the side, so at
+                                     the side is where it stays. The captions under
+                                     the drawings name the fixing method only. */ ?>
+                            <dl class="fg-sgs__keys">
+                                <div>
+                                    <dt><?php esc_html_e('Front to back', 'fenster'); ?></dt>
+                                    <dd><?php
+                                        echo $reveal
+                                            ? esc_html(sprintf(
+                                                /* translators: 1: face fix depth, 2: reveal fix depth, both millimetres. */
+                                                __('%1$dmm face fix, %2$dmm reveal fix', 'fenster'),
+                                                $face['depth'],
+                                                $reveal['depth']
+                                            ))
+                                            : esc_html(sprintf(__('%dmm', 'fenster'), $face['depth']));
+                                    ?></dd>
+                                </div>
+                                <div>
+                                    <dt><?php esc_html_e('Outer frame edge to glass', 'fenster'); ?></dt>
+                                    <dd><?php echo esc_html(sprintf(__('%dmm', 'fenster'), $face['span'])); ?></dd>
+                                </div>
+                                <div>
+                                    <dt><?php esc_html_e('Fixing', 'fenster'); ?></dt>
+                                    <dd><?php echo $reveal
+                                        ? esc_html__('Face or reveal', 'fenster')
+                                        : esc_html__('Face fix only', 'fenster'); ?></dd>
+                                </div>
+                            </dl>
+                        </div>
+                        <div class="fg-sgs__dwgs">
+                            <?php foreach ($fixings as $fix_key => $fix) :
+                                $src = $sg_drawing($style['slug'] . '-' . $fix_key);
+                                if ($src === '') {
+                                    continue;
+                                }
+                                ?>
+                                <figure class="fg-sgs__dwg">
+                                    <?php /* THE NUMBERS ARE HTML ON TOP OF THE DRAWING, NOT TEXT
+                                             INSIDE IT. The drawings are sized in millimetres so they
+                                             stay true to each other, which means anything measured in
+                                             the SVG's own units scales with the drawing: the same
+                                             label rendered at about 6px on the fixed panel and 10px
+                                             on the hinged frame. Strokes escape that through
+                                             `vector-effect`; text has no equivalent. Positioned as a
+                                             percentage of the drawing box, one CSS font size covers
+                                             all nine at every breakpoint.
+
+                                             `height: auto` is set in the stylesheet against the
+                                             dimension attributes below. An `<img>` height attribute
+                                             maps to CSS height and would otherwise beat the width the
+                                             calc sets, which is the trap the composite glass door
+                                             renders hit at 1,103px tall. */ ?>
+                                    <span class="fg-sgs__stage" style="--mm-w: <?php echo esc_attr((string) $fix['mm_w']); ?>">
+                                        <span class="fg-sgs__num fg-sgs__num--v" aria-hidden="true"
+                                            style="left: <?php echo esc_attr((string) $fix['dpos'][0]); ?>%; top: <?php echo esc_attr((string) $fix['dpos'][1]); ?>%"><?php
+                                            echo esc_html((string) $fix['depth']); ?></span>
+                                        <span class="fg-sgs__num fg-sgs__num--h" aria-hidden="true"
+                                            style="left: <?php echo esc_attr((string) $fix['spos'][0]); ?>%; top: <?php echo esc_attr((string) $fix['spos'][1]); ?>%"><?php
+                                            echo esc_html((string) $fix['span']); ?></span>
+                                    <img src="<?php echo esc_url($src); ?>"
+                                        width="<?php echo esc_attr((string) round($fix['mm_w'] * 10)); ?>"
+                                        height="<?php echo esc_attr((string) round($fix['mm_h'] * 10)); ?>"
+                                        loading="lazy" decoding="async"
+                                        alt="<?php echo esc_attr(sprintf(
+                                            /* translators: 1: style, 2: fixing, 3: depth, 4: frame edge to glass. */
+                                            __('Scale section through the frame of a %1$s, %2$s: %3$dmm edge to edge, %4$dmm from the outer edge to the glass', 'fenster'),
+                                            strtolower($style['name']),
+                                            strtolower($sg_fixings[$fix_key]['label']),
+                                            $fix['depth'],
+                                            $fix['span']
+                                        )); ?>">
+                                    </span>
+                                    <figcaption>
+                                        <span class="fg-sgs__fix"><?php echo esc_html($sg_fixings[$fix_key]['label']); ?></span>
+                                        <span class="fg-sgs__fixnote"><?php echo esc_html($sg_fixings[$fix_key]['note']); ?></span>
+                                    </figcaption>
+                                </figure>
+                            <?php endforeach; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+
+            <?php /* Attributed, never restated as ours. Same position the louvre
+                     and roofline routes hold their manufacturers' figures in. */ ?>
+            <p class="fg-sgs__note"><?php esc_html_e('The sections and the sizes are the manufacturer\'s. Which style suits an opening, and whether it fixes to the face or into the reveal, is settled at the survey.', 'fenster'); ?></p>
         </div>
     </section>
 

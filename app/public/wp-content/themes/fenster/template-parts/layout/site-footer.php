@@ -30,11 +30,9 @@ $footer_company = [
     ['label' => 'Meet the Team', 'url' => home_url('/meet-the-team/')],
     ['label' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['label' => 'Care and Maintenance', 'url' => home_url('/care-and-maintenance/')],
-    /* `AI.md` has recorded since 2026-08-26 that `/why-distinction/` is
-       reached from the composite page AND from the footer, the way
-       `/care-and-maintenance/` is. It was not: one CTA band on one page
-       was the only route to it on the whole site. Added 2026-08-27. */
-    ['label' => 'Why Distinction Doors', 'url' => home_url('/why-distinction/')],
+    /* The `Why Distinction Doors` row is absent from this release, 2026-09-04:
+       the route is not registered, so linking it would put a 404 in the footer
+       of all 712 pages. It returns with the route. */
     ['label' => 'Case Studies', 'url' => home_url('/case-studies/')],
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
     ['label' => 'Contact', 'url' => home_url('/contact/')],

@@ -1290,6 +1290,76 @@ document.querySelectorAll('[data-fg-care-guides]').forEach((widget) => {
   activate(fromHash || tabs[0].dataset.fgCareTab);
 });
 
+/**
+ * Secondary glazing: the five styles and their sections.
+ *
+ * A tablist over the five opening styles, each panel carrying the
+ * manufacturer's jamb section for both fixing methods.
+ *
+ * Progressive enhancement in the honest direction, the same bargain the bifold
+ * rail makes: all five panels and all nine drawings ship in the markup and the
+ * picker ships `hidden`. With no JavaScript the visitor gets the whole set
+ * stacked, which is complete rather than broken. If anything here throws, the
+ * picker simply stays hidden and nothing is lost.
+ *
+ * `is-enhanced` on the section is the only thing the stylesheet reads from this
+ * controller, and it does one job: drop the rules that separate the stacked
+ * panels, which would otherwise put a rule above whichever panel is showing.
+ *
+ * Roving tabindex, because five buttons all in the tab order is five stops for
+ * one control. Arrows move, Home and End jump.
+ */
+document.querySelectorAll('[data-fg-sg-styles]').forEach((section) => {
+  const picker = section.querySelector('[role="tablist"]');
+  const tabs = [...section.querySelectorAll('[data-fg-sg-tab]')];
+  const panels = [...section.querySelectorAll('[data-fg-sg-panel]')];
+  if (!picker || tabs.length < 2 || !panels.length) return;
+
+  const select = (slug, moveFocus) => {
+    tabs.forEach((tab) => {
+      const on = tab.dataset.fgSgTab === slug;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      if (on && moveFocus) {
+        tab.focus();
+        /* The picker is a swipe rail under 860px, so a keyboard move can land on
+           a tab that is off screen. `nearest` on both axes keeps the page still
+           and only scrolls the rail. No smooth behaviour: it applies to user
+           scrolling too in Chrome, which is what made the bifold rail feel laggy. */
+        tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+    });
+    panels.forEach((panel) => {
+      if (panel.dataset.fgSgPanel === slug) panel.removeAttribute('hidden');
+      else panel.setAttribute('hidden', '');
+    });
+  };
+
+  picker.hidden = false;
+  section.classList.add('is-enhanced');
+  select(tabs[0].dataset.fgSgTab, false);
+
+  picker.addEventListener('click', (event) => {
+    const tab = event.target.closest('[data-fg-sg-tab]');
+    if (tab) select(tab.dataset.fgSgTab, false);
+  });
+
+  picker.addEventListener('keydown', (event) => {
+    const current = tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true');
+    if (current < 0) return;
+
+    let next = null;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (current + 1) % tabs.length;
+    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (current - 1 + tabs.length) % tabs.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = tabs.length - 1;
+    if (next === null) return;
+
+    event.preventDefault();
+    select(tabs[next].dataset.fgSgTab, true);
+  });
+});
+
 /*
  * Bi-fold configurations: one swipe rail, with pane-count buttons that jump
  * into it.
