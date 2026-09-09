@@ -42006,7 +42006,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-sgs__dwgs {
-  --sg-mm: 2.8px;
+  --sg-mm: 2.05px;
   display: flex;
   flex-wrap: wrap;
   gap: clamp(1.25rem, 3vw, 2.5rem);
@@ -42102,7 +42102,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sgs__dwgs {
-    --sg-mm: 2.35px;
+    --sg-mm: 1.55px;
   }
 
   .fg-sgs__dwg figcaption {
@@ -42112,7 +42112,7 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 560px) {
   .fg-sgs__dwgs {
-    --sg-mm: 2.05px;
+    --sg-mm: 1.3px;
   }
 }
 /* ==========================================================================

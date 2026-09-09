@@ -165,8 +165,8 @@ $styles = [
         'name' => __('Horizontal slider', 'fenster'),
         'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 86.8, 'mm_h' => 76.0],
-            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 77.7, 'mm_h' => 94.8],
+            'face' => ['depth' => 39, 'span' => 47, 'mm_w' => 74.6, 'mm_h' => 61.2],
+            'reveal' => ['depth' => 56, 'span' => 47, 'mm_w' => 74.6, 'mm_h' => 80.3],
         ],
     ],
     [
@@ -174,8 +174,8 @@ $styles = [
         'name' => __('Vertical slider', 'fenster'),
         'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 56, 'mm_w' => 99.0, 'mm_h' => 55.7],
-            'reveal' => ['depth' => 55, 'span' => 56, 'mm_w' => 76.0, 'mm_h' => 67.8],
+            'face' => ['depth' => 39, 'span' => 43, 'mm_w' => 175.7, 'mm_h' => 61.4],
+            'reveal' => ['depth' => 55, 'span' => 43, 'mm_w' => 152.6, 'mm_h' => 73.4],
         ],
     ],
     [
@@ -183,8 +183,8 @@ $styles = [
         'name' => __('Hinged', 'fenster'),
         'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 87.9, 'mm_h' => 49.0],
-            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 88.0, 'mm_h' => 65.2],
+            'face' => ['depth' => 39, 'span' => 70, 'mm_w' => 100.7, 'mm_h' => 58.3],
+            'reveal' => ['depth' => 55, 'span' => 70, 'mm_w' => 100.7, 'mm_h' => 74.5],
         ],
     ],
     [
@@ -192,7 +192,7 @@ $styles = [
         'name' => __('Fixed', 'fenster'),
         'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 31.7, 'mm_h' => 19.9],
+            'face' => ['depth' => 12, 'span' => 20, 'mm_w' => 33.0, 'mm_h' => 22.5],
         ],
     ],
     [
@@ -200,8 +200,8 @@ $styles = [
         'name' => __('Lift-out', 'fenster'),
         'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster'),
         'fixings' => [
-            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 53.8, 'mm_h' => 40.0],
-            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 54.2, 'mm_h' => 59.0],
+            'face' => ['depth' => 30, 'span' => 40, 'mm_w' => 53.7, 'mm_h' => 42.7],
+            'reveal' => ['depth' => 49, 'span' => 40, 'mm_w' => 46.4, 'mm_h' => 61.7],
         ],
     ],
 ];
