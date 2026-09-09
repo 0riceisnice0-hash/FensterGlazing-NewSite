@@ -2514,7 +2514,7 @@ function fenster_site_data(): array
                 ],
             ],
             'secondary-glazing' => [
-                'intro' => 'Secondary glazing adds a discreet internal glazed layer to existing windows. It is useful where original frames need to stay in place, but the room would benefit from better comfort, reduced noise and improved usability.',
+                'intro' => 'For windows that have to stay. A slim frame goes on the inside of the one you already have, so nothing is cut, nothing is removed and the front of the house does not change. It is what goes into a listed home, a conservation area, or anywhere the original window is the thing worth keeping.',
                 'benefits' => [
                     ['title' => 'Keeps existing windows', 'copy' => 'Secondary glazing sits inside the original window line, making it useful for heritage homes, listed-style settings and sensitive facades.'],
                     ['title' => 'Acoustic improvement', 'copy' => 'The extra internal pane and air gap can noticeably reduce outside noise when specified and fitted correctly.'],
