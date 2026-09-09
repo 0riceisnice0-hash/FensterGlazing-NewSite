@@ -94,8 +94,22 @@ function fenster_h30_enabled(): bool
         'fenster-glazing-30.local',   // this experiment
         'fenster-glazing.local',      // the working local site
         'test.fensterglazing.com',    // the password-protected test site
-        'fensterglazing.com',         // live, opened 2026-09-04
-        'www.fensterglazing.com',     // live, opened 2026-09-04
+        // LIVE WAS REMOVED 2026-09-09, on the owner's instruction, and the two
+        // hosts are left here commented rather than deleted so putting it back
+        // is one edit.
+        //
+        // Why: internal referrals to `/online-quote/` fell from 124 to 17 in
+        // comparable windows -- 17.7/day to 3.4/day, measured in the raw access
+        // logs, so no tracking assumption is involved. Google referrals to the
+        // same page ROSE over the same period, and journeys landing on other
+        // pages and reaching the quote tool were unchanged. Demand was intact;
+        // the homepage stopped routing it. Enquiries followed, 4.8/day to
+        // 1.5/day.
+        //
+        // Homepage 3.0 stays on `test` so the work continues with the tracking
+        // that now exists behind it. Nothing is reverted in git.
+        // 'fensterglazing.com',      // live, 2026-09-04 to 2026-09-09
+        // 'www.fensterglazing.com',  // live, 2026-09-04 to 2026-09-09
         'localhost',
         '127.0.0.1',
     ], true);
