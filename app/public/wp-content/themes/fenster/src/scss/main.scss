@@ -42023,11 +42023,13 @@ html.fg-blinds-reveal-locked {
 .fg-sgs__dwg {
   margin: 0;
   display: grid;
-  gap: 0.6rem;
+  /* the bottom number hangs below the drawing box, so this gap clears the
+     NUMBER rather than the drawing; at 0.6rem the caption sat about 6px under it */
+  gap: 1.25rem;
   justify-items: center;
   text-align: center;
   /* room for the two numbers, which sit outside the drawing box */
-  padding: 0 0 1.15rem 1.7rem;
+  padding: 0 0 0.9rem 1.9rem;
 }
 
 /* The stage carries the width so the number spans can be positioned against the
@@ -42063,12 +42065,12 @@ html.fg-blinds-reveal-locked {
 
 .fg-sgs__num--v {
   transform: translate(-100%, -50%);
-  padding-right: 0.35rem;
+  padding-right: 0.5rem;
 }
 
 .fg-sgs__num--h {
   transform: translate(-50%, 0);
-  padding-top: 0.3rem;
+  padding-top: 0.45rem;
 }
 
 .fg-sgs__dwg figcaption {
@@ -42142,9 +42144,25 @@ html.fg-blinds-reveal-locked {
     padding: 0.9rem 0.75rem 0.8rem;
   }
 
+  /* THE DRAWING COMES ABOVE THE SPECIFICATION ROWS ON A PHONE. Stacked in
+     source order it sat below them, about 300px down the panel, which puts the
+     thing worth looking at under a list of the numbers describing it.
+     `display: contents` on the copy wrapper lifts its children into the panel
+     grid so they can be ordered; it is safe here only because that wrapper has
+     no box of its own to destroy. Check that before reusing this. */
   .fg-sgs__panel {
     grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem;
   }
+
+  .fg-sgs__copy {
+    display: contents;
+  }
+
+  .fg-sgs__copy h3 { order: 1; }
+  .fg-sgs__copy > p { order: 2; }
+  .fg-sgs__dwgs { order: 3; }
+  .fg-sgs__keys { order: 4; margin-top: 0; }
 
   .fg-sgs__dwgs {
     --sg-mm: 1.55px;
