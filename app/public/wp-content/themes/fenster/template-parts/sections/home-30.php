@@ -111,7 +111,7 @@ $h30_case_url = static function (string $slug): string {
                      name; `FULL-SITE-AUDIT-2026-08-13.md` records "one action
                      carrying three different labels" as an open finding. -->
                 <p class="fg-h30-hero__actions">
-                    <a class="fg-h30-btn fg-h30-btn--primary" href="<?php echo esc_url($h30_quote_url); ?>">Start your price</a>
+                    <a class="fg-h30-btn fg-h30-btn--primary" href="<?php echo esc_url($h30_quote_url); ?>">Instant Quote</a>
                     <a class="fg-h30-btn fg-h30-btn--ghost" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">Book a free visit</a>
                 </p>
 

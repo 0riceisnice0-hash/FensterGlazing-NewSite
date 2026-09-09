@@ -182,9 +182,14 @@
   transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
 }
 
+/* WHITE ON GREEN, WHICH IS THE SITE'S OWN CONVENTION AND NOT A HOMEPAGE ONE.
+   `.button` and `.site-nav__quote` in `main.scss` are both `#fff` on
+   `--color-accent`; this namespace shipped dark ink on green and was the
+   outlier, so the same green CTA read one way in the header and another way
+   six hundred pixels below it. Owner instruction, 2026-09-09. */
 .fg-h30-btn--primary {
   background: var(--h30-green);
-  color: var(--h30-ink);
+  color: #fff;
 }
 
 .fg-h30-btn--primary:hover {
