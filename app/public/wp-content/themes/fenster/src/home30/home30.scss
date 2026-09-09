@@ -298,7 +298,15 @@
   max-width: var(--h30-shell);
   margin-inline: auto;
   flex: 1 1 auto;
-  min-height: clamp(24rem, 62vh, 44rem);
+  /* A FLOOR, NOT A HEIGHT. This was `clamp(24rem, 62vh, 44rem)` -- a SECOND
+     viewport-derived height inside the hero, and the one that actually won.
+     Capping `.fg-h30-hero` at 640px did nothing on a tall monitor because the
+     stage's own minimum resolved to 704px at 1200 and pushed the band back out
+     to 818. Two rules were sizing the same thing off the viewport and the
+     inner one was invisible from the outer one.
+     `flex: 1 1 auto` already makes the stage fill whatever the hero gives it,
+     so all it needs from here is a floor for the narrow case. */
+  min-height: 24rem;
 }
 
 .fg-h30-hero__photo {
