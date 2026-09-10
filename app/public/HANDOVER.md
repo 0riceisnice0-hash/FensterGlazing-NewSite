@@ -7,15 +7,15 @@ Current Truth section of `LIVECHANGES.md` (the only authority on what is live
 and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
 carries the standing rules, including the Configuration Page Rule.
 
-**LIVE IS `72a46614`**, tag `live-secondary-glazing-copy-2026-09-09`, the
-thirty-sixth isolated release — `/secondary-glazing/` rewritten to the people who
-cannot change their windows, the missing SEO override for that route, and the
-lift-out reveal section drawing given back its glass.
+**LIVE IS `33ce83f0`**, tag `live-blind-hint-2026-09-10`, the thirty-seventh
+isolated release — the integral blind visualiser now shows you how to work it:
+a hand takes hold of each magnet and pulls it along its rail, and the whole hint
+goes on first use.
 
-Superseded: `8991a3aa`, tag `live-secondary-glazing-fixes-2026-09-09` (the
-thirty-fifth), then `d88cb83d`, tag `live-secondary-glazing-2026-09-09` (the
-thirty-fourth). **The socket purge command is recorded** in the 2026-09-09
-Current Truth entries of `LIVECHANGES.md`.
+Superseded: `72a46614`, tag `live-secondary-glazing-copy-2026-09-09` (the
+thirty-sixth), then `8991a3aa` (thirty-fifth) and `d88cb83d` (thirty-fourth).
+**The socket purge command is recorded** in the 2026-09-09 Current Truth entries
+of `LIVECHANGES.md`.
 **Verified by a full 2,344-file manifest against the live server both before
 and after the deploy**, not copied from a document. It is NOT an ancestor of
 `main`. The Distinction strand is still held back and `/why-distinction/` still
@@ -32,9 +32,9 @@ Superseded: `caf75c2e` (thirty-third, the homepage lead work), then `cc911eb0`
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `72a46614` (tag `live-secondary-glazing-copy-2026-09-09`) | cut from `8991a3aa` |
-| test | `baab7352` | `main` |
-| `main` | `baab7352` | — |
+| live | `33ce83f0` (tag `live-blind-hint-2026-09-10`) | cut from `72a46614` |
+| test | `e905e7d5` | `main` |
+| `main` | `e905e7d5` | — |
 
 **This table was stale again when `8991a3aa` shipped**, still naming the release
 before it while the head of this section named the right one. It is now the

@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-10 — Integral blinds: the visualiser tells you which magnet is which (ON TEST as `c32ae5d2`, NOT LIVE)
+## 2026-09-10 — Integral blinds: the visualiser tells you which magnet is which (LIVE as `33ce83f0`)
 
 Owner: *"on the integral blinds page, it should come up with a little overlay
 on the interactive blind to show people how to use it (ie bottom slider to
@@ -67,6 +67,13 @@ lift/lower, top to tilt). it should disappear when used."*
   rail, so unmirrored the palm hangs off the edge of the unit. The fingertip
   lands on the magnet's left half, so it points at the magnet without covering
   it. The up/down glyph came out of the pill: the hand says that now.
+- **Shipped as the thirty-seventh isolated release, `33ce83f0`**, cut from live
+  `72a46614` (re-established by a 2,345-file manifest with zero differences)
+  plus three cherry-picks. Five files, zero deletions, residual 0, backup proven
+  by extraction, socket purge `msg:OK`. **The release's own source was rebuilt in
+  the release worktree first and matched its committed bundles byte for byte**,
+  which is the only thing that proves a cherry-picked bundle carries this work
+  and not the rest of `main`.
 - Re-verified at 1280 and 375 after the rebuild: outlines centred on the drag
   targets to the pixel and sized to the real magnets, labels single line and
   inside the stage at both widths, travel -58/+283px at 1280 and -43/+210 at
