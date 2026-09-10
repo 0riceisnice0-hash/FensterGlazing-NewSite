@@ -7,7 +7,16 @@ Current Truth section of `LIVECHANGES.md` (the only authority on what is live
 and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
 carries the standing rules, including the Configuration Page Rule.
 
-**LIVE IS `594fc2c4`**, tag `live-ghost-straight-2026-09-10`, the thirty-eighth
+**LIVE IS `e5b312a7`**, tag `live-showroom-removal-2026-09-10`, the thirty-ninth
+isolated release — the 3D showroom deleted, and with it the two dead links
+`/windows/` and `/doors/` had been serving since 2026-08-24. Both pointed at
+routes that `404`d on live and on test, because `inc/showroom.php` was never
+committed while its assets, templates and hub link all were. **`--no-times` on
+the rsync is what held the release to three files**; `-a --checksum` alone
+reported 19 timestamp-only fix-ups that would each have dumped an asset's cache
+for no content change. See the 2026-09-10 Current Truth entry.
+
+Superseded: `594fc2c4`, tag `live-ghost-straight-2026-09-10`, the thirty-eighth
 isolated release — one CSS fix, so the blind coach's ghost drags straight down
 in WebKit instead of diagonally. **A percentage interpolated against a length in
 an animated transform is invisible in Chromium**; the 2026-09-10 Current Truth
@@ -50,9 +59,9 @@ Superseded: `caf75c2e` (thirty-third, the homepage lead work), then `cc911eb0`
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `594fc2c4` (tag `live-ghost-straight-2026-09-10`) | cut from `33ce83f0` |
-| test | `892ae998` | `main` |
-| `main` | `892ae998` | — |
+| live | `e5b312a7` (tag `live-showroom-removal-2026-09-10`) | cut from `594fc2c4` |
+| test | `fc6268ab` | `main` |
+| `main` | `fc6268ab` | — |
 
 **This table was stale again when `8991a3aa` shipped**, still naming the release
 before it while the head of this section named the right one. It is now the

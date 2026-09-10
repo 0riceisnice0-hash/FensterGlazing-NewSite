@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-10 — The 3D showroom is gone, and so are the two dead links it left on live (test)
+## 2026-09-10 — The 3D showroom is gone, and so are the two dead links it left on live (LIVE as `e5b312a7`)
 
 Owner: *"get rid of the 3d showroom entirely, including the links on the windows
 and doors pages."* Also this session: the repository itself was tidied, 45
@@ -49,7 +49,19 @@ branches to 29 and 9 worktrees to 6.
   `/online-quote/`. No page requests `assets/showroom` any more. `/`,
   `/windows/`, `/doors/`, `/online-quote/`, `/contact/`, `/composite-doors/` and
   `/why-distinction/` all `200`.
-- **LIVE WAS NOT TOUCHED AND THAT WAS PROVED, NOT ASSUMED.** The whole live theme
+- **IT SHIPPED TO LIVE THE SAME DAY**, as `e5b312a7`, tag
+  `live-showroom-removal-2026-09-10`, the thirty-ninth isolated release, cut from
+  live `594fc2c4` after a full 2,347-file manifest found zero differences. Owner:
+  *"make it so live doesnt have the links."* **`--no-times` held the deploy to
+  three files** — `-a --checksum` alone reported 19 timestamp-only fix-ups, each
+  of which would have re-stamped a `?ver=` cache-buster for no content change.
+  The four held-back Distinction files hash unchanged and `/why-distinction/`
+  still `404`s. **A page can look 1,030 bytes smaller and be byte-identical:**
+  `/composite-doors/` measured 268,599 before and 267,569 after, because the
+  "before" was a proxy-cached Google Ads landing carrying a `gclid` string and
+  the "after" was classified `trafficClass: bot`. Normalised, both sides are
+  exactly 269,991 bytes with a zero-line diff. Before that deploy, and recorded
+  because it was checked at the time: The whole live theme
   tree was checksummed before and after: 2,347 files, manifest md5
   `10766786b32afb4410f1babf42861d47`, identical both times, with all five
   held-back Distinction files hashing unchanged. **Live still carries the two
