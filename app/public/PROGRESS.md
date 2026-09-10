@@ -14,6 +14,59 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-10 — The 3D showroom is gone, and so are the two dead links it left on live (test)
+
+Owner: *"get rid of the 3d showroom entirely, including the links on the windows
+and doors pages."* Also this session: the repository itself was tidied, 45
+branches to 29 and 9 worktrees to 6.
+
+- **IT HAD BEEN HALF-SHIPPED FOR SEVENTEEN DAYS AND THE VISIBLE HALF WAS
+  BROKEN.** `product-hub.php` rendered *"See every window in 3D — turn one
+  round, change the colour, open it"* on `/windows/` and the door equivalent on
+  `/doors/`, linking to `/window-showroom/` and `/door-showroom/`. **Both
+  returned 404 on live and on test.** The assets, both template parts and the hub
+  link were committed and deployed on 2026-08-24; `inc/showroom.php`, which
+  registers the two routes, was never committed to any branch or remote. The
+  template's own comment read "Without this the showroom is an orphan" — it was
+  the link that ended up orphaned.
+- **NOTHING ON `main` WIRED IT UP, WHICH IS WHY THE 404s WERE SILENT** and why
+  deleting it changes no other page. No enqueue, no route, no `get_template_part`
+  anywhere in `inc/`, `functions.php` or `data/`. Outside its own two
+  directories the only references were the three inside the deleted templates.
+- **Removed:** `src/showroom/` (6 files), `assets/showroom/` (40 files, 3.2 MB),
+  `template-parts/sections/showroom.php`, `showroom-stage.php`, the
+  `$fg_showroom` block in `product-hub.php`, `.fg-product-hub__showroom-link` in
+  `main.scss`. 48 files, 31,930 lines.
+- **THE PHYSICAL SHOWROOM SHARES THE WORD AND IS UNTOUCHED.** `.fg-mk-showroom`
+  and `.fg-contact-hero__showroom` are the Milton Keynes premises. Verified
+  against live as a control: `/contact/` renders the same 1/1/5 occurrences of
+  `fg-contact-hero__showroom`, `fg-contact-hub-card--showroom` and "Showroom" on
+  both. **Grep the 3D tokens, never `showroom` alone.**
+- **Verified on test** (`f8b4d0bb`): dry run exactly 54 deletions and three
+  content changes with **no timestamp-only fix-ups**, residual **0**, 2,348 theme
+  files to 2,300. `/windows/` and `/doors/` carry zero showroom hrefs, zero "in
+  3D" phrases and their two CTAs intact; both one `h1`, seven links to
+  `/online-quote/`. No page requests `assets/showroom` any more. `/`,
+  `/windows/`, `/doors/`, `/online-quote/`, `/contact/`, `/composite-doors/` and
+  `/why-distinction/` all `200`.
+- **LIVE WAS NOT TOUCHED AND THAT WAS PROVED, NOT ASSUMED.** The whole live theme
+  tree was checksummed before and after: 2,347 files, manifest md5
+  `10766786b32afb4410f1babf42861d47`, identical both times, with all five
+  held-back Distinction files hashing unchanged. **Live still carries the two
+  dead links**; a live release has to be cut from current live `594fc2c4` plus
+  this one change, because cutting from `main` would ship the Distinction strand
+  the owner wants kept on test.
+- **`inc/showroom.php` survives only on `local/showroom-and-tooling-snapshot`**
+  (`80cc0d7b`), together with the abandoned atrium and the `shot.mjs` / `sweep.mjs`
+  QA tooling that had never been committed anywhere despite `STYLE.md`,
+  `LIVECHANGES.md` and `HANDOVER.md` all instructing people to run it. **That
+  branch must never be merged**: its `functions.php` and `package.json` are the
+  stale 2026-09-02 versions and would revert Homepage 3.0.
+- **This is the third built interactive tool cut from this site**, after the 3D
+  homepage experiment and the heritage bar-layout planner. WindowCAD is the
+  interactive tool here.
+
+
 ## 2026-09-10 — The ghost dragged diagonally, and only in the owner's browser (LIVE as `594fc2c4`)
 
 Owner, on live: *"for some reason the ghost controls go bottom right rather than
