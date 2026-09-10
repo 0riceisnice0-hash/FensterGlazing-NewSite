@@ -47,6 +47,32 @@ lift/lower, top to tilt). it should disappear when used."*
   their magnet, vertically centred on it to the pixel, inside the stage at both
   widths, no document overflow. Before and after screenshots taken from a local
   copy driven by a synthetic `pointerdown`.
+- **THEN THE HAND ARRIVED.** Owner, after seeing it: *"should be more like a
+  video game style, with a little hand showing the drag... maybe do a few
+  variants and show me before committing."* Four were built over the real
+  visualiser render, published as an artifact so the motion could be judged, and
+  he took B with A's label position: *"B but put the text boxes to the left like
+  the others."*
+- **B IS THE ONE THAT SHOWS WHAT MOVES.** Each magnet keeps a dashed outline
+  where it rests, and a translucent copy of it is taken by the hand and pulled
+  along the rail. A hand travelling on its own says where to press; the ghost
+  says what happens.
+- **THE GHOST PULLS TOWARDS THE FAR END OF THAT MAGNET'S OWN TRACK**, from
+  `magnetTracks`, so the two hands pull opposite ways: the tilt magnet opens
+  near the bottom of its short travel and the lift magnet at the top of its long
+  one. That is the product rather than a stylistic choice, and it means neither
+  hint has to be told which way to go.
+- **THE HAND IS MIRRORED, AND HAS TO BE.** A pointing hand carries its palm
+  below and to the right of the fingertip; these magnets are on the right hand
+  rail, so unmirrored the palm hangs off the edge of the unit. The fingertip
+  lands on the magnet's left half, so it points at the magnet without covering
+  it. The up/down glyph came out of the pill: the hand says that now.
+- Re-verified at 1280 and 375 after the rebuild: outlines centred on the drag
+  targets to the pixel and sized to the real magnets, labels single line and
+  inside the stage at both widths, travel -58/+283px at 1280 and -43/+210 at
+  375, no document overflow. Grip, pull and dismissed frames captured by pausing
+  the animations through `getAnimations()` at fixed times, which is the only way
+  to get a deterministic frame out of a headless screenshot.
 
 ## 2026-09-09 — Secondary glazing: the page gets written to the people who cannot change their windows (LIVE as `72a46614`)
 
