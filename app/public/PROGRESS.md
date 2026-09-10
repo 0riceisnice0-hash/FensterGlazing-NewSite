@@ -14,6 +14,35 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-10 — The ghost dragged diagonally, and only in the owner's browser (ON TEST as `92a7ea5b`, NOT LIVE)
+
+Owner, on live: *"for some reason the ghost controls go bottom right rather than
+straight down."*
+
+- **A PERCENTAGE AND A LENGTH IN THE SAME ANIMATED TRANSFORM IS THE BUG, AND IT
+  IS INVISIBLE IN CHROMIUM.** The ghost went from `translate(-50%, -50%)` to
+  `translate(-50%, calc(-50% + var(--travel)))`. Chromium interpolates that
+  componentwise and holds x exactly still: sampled at four times through the
+  travel it reported `matrix(1, 0, 0, 1, -11.1992, ...)` every time, the x
+  identical to a tenth of a pixel. So it verified clean here and was wrong on
+  his screen, which is the worst shape a bug can have.
+- **PROVED IN WEBKIT WITHOUT A WEBKIT BROWSER TO DRIVE.** `qlmanage -t` renders
+  an HTML file through WebKit, and CSS animations can be frozen at a chosen
+  moment with `animation-play-state: paused` and a negative `animation-delay`.
+  Two lanes, one box each, same frozen frame: the old form put a box that should
+  straddle a rail half its own width off that rail, the new form put it on the
+  rail. Interpolating from a correct start to a displaced end is a diagonal.
+- **Fixed by taking the percentage out of the animated transform**, not by
+  changing the animation: the centring is now `margin-left: calc(-0.5 * var(--mw))`
+  and `margin-top: calc(-0.5 * var(--mh))`, computed from the values the
+  controller already sets, and every animated transform on the component is a
+  plain pixel `translateY`. The ghost and the hand now share one set of
+  keyframes instead of needing two.
+- **This is a general rule, not a blind visualiser one.** Do not interpolate a
+  percentage against a length in a transform; put the constant offset somewhere
+  that is not animated.
+- Live is still `33ce83f0` and still has the diagonal.
+
 ## 2026-09-10 — Integral blinds: the visualiser tells you which magnet is which (LIVE as `33ce83f0`)
 
 Owner: *"on the integral blinds page, it should come up with a little overlay
