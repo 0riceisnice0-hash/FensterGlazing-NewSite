@@ -41299,6 +41299,110 @@ html.fg-blinds-reveal-locked {
   background: rgba(255, 255, 255, 0.12);
 }
 
+/* THE FIRST-USE COACH. Owner, 2026-09-10: the visualiser should say which
+   magnet does what, on the blind itself, and disappear once it has been used.
+
+   Two labels pinned to the two magnets rather than one panel across the glass,
+   because the thing being explained is which magnet is which, and a panel says
+   that only in words while a label says it by where it is.
+
+   `display: none` until `.is-live` for the same reason the canvas is: until the
+   controller has a context the stage is the fallback photograph, and a label
+   pointing at a magnet that is not drawn there is worse than no label.
+
+   `pointer-events: none` on everything here is load bearing. The coach sits
+   over the glass beside the magnet, and the only two elements on this stage
+   that may take a drag are the grabs; anything else that could swallow a
+   pointerdown would break the magnet it is pointing at. */
+.fg-blind-visualiser__coach {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.34s ease, visibility 0s linear 0s;
+}
+
+.fg-blind-visualiser.is-live .fg-blind-visualiser__coach {
+  display: block;
+}
+
+/* Dismissed. Visibility waits for the fade so the label does not vanish mid
+   transition, and both are on the section rather than on the coach so the
+   controller sets one class and nothing else. */
+.fg-blind-visualiser.is-coached .fg-blind-visualiser__coach {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.34s ease, visibility 0s linear 0.34s;
+}
+
+/* The label's RIGHT edge is the anchor: the controller sets `left` to a point
+   just clear of the magnet and the translate hangs the pill off it, so a longer
+   word grows away from the magnet instead of over it. */
+.fg-blind-visualiser__coach-tip {
+  position: absolute;
+  transform: translate(-100%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  max-width: min(15rem, 62%);
+  padding: 0.38rem 0.62rem 0.38rem 0.5rem;
+  border-radius: 7px;
+  background: rgba(6, 33, 42, 0.9);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+  box-shadow: 0 6px 18px rgba(0, 20, 28, 0.34);
+}
+
+/* The nib, pointing at the magnet the label belongs to. */
+.fg-blind-visualiser__coach-tip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 0;
+  height: 0;
+  transform: translateY(-50%);
+  border-block: 5px solid transparent;
+  border-left: 6px solid rgba(6, 33, 42, 0.9);
+}
+
+/* Up and down, because that is the axis the magnet runs on and the one thing a
+   label cannot say as quickly as a shape can. */
+.fg-blind-visualiser__coach-arrows {
+  flex: none;
+  width: 9px;
+  height: 15px;
+  background: currentColor;
+  clip-path: polygon(
+    50% 0%, 100% 32%, 62% 32%, 62% 68%, 100% 68%, 50% 100%,
+    0% 68%, 38% 68%, 38% 32%, 0% 32%
+  );
+  animation: fg-blind-coach-nudge 2.1s ease-in-out infinite;
+}
+
+@keyframes fg-blind-coach-nudge {
+  0%, 62%, 100% { transform: translateY(0); }
+  31% { transform: translateY(-2.5px); }
+  46% { transform: translateY(2.5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-blind-visualiser__coach,
+  .fg-blind-visualiser.is-coached .fg-blind-visualiser__coach {
+    transition: none;
+  }
+
+  .fg-blind-visualiser__coach-arrows {
+    animation: none;
+  }
+}
+
 .fg-blind-visualiser__canvas,
 .fg-blind-visualiser__fallback {
   display: block;
