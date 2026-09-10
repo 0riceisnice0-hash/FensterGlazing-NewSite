@@ -46505,20 +46505,6 @@ html.fg-blinds-reveal-locked {
   .fg-bfc__foot .button { width: 100%; justify-content: center; }
 }
 
-/* Hub -> showroom handover. The hub answers which product; the showroom
-   answers what it actually looks like. Without this link the showroom is a
-   real, indexable page that nothing on the site points at. */
-.fg-product-hub__showroom-link {
-  margin: 0.9rem 0 0;
-  font-size: 0.92rem;
-
-  a {
-    color: var(--color-accent-dark);
-    text-underline-offset: 3px;
-    font-weight: 500;
-  }
-}
-
 /* ------------------------------------------------------------------ *
  * Composite door style range — `.fg-cds`
  *
