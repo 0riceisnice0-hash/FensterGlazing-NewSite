@@ -41387,13 +41387,26 @@ html.fg-blinds-reveal-locked {
   top: var(--from);
   width: var(--mw);
   height: var(--mh);
+  /* CENTRED BY MARGIN, NOT BY `translate(-50%, -50%)`, AND THAT IS THE FIX FOR
+     A GHOST THAT DRIFTED DIAGONALLY. The ghost was the only thing here
+     animating a transform whose keyframes mixed a percentage with a length
+     (`translate(-50%, -50%)` to `translate(-50%, calc(-50% + var(--travel)))`).
+     Chromium interpolates that componentwise and holds x still; a browser that
+     falls back to decomposing both sides to matrices has to resolve the
+     percentages first, and gets the horizontal component wrong, which reads as
+     the copy sliding to the bottom right instead of straight down. Owner saw
+     exactly that, 2026-09-10.
+
+     With the offset moved into `margin`, every animated transform on this
+     component is a plain pixel `translateY`, which has nothing to decompose. */
+  margin-left: calc(-0.5 * var(--mw));
+  margin-top: calc(-0.5 * var(--mh));
   border-radius: 4px;
 }
 
 /* Where the magnet actually is. Static, so the moving copy has something to
    have moved away FROM. */
 .fg-blind-visualiser__coach-mark {
-  transform: translate(-50%, -50%);
   border: 1.4px dashed rgba(255, 255, 255, 0.5);
 }
 
@@ -41401,7 +41414,6 @@ html.fg-blinds-reveal-locked {
   background: rgba(255, 255, 255, 0.42);
   border: 1.5px solid #fff;
   box-shadow: 0 3px 10px rgba(0, 20, 28, 0.4);
-  transform: translate(-50%, -50%);
   animation: fg-blind-coach-drag 3.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 
@@ -41416,9 +41428,7 @@ html.fg-blinds-reveal-locked {
   width: 32px;
   height: 39px;
   margin: -3px 0 0 -15px;
-  /* Its own keyframes: the ghost is centred on the magnet and carries a
-     translate already, the hand is not and must not inherit one. */
-  animation: fg-blind-coach-drag-hand 3.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: fg-blind-coach-drag 3.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 
 .fg-blind-visualiser__coach-hand svg {
@@ -41439,30 +41449,10 @@ html.fg-blinds-reveal-locked {
 }
 
 /* `--travel` is the distance to the far end of that magnet's own track, in
-   pixels, set by the controller. Animating a transform rather than `top` keeps
-   the whole thing on the compositor. */
+   pixels, set by the controller. One `translateY` and nothing else: the offsets
+   that centre these things live in `margin`, so no keyframe here has to
+   interpolate a percentage against a length. */
 @keyframes fg-blind-coach-drag {
-  0%, 8% {
-    transform: translate(-50%, -50%);
-    opacity: 0;
-  }
-
-  18%, 46% {
-    opacity: 1;
-  }
-
-  52%, 68% {
-    transform: translate(-50%, calc(-50% + var(--travel)));
-    opacity: 1;
-  }
-
-  86%, 100% {
-    transform: translate(-50%, calc(-50% + var(--travel)));
-    opacity: 0;
-  }
-}
-
-@keyframes fg-blind-coach-drag-hand {
   0%, 8% {
     transform: translateY(0);
     opacity: 0;
