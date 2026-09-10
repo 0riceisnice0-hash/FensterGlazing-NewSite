@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-10 — The ghost dragged diagonally, and only in the owner's browser (ON TEST as `92a7ea5b`, NOT LIVE)
+## 2026-09-10 — The ghost dragged diagonally, and only in the owner's browser (LIVE as `594fc2c4`)
 
 Owner, on live: *"for some reason the ghost controls go bottom right rather than
 straight down."*
@@ -41,7 +41,11 @@ straight down."*
 - **This is a general rule, not a blind visualiser one.** Do not interpolate a
   percentage against a length in a transform; put the constant offset somewhere
   that is not animated.
-- Live is still `33ce83f0` and still has the diagonal.
+- **Shipped as the thirty-eighth isolated release, `594fc2c4`**, cut from live
+  `33ce83f0` (re-established by a 2,345-file manifest with zero differences)
+  plus one cherry-pick. Two files, zero deletions, residual 0, backup proven by
+  extraction, socket purge `msg:OK`, and the release's own source rebuilt to its
+  committed bundle byte for byte first.
 
 ## 2026-09-10 — Integral blinds: the visualiser tells you which magnet is which (LIVE as `33ce83f0`)
 

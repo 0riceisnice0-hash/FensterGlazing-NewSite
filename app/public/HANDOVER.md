@@ -7,10 +7,16 @@ Current Truth section of `LIVECHANGES.md` (the only authority on what is live
 and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
 carries the standing rules, including the Configuration Page Rule.
 
-**LIVE IS `33ce83f0`**, tag `live-blind-hint-2026-09-10`, the thirty-seventh
-isolated release — the integral blind visualiser now shows you how to work it:
-a hand takes hold of each magnet and pulls it along its rail, and the whole hint
-goes on first use.
+**LIVE IS `594fc2c4`**, tag `live-ghost-straight-2026-09-10`, the thirty-eighth
+isolated release — one CSS fix, so the blind coach's ghost drags straight down
+in WebKit instead of diagonally. **A percentage interpolated against a length in
+an animated transform is invisible in Chromium**; the 2026-09-10 Current Truth
+entry in `LIVECHANGES.md` records that and how to render a frozen frame through
+WebKit with `qlmanage`.
+
+Superseded: `33ce83f0`, tag `live-blind-hint-2026-09-10` (the thirty-seventh) —
+the integral blind visualiser showing you how to work it: a hand takes hold of
+each magnet and pulls it along its rail, and the whole hint goes on first use.
 
 **THE HOMEPAGE WAS REVERTED ON 2026-09-09 AND THE FULL WRITE-UP IS
 `HOMEPAGE-30-REPORT-2026-09-10.md`.** Live serves the classic homepage;
@@ -44,9 +50,9 @@ Superseded: `caf75c2e` (thirty-third, the homepage lead work), then `cc911eb0`
 
 | | SHA | theme tree |
 | --- | --- | --- |
-| live | `33ce83f0` (tag `live-blind-hint-2026-09-10`) | cut from `72a46614` |
-| test | `e905e7d5` | `main` |
-| `main` | `e905e7d5` | — |
+| live | `594fc2c4` (tag `live-ghost-straight-2026-09-10`) | cut from `33ce83f0` |
+| test | `892ae998` | `main` |
+| `main` | `892ae998` | — |
 
 **This table was stale again when `8991a3aa` shipped**, still naming the release
 before it while the head of this section named the right one. It is now the
