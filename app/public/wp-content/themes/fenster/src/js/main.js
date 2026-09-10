@@ -6466,6 +6466,20 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   root.querySelectorAll('[data-fg-blind-grab]').forEach((grab) => {
     grabs.set(grab.dataset.fgBlindGrab, grab);
   });
+
+  /* The first-use coach: one label per magnet, pinned to it by `placeGrabs` and
+     taken away the moment either magnet is worked. */
+  const coach = root.querySelector('[data-fg-blind-coach]');
+  const coachTips = new Map();
+  root.querySelectorAll('[data-fg-blind-coach-for]').forEach((tip) => {
+    coachTips.set(tip.dataset.fgBlindCoachFor, tip);
+  });
+  let coached = false;
+  const dismissCoach = () => {
+    if (coached) return;
+    coached = true;
+    root.classList.add('is-coached');
+  };
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* A hanging blind is not a grating. Real slats sit a fraction off pitch and
@@ -7408,11 +7422,13 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
   tiltInput.addEventListener('input', () => {
     tiltTarget = clamp(Number.parseFloat(tiltInput.value) || 0, 0, 100);
+    dismissCoach();
     describe();
     nudge();
   });
   liftInput.addEventListener('input', () => {
     liftTarget = clamp(Number.parseFloat(liftInput.value) || 0, 0, 100);
+    dismissCoach();
     describe();
     nudge();
   });
@@ -7460,12 +7476,24 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       grab.style.width = `${w.toFixed(1)}px`;
       grab.style.height = `${h.toFixed(1)}px`;
     });
+
+    /* The coach labels ride the same centres, so they follow the magnets
+       through a resize and sit where the magnet actually is rather than where
+       it was at the size the page first laid out. `left` is the label's RIGHT
+       edge, a little clear of the magnet; the CSS translate does the rest. */
+    if (coached) return;
+    coachTips.forEach((tip, which) => {
+      const m = magnetCentre(L, which);
+      tip.style.left = `${(m.x - m.w / 2 - 11).toFixed(1)}px`;
+      tip.style.top = `${m.y.toFixed(1)}px`;
+    });
   };
 
   grabs.forEach((grab, which) => {
     grab.addEventListener('pointerdown', (event) => {
       dragging = which;
       focused = which;
+      dismissCoach();
       grab.setPointerCapture?.(event.pointerId);
       grab.classList.add('is-held');
       event.preventDefault();

@@ -110,6 +110,39 @@ foreach ($colours as $index => $colour) {
                 <div class="fg-blind-visualiser__grab" data-fg-blind-grab="tilt" aria-hidden="true"></div>
                 <div class="fg-blind-visualiser__grab" data-fg-blind-grab="lift" aria-hidden="true"></div>
 
+                <?php
+                /* The first-use coach. Owner, 2026-09-10: the visualiser should
+                   say which magnet does what, on the blind itself, and go away
+                   once it has been used.
+
+                   The two magnets are small dark tabs on a dark frame and they
+                   are the whole interface, so without this the paragraph below
+                   the stage is the only thing that says they can be dragged,
+                   and it is under the picture rather than on it.
+
+                   `aria-hidden` because this says nothing new to a screen
+                   reader: the two range inputs in `__a11y` are labelled "Tilt
+                   the slats" and "Raise or lower the blind" already, and the
+                   hint paragraph carries the same sentence in text. It is also
+                   `pointer-events: none` throughout, so it can never take a
+                   drag that was meant for the magnet under it.
+
+                   Positioned by the controller from the same `magnetCentre` the
+                   grabs use, so it follows the magnets rather than guessing at
+                   where they are, and it is only displayed once the canvas is
+                   live: over the fallback photograph it would point at nothing. */
+                ?>
+                <div class="fg-blind-visualiser__coach" data-fg-blind-coach aria-hidden="true">
+                    <span class="fg-blind-visualiser__coach-tip" data-fg-blind-coach-for="tilt">
+                        <span class="fg-blind-visualiser__coach-arrows"></span>
+                        <?php esc_html_e('Drag to tilt the slats', 'fenster'); ?>
+                    </span>
+                    <span class="fg-blind-visualiser__coach-tip" data-fg-blind-coach-for="lift">
+                        <span class="fg-blind-visualiser__coach-arrows"></span>
+                        <?php esc_html_e('Drag to raise and lower', 'fenster'); ?>
+                    </span>
+                </div>
+
                 <div class="fg-blind-visualiser__a11y">
                     <label for="<?php echo esc_attr($section_id); ?>-tilt"><?php esc_html_e('Tilt the slats', 'fenster'); ?></label>
                     <?php /* 0 and 100 are both closed, 50 is edge on. That is
