@@ -12,6 +12,18 @@ isolated release — the integral blind visualiser now shows you how to work it:
 a hand takes hold of each magnet and pulls it along its rail, and the whole hint
 goes on first use.
 
+**THE HOMEPAGE WAS REVERTED ON 2026-09-09 AND THE FULL WRITE-UP IS
+`HOMEPAGE-30-REPORT-2026-09-10.md`.** Live serves the classic homepage;
+Homepage 3.0 is gated to `test` at the host allowlist in `inc/home-30.php`,
+not reverted in git. Read the report before turning it back on.
+
+Superseded: **LIVE WAS `caf75c2e`**, tag `live-homepage-2026-09-09`, the thirty-third
+isolated release — the homepage lead work, cut as `main` plus the Distinction
+hold-back restored from the running site. **That commit was made AFTER the
+deploy so live has a SHA at all**: the tree that went out was not a committed
+state, and "cut from current live" needs something to point at. Read the
+2026-09-09 entry in `LIVECHANGES.md` before the next release.
+
 Superseded: `72a46614`, tag `live-secondary-glazing-copy-2026-09-09` (the
 thirty-sixth), then `8991a3aa` (thirty-fifth) and `d88cb83d` (thirty-fourth).
 **The socket purge command is recorded** in the 2026-09-09 Current Truth entries
