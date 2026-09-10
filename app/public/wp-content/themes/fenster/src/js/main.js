@@ -6470,9 +6470,13 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   /* The first-use coach: one label per magnet, pinned to it by `placeGrabs` and
      taken away the moment either magnet is worked. */
   const coach = root.querySelector('[data-fg-blind-coach]');
-  const coachTips = new Map();
-  root.querySelectorAll('[data-fg-blind-coach-for]').forEach((tip) => {
-    coachTips.set(tip.dataset.fgBlindCoachFor, tip);
+  const coachParts = new Map([['tilt', {}], ['lift', {}]]);
+  [['fgBlindCoachFor', 'tip'], ['fgBlindCoachMark', 'mark'],
+    ['fgBlindCoachGhost', 'ghost'], ['fgBlindCoachHand', 'hand']].forEach(([key, part]) => {
+    root.querySelectorAll(`[data-${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}]`).forEach((el) => {
+      const which = el.dataset[key];
+      if (coachParts.has(which)) coachParts.get(which)[part] = el;
+    });
   });
   let coached = false;
   const dismissCoach = () => {
@@ -7477,21 +7481,44 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       grab.style.height = `${h.toFixed(1)}px`;
     });
 
-    /* The coach labels ride the same centres, so they follow the magnets
-       through a resize and sit where the magnet actually is rather than where
-       it was at the size the page first laid out.
+    /* The coach rides the same centres, so it follows the magnets through a
+       resize and sits where the magnet actually is rather than where it was at
+       the size the page first laid out.
 
-       `right` rather than `left`, because these are absolutely positioned and
-       therefore shrink to fit: with `left` set, the available width is what
-       lies to its RIGHT, which beside a magnet on the right hand rail is a
-       sliver, and the label wraps to a quarter of its width. See the note on
-       `.fg-blind-visualiser__coach-tip`. `width` is the stage box in CSS
-       pixels, set by `layout()` on the call above this one. */
+       The label is anchored on `right` rather than `left`, because these are
+       absolutely positioned and therefore shrink to fit: with `left` set, the
+       available width is what lies to its RIGHT, which beside a magnet on the
+       right hand rail is a sliver, and the label wraps to a quarter of its
+       width. See the note on `.fg-blind-visualiser__coach-tip`. `width` is the
+       stage box in CSS pixels, set by `layout()` on the call above this one. */
     if (coached) return;
-    coachTips.forEach((tip, which) => {
+    const tracks = magnetTracks(L);
+    coachParts.forEach((part, which) => {
       const m = magnetCentre(L, which);
-      tip.style.right = `${(width - (m.x - m.w / 2 - 11)).toFixed(1)}px`;
-      tip.style.top = `${m.y.toFixed(1)}px`;
+      const track = tracks[which];
+      /* Pull towards whichever end of this magnet's own travel is further off,
+         so the gesture shows real range rather than a token wiggle. The tilt
+         magnet opens near the bottom of its short track and the lift magnet at
+         the top of its long one, so the two hands pull opposite ways, which is
+         true of the product and not a stylistic choice. */
+      const far = Math.abs(track.top - m.y) > Math.abs(track.bottom - m.y) ? track.top : track.bottom;
+      const travel = `${(far - m.y).toFixed(1)}px`;
+
+      if (part.tip) {
+        part.tip.style.right = `${(width - (m.x - m.w / 2 - 11)).toFixed(1)}px`;
+        part.tip.style.top = `${m.y.toFixed(1)}px`;
+      }
+
+      [part.mark, part.ghost, part.hand].forEach((el) => {
+        if (!el) return;
+        el.style.setProperty('--mx', `${m.x.toFixed(1)}px`);
+        el.style.setProperty('--mw', `${m.w.toFixed(1)}px`);
+        el.style.setProperty('--mh', `${m.h.toFixed(1)}px`);
+        el.style.setProperty('--from', `${m.y.toFixed(1)}px`);
+        el.style.setProperty('--travel', travel);
+        /* The fingertip lands on the magnet's left half, not its centre. */
+        el.style.setProperty('--hx', `${(m.x - m.w * 0.28).toFixed(1)}px`);
+      });
     });
   };
 

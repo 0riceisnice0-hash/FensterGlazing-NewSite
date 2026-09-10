@@ -132,13 +132,45 @@ foreach ($colours as $index => $colour) {
                    where they are, and it is only displayed once the canvas is
                    live: over the fallback photograph it would point at nothing. */
                 ?>
+                <?php
+                /* One hand per magnet, and it does the explaining. Owner,
+                   2026-09-10, after four variants were put in front of him:
+                   video game style, with a little hand showing the drag, and
+                   the wording in a box to the left as it already was.
+
+                   So each magnet gets three things: a dashed outline left where
+                   it rests, a translucent copy of it that the hand takes hold of
+                   and pulls along the rail, and the label. Showing what MOVES is
+                   the part a static label could never do, and it is the reason
+                   this variant was chosen over a hand travelling on its own.
+
+                   The hand is MIRRORED. A pointing hand has its palm below and
+                   to the right of the fingertip, and these magnets sit on the
+                   right hand rail, so unmirrored the palm falls off the edge of
+                   the unit. Mirrored it reaches in across the glass, which is
+                   also how a real hand would come at it. The fingertip lands on
+                   the magnet's left half rather than its centre, so it points at
+                   the magnet without covering it.
+
+                   Everything is positioned by the controller from the same
+                   `magnetCentre` and `magnetTracks` the drag targets use, so the
+                   ghost travels the magnet's REAL range rather than a guess at
+                   it, and the whole thing follows a resize. */
+                ?>
                 <div class="fg-blind-visualiser__coach" data-fg-blind-coach aria-hidden="true">
+                    <?php foreach (['tilt', 'lift'] as $coach_which) : ?>
+                        <span class="fg-blind-visualiser__coach-mark" data-fg-blind-coach-mark="<?php echo esc_attr($coach_which); ?>"></span>
+                        <span class="fg-blind-visualiser__coach-ghost" data-fg-blind-coach-ghost="<?php echo esc_attr($coach_which); ?>"></span>
+                        <span class="fg-blind-visualiser__coach-hand" data-fg-blind-coach-hand="<?php echo esc_attr($coach_which); ?>">
+                            <svg viewBox="0 0 30 36" focusable="false" aria-hidden="true">
+                                <path d="M11.4 4.1a2.6 2.6 0 0 1 5.2 0v9.6a2.4 2.4 0 0 1 4.3.9 2.4 2.4 0 0 1 4 1.5 2.4 2.4 0 0 1 3.7 2v6.4c0 5.3-4.3 9.6-9.6 9.6h-1.6a9.6 9.6 0 0 1-7.7-3.9l-4.4-5.9a2.5 2.5 0 0 1 3.7-3.3l2.4 2.3z"/>
+                            </svg>
+                        </span>
+                    <?php endforeach; ?>
                     <span class="fg-blind-visualiser__coach-tip" data-fg-blind-coach-for="tilt">
-                        <span class="fg-blind-visualiser__coach-arrows"></span>
                         <?php esc_html_e('Drag to tilt the slats', 'fenster'); ?>
                     </span>
                     <span class="fg-blind-visualiser__coach-tip" data-fg-blind-coach-for="lift">
-                        <span class="fg-blind-visualiser__coach-arrows"></span>
                         <?php esc_html_e('Drag to raise and lower', 'fenster'); ?>
                     </span>
                 </div>
