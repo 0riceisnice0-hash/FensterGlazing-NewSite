@@ -175,8 +175,16 @@ $h30_case_url = static function (string $slug): string {
                                                                         <ul class="fg-h30-finder__options" id="fg-h30-options-<?php echo esc_attr($h30_key); ?>" data-lenis-prevent>
                                                                             <?php foreach ($h30_group['options'] as $h30_option) : ?>
                                                                                 <li data-h30-option data-h30-category="<?php echo esc_attr($h30_group['label']); ?>" data-h30-terms="<?php echo esc_attr(implode(' ', [$h30_option['label'], $h30_option['meta'], $h30_option['keywords']])); ?>">
-                                                                                    <?php $h30_preview = fenster_h30_option_preview($h30_option['value']); ?>
-                                                                                    <a class="fg-h30-finder__option" href="<?php echo esc_url(home_url('/' . $h30_option['value'] . '/')); ?>"
+                                                                                    <?php
+                                                                                    $h30_preview = fenster_h30_option_preview($h30_option['value']);
+                                                                                    /* THE ROW LEADS WITH THE PRICE. See
+                                                                                       `fenster_h30_option_actions()` for why, and
+                                                                                       `HOMEPAGE-30-REPORT-2026-09-10.md` for the
+                                                                                       measurement behind it. */
+                                                                                    $h30_actions = fenster_h30_option_actions($h30_option['value']);
+                                                                                    ?>
+                                                                                    <a class="fg-h30-finder__option" href="<?php echo esc_url($h30_actions['url']); ?>"
+                                                                                        data-h30-action-label="<?php echo esc_attr($h30_actions['label']); ?>"
                                                                                         <?php if (! empty($h30_preview['src'])) : ?>
                                                                                             data-h30-preview-src="<?php echo esc_url(fenster_generated_url($h30_preview['src'])); ?>"
                                                                                             data-h30-preview-alt="<?php echo esc_attr($h30_preview['alt'] ?? $h30_option['label']); ?>"
@@ -192,8 +200,18 @@ $h30_case_url = static function (string $slug): string {
                                                                                             <?php endif; ?>
                                                                                         </span>
                                                                                         <span class="fg-h30-finder__option-copy"><strong><?php echo esc_html($h30_option['label']); ?></strong><small><?php echo esc_html($h30_option['meta']); ?></small><em data-h30-result-category hidden><?php echo esc_html($h30_group['label']); ?></em></span>
+                                                                                        <span class="fg-h30-finder__go<?php echo $h30_actions['is_price'] ? ' fg-h30-finder__go--price' : ''; ?>"><?php echo esc_html($h30_actions['label']); ?></span>
                                                                                         <span class="fg-h30-finder__arrow" aria-hidden="true">&rarr;</span>
                                                                                     </a>
+                                                                                    <?php if ($h30_actions['detail'] !== '') : ?>
+                                                                                        <?php /* A SIBLING OF THE OPTION, NEVER A CHILD: an `a`
+                                                                                                  cannot nest an `a`. The visible words are the
+                                                                                                  same on every row, so the accessible name
+                                                                                                  carries the product or a screen-reader user
+                                                                                                  gets twenty identical links. */ ?>
+                                                                                        <a class="fg-h30-finder__detail" href="<?php echo esc_url($h30_actions['detail']); ?>"
+                                                                                            aria-label="<?php echo esc_attr('Read about ' . $h30_option['label']); ?>">Read about it</a>
+                                                                                    <?php endif; ?>
                                                                                 </li>
                                                                             <?php endforeach; ?>
                                                                         </ul>
@@ -203,7 +221,13 @@ $h30_case_url = static function (string $slug): string {
                                                                             <button type="button" data-h30-reset>Browse all options in this category <span aria-hidden="true">&rarr;</span></button>
                                                                         </div>
 
-                                                                        <p class="fg-h30-finder__help">Not sure where to start? <a href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">Let us help you choose &rarr;</a></p>
+                                                                        <?php /* THIS LINE POINTED AT A CONSULTATION AND IT RENDERS ONCE PER
+                                                                                  PANEL, so the moment somebody was choosing a product they
+                                                                                  were offered a way out of choosing, three times over. The
+                                                                                  visit is still the hero's second action; here the honest
+                                                                                  answer for somebody who cannot pick one product is the
+                                                                                  all-products designer, which prices the lot. */ ?>
+                                                                        <p class="fg-h30-finder__help">Doing the whole house? <a href="<?php echo esc_url(home_url('/online-quote/')); ?>">Price it all together &rarr;</a></p>
                                                                         </div>
                                                                     </div>
 
@@ -281,9 +305,16 @@ $h30_case_url = static function (string $slug): string {
                         from the same price list we use on a home visit, so the figure does not change when we
                         turn up.
                     </p>
+                    <?php /* ONE ACTION IN THIS BAND, NOT A PAIR. The visit was
+                              offered beside the price here, in the hero above and
+                              in the closing band below -- three pairs on one page,
+                              each giving the reader a way past the thing the band
+                              exists to sell. `STYLE.md` allows a second CTA only
+                              where it is a genuine alternative route rather than a
+                              repeat, and this one is a repeat: the hero already
+                              carries the visit above the fold. */ ?>
                     <p class="fg-h30-price__actions">
                         <a class="fg-h30-btn fg-h30-btn--primary" href="<?php echo esc_url($h30_quote_url); ?>">Start your price</a>
-                        <a class="fg-h30-btn fg-h30-btn--ghost" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">Book a free visit</a>
                     </p>
                 </div>
                 <!-- The pricing tool itself, rather than a description of it. The frame

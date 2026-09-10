@@ -46,6 +46,10 @@ $fenster_required_files = [
        theme deploy cannot put it on production. Delete this line and those
        paths to remove it; the classic homepage comes back on its own. */
     'inc/home-30.php',
+    /* Which routes the designer can price, and the collection each one opens.
+       Read by the homepage finder and by `/online-quote/`, so it sits outside
+       the home-30 strand rather than inside it. */
+    'inc/quote-collections.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {

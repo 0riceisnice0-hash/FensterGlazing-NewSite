@@ -26,6 +26,31 @@ $page = is_array($args['page'] ?? null) ? $args['page'] : get_query_var('fenster
 $trust_items = is_array($args['trust_items'] ?? null) ? $args['trust_items'] : [];
 $title = (string) ($args['title'] ?? ($page['title'] ?? 'Online quote'));
 $quote_url = (string) ($args['instant_quote_url'] ?? 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing');
+
+/* ARRIVING WITH A PRODUCT ALREADY CHOSEN. The homepage finder sends somebody
+   here as `?product=<route>` so the tool opens on the thing they just picked
+   and they do not choose it twice. An unknown, unpriceable or absent value
+   falls through to the all-products designer, which is what this page has
+   always shown, so a stale or hand-typed link can only ever be harmless.
+
+   THIS SURVIVES THE PROXY. SiteGround caches generated pages by path and the
+   query string is part of that key -- measured 2026-09-10, a novel parameter
+   value returns `X-Proxy-Cache: MISS` and repeats return `HIT`, so each
+   product gets its own cached copy. Known ad parameters are the exception and
+   are stripped from the key, which is the behaviour `LIVECHANGES.md` recorded
+   as though it applied to every parameter. It does not.
+
+   The canonical is built from the slug and carries no query string, so these
+   are not indexable variants. */
+$quote_product = isset($_GET['product']) && is_string($_GET['product'])
+    ? sanitize_key(wp_unslash($_GET['product']))
+    : '';
+$quote_product_url = ($quote_product !== '' && function_exists('fenster_quote_collection_url'))
+    ? fenster_quote_collection_url($quote_product)
+    : '';
+if ($quote_product_url !== '') {
+    $quote_url = $quote_product_url;
+}
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $phone);

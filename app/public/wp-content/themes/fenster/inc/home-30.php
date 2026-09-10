@@ -322,6 +322,56 @@ function fenster_h30_search_groups(): array
 
 
 /**
+ * What a finder result offers, and where each action goes.
+ *
+ * THE FINDER HAS TO END AT A PRICE. Every option used to be a single link to a
+ * product page, so 26 of the 27 things somebody could search for routed away
+ * from `/online-quote/` -- the page that produces very nearly every lead this
+ * site gets. Measured over the days Homepage 3.0 was live: onward traffic from
+ * the homepage to the quote tool fell 19.4% to 4.8% while `/contact/` went 8.3%
+ * to 25.0%, and journeys that landed on some other page and reached the quote
+ * tool were unchanged, so the demand was intact and the routing was not. See
+ * `HOMEPAGE-30-REPORT-2026-09-10.md`.
+ *
+ * So the result row leads with the price, on the product just chosen, and keeps
+ * the product page as a second, smaller action. Choosing it here is choosing
+ * it: `/online-quote/` reads the `product` parameter and opens that collection.
+ *
+ * TWO OPTIONS ARE NOT PRODUCTS and take their own route. Two more cannot be
+ * priced online at all, and those keep the product page as the primary rather
+ * than promising a number the visitor cannot get.
+ *
+ * @return array{url: string, label: string, detail: string, is_price: bool}
+ */
+function fenster_h30_option_actions(string $slug): array
+{
+    $product_page = home_url('/' . $slug . '/');
+
+    /* The two that are already an action rather than a thing to buy. Neither
+       has a product page to read, so neither gets a second link. */
+    if ($slug === 'online-quote') {
+        return ['url' => home_url('/online-quote/'), 'label' => 'Get a price', 'detail' => '', 'is_price' => true];
+    }
+
+    if ($slug === 'book-a-consultation') {
+        return ['url' => home_url('/book-a-consultation/'), 'label' => 'Book a visit', 'detail' => '', 'is_price' => false];
+    }
+
+    /* Not priceable online, so the page is the honest destination. */
+    if (! function_exists('fenster_quote_can_price') || ! fenster_quote_can_price($slug)) {
+        return ['url' => $product_page, 'label' => 'Read about it', 'detail' => '', 'is_price' => false];
+    }
+
+    return [
+        'url' => add_query_arg('product', $slug, home_url('/online-quote/')),
+        'label' => 'Get a price',
+        'detail' => $product_page,
+        'is_price' => true,
+    ];
+}
+
+
+/**
  * Hero images used by the linked pages. Bespoke heroes override product_media;
  * keep these exceptions in step with their named templates when they change.
  * Advice/quote pages have no product hero and retain the category photograph.

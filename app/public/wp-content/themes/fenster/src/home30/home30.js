@@ -116,7 +116,11 @@ import {initHeadline} from './typewriter.js';
                 title.textContent = link.querySelector('strong').textContent;
                 description.textContent = link.querySelector('small').textContent;
                 label.textContent = link.closest('[data-h30-option]').dataset.h30Category;
-                action.textContent = 'Explore ' + link.querySelector('strong').textContent.toLowerCase();
+                /* The preview's action follows the row's, so a row offering a
+                   price does not preview as "Explore ...". PHP owns the wording
+                   in `fenster_h30_option_actions()`. */
+                action.textContent = link.dataset.h30ActionLabel
+                    || ('Explore ' + link.querySelector('strong').textContent.toLowerCase());
                 destination.href = link.href;
                 original.hidden = true;
                 image.hidden = false;
@@ -127,11 +131,11 @@ import {initHeadline} from './typewriter.js';
         // Delegation also covers newly rendered results from other categories.
         panel.addEventListener('pointerover', function (event) {
             if (event.pointerType === 'touch') return;
-            var link = event.target.closest('[data-h30-option] a');
+            var link = event.target.closest('[data-h30-option] a.fg-h30-finder__option');
             if (link && panel.contains(link)) show(link);
         });
         panel.addEventListener('focusin', function (event) {
-            var link = event.target.closest('[data-h30-option] a');
+            var link = event.target.closest('[data-h30-option] a.fg-h30-finder__option');
             if (link) show(link);
         });
         /* Same null-`relatedTarget` guard as the hero handler below, for the
@@ -230,7 +234,7 @@ import {initHeadline} from './typewriter.js';
             if (event.key === 'Enter' || event.key === 'ArrowDown') {
                 event.preventDefault();
                 openResults();
-                var first = panel.querySelector('[data-h30-option] a');
+                var first = panel.querySelector('[data-h30-option] a.fg-h30-finder__option');
                 if (first) focusOption(first);
             }
         });
@@ -240,9 +244,9 @@ import {initHeadline} from './typewriter.js';
         panel.querySelector('[data-h30-dismiss]').addEventListener('click', function () { input.focus({preventScroll: true}); openResults(false); });
 
         panel.addEventListener('keydown', function (event) {
-            var link = event.target.closest('[data-h30-option] a');
+            var link = event.target.closest('[data-h30-option] a.fg-h30-finder__option');
             if (!link) return;
-            var links = Array.from(panel.querySelectorAll('[data-h30-option] a'));
+            var links = Array.from(panel.querySelectorAll('[data-h30-option] a.fg-h30-finder__option'));
             var index = links.indexOf(link);
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 event.preventDefault();
