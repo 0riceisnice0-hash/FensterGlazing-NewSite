@@ -41377,34 +41377,128 @@ html.fg-blinds-reveal-locked {
   border-left: 6px solid rgba(6, 33, 42, 0.9);
 }
 
-/* Up and down, because that is the axis the magnet runs on and the one thing a
-   label cannot say as quickly as a shape can. */
-.fg-blind-visualiser__coach-arrows {
-  flex: none;
-  width: 9px;
-  height: 15px;
-  background: currentColor;
-  clip-path: polygon(
-    50% 0%, 100% 32%, 62% 32%, 62% 68%, 100% 68%, 50% 100%,
-    0% 68%, 38% 68%, 38% 32%, 0% 32%
-  );
-  animation: fg-blind-coach-nudge 2.1s ease-in-out infinite;
+/* WHAT MOVES, SHOWN MOVING. The hand takes hold of a translucent copy of the
+   magnet and pulls it along the rail, leaving a dashed outline where the real
+   one rests. The three pieces share one timeline so they read as one gesture. */
+.fg-blind-visualiser__coach-mark,
+.fg-blind-visualiser__coach-ghost {
+  position: absolute;
+  left: var(--mx);
+  top: var(--from);
+  width: var(--mw);
+  height: var(--mh);
+  border-radius: 4px;
 }
 
-@keyframes fg-blind-coach-nudge {
-  0%, 62%, 100% { transform: translateY(0); }
-  31% { transform: translateY(-2.5px); }
-  46% { transform: translateY(2.5px); }
+/* Where the magnet actually is. Static, so the moving copy has something to
+   have moved away FROM. */
+.fg-blind-visualiser__coach-mark {
+  transform: translate(-50%, -50%);
+  border: 1.4px dashed rgba(255, 255, 255, 0.5);
 }
 
+.fg-blind-visualiser__coach-ghost {
+  background: rgba(255, 255, 255, 0.42);
+  border: 1.5px solid #fff;
+  box-shadow: 0 3px 10px rgba(0, 20, 28, 0.4);
+  transform: translate(-50%, -50%);
+  animation: fg-blind-coach-drag 3.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+/* MIRRORED, and it has to be: a pointing hand carries its palm below and right
+   of the fingertip, and these magnets are on the right hand rail, so unmirrored
+   the palm hangs off the edge of the unit. `--hx` puts the fingertip on the
+   magnet's left half so it points at it rather than covering it. */
+.fg-blind-visualiser__coach-hand {
+  position: absolute;
+  left: var(--hx);
+  top: var(--from);
+  width: 32px;
+  height: 39px;
+  margin: -3px 0 0 -15px;
+  /* Its own keyframes: the ghost is centred on the magnet and carries a
+     translate already, the hand is not and must not inherit one. */
+  animation: fg-blind-coach-drag-hand 3.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.fg-blind-visualiser__coach-hand svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: scaleX(-1) rotate(13deg);
+  transform-origin: 14px 3px;
+  filter: drop-shadow(0 3px 6px rgba(0, 20, 28, 0.5));
+}
+
+.fg-blind-visualiser__coach-hand path {
+  fill: #fff;
+  stroke: rgba(4, 20, 26, 0.9);
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+
+/* `--travel` is the distance to the far end of that magnet's own track, in
+   pixels, set by the controller. Animating a transform rather than `top` keeps
+   the whole thing on the compositor. */
+@keyframes fg-blind-coach-drag {
+  0%, 8% {
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  18%, 46% {
+    opacity: 1;
+  }
+
+  52%, 68% {
+    transform: translate(-50%, calc(-50% + var(--travel)));
+    opacity: 1;
+  }
+
+  86%, 100% {
+    transform: translate(-50%, calc(-50% + var(--travel)));
+    opacity: 0;
+  }
+}
+
+@keyframes fg-blind-coach-drag-hand {
+  0%, 8% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  18%, 46% {
+    opacity: 1;
+  }
+
+  52%, 68% {
+    transform: translateY(var(--travel));
+    opacity: 1;
+  }
+
+  86%, 100% {
+    transform: translateY(var(--travel));
+    opacity: 0;
+  }
+}
+
+/* Still, but still saying it. The outline and the hand stay on the magnet and
+   the moving copy is taken away, because a ghost that never moves is just a
+   second magnet in the wrong place. */
 @media (prefers-reduced-motion: reduce) {
   .fg-blind-visualiser__coach,
   .fg-blind-visualiser.is-coached .fg-blind-visualiser__coach {
     transition: none;
   }
 
-  .fg-blind-visualiser__coach-arrows {
+  .fg-blind-visualiser__coach-ghost {
+    display: none;
+  }
+
+  .fg-blind-visualiser__coach-hand {
     animation: none;
+    opacity: 1;
   }
 }
 
