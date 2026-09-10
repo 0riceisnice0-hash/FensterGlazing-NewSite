@@ -14,6 +14,40 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-10 — Integral blinds: the visualiser tells you which magnet is which (ON TEST as `c32ae5d2`, NOT LIVE)
+
+Owner: *"on the integral blinds page, it should come up with a little overlay
+on the interactive blind to show people how to use it (ie bottom slider to
+lift/lower, top to tilt). it should disappear when used."*
+
+- Two labels pinned to the two magnets rather than one panel over the glass,
+  because what needs explaining is which magnet is which, and a label says that
+  by where it is. They ride the same `magnetCentre` the grab targets use, so
+  they follow the magnets through a resize.
+- Dismissed on the first `pointerdown` on either magnet **and** on the first
+  `input` on either off-screen range, so a keyboard user clears it the same way
+  a dragging one does. `aria-hidden` and `pointer-events: none` throughout: the
+  labelled inputs and the hint paragraph already say this in text, and nothing
+  over that stage may swallow a drag meant for the magnet under it.
+- **AN ABSOLUTELY POSITIONED LABEL ANCHORED WITH `left` PLUS `translateX(-100%)`
+  LAYS OUT WRONG, AND IT IS NOT OBVIOUS.** Such a box is shrink to fit, and with
+  only `left` set its available width is the containing block MINUS that left.
+  These sit beside a magnet on the right hand rail, so that was a 75px sliver: a
+  146px pill wrapped to 74px and stood four lines tall. **The transform runs
+  after layout and cannot give the width back.** Anchored on `right` instead.
+- **TWO HARNESS TRAPS COST MORE TIME THAN THE FEATURE DID, AND BOTH LOOKED LIKE
+  BUGS IN THE WORK.** The in-app browser pane does not carry Basic Auth to sub
+  resources, so `test.` loaded its HTML and 401'd on `main.css` and `main.js`:
+  an unstyled stage and no `is-live`, which reads exactly like a broken
+  controller. And **while that pane is hidden the document timeline does not
+  advance**, so a CSS transition sits at `currentTime: 0` and a fade that works
+  looks like a fade that never fires. Headless Chrome against the site, or a
+  static copy served over `127.0.0.1`, has neither problem.
+- Verified at 1280 and 375: labels single line at both, right edges 2-4px off
+  their magnet, vertically centred on it to the pixel, inside the stage at both
+  widths, no document overflow. Before and after screenshots taken from a local
+  copy driven by a synthetic `pointerdown`.
+
 ## 2026-09-09 — Secondary glazing: the page gets written to the people who cannot change their windows (LIVE as `72a46614`)
 
 Owner, on the opening H2: *"A second window, on the inside of the one you have.
