@@ -1492,45 +1492,27 @@ Use:
     terminal ended up behind the site header. Budget for that.
   - The models are **WindowSoftware's IP** (`3d.md` §11) and are local only.
 
-- **TWO SHOWROOM PAGES EXIST AT `/window-showroom/` AND `/door-showroom/`,
-  added 2026-08-24.** They came out of the audit of the 3D experiment: rather
-  than replace the homepage with it, the valuable part — real WindowCAD geometry
-  with real specifications — was moved onto pages where somebody is actually
-  choosing a product. Read
-  `wp-content/themes/fenster/assets/showroom/README.md` before touching
-  anything named `showroom`, and `PRODUCT-VIEWER-BRIEF-2026-08-24.md` for why
-  they are built the way they are.
-  - **The one rule: the 3D viewer is never on the critical path.** The page is
-    complete, indexable and converting as HTML plus a poster image; `three` is
-    imported dynamically only when the visitor presses *View in 3D*. Measured:
-    LCP 828ms on an `<img>`, CLS 0, the page's own assets 139 KB across 10
-    requests, 5,477 crawlable words. The audited 3D page managed 170.
-  - **All nine products' specifications are in the served HTML**, one visible
-    and the rest `hidden`, so a crawler reads the whole range and switching
-    product is a class change rather than a fetch.
-  - **The models were reprocessed, not just compressed.** 9,125 KB to 1,087 KB,
-    draw calls from 2,223 to 51–111, frame time from 57ms to 1.1–2.12ms. The win
-    is the material merge rather than the codec: a WindowCAD export gives every
-    gasket its own material, and merging them leaves exactly one `fenster:frame`
-    material per product — which is what makes the finish switcher one
-    assignment. `npm run models:optimise`, then `npm run models:verify` to
-    confirm every baked animation still moves.
-  - **Eleven of the eighteen range products have a model** (windows 4 of 9,
-    doors 7 of 9). The rest are photography cards in the same grid. Do not close
-    that gap by recolouring one product and relabelling it.
-  - **Two site-wide problems surfaced while measuring, neither caused by this
-    work and neither changed:**
-    - `legend-spritesheet.webp` is **1,996 KB and loads on every page**, 2,118 KB
-      with its companion — about half the homepage's entire payload. Hiding the
-      widget in CSS, which the 3D experiment does, does not stop the download.
-    - `lang="en-US"` in the header on a UK site.
-  - Traps worth knowing before editing: a `renderer.info.memory` leak test must
-    return to the SAME product before comparing, or it reports a phantom leak;
-    `Box3.setFromObject` must not run inside a per-frame camera update; and
-    frame rate must be measured by timing `renderer.render()` directly, because
-    requestAnimationFrame in the headless harness is throttled to 30fps and
-    measures the compositor rather than the scene. All written up in the
-    showroom README.
+- **THE 3D SHOWROOM IS GONE, REMOVED 2026-09-10 ON THE OWNER'S INSTRUCTION.**
+  `/window-showroom/` and `/door-showroom/`, added 2026-08-24, are deleted along
+  with `src/showroom/`, `assets/showroom/`,
+  `template-parts/sections/showroom.php`, `showroom-stage.php` and the link from
+  the product hubs. 48 files, 3.2 MB, 31,930 lines.
+  - **IT HAD BEEN HALF-SHIPPED SINCE 2026-08-24 AND NOBODY COULD SEE IT.** The
+    assets, the two template parts and the hub link were all committed and
+    deployed; `inc/showroom.php`, which registers the two routes, never was. So
+    `/windows/` and `/doors/` invited every visitor to "See every window in 3D"
+    and both links returned **404 on live and on test** for seventeen days.
+    Nothing in `inc/`, `functions.php` or `data/` referenced any of it, which is
+    why no error was ever raised and why deleting it changes no other page.
+  - **The models were WindowSoftware's IP** and leave the repository with this
+    change. The registration file survives only on the dead-end branch
+    `local/showroom-and-tooling-snapshot` (`80cc0d7b`), which must never be
+    merged: its `functions.php` and `package.json` are the stale 2026-09-02
+    versions and would revert Homepage 3.0.
+  - **This is the third built interactive tool cut from this site**, after the
+    3D homepage experiment and the heritage bar-layout planner. WindowCAD is the
+    interactive tool here. Do not rebuild a product viewer without the owner
+    asking for one.
 
 - **`/heritage-windows/` was rebuilt on 2026-08-11 and is live**, as the ninth
   bespoke residential middle. It is written around the steel window it replaces
