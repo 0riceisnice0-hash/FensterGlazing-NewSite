@@ -7479,12 +7479,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     /* The coach labels ride the same centres, so they follow the magnets
        through a resize and sit where the magnet actually is rather than where
-       it was at the size the page first laid out. `left` is the label's RIGHT
-       edge, a little clear of the magnet; the CSS translate does the rest. */
+       it was at the size the page first laid out.
+
+       `right` rather than `left`, because these are absolutely positioned and
+       therefore shrink to fit: with `left` set, the available width is what
+       lies to its RIGHT, which beside a magnet on the right hand rail is a
+       sliver, and the label wraps to a quarter of its width. See the note on
+       `.fg-blind-visualiser__coach-tip`. `width` is the stage box in CSS
+       pixels, set by `layout()` on the call above this one. */
     if (coached) return;
     coachTips.forEach((tip, which) => {
       const m = magnetCentre(L, which);
-      tip.style.left = `${(m.x - m.w / 2 - 11).toFixed(1)}px`;
+      tip.style.right = `${(width - (m.x - m.w / 2 - 11)).toFixed(1)}px`;
       tip.style.top = `${m.y.toFixed(1)}px`;
     });
   };

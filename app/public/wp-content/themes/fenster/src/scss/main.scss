@@ -41337,12 +41337,17 @@ html.fg-blinds-reveal-locked {
   transition: opacity 0.34s ease, visibility 0s linear 0.34s;
 }
 
-/* The label's RIGHT edge is the anchor: the controller sets `left` to a point
-   just clear of the magnet and the translate hangs the pill off it, so a longer
-   word grows away from the magnet instead of over it. */
+/* THE LABEL IS ANCHORED ON `right`, AND IT HAS TO BE. The obvious way to hang a
+   pill off a point is `left` plus `translateX(-100%)`, and it lays out wrong:
+   an absolutely positioned box is shrink to fit, and with only `left` set its
+   available width is the containing block MINUS that left, which here is the
+   sliver between the magnet and the right edge of the glass. The transform runs
+   after layout and cannot give the width back, so a 146px label wrapped to 74px
+   and stood four lines tall. Anchoring on `right` makes the available width the
+   space the label actually occupies, to the left of the magnet. */
 .fg-blind-visualiser__coach-tip {
   position: absolute;
-  transform: translate(-100%, -50%);
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   gap: 0.42rem;
