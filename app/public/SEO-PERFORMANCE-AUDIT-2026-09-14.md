@@ -1,6 +1,6 @@
 # Non-brand search and landing-page rebuild — 14 September 2026
 
-Status: implemented and checked locally on `codex/seo-landing-pages-2026-09`. Not pushed or deployed to test or production. Test-site authentication and remote publication remain pending explicit owner permission after automatic approval review rejected those actions. The local preview is a standalone rendering of theme templates, not a running WordPress site.
+Status: pushed on `codex/seo-landing-pages-2026-09` and deployed to protected test at **`2bc795e0`** after the owner approved publication and test access on 14 September. Production is unchanged. The earlier local preview was a standalone rendering; the server verification below supersedes its release blocker.
 
 ## What the supplied export establishes
 
@@ -62,11 +62,21 @@ These tests render the real PHP templates and built CSS with WordPress functions
 
 All seven price guides were also checked at mobile width: each has one H1, no horizontal overflow and no broken loaded images. The nine final desktop samples have no section taller than 699 pixels with their FAQs closed.
 
+## Protected test verification — completed after owner approval
+
+- Published the feature branch to the existing GitHub repository. Deployed exact theme commit `06007b4f`, then the one-file metadata follow-up `2bc795e0`.
+- Established that the pre-deploy test theme exactly matched `9ed4779e`. Used a Git archive in an isolated temporary directory, leaving the shared server checkout untouched. The initial guarded dry run contained 203 entries, including the new image directory, with zero deletions; the follow-up contained only `inc/generated-pages.php`. Both deployments finished with zero checksum differences against the intended source. Replaced test files were preserved under `/tmp/fenster-seo-test-gpxnZM/`.
+- Flushed test caches. WordPress CLI rendering checks pass for all 573 area pages and seven price guides with zero errors. These now run against the real WordPress installation.
+- Direct authenticated HTTPS checks pass for 16 key pages, including all five deliberate canonical routes, residential and commercial examples, the quote page, a main product page and pricing guides. All return 200 with one H1, one intended production canonical and test-only noindex. Sitemap and robots endpoints return 200. The page sitemap has 727 unique URLs, contains the sampled area routes and excludes the retired double-glazing-prices alias.
+- Fixed an old Milton Keynes description promising a guide price straight away. The key double-glazing, commercial and pricing pages now use relevant product/project social imagery where available. The final responses confirm these changes.
+- The in-app browser blocks direct Basic Auth navigation. Browser QA therefore used a loopback-only, read-only proxy which sent credentials in HTTP headers to the fixed test host. The actual deployed HTML, CSS and JavaScript were inspected. Aylesbury's real reviews render; its mobile menu opens/closes and FAQs expand. Aylesbury, Buckinghamshire commercial glazing, Leighton Buzzard slide-and-fold and sash pricing have no mobile overflow or broken loaded content images. Direct HTTPS checks above are independent of the proxy.
+- No real enquiry was sent. The proxy blocks POST requests. Form delivery and third-party quote completion have not been tested by creating a customer lead, and production cache behaviour/Core Web Vitals have not been measured by this release.
+
 ## Release and measurement
 
 The starting main revision was `9ed4779e`. The documented live release is `e5b312a7`; live is not an ancestor of main, and main contains held-back product/homepage work. Do not deploy main wholesale to production. Follow `LIVECHANGES.md` and cut an isolated release after test verification and owner review.
 
-Next concrete release step: publish the reviewed change to the existing repository on a feature branch and deploy that exact revision to protected test once permission is received. Authenticate test using HTTP authentication headers, never credentials embedded in a URL. Run the WordPress CLI check and inspect actual HTML, response codes, canonicals, asset responses, mobile navigation, quote controls and enquiry handling before any live release.
+The next release step is owner review on protected test, then a separately approved isolated production release. Publishing and test access were approved in this session; do not ask for those permissions again. Use HTTP authentication headers, never credentials embedded in a URL. Production has not been authorised by this test-release approval.
 
 For measurement, export UK Web data excluding Fenster for equal-length periods starting on/after 5 July, with daily chart rows and matching query/page filters. After release, compare at 28 and 56 days; record non-brand local buying clicks and genuine enquiries by source page separately. This is a measurement plan, not an automation that has been scheduled.
 

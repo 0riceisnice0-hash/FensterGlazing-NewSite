@@ -1,20 +1,22 @@
 # Fenster Glazing Handover
 
-## Local work pending release — 14 September 2026
+## SEO work on protected test — 14 September 2026
 
-The non-brand SEO and area-page rebuild is implemented locally; it has not been
-pushed or deployed. Read `SEO-PERFORMANCE-AUDIT-2026-09-14.md` and the newest
-`PROGRESS.md` entry for scope, evidence and the permission blocker. Do not read
-the old test/main table below as this workspace's current revision.
+The non-brand SEO and area-page rebuild is pushed on
+`codex/seo-landing-pages-2026-09` and deployed to protected test at `2bc795e0`,
+following owner approval. Read `SEO-PERFORMANCE-AUDIT-2026-09-14.md` and the newest
+`PROGRESS.md` entry for scope and server verification. Production is unchanged.
+Do not read the old test/main table below as this workspace's current revision.
 
 Residential location pages now use `inc/location-page-data.php` (21 product
 families) and `template-parts/sections/location-service.php`; commercial county
 pages share their scoped `.fg-local` layout. Responsive source mappings live in
 `assets/images/landing/manifest.json`, rebuilt with
 `scripts/build-landing-images.py`. Run `wp eval-file scripts/check-location-pages.php`
-from the theme directory on protected test after deployment. Local stub-based
-validation passed for 573 area pages and seven price guides, but actual WordPress
-responses, reviews, quote loading and enquiry processing still need test checks.
+from the theme directory on protected test after deployment. Real WordPress
+validation now passes for 573 area pages and seven price guides. Sixteen HTTP
+page checks pass, as do sampled browser checks for real reviews, mobile menus,
+FAQs and layouts. No actual enquiry or third-party quote was submitted.
 
 The rebuild preserves existing routes and host gates. Production must continue
 to use the isolated release procedure in `LIVECHANGES.md`; there are unrelated

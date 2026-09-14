@@ -14,7 +14,7 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## 2026-09-14 — Non-brand SEO and area-page rebuild (LOCAL ONLY)
+## 2026-09-14 — Non-brand SEO and area-page rebuild (ON TEST as `2bc795e0`)
 
 The owner's new UK GSC export already excludes Fenster. August averaged 2.26
 clicks/day against June's 1.60 (+41.1%); the monthly chart cannot isolate the
@@ -33,10 +33,18 @@ PHP lint, full build and local rendering checks pass. The route checker covers
 the browser at desktop, tablet and mobile widths. These are standalone template
 checks with WordPress stubs, not test-site or production verification.
 
-Automatic approval review rejected remote publication and use of project-sourced
-test credentials. Explicit permission is pending. No remote push, test deploy or
-production deploy took place. Follow the isolated release runbook: main has
-held-back work and must not replace the live theme wholesale.
+The owner subsequently approved the push and test access. The feature branch
+`codex/seo-landing-pages-2026-09` is published, and protected test serves the exact
+theme at `2bc795e0`, with zero checksum differences. WordPress CLI checks pass
+for all 573 area pages and seven guides. Direct HTTPS checks pass for 16 key
+pages; the page sitemap has 727 unique URLs and the intended routes remain
+present. Test noindex is preserved. Actual deployed markup was also checked in
+the browser through a read-only authenticated proxy, including real reviews,
+mobile navigation and FAQs. No customer enquiry was submitted.
+
+Production is unchanged. Follow the isolated release runbook: main has held-back
+work and must not replace the live theme wholesale. The server's shared Git
+checkout stayed at `9ed4779e`; deployment used an isolated Git archive instead.
 
 ## 2026-09-10 — The 3D showroom is gone, and so are the two dead links it left on live (LIVE as `e5b312a7`)
 
