@@ -258,7 +258,7 @@ function fenster_gsc_seo_overrides(): array
         // listing a reason to be clicked over four older, larger local firms.
         'double-glazing-milton-keynes' => [
             'title_tag' => 'Double Glazing Milton Keynes | See Your Price Online',
-            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Design your windows or doors online and see a guide price straight away, or book a free consultation.',
+            'meta_description' => 'Double glazing in Milton Keynes. Compare uPVC and aluminium windows, doors and replacement glass. Get an online price or book a free home consultation.',
         ],
         // Also the landing page for "replacement windows", "uPVC windows" and
         // "window installer" in Milton Keynes, so the title carries the intent
@@ -2501,7 +2501,14 @@ function fenster_render_generated_seo(): void
     $social_title = (string) ($seo['title_tag'] ?? $page['title'] ?? get_bloginfo('name'));
     $social_description = (string) ($seo['meta_description'] ?? '');
     $default_social_image = FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png';
-    $page_social_image = (string) ($seo['image'] ?? fenster_data('product_media.' . (string) ($page['slug'] ?? '') . '.hero.src', ''));
+    $social_product_slug = (string) ($page['product_slug'] ?? $page['slug'] ?? '');
+    if ($social_product_slug === 'double-glazing-milton-keynes') { $social_product_slug = 'double-glazing'; }
+    $page_social_image = (string) ($seo['image'] ?? fenster_data('product_media.' . $social_product_slug . '.hero.src', ''));
+    if ($page_social_image === '' && function_exists('fenster_commercial_product_pages')) {
+        $commercial_slug = str_starts_with($social_product_slug, 'commercial-glazing-') ? 'commercial-windows-and-doors' : $social_product_slug;
+        $commercial_social_pages = fenster_commercial_product_pages();
+        $page_social_image = (string) ($commercial_social_pages[$commercial_slug]['hero_image'] ?? '');
+    }
     if ($page_social_image !== '' && is_file(fenster_theme_asset_path_from_url($page_social_image))) {
         $default_social_image = fenster_generated_url($page_social_image);
     }
