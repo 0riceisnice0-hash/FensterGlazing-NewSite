@@ -51,6 +51,8 @@
   &__knowledge-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 2rem; }
   &__case-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.5rem; }
   &__case-grid .fg-cs-card { box-shadow: none; }
+  section.fg-local__cases { padding-block: 2rem; }
+  &__case-grid .fg-cs-card__media { height: clamp(180px, 17vw, 230px); aspect-ratio: auto; }
   &__faq-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 4rem; }
   &__faq details { border-top: 1px solid rgba(0,45,58,.25); }
   &__faq details:last-child { border-bottom: 1px solid rgba(0,45,58,.25); }
@@ -62,6 +64,16 @@
   &__enquiry-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 4rem; align-items: start; }
   &__form { padding: 1.6rem; background: rgba(255,255,255,.72); border: 1px solid rgba(0,45,58,.16); border-radius: 8px; }
   &__form .fg-form { margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+  &__form .fg-enquiry-form__compact-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .85rem; }
+  &__form .fg-enquiry-form__compact-wide, &__form .fg-enquiry-form__footer { grid-column: 1 / -1; }
+  &__form .fg-enquiry-form__compact-grid textarea { min-height: 92px; height: 92px; }
+  &__form .fg-enquiry-form__compact-grid label { min-width: 0; }
+  &__form .fg-form label, &__form .fg-form label span, &__form .fg-form small { color: var(--color-ink); }
+  &__form .fg-form label em { color: #46616a; }
+  &__form .fg-form input:not([type="checkbox"]):not([type="hidden"]), &__form .fg-form textarea { border: 1px solid #a8babc; background: #fff; }
+  &__form .fg-form input:not([type="checkbox"]):not([type="hidden"]) { min-height: 44px; padding-block: 8px; }
+  &__form .fg-form .fg-enquiry-form__consent { background: #eaf1ef; }
+  &--commercial .fg-local__range-grid p { font-size: .94rem; line-height: 1.55; }
   &__links .fg-link-cards { margin-top: 1rem; }
   &__process .section-heading { max-width: 760px; }
 }
@@ -74,7 +86,7 @@
     &__reassurance { gap: 1rem; }
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   .fg-local {
     .container { width: calc(100% - 2rem); }
     section { padding-block: 2rem; }
@@ -98,6 +110,7 @@
     &__visit-details { border-left: 0; padding-left: 0; }
     &__knowledge-grid, &__case-grid { grid-template-columns: minmax(0,1fr); gap: 1rem; }
     &__form { padding: 1rem; }
+    &__form .fg-enquiry-form__compact-grid { grid-template-columns: minmax(0,1fr); }
     &__faq-grid { gap: .6rem; }
   }
 }

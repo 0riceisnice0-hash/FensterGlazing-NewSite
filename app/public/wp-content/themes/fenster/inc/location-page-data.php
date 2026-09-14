@@ -13,8 +13,8 @@ function fenster_location_editorial(): array
             'lead' => 'Replacement windows, new doors or just the glass. We help you work out what your home needs, price the choices and fit the finished job with our own team.',
             'heading' => 'Start with what you want to change.',
             'decisions' => [
-                ['New windows', 'Choose how each room opens and ventilates first. Casement, flush and sliding sash windows offer different frame lines and opening styles; uPVC and aluminium give you different finishes.', 'windows'],
-                ['New doors', 'A front entrance needs a different layout from a wide garden opening. Compare composite entrance doors, paired French doors, bifolds and sliding doors around the space you use.', 'doors'],
+                ['New windows', 'Choose how each room opens and ventilates first. Casement, flush and sliding sash windows offer different frame lines and opening styles; uPVC and aluminium give you different finishes.', 'windows-milton-keynes'],
+                ['New doors', 'A front entrance needs a different layout from a wide garden opening. Compare composite entrance doors, paired French doors, bifolds and sliding doors around the space you use.', 'doors-milton-keynes'],
                 ['Replacement glass', 'If your frames are sound and the glass has misted between the panes, we can assess the sealed units on their own. Send a photograph of the whole window and a close-up of the glass.', 'double-glazing-replacement'],
             ],
             'question' => 'Can you replace the glass and keep my existing frames?',
@@ -26,7 +26,7 @@ function fenster_location_editorial(): array
             'heading' => 'Choose the opening before the finish.',
             'decisions' => [
                 ['Room-by-room openings', 'A fixed pane keeps the view open. A side or top opener provides ventilation. We check handle reach, outside clearance and the layout of adjoining panes.', 'casement-windows'],
-                ['Colour and handles', 'Compare white and foiled finishes with the S2 Signature handle range. Swatches come to your consultation so you can see the finish against your own brickwork.', 'upvc-colours'],
+                ['Colour and handles', 'Compare white and foiled finishes with the S2 Signature handle range. Swatches come to your consultation so you can see the finish against your own brickwork.', 'colour-options'],
                 ['Glass and privacy', 'Choose clear glass for the view or obscured glass where you need privacy. We check ventilation and the glazing specification as part of your window order.', 'obscured-glass'],
             ],
             'question' => 'Can I mix fixed panes and opening windows?',
@@ -38,8 +38,8 @@ function fenster_location_editorial(): array
             'heading' => 'The flat frame line is the starting point.',
             'decisions' => [
                 ['Flush appearance', 'The sash closes level with the outside frame. Look at the whole elevation when choosing where openers and fixed panes sit.', 'flush-casement-windows'],
-                ['Colour and hardware', 'White, coloured and timber-effect foils change the appearance of the frame. Compare them with handle finishes using actual samples.', 'upvc-colours'],
-                ['Glazing bars', 'Bars divide the glass visually. Their position should follow the proportions of your windows and any adjoining windows you are keeping.', 'windows'],
+                ['Colour and hardware', 'White, coloured and timber-effect foils change the appearance of the frame. Compare them with handle finishes using actual samples.', 'colour-options'],
+                ['Glazing bars', 'Bars divide the glass visually. Their position should follow the proportions of your windows and any adjoining windows you are keeping.', 'windows-milton-keynes'],
             ],
             'question' => 'What is the difference between flush and standard casements?',
             'answer' => 'A flush sash closes level with the outer frame on the outside. A standard casement sash projects from it. Both open on hinges; the choice changes the frame lines you see from the street.',
@@ -79,7 +79,7 @@ function fenster_location_editorial(): array
             ],
             'question' => 'Will a tilt and turn window open into the room?',
             'answer' => 'Yes. Both the tilt and turn modes open inward. We check the sash swing against curtains, blinds, taps and furniture at survey so you can use both modes.',
-            'related' => ['casement-windows', 'flush-casement-windows', 'windows'],
+            'related' => ['casement-windows', 'flush-casement-windows', 'windows-milton-keynes'],
         ],
         'bow-bay-windows' => [
             'lead' => 'Replacement bow and bay windows, specified around the shape of the existing opening. Compare the frame systems, pane layout and opening positions as one complete elevation.',
@@ -87,7 +87,7 @@ function fenster_location_editorial(): array
             'decisions' => [
                 ['Shape and projection', 'The angles, projection and support are part of the survey. Photographs of the full bay, inside and outside, help us understand the job from the start.', 'bow-bay-windows'],
                 ['Window system', 'Bow and bay describes the arrangement. The main configuration page shows the compatible window systems and their different frame details.', 'bow-bay-windows'],
-                ['Openers and finishes', 'Decide which panes need to open and how you will reach the handles. We check the cill and internal finishing alongside the frame colour and glass.', 'windows'],
+                ['Openers and finishes', 'Decide which panes need to open and how you will reach the handles. We check the cill and internal finishing alongside the frame colour and glass.', 'windows-milton-keynes'],
             ],
             'question' => 'Can you keep the shape of my existing bay?',
             'answer' => 'We survey the existing angles, projection, support and opening sizes before manufacture. Send photographs of the whole bay from inside and outside so we can discuss the replacement layout and finishing details.',
@@ -98,7 +98,7 @@ function fenster_location_editorial(): array
             'heading' => 'Frame lines, opening positions and colour.',
             'decisions' => [
                 ['Pane layout', 'Fixed panes and opening casements have different frame lines. Compare the complete window arrangement rather than a single profile measurement.', 'aluminium-windows'],
-                ['Powder-coated finish', 'Choose the aluminium colour using physical samples. Think about the outside elevation and how the frame looks from inside the room.', 'aluminium-colours'],
+                ['Powder-coated finish', 'Choose the aluminium colour using physical samples. Think about the outside elevation and how the frame looks from inside the room.', 'colour-options'],
                 ['Glass specification', 'Tell us which rooms need privacy and how much sun reaches the glass. We check the glazing, ventilation and opening sizes before manufacture.', 'obscured-glass'],
             ],
             'question' => 'Can aluminium windows match new aluminium doors?',
@@ -110,7 +110,7 @@ function fenster_location_editorial(): array
             'heading' => 'A flush sash changes the outside frame line.',
             'decisions' => [
                 ['Flush detail', 'Look at the whole window, including its opening sashes. Fixed panes and openers have different sightlines, so one minimum figure does not describe every layout.', 'aluminium-flush-windows'],
-                ['Colour choice', 'Use powder-coat samples to compare the frame with your brick, stone or render. We can consider adjoining doors in the same specification.', 'aluminium-colours'],
+                ['Colour choice', 'Use powder-coat samples to compare the frame with your brick, stone or render. We can consider adjoining doors in the same specification.', 'colour-options'],
                 ['Survey and finishing', 'We check how the frame sits in the reveal, the opening clearances and the cill detail before anything is made.', 'book-a-consultation'],
             ],
             'question' => 'Do all panes have the same sightline?',
@@ -147,7 +147,7 @@ function fenster_location_editorial(): array
             'decisions' => [
                 ['Independent panels', 'The panels slide and turn individually rather than folding as a linked concertina. Try the movement at our Milton Keynes showroom.', 'slide-fold-doors'],
                 ['Parking space', 'We check where the panels will gather and how the open doors relate to the room and patio. Bring a sketch or photograph of the full opening.', 'slide-fold-doors'],
-                ['Finish and floor levels', 'Choose the powder-coated finish while we review the threshold, floor levels and glass. The technical survey confirms the manufacture dimensions.', 'aluminium-colours'],
+                ['Finish and floor levels', 'Choose the powder-coated finish while we review the threshold, floor levels and glass. The technical survey confirms the manufacture dimensions.', 'colour-options'],
             ],
             'question' => 'How do slide and fold doors differ from bifolds?',
             'answer' => 'Slide and fold panels move independently along the track and turn at the end. Bifold panels are linked together and fold as a concertina. The showroom has a slide and fold display so you can feel the movement before deciding.',
@@ -159,7 +159,7 @@ function fenster_location_editorial(): array
             'decisions' => [
                 ['Tracks and panels', 'A sliding panel moves behind another pane. The number of tracks and moving panels determines how much of the overall width opens.', 'aluminium-sliding-doors'],
                 ['Lift and slide operation', 'The handle lifts the moving sash for sliding and lowers it into position when closed. Try the operation with a full-size sample.', 'aluminium-sliding-doors'],
-                ['Threshold and finish', 'We survey the floor levels, drainage and access for installation. Colour samples help you compare the aluminium with the rest of the extension.', 'aluminium-colours'],
+                ['Threshold and finish', 'We survey the floor levels, drainage and access for installation. Colour samples help you compare the aluminium with the rest of the extension.', 'colour-options'],
             ],
             'question' => 'How much of a sliding door opening will be clear?',
             'answer' => 'It depends on the number of panels, the track arrangement and which panels move. Sliding panes overlap when open. We can compare configurations against your approximate opening width before technical survey.',
@@ -171,7 +171,7 @@ function fenster_location_editorial(): array
             'decisions' => [
                 ['Panel and glazing', 'Choose how much of the door is glazed and whether you want adjoining side panels. We can review privacy glass for overlooked entrances.', 'aluminium-doors'],
                 ['Hardware', 'Compare handles, locking and hinge details on the main product page. The final hardware specification belongs with the door you order.', 'aluminium-doors'],
-                ['Access and finish', 'Opening direction, clear width and threshold height affect daily use. We check them alongside the frame colour and the surrounding opening.', 'aluminium-colours'],
+                ['Access and finish', 'Opening direction, clear width and threshold height affect daily use. We check them alongside the frame colour and the surrounding opening.', 'colour-options'],
             ],
             'question' => 'Can you include glazed panels beside the door?',
             'answer' => 'We can review a door with adjoining glazing as one entrance. Send a photograph of the whole opening and approximate dimensions so we can discuss the layout before survey.',
@@ -183,7 +183,7 @@ function fenster_location_editorial(): array
             'decisions' => [
                 ['Single or paired doors', 'Choose the opening around the space and how often you pass through it. The main page shows the available door arrangements.', 'heritage-aluminium-doors'],
                 ['Bars and side panels', 'Align the bars across the doors and adjoining glass. We review the proportions using the full opening dimensions.', 'heritage-aluminium-doors'],
-                ['Threshold and colour', 'Opening clearances and floor levels are checked at survey. Compare powder-coat samples and handles before the order is made.', 'aluminium-colours'],
+                ['Threshold and colour', 'Opening clearances and floor levels are checked at survey. Compare powder-coat samples and handles before the order is made.', 'colour-options'],
             ],
             'question' => 'Can the glazing bars line up across doors and side panels?',
             'answer' => 'We review the bar layout across the full opening when preparing the specification. The door arrangement, frame dimensions and any adjoining screens are considered together.',
@@ -207,7 +207,7 @@ function fenster_location_editorial(): array
             'decisions' => [
                 ['Glass and panels', 'Choose the balance of solid panel and glazing, then decide where obscured glass would be useful. Photographs help us match the existing opening.', 'upvc-doors'],
                 ['Hardware and security', 'Compare handles and locking choices. Laminated glass and a three-star cylinder are available security upgrades to discuss with the door specification.', 'upvc-doors'],
-                ['Finish and threshold', 'Use physical colour samples to compare the door with adjoining windows. We check floor levels and opening clearances before manufacture.', 'upvc-colours'],
+                ['Finish and threshold', 'Use physical colour samples to compare the door with adjoining windows. We check floor levels and opening clearances before manufacture.', 'colour-options'],
             ],
             'question' => 'Can a new uPVC door match my existing windows?',
             'answer' => 'We can compare the available colours and foils with your existing frames using samples. Send photographs of the door and nearby windows when you enquire.',
@@ -265,6 +265,17 @@ function fenster_location_editorial(): array
 }
 
 /** Curated media only, deduplicated after URL normalisation. */
+function fenster_location_photo_key(string $src): string
+{
+    $path = fenster_theme_asset_path_from_url($src);
+    // The product WebP and the case-study JPEG are exports of the same photo.
+    // Reserve the scene, not just a filename, when the local case study renders.
+    if (in_array(basename($path), ['sf-lb-closed-1200w.webp', 'cs-leighton-buzzard-slide-fold-closed.jpg'], true)) {
+        return 'leighton-buzzard-slide-fold-closed';
+    }
+    return $path;
+}
+
 function fenster_location_images(string $product): array
 {
     $media = (array) fenster_data('product_media.' . $product, []);
@@ -304,7 +315,7 @@ function fenster_location_image_attrs(array $image, array $attrs = []): string
     }
     if ($sources !== []) {
         $attrs['srcset'] = implode(', ', $sources);
-        $attrs['sizes'] = $attrs['sizes'] ?? '(max-width: 760px) calc(100vw - 32px), (max-width: 1200px) 50vw, 640px';
+        $attrs['sizes'] = $attrs['sizes'] ?? '(max-width: 860px) calc(100vw - 32px), (max-width: 1200px) 50vw, 640px';
     }
     return fenster_image_attr_string($source, array_merge(['alt' => (string) ($image['alt'] ?? ''), 'loading' => 'lazy'], $attrs));
 }

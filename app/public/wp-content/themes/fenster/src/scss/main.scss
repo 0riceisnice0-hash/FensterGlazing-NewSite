@@ -29942,6 +29942,23 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
+.fg-price-guide__glance--photo {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.fg-price-guide__glance--photo > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 1.2rem;
+}
+
 .fg-price-guide__glance ul {
   display: grid;
   margin: 0;

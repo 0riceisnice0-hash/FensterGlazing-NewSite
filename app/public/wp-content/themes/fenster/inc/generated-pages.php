@@ -705,10 +705,16 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
         // a generic local-supplier claim. Keep its snippet aligned with that page.
         $source['seo']['title_tag'] = $products[$product_slug] . ' ' . $town_label
             . ($product_slug === 'double-glazing' ? ' | Windows & Doors Fitted' : ' | Supply & Fit');
-        $source['seo']['meta_description'] = fenster_trim_meta_description(sprintf(
-            '%s in %s. Compare %s. Supplied and fitted by our own team. Book a free consultation.',
+        $location_description = sprintf(
+            '%s in %s. Compare %s.',
             $products[$product_slug], $town_label, (string) $product_profile['decision']
-        ));
+        );
+        foreach ([' Supplied and fitted by our own team.', ' Book a free consultation.'] as $sentence) {
+            if (strlen($location_description . $sentence) <= 160) {
+                $location_description .= $sentence;
+            }
+        }
+        $source['seo']['meta_description'] = $location_description;
         $source['seo']['image'] = (string) fenster_data('product_media.' . $product_slug . '.hero.src', '');
         unset($source['seo']['robots']);
 

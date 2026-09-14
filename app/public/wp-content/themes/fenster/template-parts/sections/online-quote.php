@@ -306,7 +306,7 @@ $faqs = [
             foreach (fenster_price_guide_pages() as $guide_slug => $guide) {
                 $pricing_links[] = ['text' => $guide['title'], 'url' => home_url('/' . $guide_slug . '/')];
             }
-            get_template_part('template-parts/components/link-cards', null, ['links' => $pricing_links]);
+            get_template_part('template-parts/components/link-cards', null, ['links' => $pricing_links, 'show_images' => false]);
             ?>
         </div></section>
     <?php endif; ?>

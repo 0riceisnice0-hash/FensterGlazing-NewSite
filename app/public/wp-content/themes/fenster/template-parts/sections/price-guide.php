@@ -37,6 +37,7 @@ $checked = array_values(array_filter(
     $examples,
     static fn (array $example): bool => str_starts_with((string) ($example['price'] ?? ''), '£')
 ));
+$guide_image = $checked === [] ? (fenster_location_images((string) ($page['product_slug'] ?? ''))[0] ?? null) : null;
 
 // Pages without a checked example must not claim that they publish real prices.
 // The tool collects the customer's details before displaying the quote.
@@ -68,7 +69,7 @@ if ($checked !== []) {
                     <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </div>
             </div>
-            <aside class="fg-price-guide__glance" aria-label="<?php esc_attr_e('Checked fitted prices at a glance', 'fenster'); ?>">
+            <aside class="fg-price-guide__glance<?php echo $guide_image ? ' fg-price-guide__glance--photo' : ''; ?>" aria-label="<?php echo esc_attr($checked !== [] ? 'Checked fitted prices at a glance' : 'How to get your price'); ?>">
                 <?php if ($checked !== []) : ?>
                     <strong><?php esc_html_e('Checked fitted prices', 'fenster'); ?></strong>
                     <ul>
@@ -81,8 +82,9 @@ if ($checked !== []) {
                     </ul>
                     <p><?php esc_html_e('Fitted prices including VAT, checked July 2026. Full details below.', 'fenster'); ?></p>
                 <?php else : ?>
+                    <?php if ($guide_image) : ?><img <?php echo fenster_location_image_attrs($guide_image, ['loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 1024px) 90vw, 400px']); ?>><?php endif; ?>
                     <strong><?php esc_html_e('Your price in minutes', 'fenster'); ?></strong>
-                    <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours and glass in the quote tool below and it prices as you go, from the same list our office quotes from.', $product)); ?></p>
+                    <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours and glass, then enter your contact details to see the price. Our office uses the same software and price list.', $product)); ?></p>
                 <?php endif; ?>
             </aside>
         </div>
@@ -138,7 +140,7 @@ if ($checked !== []) {
             <div class="fg-price-guide__factors-copy">
                 <p class="eyebrow"><?php esc_html_e('What changes the price', 'fenster'); ?></p>
                 <h2><?php esc_html_e('The choices that move the number.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('No two openings are quite the same, which is why one-size price lists are usually fiction. These are the choices that genuinely change the fitted price, and you can test every one of them in the quote tool before anyone visits.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Opening sizes, product choices and fitting conditions affect the cost. Use the online tool to specify the product, then discuss access, the existing frames and any building work with us when confirming the job.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="#fenster-instant-pricing"><?php esc_html_e('Try it on your job', 'fenster'); ?></a>
                 </div>
@@ -175,10 +177,10 @@ if ($checked !== []) {
             <div>
                 <p class="eyebrow"><?php esc_html_e('Ready for your number?', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Price your exact job, right here.', 'fenster'); ?></h2>
-                <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours, glass and hardware, and watch the price build as you go. It is the same software behind every checked example on this page.', $product)); ?></p>
+                <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours, glass and hardware, then enter your contact details to see the fitted price. Approximate measurements are enough to get started.', $product)); ?></p>
                 <ul class="fg-home-quote-station__points">
                     <li><?php esc_html_e('A real figure in about ten minutes', 'fenster'); ?></li>
-                    <li><?php esc_html_e('See how each choice moves the price', 'fenster'); ?></li>
+                    <li><?php esc_html_e('A quote for the specification you choose', 'fenster'); ?></li>
                     <li><?php esc_html_e('We check the final details at survey', 'fenster'); ?></li>
                 </ul>
                 <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
