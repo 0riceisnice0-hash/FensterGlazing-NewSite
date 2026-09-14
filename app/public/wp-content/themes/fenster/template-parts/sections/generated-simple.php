@@ -24,6 +24,7 @@ $phone = (string) ($brand['phone'] ?? '01908 429200');
 $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $phone);
 $cards = [];
+$used_images = [fenster_generated_url($hero_media_src) => true];
 $is_careers = $slug === 'careers';
 
 foreach ($sections as $index => $section) {
@@ -34,10 +35,14 @@ foreach ($sections as $index => $section) {
         continue;
     }
 
+    $card_image = (string) ($images[$index]['src'] ?? '');
+    $card_image_key = fenster_generated_url($card_image);
+    if (isset($used_images[$card_image_key])) { $card_image = ''; }
+    if ($card_image !== '') { $used_images[$card_image_key] = true; }
     $cards[] = [
         'heading' => $heading,
         'body' => $body,
-        'image' => $images[$index]['src'] ?? ($images[$index + 1]['src'] ?? ''),
+        'image' => $card_image,
         'alt' => $images[$index]['alt'] ?? $heading,
     ];
 }
