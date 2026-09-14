@@ -38,20 +38,16 @@ $checked = array_values(array_filter(
     static fn (array $example): bool => str_starts_with((string) ($example['price'] ?? ''), '£')
 ));
 
+// Pages without a checked example must not claim that they publish real prices.
+// The tool collects the customer's details before displaying the quote.
 $faqs = [
-    [
-        'question' => 'Are the prices on this page real?',
-        'answer' => 'Yes. Each checked example is a real fitted price from our pricing software for the exact specification shown, including VAT. The same software prices your job in the quote tool.',
-    ],
-    [
-        'question' => 'Do the prices include VAT and fitting?',
-        'answer' => 'Yes. Every checked example is a fitted price including VAT. The only thing that can move it is the survey, once we have measured your opening properly, and we tell you before you order.',
-    ],
-    [
-        'question' => 'Why can the same product cost different amounts?',
-        'answer' => 'Size, colour, glass, vents, handles, thresholds and access all change the fitted price. The quote tool lets you test each choice and watch the number move before anyone visits your home.',
-    ],
+    ['question' => 'How do I get a price for my own specification?', 'answer' => 'Choose the product, sizes, finish and glass in our online quote tool. Add your contact and property details to receive your price. A free consultation uses the same software and price list.'],
+    ['question' => 'What changes the fitted price?', 'answer' => 'The opening sizes, frame material, colour, glass, hardware and installation requirements affect the quote. Tell us about side panels, thresholds and access when discussing the job.'],
+    ['question' => 'When are the final sizes checked?', 'answer' => 'Once you decide to go ahead, a technical survey confirms the dimensions and fitting details before manufacture. Approximate sizes are enough to start a quote.'],
 ];
+if ($checked !== []) {
+    array_unshift($faqs, ['question' => 'What do the example prices include?', 'answer' => 'The examples shown are fitted prices including VAT, checked in July 2026 for the exact specifications listed. Use the quote tool or book a consultation for a current price for your own job.']);
+}
 // FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
 // Seven separate copies of this block existed across the theme until
 // 2026-08-15, which is seven places for the shape to drift and five that

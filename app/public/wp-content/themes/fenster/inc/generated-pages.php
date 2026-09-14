@@ -701,6 +701,15 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
             $source['seo']['meta_description'] = $gsc_seo_overrides[$slug]['meta_description'];
         }
         $source['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
+        // The landing page now answers a product decision, rather than repeating
+        // a generic local-supplier claim. Keep its snippet aligned with that page.
+        $source['seo']['title_tag'] = $products[$product_slug] . ' ' . $town_label
+            . ($product_slug === 'double-glazing' ? ' | Windows & Doors Fitted' : ' | Supply & Fit');
+        $source['seo']['meta_description'] = fenster_trim_meta_description(sprintf(
+            '%s in %s. Compare %s. Supplied and fitted by our own team. Book a free consultation.',
+            $products[$product_slug], $town_label, (string) $product_profile['decision']
+        ));
+        $source['seo']['image'] = (string) fenster_data('product_media.' . $product_slug . '.hero.src', '');
         unset($source['seo']['robots']);
 
         return $source;
@@ -2488,6 +2497,10 @@ function fenster_render_generated_seo(): void
     $social_title = (string) ($seo['title_tag'] ?? $page['title'] ?? get_bloginfo('name'));
     $social_description = (string) ($seo['meta_description'] ?? '');
     $default_social_image = FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png';
+    $page_social_image = (string) ($seo['image'] ?? fenster_data('product_media.' . (string) ($page['slug'] ?? '') . '.hero.src', ''));
+    if ($page_social_image !== '' && is_file(fenster_theme_asset_path_from_url($page_social_image))) {
+        $default_social_image = fenster_generated_url($page_social_image);
+    }
     $is_bad_seo_content = static function (string $content): bool {
         $trimmed = trim($content);
 

@@ -163,7 +163,15 @@ foreach ($sections as $section) {
     ];
 }
 
-$article_images = array_values(array_filter($images, static fn ($image): bool => is_array($image) && ! empty($image['src'])));
+$article_images = [];
+foreach ($images as $image) {
+    if (! is_array($image) || empty($image['src'])) { continue; }
+    $image_url = fenster_generated_url((string) $image['src']);
+    $image_path = fenster_theme_asset_path_from_url($image_url);
+    if ($image_path !== '' && ! is_file($image_path)) { continue; }
+    $article_images[$image_path !== '' ? $image_path : $image_url] = $image;
+}
+$article_images = array_values($article_images);
 $hero_image = $article_images[0] ?? null;
 $inline_images = array_slice($article_images, 1, 3);
 $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inline_images) + 1)));

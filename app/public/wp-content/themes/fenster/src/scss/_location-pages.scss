@@ -1,0 +1,103 @@
+// Town landing pages share the site's canvas and typography. No legacy card stack.
+.fg-local {
+  color: var(--color-ink);
+  .container { width: min(100% - 3rem, 1240px); }
+  section { padding-block: 3rem; scroll-margin-top: 90px; }
+  h1 { font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max)); line-height: 1.06; max-width: 17ch; margin: .6rem 0 1.3rem; }
+  h2 { font-size: clamp(1.55rem, 2.3vw, 2.15rem); line-height: 1.15; margin: .4rem 0 1.2rem; max-width: 27ch; }
+  h3 { font-size: 1.2rem; line-height: 1.25; margin: 0 0 .5rem; }
+  p { margin: 0 0 1rem; }
+  figure { margin: 0; min-width: 0; }
+  figcaption { font-size: .8rem; line-height: 1.4; padding-block: .7rem; color: #46616a; }
+  img { display: block; max-width: 100%; }
+  a { text-underline-offset: .2em; }
+  .eyebrow { color: #287c50; font-size: .78rem; margin-bottom: .65rem; }
+  .button { min-height: 46px; font-size: .94rem; }
+  .button-row { gap: .6rem; }
+  .button-row .button + .button { background: var(--color-steel); color: #fff; }
+  :focus-visible { outline: 3px solid #237348; outline-offset: 4px; }
+  &__hero { padding-top: 2.2rem !important; }
+  &__hero-grid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+  &__crumbs { display: flex; flex-wrap: wrap; gap: .65rem; font-size: .78rem; margin-bottom: 2rem; color: #49636a; }
+  &__lead { font-size: 1.1rem; line-height: 1.65; max-width: 48ch; }
+  &__hero-media img { width: 100%; height: clamp(320px, 34vw, 450px); object-fit: cover; border-radius: 3px; }
+  &__phone { display: inline-flex; margin-top: 1.1rem; font-size: .94rem; font-weight: 700; }
+  &__service-note { font-size: .8rem; margin-top: .75rem !important; color: #46616a; }
+  &__reassurance { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid rgba(0,45,58,.2); padding-block: 1.3rem; gap: 1.8rem; }
+  &__reassurance a { text-decoration: none; }
+  &__reassurance strong { display: block; font-size: 1rem; }
+  &__reassurance span { display: block; margin-top: .2rem; font-size: .83rem; line-height: 1.45; color: #46616a; }
+  &__choice-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+  &__choice-grid--text { grid-template-columns: 1fr; }
+  &__feature img { width: 100%; height: 510px; object-fit: cover; border-radius: 3px; }
+  &__decisions > div { border-top: 1px solid rgba(0,45,58,.18); padding: 1rem 0 .6rem; }
+  &__decisions p { font-size: .97rem; line-height: 1.55; margin-bottom: .4rem; }
+  &__decisions a { display: inline-block; min-height: 28px; font-size: .87rem; font-weight: 700; }
+  &__section-head { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; margin-bottom: 1.5rem; }
+  &__section-head h2 { margin-bottom: .3rem; }
+  &__section-head > a { flex-shrink: 0; padding: .6rem 0; }
+  &__range-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.2rem; }
+  &__range-grid > a { text-decoration: none; }
+  &__range-grid img { width: 100%; aspect-ratio: 4/3; height: auto; object-fit: cover; margin-bottom: .9rem; border-radius: 3px; }
+  &__range-grid h3 { font-size: 1.1rem; }
+  &__visit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); border-block: 1px solid rgba(0,45,58,.2); padding-block: 2.6rem; }
+  &__visit-grid p { max-width: 51ch; }
+  &__visit-details { padding-left: 2rem; border-left: 1px solid rgba(0,45,58,.2); }
+  &__visit-details ul { padding-left: 1.15rem; margin: 0 0 1.4rem; }
+  &__visit-details li { padding-bottom: .35rem; }
+  &__address { font-size: .9rem; }
+  &__address > span { font-weight: 700; }
+  &__address p { margin: .25rem 0 .4rem; }
+  &__knowledge-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 2rem; }
+  &__case-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.5rem; }
+  &__case-grid .fg-cs-card { box-shadow: none; }
+  &__faq-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 4rem; }
+  &__faq details { border-top: 1px solid rgba(0,45,58,.25); }
+  &__faq details:last-child { border-bottom: 1px solid rgba(0,45,58,.25); }
+  &__faq summary { padding: 1.15rem 2rem 1.15rem 0; cursor: pointer; font-size: 1rem; font-weight: 700; list-style: none; position: relative; }
+  &__faq summary::-webkit-details-marker { display: none; }
+  &__faq summary::after { content: '+'; position: absolute; right: .3rem; top: 1rem; font-size: 1.35rem; }
+  &__faq details[open] summary::after { content: '−'; }
+  &__faq details p { padding-right: 1rem; font-size: .97rem; }
+  &__enquiry-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 4rem; align-items: start; }
+  &__form { padding: 1.6rem; background: rgba(255,255,255,.72); border: 1px solid rgba(0,45,58,.16); border-radius: 8px; }
+  &__form .fg-form { margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+  &__links .fg-link-cards { margin-top: 1rem; }
+  &__process .section-heading { max-width: 760px; }
+}
+@media (max-width: 1024px) {
+  .fg-local {
+    &__hero-grid, &__choice-grid { gap: 2rem; }
+    &__hero-media img { height: 380px; }
+    &__feature img { height: 500px; }
+    &__faq-grid, &__enquiry-grid { gap: 2rem; }
+    &__reassurance { gap: 1rem; }
+  }
+}
+@media (max-width: 760px) {
+  .fg-local {
+    .container { width: calc(100% - 2rem); }
+    section { padding-block: 2rem; }
+    &__hero { padding-top: 1.4rem !important; }
+    &__hero-grid, &__choice-grid, &__visit-grid, &__faq-grid, &__enquiry-grid { grid-template-columns: minmax(0,1fr); gap: 1.5rem; }
+    h1 { font-size: clamp(2.1rem, 8vw, 2.7rem); max-width: 19ch; }
+    h2 { font-size: 1.65rem; }
+    &__crumbs { margin-bottom: 1.4rem; }
+    &__lead { font-size: 1rem; }
+    .button-row .button { width: auto; flex: 1 1 160px; }
+    &__hero-media img { height: auto; aspect-ratio: 4/3; }
+    &__hero-media figcaption { padding-bottom: 0; }
+    &__reassurance { grid-template-columns: repeat(2,minmax(0,1fr)); padding-block: 1.2rem; gap: 1.2rem; }
+    &__reassurance strong { font-size: .94rem; }
+    &__choice-grid > .fg-local__feature { order: 2; }
+    &__feature img { height: auto; aspect-ratio: 4/3; }
+    &__section-head { align-items: start; flex-direction: column; gap: .4rem; }
+    &__range-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.3rem 1rem; }
+    &__range-grid h3 { font-size: 1rem; }
+    &__visit-grid { padding-block: 1.5rem; }
+    &__visit-details { border-left: 0; padding-left: 0; }
+    &__knowledge-grid, &__case-grid { grid-template-columns: minmax(0,1fr); gap: 1rem; }
+    &__form { padding: 1rem; }
+    &__faq-grid { gap: .6rem; }
+  }
+}

@@ -322,4 +322,17 @@ $faqs = [
         ]);
         ?>
     <?php endif; ?>
+    <?php if (fenster_price_guides_enabled()) : ?>
+        <section class="fg-oq-price-guides fg-links-band"><div class="container">
+            <p class="eyebrow">Before you price the job</p><h2>See what changes the fitted price.</h2>
+            <p>Read the product guides for specification choices and checked examples where available.</p>
+            <?php
+            $pricing_links = [];
+            foreach (fenster_price_guide_pages() as $guide_slug => $guide) {
+                $pricing_links[] = ['text' => $guide['title'], 'url' => home_url('/' . $guide_slug . '/')];
+            }
+            get_template_part('template-parts/components/link-cards', null, ['links' => $pricing_links]);
+            ?>
+        </div></section>
+    <?php endif; ?>
 </article>
