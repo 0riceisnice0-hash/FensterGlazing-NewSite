@@ -19,7 +19,7 @@ $args = wp_parse_args($args ?? [], [
     'trust_items' => [],
     'limit' => 7,
     'prioritise_context' => '',
-    'title' => 'What Milton Keynes homeowners say',
+    'heading_override' => 'What Milton Keynes homeowners say',
 ]);
 
 $summary = fenster_review_summary();
@@ -66,7 +66,7 @@ $render_stars = static function (float $value): string {
         <header class="fg-review-showcase__summary">
             <div class="fg-review-showcase__intro">
                 <span class="fg-review-showcase__badge"><?php esc_html_e('Google and Trustpilot', 'fenster'); ?></span>
-                <h2><?php echo esc_html((string) $args['title']); ?></h2>
+                <h2><?php echo esc_html((string) $args['heading_override']); ?></h2>
                 <p><?php esc_html_e('Real reviews from real installations. Every one is public, so you can go and check them yourself.', 'fenster'); ?></p>
             </div>
 

@@ -1093,5 +1093,235 @@
         "bytes": 406626
       }
     ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-mk-composite-door-card.jpg",
+    "outputs": [
+      {
+        "file": "ce1db4d04d2f-480w.webp",
+        "width": 480,
+        "bytes": 11670
+      },
+      {
+        "file": "ce1db4d04d2f-960w.webp",
+        "width": 960,
+        "bytes": 25620
+      },
+      {
+        "file": "ce1db4d04d2f-1600w.webp",
+        "width": 1600,
+        "bytes": 47546
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-mk-whitehouse-bifold-closed.jpg",
+    "outputs": [
+      {
+        "file": "5462e955bf3d-480w.webp",
+        "width": 480,
+        "bytes": 58832
+      },
+      {
+        "file": "5462e955bf3d-960w.webp",
+        "width": 960,
+        "bytes": 215068
+      },
+      {
+        "file": "5462e955bf3d-1600w.webp",
+        "width": 1600,
+        "bytes": 542482
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-wolverton-heritage-doors-open.webp",
+    "outputs": [
+      {
+        "file": "a0f971af0078-480w.webp",
+        "width": 480,
+        "bytes": 64630
+      },
+      {
+        "file": "a0f971af0078-960w.webp",
+        "width": 960,
+        "bytes": 211636
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-wolverton-charisma-sash-card.jpg",
+    "outputs": [
+      {
+        "file": "ed4d7504b6a2-480w.webp",
+        "width": 480,
+        "bytes": 13546
+      },
+      {
+        "file": "ed4d7504b6a2-960w.webp",
+        "width": 960,
+        "bytes": 44952
+      },
+      {
+        "file": "ed4d7504b6a2-1600w.webp",
+        "width": 1600,
+        "bytes": 119778
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-leighton-buzzard-casement-front.jpg",
+    "outputs": [
+      {
+        "file": "56f28da789b1-480w.webp",
+        "width": 480,
+        "bytes": 39180
+      },
+      {
+        "file": "56f28da789b1-960w.webp",
+        "width": 960,
+        "bytes": 154090
+      },
+      {
+        "file": "56f28da789b1-1600w.webp",
+        "width": 1600,
+        "bytes": 452524
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-leighton-buzzard-slide-fold-closed.jpg",
+    "outputs": [
+      {
+        "file": "9ebfd11be8e1-480w.webp",
+        "width": 480,
+        "bytes": 72236
+      },
+      {
+        "file": "9ebfd11be8e1-960w.webp",
+        "width": 960,
+        "bytes": 256456
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-luton-leagrave-integral-blinds-card.jpg",
+    "outputs": [
+      {
+        "file": "5fb62e8f4fee-480w.webp",
+        "width": 480,
+        "bytes": 10878
+      },
+      {
+        "file": "5fb62e8f4fee-960w.webp",
+        "width": 960,
+        "bytes": 32232
+      },
+      {
+        "file": "5fb62e8f4fee-1600w.webp",
+        "width": 1600,
+        "bytes": 69992
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-lantern-doors-interior.jpg",
+    "outputs": [
+      {
+        "file": "e6a600db2c73-480w.webp",
+        "width": 480,
+        "bytes": 81520
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-bletchley-rail-depot-elevation.webp",
+    "outputs": [
+      {
+        "file": "1915f38019ce-480w.webp",
+        "width": 480,
+        "bytes": 33056
+      },
+      {
+        "file": "1915f38019ce-960w.webp",
+        "width": 960,
+        "bytes": 105956
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-all-hallows-bedford-terrace-run.webp",
+    "outputs": [
+      {
+        "file": "0c1f57c1414e-480w.webp",
+        "width": 480,
+        "bytes": 31384
+      },
+      {
+        "file": "0c1f57c1414e-960w.webp",
+        "width": 960,
+        "bytes": 96872
+      },
+      {
+        "file": "0c1f57c1414e-1600w.webp",
+        "width": 1600,
+        "bytes": 216408
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/commercial/comm-curtain-walling-parade-1600w.jpg",
+    "outputs": [
+      {
+        "file": "cdf6f8c1ee24-480w.webp",
+        "width": 480,
+        "bytes": 21396
+      },
+      {
+        "file": "cdf6f8c1ee24-960w.webp",
+        "width": 960,
+        "bytes": 67128
+      },
+      {
+        "file": "cdf6f8c1ee24-1600w.webp",
+        "width": 1600,
+        "bytes": 146588
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/commercial/comm-failed-unit-office-1200w.jpg",
+    "outputs": [
+      {
+        "file": "e7040ce6e6ab-480w.webp",
+        "width": 480,
+        "bytes": 54488
+      },
+      {
+        "file": "e7040ce6e6ab-960w.webp",
+        "width": 960,
+        "bytes": 224982
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/louvre/louvre-plant-doors-2048w.webp",
+    "outputs": [
+      {
+        "file": "f5a217d116bb-480w.webp",
+        "width": 480,
+        "bytes": 30030
+      },
+      {
+        "file": "f5a217d116bb-960w.webp",
+        "width": 960,
+        "bytes": 115188
+      },
+      {
+        "file": "f5a217d116bb-1600w.webp",
+        "width": 1600,
+        "bytes": 282124
+      }
+    ]
   }
 ]

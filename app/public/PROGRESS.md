@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-09-04
+Last updated: 2026-09-14
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -13,6 +13,30 @@ sequence rather than ten competing starting points.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## 2026-09-14 — Non-brand SEO and area-page rebuild (LOCAL ONLY)
+
+The owner's new UK GSC export already excludes Fenster. August averaged 2.26
+clicks/day against June's 1.60 (+41.1%); the monthly chart cannot isolate the
+5 July launch. Full findings, scope and limitations are in
+`SEO-PERFORMANCE-AUDIT-2026-09-14.md`.
+
+Rebuilt 526 residential and 47 commercial area pages using current product
+guidance, genuine product/project imagery without within-page repeats, readable
+mobile layouts, relevant links and one attributed enquiry form. Added 184
+responsive WebPs from 81 existing sources. Corrected the seven price guides
+and generic article/simple-page image selection. New editorial source:
+`inc/location-page-data.php`; scoped styles: `src/scss/_location-pages.scss`.
+
+PHP lint, full build and local rendering checks pass. The route checker covers
+573 area pages and seven guides. Nine representative layouts were checked in
+the browser at desktop, tablet and mobile widths. These are standalone template
+checks with WordPress stubs, not test-site or production verification.
+
+Automatic approval review rejected remote publication and use of project-sourced
+test credentials. Explicit permission is pending. No remote push, test deploy or
+production deploy took place. Follow the isolated release runbook: main has
+held-back work and must not replace the live theme wholesale.
 
 ## 2026-09-10 — The 3D showroom is gone, and so are the two dead links it left on live (LIVE as `e5b312a7`)
 
