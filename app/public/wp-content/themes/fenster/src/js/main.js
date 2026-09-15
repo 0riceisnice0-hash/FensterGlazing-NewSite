@@ -3278,9 +3278,7 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
   renderCalendar();
 });
 
-// The rebuilt composite catalogue uses native scrolling. Its many interactive
-// choices must not sit inside an interpolated document scroll loop.
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.querySelector('[data-composite-page]')) {
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const lenis = new Lenis({
     anchors: {
       offset: -88,

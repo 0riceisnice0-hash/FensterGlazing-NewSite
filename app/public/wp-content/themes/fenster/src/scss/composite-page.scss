@@ -1,5 +1,5 @@
 /* Dedicated composite page. One spacing owner per section; no viewport floors. */
-html:has(.fg-cdoor-page) { scroll-behavior: auto; }
+html:has(.fg-cdoor-page) { scroll-behavior: smooth; }
 .fg-cdoor-page {
   --cd-ink: #062e38;
   --cd-muted: #52676b;
