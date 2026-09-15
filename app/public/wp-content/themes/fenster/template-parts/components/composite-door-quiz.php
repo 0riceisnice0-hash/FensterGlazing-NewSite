@@ -313,11 +313,11 @@ $fg_total = count($fg_questions);
                         <p class="fg-cdq__why" data-fg-quiz-why></p>
                         <p class="fg-cdq__poa" data-fg-quiz-poa hidden><?php esc_html_e('This one is priced on application rather than instantly, so the tool will take you as far as the design and we will follow up with the number.', 'fenster'); ?></p>
                         <p class="fg-cdq__result-actions">
-                            <button type="button" class="button" data-fg-quiz-share><?php esc_html_e('Share your door', 'fenster'); ?></button>
-                            <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php echo esc_html((string) ($args['open_label'] ?? 'Open full size')); ?></a>
+                            <a class="button" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php echo esc_html((string) ($args['open_label'] ?? 'Open full size')); ?></a>
+                            <button type="button" class="button button--light" data-fg-quiz-share><?php esc_html_e('Share your door', 'fenster'); ?></button>
                             <button type="button" class="fg-cdq__again" data-fg-quiz-reset><?php esc_html_e('Try again', 'fenster'); ?></button>
                         </p>
-                        <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the style range higher up the page has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
+                        <p class="fg-cdq__caveat"><?php echo esc_html((string) ($args['caveat'] ?? 'Five questions cannot know your house. If it is not right, the style range higher up the page has the other 141 and every one of them opens the same way.')); ?></p>
                     </div>
                 </div>
 

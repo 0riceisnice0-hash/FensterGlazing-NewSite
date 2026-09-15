@@ -108,14 +108,16 @@ $reviews = fenster_review_cards(2, 'front door');
     <div class="fg-cdoor-finishes" aria-label="Glass, colour and hardware choices">
         <section class="fg-cdoor-section" aria-labelledby="composite-glass-title">
             <div class="fg-cdoor-shell fg-cdoor-choice" data-cdoor-picker>
+                <div class="fg-cdoor-choice__intro">
+                    <p class="fg-cdoor-kicker">02 / The finishing details</p>
+                    <h2 id="composite-glass-title">Let the glass<br> set the character.</h2>
+                    <p>From a quiet satin panel to bevels and decorative leadwork. The shape of your door sets the opening; the glass gives it its own detail.</p>
+                </div>
                 <figure class="fg-cdoor-choice__media">
                     <?php $photo($asset('glass-doors/' . $first_glass['slug'] . '-800w.webp'), 'A composite door with ' . $first_glass['name'] . ' decorative glass', 'fg-cdoor-choice__image'); ?>
                     <figcaption><strong data-cdoor-name><?php echo esc_html($first_glass['name']); ?></strong><span data-cdoor-kind>Decorative glass shown in a door</span></figcaption>
                 </figure>
                 <div class="fg-cdoor-choice__body">
-                    <p class="fg-cdoor-kicker">02 / The finishing details</p>
-                    <h2 id="composite-glass-title">Let the glass<br> set the character.</h2>
-                    <p>From a quiet satin panel to bevels and decorative leadwork. The shape of your door sets the opening; the glass gives it its own detail.</p>
                     <div class="fg-cdoor-glass-options" aria-label="Glass designs">
                         <?php foreach ($glass_doors as $index => $glass) : ?>
                             <button type="button" data-cdoor-choice data-image="<?php echo esc_url($asset('glass-doors/' . $glass['slug'] . '-800w.webp')); ?>" data-name="<?php echo esc_attr($glass['name']); ?>" data-kind="<?php echo in_array($glass['slug'], ['chatsworth', 'wentworth'], true) ? 'Double glazed decorative design' : 'Decorative glass shown in a door'; ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"><?php echo esc_html($glass['name']); ?></button>
@@ -130,13 +132,15 @@ $reviews = fenster_review_cards(2, 'front door');
         </section>
         <section class="fg-cdoor-section" aria-labelledby="composite-colour-title">
             <div class="fg-cdoor-shell fg-cdoor-choice fg-cdoor-choice--reverse" data-cdoor-picker>
+                <div class="fg-cdoor-choice__intro">
+                    <p class="fg-cdoor-kicker">Colour</p><h2 id="composite-colour-title">A colour that belongs<br> on your home.</h2>
+                    <p>Match the windows, pick up the brickwork or give the entrance a colour of its own. You can choose a different finish inside.</p>
+                </div>
                 <figure class="fg-cdoor-choice__media">
                     <?php $photo($first_colour['src'], $colours[0]['name'] . ' composite door', 'fg-cdoor-choice__image'); ?>
                     <figcaption><strong data-cdoor-name><?php echo esc_html($colours[0]['name']); ?></strong><span data-cdoor-kind><?php echo esc_html($first_colour['kind']); ?></span></figcaption>
                 </figure>
                 <div class="fg-cdoor-choice__body">
-                    <p class="fg-cdoor-kicker">Colour</p><h2 id="composite-colour-title">A colour that belongs<br> on your home.</h2>
-                    <p>Match the windows, pick up the brickwork or give the entrance a colour of its own. You can choose a different finish inside.</p>
                     <div class="fg-cdoor-swatches" aria-label="Composite door colours">
                         <?php foreach ($colours as $index => $colour) : $preview = $colour_preview($colour); ?>
                             <button type="button" data-cdoor-choice data-image="<?php echo esc_url($preview['src']); ?>" data-name="<?php echo esc_attr($colour['name']); ?>" data-kind="<?php echo esc_attr($preview['kind']); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
@@ -218,6 +222,7 @@ $reviews = fenster_review_cards(2, 'front door');
                     'result_heading' => 'Your starting point',
                     'open_label' => 'Design this door',
                     'embed_result' => false,
+                    'caveat' => 'A starting point, based on your answers. You can explore all 142 styles in the range above.',
                 ]); ?>
                 <noscript><p><a href="#composite-range">Browse all door styles above</a>. The door finder needs JavaScript.</p></noscript>
             </div>
