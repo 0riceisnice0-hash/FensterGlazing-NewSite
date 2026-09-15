@@ -221,7 +221,7 @@
 .fg-cdoor-enquiry .fg-cdoor-form { padding: 0; background: none; border: 0; box-shadow: none; gap: 14px; }
 .fg-cdoor-form label { color: var(--cd-ink); }
 .fg-cdoor-page .fg-cdoor-form input:not([type='hidden']):not([type='checkbox']),
-.fg-cdoor-page .fg-cdoor-form textarea { background: #f8faf8; border: 1px solid #859b91; color: var(--cd-ink); }
+.fg-cdoor-page .fg-cdoor-form textarea { background: #f8faf8; border: 1px solid #859b91; color: var(--cd-ink); font-weight: 400; }
 .fg-cdoor-page .fg-cdoor-form input::placeholder,
 .fg-cdoor-page .fg-cdoor-form textarea::placeholder { color: var(--cd-muted); opacity: 1; }
 .fg-cdoor-page .fg-cdoor-form label em,
@@ -229,6 +229,8 @@
 .fg-cdoor-page .fg-cdoor-form .fg-enquiry-form__consent,
 .fg-cdoor-page .fg-cdoor-form .fg-enquiry-form__consent a,
 .fg-cdoor-page .fg-cdoor-form .fg-enquiry-form__footer small { color: var(--cd-muted); }
+/* The shared dark form marks consent colour important; scope its light variant here. */
+.fg-cdoor-page .fg-cdoor-form .fg-enquiry-form__consent { color: var(--cd-muted) !important; background: #f1f5f2; border-color: var(--cd-line); border-radius: 4px; }
 .fg-cdoor-page .fg-cdoor-form .fg-enquiry-form__message textarea { min-height: 90px; height: 90px; }
 .fg-cdoor-form .fg-enquiry-form__compact-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
 .fg-cdoor-form .fg-enquiry-form__compact-wide { grid-column: 1 / -1; }
