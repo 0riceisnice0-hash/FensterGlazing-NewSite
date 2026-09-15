@@ -67,8 +67,8 @@ $reviews = fenster_review_cards(2, 'front door');
     <section class="fg-cdoor-section fg-cdoor-range" id="composite-range" aria-labelledby="composite-range-title" data-cdoor-range>
         <div class="fg-cdoor-shell">
             <header class="fg-cdoor-heading">
-                <div><p class="fg-cdoor-kicker">01 / Find your style</p><h2 id="composite-range-title"><?php echo (int) $door_count; ?> doors. One that is yours.</h2></div>
-                <p>Panelled, plain or cottage style. Pick a collection, compare the shapes, then open any door in the quote tool to choose its finish.</p>
+                <div><p class="fg-cdoor-kicker">01 / Find your style</p><h2 id="composite-range-title"><?php echo (int) $door_count; ?> door styles.</h2></div>
+                <p>Browse six collections. Open a style to choose its colour, glass and hardware in the quote tool.</p>
             </header>
             <div class="fg-cdoor-range__tools" hidden data-cdoor-range-tools>
                 <div class="fg-cdoor-tabs" role="tablist" aria-label="Door collections">
@@ -76,6 +76,7 @@ $reviews = fenster_review_cards(2, 'front door');
                         <button type="button" role="tab" id="cdoor-tab-<?php echo (int) $index; ?>" aria-controls="cdoor-collection-<?php echo (int) $index; ?>" aria-selected="<?php echo $index === 0 ? 'true' : 'false'; ?>" tabindex="<?php echo $index === 0 ? '0' : '-1'; ?>" data-cdoor-tab="<?php echo (int) $index; ?>"><?php echo esc_html($collection['name']); ?><span><?php echo count($collection['styles']); ?></span></button>
                     <?php endforeach; ?>
                 </div>
+                <label class="fg-cdoor-collection-select"><span>Door collection</span><select data-cdoor-collection-select><?php foreach ($collections as $index => $collection) : ?><option value="<?php echo (int) $index; ?>"><?php echo esc_html($collection['name'] . ' (' . count($collection['styles']) . ')'); ?></option><?php endforeach; ?></select></label>
                 <label class="fg-cdoor-filter"><span>Glass in the door</span><select data-cdoor-glass><option value="">Any amount</option><option value="3">Lots of glass</option><option value="2">Some glass</option><option value="1">A little glass</option><option value="0">Solid door</option></select></label>
             </div>
             <?php foreach ($collections as $index => $collection) : ?>
@@ -93,6 +94,7 @@ $reviews = fenster_review_cards(2, 'front door');
                             </li>
                         <?php endforeach; ?>
                     </ul>
+                    <div class="fg-cdoor-range__empty" data-cdoor-empty hidden><p>No styles in this collection have that amount of glass.</p><button type="button" data-cdoor-reset-glass>Show every style in this collection</button></div>
                 </div>
             <?php endforeach; ?>
             <div class="fg-cdoor-range__footer" hidden data-cdoor-range-footer>
@@ -112,7 +114,7 @@ $reviews = fenster_review_cards(2, 'front door');
                 </figure>
                 <div class="fg-cdoor-choice__body">
                     <p class="fg-cdoor-kicker">02 / The finishing details</p>
-                    <h2 id="composite-glass-title">Let the glass<br>set the character.</h2>
+                    <h2 id="composite-glass-title">Let the glass<br> set the character.</h2>
                     <p>From a quiet satin panel to bevels and decorative leadwork. The shape of your door sets the opening; the glass gives it its own detail.</p>
                     <div class="fg-cdoor-glass-options" aria-label="Glass designs">
                         <?php foreach ($glass_doors as $index => $glass) : ?>
@@ -133,7 +135,7 @@ $reviews = fenster_review_cards(2, 'front door');
                     <figcaption><strong data-cdoor-name><?php echo esc_html($colours[0]['name']); ?></strong><span data-cdoor-kind><?php echo esc_html($first_colour['kind']); ?></span></figcaption>
                 </figure>
                 <div class="fg-cdoor-choice__body">
-                    <p class="fg-cdoor-kicker">Colour</p><h2 id="composite-colour-title">A colour that belongs<br>on your home.</h2>
+                    <p class="fg-cdoor-kicker">Colour</p><h2 id="composite-colour-title">A colour that belongs<br> on your home.</h2>
                     <p>Match the windows, pick up the brickwork or give the entrance a colour of its own. You can choose a different finish inside.</p>
                     <div class="fg-cdoor-swatches" aria-label="Composite door colours">
                         <?php foreach ($colours as $index => $colour) : $preview = $colour_preview($colour); ?>
@@ -195,7 +197,7 @@ $reviews = fenster_review_cards(2, 'front door');
 
     <section class="fg-cdoor-section fg-cdoor-quote" id="fenster-product-quote" aria-labelledby="composite-quote-title">
         <div class="fg-cdoor-shell fg-cdoor-quote__grid">
-            <div><p class="fg-cdoor-kicker">05 / Put a price to it</p><h2 id="composite-quote-title">Your door.<br>Your specification.<br>Your quote.</h2><p>Choose the style, sizes, colour, glass and handles in our online tool. We confirm the final specification and price after survey.</p><p>If you would rather build the quote with us, <a href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">book a free consultation</a>.</p><a class="button fg-cdoor-quote__mobile" href="<?php echo esc_url($quote_url); ?>">Open the quote tool <span aria-hidden="true">↗</span></a></div>
+            <div><p class="fg-cdoor-kicker">05 / Put a price to it</p><h2 id="composite-quote-title">Your door.<br> Your specification.<br> Your quote.</h2><p>Choose the style, sizes, colour, glass and handles in our online tool. We confirm the final specification and price after survey.</p><p>If you would rather build the quote with us, <a href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">book a free consultation</a>.</p><a class="button fg-cdoor-quote__mobile" href="<?php echo esc_url($quote_url); ?>">Open the quote tool <span aria-hidden="true">↗</span></a></div>
             <div class="fg-cdoor-quote__card" data-quote-card>
                 <div class="fg-cdoor-quote__toolbar"><span>Composite door designer</span><a href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
                 <div class="fg-cdoor-quote__frame" data-quote-frame-wrap data-quote-autoload="visible" data-lenis-prevent data-quote-url="<?php echo esc_url($quote_url); ?>">
@@ -206,7 +208,7 @@ $reviews = fenster_review_cards(2, 'front door');
         </div>
     </section>
 
-    <div class="fg-cdoor-assist fg-cdoor-shell"><details data-cdoor-assist><summary><span><strong>Still choosing a style?</strong><span>Try the five-question door finder.</span></span><span aria-hidden="true">+</span></summary><div><?php get_template_part('template-parts/components/composite-door-quiz'); ?></div></details></div>
+    <div class="fg-cdoor-assist fg-cdoor-shell"><details data-cdoor-assist><summary><span><strong>Still choosing a style?</strong><span>Try the five-question door finder.</span></span><span aria-hidden="true">+</span></summary><div><?php get_template_part('template-parts/components/composite-door-quiz', null, ['heading' => 'Find your door.', 'intro' => 'Five questions about your home and the details you like. We will suggest a style to start with.']); ?><noscript><p><a href="#composite-range">Browse all door styles above</a>. The door finder needs JavaScript.</p></noscript></div></details></div>
 
     <section class="fg-cdoor-section fg-cdoor-enquiry" id="fenster-enquiry" aria-labelledby="composite-enquiry-title">
         <div class="fg-cdoor-shell fg-cdoor-enquiry__grid"><div><p class="fg-cdoor-kicker">Talk to our team</p><h2 id="composite-enquiry-title">Tell us about<br>your front door.</h2><p>A photograph and rough sizes are useful. Send what you have, and we will help you choose the right style and specification.</p><div class="fg-cdoor-contact"><a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '')); ?>"><?php echo esc_html($brand['phone'] ?? ''); ?></a><a href="mailto:<?php echo esc_attr($brand['email'] ?? ''); ?>"><?php echo esc_html($brand['email'] ?? ''); ?></a></div><p class="fg-cdoor-note">Based in Milton Keynes. We also fit doors across Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. <a href="<?php echo esc_url(home_url('/areas-we-cover/')); ?>">See our service areas</a>.</p></div>

@@ -209,8 +209,8 @@ $fg_total = count($fg_questions);
 
         <header class="fg-cdq__head">
             <p class="fg-cdq__badge"><?php esc_html_e('Quiz', 'fenster'); ?></p>
-            <h2 id="fg-cdq-title"><?php esc_html_e('Which composite door are you?', 'fenster'); ?></h2>
-            <p class="fg-cdq__standfirst"><?php esc_html_e('Read the lot and still cannot pick one? Answer five questions about your house and we will point at a door, with the reasoning, and open it in the pricing tool in the colour you chose.', 'fenster'); ?></p>
+            <h2 id="fg-cdq-title"><?php echo esc_html((string) ($args['heading'] ?? 'Which composite door are you?')); ?></h2>
+            <p class="fg-cdq__standfirst"><?php echo esc_html((string) ($args['intro'] ?? 'Read the lot and still cannot pick one? Answer five questions about your house and we will point at a door, with the reasoning, and open it in the pricing tool in the colour you chose.')); ?></p>
         </header>
 
         <?php /* Ships hidden. Without JavaScript the range above is the answer,
