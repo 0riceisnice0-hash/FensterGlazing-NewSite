@@ -1,5 +1,50 @@
 # Fenster Glazing Live Changes Runbook
 
+## Full composite rebuild published — 15 September 2026
+
+**Current live theme: `4f6afab5b6d5fbcb4f94ed04a6bf92713e4a9910`**, tag
+`live-composite-replay-2026-09-15`, isolated branch
+`codex/composite-rebuild-2026-09-15`. This supersedes the emergency overhaul
+and scrolling patch below. Owner requested a full audit and rebuild, allowing
+two hours, after rejecting the earlier layout and padding.
+
+Dedicated template/CSS/interaction module; real range and product information,
+unique photographs, light technical/form sections, compact optional finder,
+native scrolling and immediate anchors. All primary sections fit 707px at
+1440 × 780. Document height falls from 10,360 to 6,684px on desktop and from
+18,228 to 10,594px at 390 × 844. No horizontal overflow at eight widths from
+320 to 1440px. All 142 styles remain server rendered; FAQ/schema parity and
+the final content checks pass 155/155. Read the full evidence and limitations
+in `COMPOSITE-REBUILD-AUDIT-2026-09-15.md`.
+
+Release sequence: `c6853022` → `dbd29ce9` (17 theme files) → `1966c57d`
+(four styling/template files) → `4f6afab5` (two CSS files). All were tested before live, guarded
+against the exact preceding full theme and verified with full-tree checksum
+residual 0. No deletions. WordPress cache and SiteGround socket purge succeeded.
+Backups: `~/fenster-pre-composite-rebuild-20260915.tar.gz` and
+`~/fenster-pre-composite-final-20260915.tar.gz`. Manifests and residuals are in
+`/tmp/fenster-composite-rebuild-20260915/` and
+`/tmp/fenster-composite-final-20260915/`.
+
+The last two-file correction prevents the delayed `fenster-clarity-replay-css`
+copy of shared CSS overriding the handle row and finder typography. It was
+reproduced on production and tested by loading shared CSS last in a local
+harness. Final evidence: `/tmp/fenster-composite-replay-20260915/`; backup:
+`~/fenster-pre-composite-replay-20260915.tar.gz`. Root-prefixed component
+selectors are deliberate; keep them when changing this page.
+
+**Protected test now has SEO plus the rebuild at theme revision `30d77318`**,
+full-tree residual 0. Checks pass for 573 area pages and seven price guides.
+This is a theme revision: later documentation-only commits need not change the
+served files. The broad SEO strand is preserved and is still not part of the
+isolated live theme. Do not deploy this branch wholesale to live.
+
+The vendor's direct quote interface works, but its iframe did not render in
+the in-app browser even on a bare test page. The rebuilt page autoloads it,
+keeps a direct link visible and shows a 12-second timeout fallback. The successful
+load handler was checked with a local test double. No vendor lead or enquiry
+was submitted; the existing vendor attribution limitation remains documented.
+
 ## Composite scrolling follow-up — 15 September 2026
 
 **Current live theme: c6853022a1bda96909362cbfb73bbc3462ccd174**, same isolated
@@ -51,6 +96,10 @@ This is the short operational guide for any Codex agent or developer making chan
 - **Never render a per-visitor value into the page config.** The same caching makes it a leak, not just a dead value: a reference printed into cacheable HTML is baked into the cached copy and served to every later visitor of that page. `adAttributionRef` was removed from `fenster_enqueue_website_tracking_config()` for exactly this.
 
 ## Current Truth
+
+- **LIVE: `4f6afab5`, 2026-09-15. TEST THEME: `30d77318`.** These supersede the
+  historical entries below. See the full composite rebuild entry at the top for
+  release scope, backups, validation and the quote-provider browser limitation.
 
 - **TEST ONLY: `2bc795e0`, 2026-09-14**, on `codex/seo-landing-pages-2026-09`. Owner approved pushing the non-brand SEO/landing-page rebuild and authenticating to protected test. The theme is checksum-identical to this commit. It rebuilds 526 residential and 47 commercial area pages, corrects seven price guides, improves product/town metadata and provides responsive imagery without repeated landing-page photos. WordPress CLI checks pass for all 573 area pages plus seven guides; 16 direct HTTP page checks pass, and the page sitemap contains 727 unique URLs. The browser checked deployed markup through a read-only authenticated proxy because direct Basic Auth navigation is blocked by the in-app browser. No customer enquiry was submitted. **Production remains `e5b312a7`; do not deploy this branch wholesale to live.** The shared server checkout remains `9ed4779e`; the test deploy used an isolated Git archive, guarded dry runs and zero-residual checksum checks. Full evidence: `SEO-PERFORMANCE-AUDIT-2026-09-14.md`.
 

@@ -1,6 +1,25 @@
 # Fenster Glazing Handover
 
-**Latest live revision is c6853022**, superseding `02dc0f43` below. The follow-up
+## Full composite rebuild — start here, 15 September 2026
+
+The full composite page audit and rebuild is now published. The older emergency
+release entries below are historical. Read the top of `LIVECHANGES.md` for the
+authoritative live revision and backup paths, then
+`COMPOSITE-REBUILD-AUDIT-2026-09-15.md` for measurements and validation.
+
+The route is dispatched early to `template-parts/sections/composite-doors.php`.
+Its dedicated `composite-page.scss` and `composite-page.js` own layout and
+interaction. Do not resume adding overrides to the dormant legacy composite
+assembly. Native scrolling is deliberate; no Lenis or document snapping on
+this page. Shared forms, handles and catalogue data remain the source of truth.
+
+Protected test now contains the SEO branch plus the complete live rebuild.
+All 573 area pages/seven price guides and the composite content checks pass.
+The Git backport preserves the unrelated SEO work. No broad SEO deployment to
+production occurred during this composite rebuild. The vendor iframe browser
+limitation and direct-designer fallback are documented in the audit.
+
+**Historical scrolling follow-up: c6853022**, superseding `02dc0f43` below. The follow-up
 removes composite-only vertical scroll snapping that competed with Lenis.
 Verified on test and public live, proxy purged, previous SEO test files restored.
 The fix is also present in this SEO branch. See `LIVECHANGES.md`.

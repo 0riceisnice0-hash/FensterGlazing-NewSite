@@ -1,5 +1,24 @@
 # Fenster Glazing Progress Log
 
+## 2026-09-15 — Full composite audit and rebuild published
+
+Replaced the composite page composition after the owner rejected the emergency
+padding fixes and requested a two-hour audit/rebuild. Dedicated route assets,
+native scrolling, immediate anchors, content-led spacing, all 142 styles,
+light product/form sections, distinct product and local proof imagery, current
+security/glazing facts and matching FAQ schema. Final desktop sections fit the
+707px budget; total document is 35.5% shorter desktop and 41.9% shorter phone.
+Eight viewport widths, 155 content checks, 222 asset/internal HTTP checks,
+30 filter combinations, all preview choices and keyboard/finder flows checked.
+
+Published from an isolated live baseline with backups, exact full-theme guards,
+zero residual differences and successful cache purges. Backported all changes
+to the SEO branch and deployed the combined theme to protected test. WordPress
+checks for all 573 area pages and seven price guides still pass. See
+`LIVECHANGES.md` for current revisions and
+`COMPOSITE-REBUILD-AUDIT-2026-09-15.md` for the full report and vendor iframe
+limitation. No real enquiry or quote lead was submitted.
+
 ## 2026-09-15 — Composite scrolling fixed live
 
 Live **c6853022** supersedes `02dc0f43`. Removed document and section scroll
