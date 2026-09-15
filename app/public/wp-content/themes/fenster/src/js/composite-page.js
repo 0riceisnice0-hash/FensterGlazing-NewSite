@@ -100,9 +100,30 @@ if (page) {
   // Visibility already defers this iframe through the shared quote loader.
   // A second native lazy gate can strand a previously hidden frame at blank.
   const quoteFrame = page.querySelector('.fg-cdoor-quote__frame iframe');
-  quoteFrame?.addEventListener('load', () => {
-    if (quoteFrame.getAttribute('src')) quoteFrame.parentElement.setAttribute('data-cdoor-frame-ready', 'true');
-  });
+  if (quoteFrame) {
+    const frameWrap = quoteFrame.parentElement;
+    const fallback = frameWrap.querySelector('[data-cdoor-quote-fallback]');
+    const status = frameWrap.querySelector('[data-cdoor-quote-status]');
+    let pending;
+    const watchNavigation = () => {
+      if (!quoteFrame.getAttribute('src')) return;
+      clearTimeout(pending);
+      frameWrap.removeAttribute('data-cdoor-frame-ready');
+      fallback.hidden = true;
+      status.textContent = 'Opening your door designer…';
+      pending = setTimeout(() => {
+        status.textContent = 'The designer is taking longer to load here. Open it in a new tab to continue.';
+        fallback.hidden = false;
+      }, 12000);
+    };
+    new MutationObserver(watchNavigation).observe(quoteFrame, {attributes: true, attributeFilter: ['src']});
+    quoteFrame.addEventListener('load', () => {
+      if (!quoteFrame.getAttribute('src')) return;
+      clearTimeout(pending);
+      frameWrap.setAttribute('data-cdoor-frame-ready', 'true');
+    });
+    watchNavigation();
+  }
   const assist = page.querySelector('[data-cdoor-assist]');
   // Shared quiz links must reveal their result even though the optional finder
   // is collapsed for visitors who have not asked to use it.

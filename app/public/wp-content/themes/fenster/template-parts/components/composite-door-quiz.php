@@ -306,15 +306,15 @@ $fg_total = count($fg_questions);
                         <img data-fg-quiz-art-img alt="" width="914" height="2013" decoding="async">
                     </div>
                     <div class="fg-cdq__reveal-words">
-                        <p class="fg-cdq__reveal-kicker"><?php esc_html_e('You are a', 'fenster'); ?></p>
-                        <p class="fg-cdq__door-name" data-fg-quiz-name></p>
+                        <p class="fg-cdq__reveal-kicker"><?php echo esc_html((string) ($args['result_heading'] ?? 'You are a')); ?></p>
+                        <p class="fg-cdq__door-name" data-fg-quiz-name tabindex="-1"></p>
                         <p class="fg-cdq__collection" data-fg-quiz-collection></p>
                         <p class="fg-cdq__chosen-colour" data-fg-quiz-colour hidden></p>
                         <p class="fg-cdq__why" data-fg-quiz-why></p>
                         <p class="fg-cdq__poa" data-fg-quiz-poa hidden><?php esc_html_e('This one is priced on application rather than instantly, so the tool will take you as far as the design and we will follow up with the number.', 'fenster'); ?></p>
                         <p class="fg-cdq__result-actions">
                             <button type="button" class="button" data-fg-quiz-share><?php esc_html_e('Share your door', 'fenster'); ?></button>
-                            <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php esc_html_e('Open full size', 'fenster'); ?></a>
+                            <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php echo esc_html((string) ($args['open_label'] ?? 'Open full size')); ?></a>
                             <button type="button" class="fg-cdq__again" data-fg-quiz-reset><?php esc_html_e('Try again', 'fenster'); ?></button>
                         </p>
                         <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the style range higher up the page has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
@@ -323,10 +323,12 @@ $fg_total = count($fg_questions);
 
                 <?php /* The tool, on that door. Built on submit rather than
                          shipped, so a visitor who never answers never loads it. */ ?>
+                <?php if ($args['embed_result'] ?? true) : ?>
                 <div class="fg-cdq__tool">
                     <div class="fg-cdq__frame" data-fg-quiz-frame data-lenis-prevent></div>
                     <p class="fg-cdq__frame-note"><?php esc_html_e('Colour, glass and handles are chosen in here, and the price moves as you change them.', 'fenster'); ?></p>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

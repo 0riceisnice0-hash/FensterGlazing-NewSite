@@ -201,14 +201,28 @@ $reviews = fenster_review_cards(2, 'front door');
             <div class="fg-cdoor-quote__card" data-quote-card>
                 <div class="fg-cdoor-quote__toolbar"><span>Composite door designer</span><a href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
                 <div class="fg-cdoor-quote__frame" data-quote-frame-wrap data-quote-autoload="visible" data-lenis-prevent data-quote-url="<?php echo esc_url($quote_url); ?>">
-                    <div class="fg-cdoor-quote__placeholder"><span class="fg-cdoor-quote__outline" aria-hidden="true"></span><p>Opening your door designer…</p><noscript><a href="<?php echo esc_url($quote_url); ?>">Open the quote tool</a></noscript></div>
+                    <div class="fg-cdoor-quote__placeholder"><span class="fg-cdoor-quote__outline" aria-hidden="true"></span><p data-cdoor-quote-status aria-live="polite">Opening your door designer…</p><a class="button" data-cdoor-quote-fallback hidden href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener">Open the door designer ↗</a><noscript><a href="<?php echo esc_url($quote_url); ?>">Open the quote tool</a></noscript></div>
                     <iframe data-quote-iframe-src="<?php echo esc_url($quote_url); ?>" title="Composite door quote tool" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="fg-cdoor-assist fg-cdoor-shell"><details data-cdoor-assist><summary><span><strong>Still choosing a style?</strong><span>Try the five-question door finder.</span></span><span aria-hidden="true">+</span></summary><div><?php get_template_part('template-parts/components/composite-door-quiz', null, ['heading' => 'Find your door.', 'intro' => 'Five questions about your home and the details you like. We will suggest a style to start with.']); ?><noscript><p><a href="#composite-range">Browse all door styles above</a>. The door finder needs JavaScript.</p></noscript></div></details></div>
+    <div class="fg-cdoor-assist fg-cdoor-shell">
+        <details data-cdoor-assist>
+            <summary><span><strong>Still choosing a style?</strong><span>Try the five-question door finder.</span></span><span aria-hidden="true">+</span></summary>
+            <div>
+                <?php get_template_part('template-parts/components/composite-door-quiz', null, [
+                    'heading' => 'Find your door.',
+                    'intro' => 'Five questions about your home and the details you like. We will suggest a style to start with.',
+                    'result_heading' => 'Your starting point',
+                    'open_label' => 'Design this door',
+                    'embed_result' => false,
+                ]); ?>
+                <noscript><p><a href="#composite-range">Browse all door styles above</a>. The door finder needs JavaScript.</p></noscript>
+            </div>
+        </details>
+    </div>
 
     <section class="fg-cdoor-section fg-cdoor-enquiry" id="fenster-enquiry" aria-labelledby="composite-enquiry-title">
         <div class="fg-cdoor-shell fg-cdoor-enquiry__grid"><div><p class="fg-cdoor-kicker">Talk to our team</p><h2 id="composite-enquiry-title">Tell us about<br>your front door.</h2><p>A photograph and rough sizes are useful. Send what you have, and we will help you choose the right style and specification.</p><div class="fg-cdoor-contact"><a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '')); ?>"><?php echo esc_html($brand['phone'] ?? ''); ?></a><a href="mailto:<?php echo esc_attr($brand['email'] ?? ''); ?>"><?php echo esc_html($brand['email'] ?? ''); ?></a></div><p class="fg-cdoor-note">Based in Milton Keynes. We also fit doors across Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. <a href="<?php echo esc_url(home_url('/areas-we-cover/')); ?>">See our service areas</a>.</p></div>
