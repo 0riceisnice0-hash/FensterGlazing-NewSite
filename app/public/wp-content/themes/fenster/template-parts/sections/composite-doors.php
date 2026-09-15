@@ -3,6 +3,7 @@
 if (! defined('ABSPATH')) { exit; }
 require_once FENSTER_THEME_DIR . '/inc/composite-door-data.php';
 require_once FENSTER_THEME_DIR . '/inc/composite-page-data.php';
+require_once FENSTER_THEME_DIR . '/inc/quote-collections.php';
 $brand = fenster_data('brand', []);
 $content = fenster_data('product_content.composite-doors', []);
 $collections = fenster_composite_door_collections();
