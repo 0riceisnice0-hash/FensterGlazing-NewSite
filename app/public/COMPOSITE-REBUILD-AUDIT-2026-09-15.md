@@ -116,7 +116,7 @@ composition, not a restoration of the previous template.
 | Door range | 706px |
 | Glass | 606px |
 | Colour | 639px |
-| Handles | 491px |
+| Handles | 492px |
 | Construction and security | 616px |
 | Local installation and review | 559px |
 | FAQs, closed | 463px |
@@ -127,21 +127,23 @@ Every primary desktop section fits the owner's 707px content budget. These
 are content heights, not forced minimums. The optional finder is collapsed
 initially; its first question is 594px on desktop and about 506px at 390px.
 
-The default document is 6,684px on desktop instead of 10,360px (35.5% shorter),
-and 10,594px at 390 × 844 instead of 18,228px (41.9% shorter). All 142 styles
+The default document is 6,686px on desktop instead of 10,360px (35.5% shorter),
+and 10,595px at 390 × 844 instead of 18,228px (41.9% shorter). All 142 styles
 remain in the server HTML. The catalogue shows ten at a time on desktop and
 six on phones, with stable pagination and a glass filter.
 
 | Tested width | Document height | Horizontal overflow |
 | --- | ---: | --- |
-| 1440px | 6684px | None |
-| 1280px | 6669px | None |
-| 1024px | 6819px | None |
-| 768px | 8024px | None |
-| 600px | 9733px | None |
-| 390px | 10594px | None |
-| 360px | 10967px | None |
-| 320px | 11503px | None |
+| 1440px | 6686px | None |
+| 1280px | 6670px | None |
+| 1024px | 6820px | None |
+| 768px | 8025px | None |
+| 600px | 9734px | None |
+| 390px | 10595px | None |
+| 360px | 10969px | None |
+| 320px | 11504px | None |
+
+The final matrix was repeated on production with replay CSS present at every width.
 
 Viewport checks assert the actual `window.innerWidth`; the in-app viewport
 control applies to the newest tab, so earlier attempts that remained at 1440px

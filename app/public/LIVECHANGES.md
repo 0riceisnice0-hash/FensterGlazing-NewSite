@@ -11,8 +11,8 @@ two hours, after rejecting the earlier layout and padding.
 Dedicated template/CSS/interaction module; real range and product information,
 unique photographs, light technical/form sections, compact optional finder,
 native scrolling and immediate anchors. All primary sections fit 707px at
-1440 × 780. Document height falls from 10,360 to 6,684px on desktop and from
-18,228 to 10,594px at 390 × 844. No horizontal overflow at eight widths from
+1440 × 780. Document height falls from 10,360 to 6,686px on desktop and from
+18,228 to 10,595px at 390 × 844. No horizontal overflow at eight widths from
 320 to 1440px. All 142 styles remain server rendered; FAQ/schema parity and
 the final content checks pass 155/155. Read the full evidence and limitations
 in `COMPOSITE-REBUILD-AUDIT-2026-09-15.md`.
