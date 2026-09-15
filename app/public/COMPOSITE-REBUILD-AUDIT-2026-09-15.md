@@ -189,8 +189,7 @@ a 4.85:1 contrast ratio. This is not a claim of a complete WCAG conformance audi
   single FAQPage schema. The fitted-price answer keeps the checked £2,000
   including-VAT example and explains specification/survey dependency.
 - Relevant links include the price guide, installation case study, service areas,
-  handle choices and consultation. No link to the unpublished why-distinction
-  page is emitted by this composition.
+  handle choices, consultation and the published `/why-distinction/` evidence page.
 
 SEO improvements are content and technical changes. No ranking uplift can be
 measured at publication; retain the non-brand GSC methodology from the September
@@ -275,3 +274,30 @@ with full-tree residual zero. Its backup/evidence is under
 `/tmp/fenster-composite-seo-20260915/`. The server repository checkout was not
 reset; deployments used committed archives. Do not deploy the SEO branch
 wholesale to production as part of a composite-page follow-up.
+
+### Follow-up: product evidence and Why Distinction route
+
+The owner's follow-up review found that the new composition had removed too
+much useful manufacturer evidence and omitted the intended handoff to
+`/why-distinction/`. The correction makes the H1 product-led, restores the
+green/dark CTA pair, adds three concrete hero facts and introduces a light,
+image-led `Product information` section. The new section distinguishes the
+Distinction slab from the complete doorset and covers layered construction,
+BS 6375-1 weather testing, 26 dB OITC / 29 dB STC acoustic results, the scoped
+25-year manufacturer slab warranty and Distinction's published installation
+figures. Its image is not repeated elsewhere on the page.
+
+The production route had deliberately remained unregistered in the release
+line and returned 404 when the new link was first checked. The final focused
+release registers it, gives it a canonical/title/description and adds it to
+the page sitemap. Public HTTP verification now returns 200 and the sitemap
+contains `https://fensterglazing.com/why-distinction/`.
+
+The final public page passes **158/158** composite checks. At 1440×780 the new
+product-information section is 618px high and every top-level composite section
+remains at or below the 707px desktop budget. Browser checks at 390px and 320px
+show no page-level horizontal overflow. Live theme revision is
+`49bbb55a661ac66dca77fc8d8c564cb67b6a1386`; combined protected-test revision is
+`a1d357f8afd4578390cae42eedfb69527066438e`. Additional rollback archives are
+`~/fenster-pre-composite-depth-20260915.tar.gz` and
+`~/fenster-pre-why-distinction-20260915.tar.gz`.
