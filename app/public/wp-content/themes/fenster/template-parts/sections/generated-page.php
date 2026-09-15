@@ -12,6 +12,12 @@ if (! is_array($page)) {
 }
 
 $slug = (string) ($page['slug'] ?? '');
+// The composite page owns its composition; legacy product wrappers must not
+// reintroduce old spacing and full-screen section rules into this route.
+if ($slug === 'composite-doors') {
+    get_template_part('template-parts/sections/composite-doors', null, ['page' => $page]);
+    return;
+}
 $title = (string) ($page['title'] ?? 'Fenster Glazing');
 $sections = $page['sections'] ?? [];
 $images = $page['images'] ?? [];

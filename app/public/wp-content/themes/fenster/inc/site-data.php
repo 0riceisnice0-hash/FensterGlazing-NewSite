@@ -2621,33 +2621,21 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'intro' => 'We fit Distinction composite doors, the door on one in four UK front entrances: Signature for traditional homes, Contemporary for clean lines. Price yours online in about ten minutes, or come and slam one in the showroom.',
+                'intro' => 'We fit Distinction composite doors across Milton Keynes and the surrounding counties. Choose from six collections, with colour, glass and hardware specified for your home. Our own team surveys the opening and fits the finished doorset.',
                 'benefits' => [
-                    ['title' => 'Strong entrance door construction', 'copy' => 'Composite doors combine a reinforced core, durable skins and secure hardware for a robust front-door upgrade.'],
-                    ['title' => 'Wide design choice', 'copy' => 'We can help compare door styles, glass designs, colours and hardware so the entrance suits the property.'],
-                    ['title' => 'Secure by design options', 'copy' => 'Security-focused locks, cylinders and hardware options help create a reassuring entrance specification.'],
-                    ['title' => 'Weather-resistant finish', 'copy' => 'Composite door skins are designed to handle everyday weather while keeping a smart, low-maintenance appearance.'],
-                    ['title' => 'Surveyed and fitted carefully', 'copy' => 'The frame, threshold, opening and hardware details are checked before ordering so the final door fits properly.'],
+                    ['title' => 'A 44.5mm insulated slab', 'copy' => 'GRP skins, a foam-filled core and a reinforced structure combine in a low-maintenance entrance door.'],
+                    ['title' => 'Six door collections', 'copy' => 'Compare traditional, contemporary, cottage and stable-door styles, then choose the colour, glass and hardware.'],
+                    ['title' => 'AI Secure locking', 'copy' => 'An APECS 3-star cylinder and ILH Duplex multipoint lock are fitted to every door. The break-in guarantee covers up to £5,000, subject to terms.'],
+                    ['title' => 'Your choice of finish', 'copy' => 'Choose a standard finish or a RAL colour match, with a different colour inside if you prefer.'],
+                    ['title' => 'Our own surveyors and fitters', 'copy' => 'We check the opening, threshold, glass and hardware before ordering. Installation has a ten-year insurance-backed guarantee.'],
                 ],
                 'faqs' => [
-                    ['question' => 'How much does a composite door cost fitted?', 'answer' => 'One we fitted recently came to £2,000 including VAT: a 900 x 2100 Distinction Esteem, anthracite grey outside and white inside, with a low aluminium threshold, clear glass and a chrome lever handle. Yours will differ with size, style, glass and hardware, so the honest answer is to price your exact door on our quote tool, which takes about ten minutes. Our composite door prices page shows the checked example and what moves the figure.'],
-                    /* THE QUESTION WAS RETITLED 2026-08-15, not rewritten. It asked "What is a
-                       composite door made from?", which is a category question this
-                       page already answers at length in the slab section, and it meant
-                       nobody arriving with the question they actually have — why this
-                       door and not another — found it phrased that way anywhere.
-
-                       The answer is the approved copy untouched, with one sentence
-                       added. That sentence is a judgment and says so: the owner's real
-                       reason for choosing this door is that it is the best made one he
-                       has handled, which is not a specification and must not be dressed
-                       up as one. The showroom line is what turns it into something the
-                       reader can check for themselves. */
-                    ['question' => 'Why do you fit Distinction composite doors?', 'answer' => 'A 44.5mm slab built in layers: a GRP skin with a woodgrain taken from real oak, water-resistant polymer edges, engineered wood stiles, a reinforced central board and a foam-filled insulating core. A typical uPVC door panel is 28mm, which is why a composite door feels so different the first time you close one. It is the best-made door we have handled, and the showroom is the place to test that.'],
-                    ['question' => 'Are composite doors more secure than uPVC doors?', 'answer' => 'The slab is thicker and stiffer than a uPVC panel, most decorative glass designs are laminated, and every doorset we fit has multi-point locking. Distinction door slabs are accredited by Secured by Design, the police security initiative, and our composite doors carry a £5,000 security guarantee.'],
-                    ['question' => 'Can I choose the colour and glass design?', 'answer' => 'Yes, and you can have one colour outside and a different one inside. Colour, glass and hardware are chosen against your door style, and the combination is confirmed before anything is ordered. Colour swatches come out to a consultation; the doors themselves are at the showroom.'],
-                    ['question' => 'Do composite doors need repainting?', 'answer' => 'No, and you should not paint one; it voids the surface warranty. Warm water and a soft cloth is the whole maintenance routine. Skip abrasive cleaners, pressure washers and solvents.'],
-                    ['question' => 'Why is there no U-value shown for composite doors?', 'answer' => 'A real U-value belongs to the complete doorset: slab, frame, glass and threshold together. We will not print an invented number before your door is specified. The tested figure worth knowing is Distinction\'s: up to 50% more thermally efficient than a 48mm solid-timber-core composite door in independent testing at the University of Salford\'s Energy House.'],
+                    ['question' => 'How much does a composite door cost fitted?', 'answer' => 'A checked installation example was £2,000 including VAT: a 900 x 2100mm Distinction Esteem, anthracite grey outside and white inside, with a low aluminium threshold, clear glass and a chrome lever handle. Your price depends on the size, style, glass, hardware and any side panels. Use the quote tool for your specification, or read our composite door price guide. The final specification and price are confirmed after survey.'],
+                    ['question' => 'Why do you fit Distinction composite doors?', 'answer' => 'The 44.5mm slab combines a GRP outer skin, water-resistant polymer edges, engineered wood stiles, a reinforced central board and a foam-filled insulating core. It gives us a well-built door with a broad choice of styles and finishes. You can see the doors and try the hardware at our Milton Keynes showroom.'],
+                    ['question' => 'What security comes with the door?', 'answer' => 'Every door we fit has AI Secure locking, with an APECS 3-star cylinder and an ILH Duplex multipoint lock. If either lock component fails in a break-in, the guarantee covers up to £5,000 in compensation. The terms are confirmed before you order, alongside the complete doorset specification.'],
+                    ['question' => 'Can I choose different colours inside and outside?', 'answer' => 'Yes. Choose a standard finish or a RAL colour match outside, with a different finish inside if you prefer. Glass and hardware are selected for the chosen door style. We bring physical colour swatches to your consultation and confirm the complete combination before ordering.'],
+                    ['question' => 'Do composite doors need repainting?', 'answer' => 'No. Clean the surface with warm water and a soft cloth. Avoid abrasive cleaners, pressure washers and solvents. Painting the door voids the surface warranty, so choose the finish you want when specifying it.'],
+                    ['question' => 'How energy efficient is a composite door?', 'answer' => 'The foam-filled slab helps insulate the entrance. A U-value applies to the complete doorset, including its frame, glass and threshold, so it depends on the door you choose. Ask us for the performance information for your final specification; one figure would not describe every combination on this page.'],
                 ],
                 'glass_styles' => [
                     'intro' => 'Distinction decorative glass gives a composite entrance more character without turning the choice into guesswork. Most decorative units are triple glazed and laminated as standard; availability still depends on the chosen door style, aperture size and final doorset specification.',

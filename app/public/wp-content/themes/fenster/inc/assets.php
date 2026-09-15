@@ -31,6 +31,20 @@ function fenster_enqueue_assets(): void
         $js_version,
         true
     );
+
+    $generated_page = get_query_var('fenster_generated_page');
+    if (is_array($generated_page) && ($generated_page['slug'] ?? '') === 'composite-doors') {
+        foreach (['css', 'js'] as $type) {
+            $relative = '/assets/' . $type . '/composite-page.' . $type;
+            $path = FENSTER_THEME_DIR . $relative;
+            $version = filemtime($path) . '-' . filesize($path);
+            if ($type === 'css') {
+                wp_enqueue_style('fenster-composite-page', FENSTER_THEME_URI . $relative, ['fenster-main'], $version);
+            } else {
+                wp_enqueue_script('fenster-composite-page', FENSTER_THEME_URI . $relative, ['fenster-main'], $version, true);
+            }
+        }
+    }
 }
 
 add_filter('style_loader_tag', 'fenster_unmask_stylesheet_for_clarity', 10, 4);
