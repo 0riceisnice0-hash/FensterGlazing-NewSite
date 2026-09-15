@@ -57,7 +57,7 @@ function fenster_composite_door_collections(): array
         [
             'name'   => 'Traditional',
             'slab'   => 'Panelled slab, glass cut into it',
-            'intro'  => 'A moulded slab with raised detail and the glazed section cut into it. Much the biggest group, and where most period and estate frontages end up.',
+            'intro'  => 'Raised panel detail with a choice of glazed openings. Familiar front-door shapes for period homes and traditional frontages.',
             'styles' => [
                 ['key' => '247', 'name' => '3 Quarter Lite', 'slab' => '3 Quarter Lite', 'glass_options' => 4, 'traits' => ['glass' => 3, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
                 ['key' => '0', 'name' => 'Elegance', 'slab' => '4 Panel Blank', 'glass_options' => 17, 'traits' => ['glass' => 3, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
