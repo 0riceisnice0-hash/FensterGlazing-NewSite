@@ -124,8 +124,4 @@ if (page) {
     });
     watchNavigation();
   }
-  const assist = page.querySelector('[data-cdoor-assist]');
-  // Shared quiz links must reveal their result even though the optional finder
-  // is collapsed for visitors who have not asked to use it.
-  if (assist && new URLSearchParams(location.search).has('door')) assist.open = true;
 }

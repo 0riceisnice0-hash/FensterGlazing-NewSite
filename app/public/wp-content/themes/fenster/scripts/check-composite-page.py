@@ -74,6 +74,24 @@ hero_facts = article.find(lambda n: 'fg-cdoor-hero__facts' in n.attrs.get('class
 check('hero carries three concrete facts', len(hero_facts) == 1 and len(hero_facts[0].find(lambda n: n.tag == 'li')) == 3)
 product_info = article.find(lambda n: n.attrs.get('aria-labelledby') == 'composite-distinction-title')
 check('Distinction product information is present', len(product_info) == 1 and all(term in normalise(product_info[0].text()) for term in ['BS 6375-1', '25-year slab warranty', 'CFC-free polyurethane core', 'four million doors']))
+doorset_info = article.find(lambda n: n.attrs.get('aria-labelledby') == 'composite-spec-title')
+check('complete doorset guidance is present', len(doorset_info) == 1 and all(term in normalise(doorset_info[0].text()) for term in ['U-value', 'threshold', 'hinge side', 'ten-year insurance-backed installation guarantee']))
+ordered_markers = [
+    'composite-distinction-title',
+    'composite-build-title',
+    'composite-spec-title',
+    'composite-range-title',
+    'composite-glass-title',
+    'composite-colour-title',
+    'fg-door-handle-finishes-title',
+    'composite-proof-title',
+    'composite-faq-title',
+    'composite-quote-title',
+    'composite-enquiry-title',
+]
+article_ids = [n.attrs['id'] for n in article.walk() if 'id' in n.attrs]
+check('sections run from reasons and specification to choices and enquiry', all(marker in article_ids for marker in ordered_markers) and [article_ids.index(marker) for marker in ordered_markers] == sorted(article_ids.index(marker) for marker in ordered_markers))
+check('door finder quiz is absent', not article.find(lambda n: 'data-cdoor-assist' in n.attrs or 'fg-cdoor-assist' in n.attrs.get('class', '')))
 ids = [n.attrs['id'] for n in document.walk() if 'id' in n.attrs]
 duplicates = [value for value, count in collections.Counter(ids).items() if count > 1]
 check('unique document IDs', not duplicates)
@@ -131,7 +149,10 @@ for node in article.find(lambda n: n.tag == 'img' and n.attrs.get('src')):
 repeated_photos = [paths for paths in photo_hashes.values() if len(paths) > 1]
 check('no repeated raster images in page content', not repeated_photos)
 check('no empty iframe src', not article.find(lambda n: n.tag == 'iframe' and n.attrs.get('src') == ''))
-check('one shared enquiry form', len(article.find(lambda n: n.tag == 'form' and 'fg-enquiry-form' in n.attrs.get('class', ''))) == 1)
+enquiry_sections = article.find(lambda n: n.tag == 'section' and 'fg-enquiry' in n.attrs.get('class', '').split())
+enquiry_forms = article.find(lambda n: n.tag == 'form' and 'fg-enquiry-form' in n.attrs.get('class', ''))
+check('one shared enquiry section and form', len(enquiry_sections) == 1 and len(enquiry_forms) == 1 and 'fg-form' in enquiry_forms[0].attrs.get('class', '').split())
+check('no composite-specific form skin', not article.find(lambda n: 'fg-cdoor-form' in n.attrs.get('class', '').split()))
 check('no legacy composite page assembly', not document.find(lambda n: 'generated-page--composite-doors' in n.attrs.get('class', '')))
 
 internal_links = sorted(set(n.attrs['href'] for n in article.find(lambda n: n.tag == 'a' and '/windowcad7/' not in n.attrs.get('href', '') and n.attrs.get('href', '').startswith('http'))))
