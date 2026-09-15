@@ -67,7 +67,7 @@ $reviews = fenster_review_cards(2, 'front door');
     <section class="fg-cdoor-section fg-cdoor-range" id="composite-range" aria-labelledby="composite-range-title" data-cdoor-range>
         <div class="fg-cdoor-shell">
             <header class="fg-cdoor-heading">
-                <div><p class="fg-cdoor-kicker">01 / Find your style</p><h2 id="composite-range-title"><?php echo (int) $door_count; ?> door styles.</h2></div>
+                <div><p class="fg-cdoor-kicker">Find your style</p><h2 id="composite-range-title"><?php echo (int) $door_count; ?> door styles.</h2></div>
                 <p>Browse six collections. Open a style to choose its colour, glass and hardware in the quote tool.</p>
             </header>
             <div class="fg-cdoor-range__tools" hidden data-cdoor-range-tools>
@@ -109,7 +109,7 @@ $reviews = fenster_review_cards(2, 'front door');
         <section class="fg-cdoor-section" aria-labelledby="composite-glass-title">
             <div class="fg-cdoor-shell fg-cdoor-choice" data-cdoor-picker>
                 <div class="fg-cdoor-choice__intro">
-                    <p class="fg-cdoor-kicker">02 / The finishing details</p>
+                    <p class="fg-cdoor-kicker">The finishing details</p>
                     <h2 id="composite-glass-title">Let the glass<br> set the character.</h2>
                     <p>From a quiet satin panel to bevels and decorative leadwork. The shape of your door sets the opening; the glass gives it its own detail.</p>
                 </div>
@@ -164,7 +164,7 @@ $reviews = fenster_review_cards(2, 'front door');
         <div class="fg-cdoor-shell">
             <div class="fg-cdoor-build__grid">
                 <figure><?php $photo($asset('anatomy/slab-cutaway-trim-341w.webp'), 'Cutaway of the GRP skin, insulated core and reinforced structure of a Distinction composite door'); ?><figcaption>The layers inside a 44.5mm Distinction slab.</figcaption></figure>
-                <div><p class="fg-cdoor-kicker">03 / Built for everyday life</p><h2 id="composite-build-title">More to it than<br>a good first impression.</h2>
+                <div><p class="fg-cdoor-kicker">Built for everyday life</p><h2 id="composite-build-title">More to it than<br>a good first impression.</h2>
                     <p>The woodgrain comes from real oak. Beneath it, the slab combines insulation, reinforcement and water-resistant edges.</p>
                     <dl class="fg-cdoor-build__facts">
                         <div><dt>GRP outer skin</dt><dd>A textured, low-maintenance surface. Clean with warm water and a soft cloth.</dd></div>
@@ -181,7 +181,7 @@ $reviews = fenster_review_cards(2, 'front door');
     <section class="fg-cdoor-section fg-cdoor-proof" aria-labelledby="composite-proof-title">
         <div class="fg-cdoor-shell fg-cdoor-proof__grid">
             <figure><?php $photo($asset('hero/fenster-mk-front-door-1280w.webp'), 'Our completed anthracite composite front door and glazed sidelight installation in Milton Keynes'); ?><figcaption>Milton Keynes · Fitted by our team</figcaption></figure>
-            <div><p class="fg-cdoor-kicker">04 / Fitted by us</p><h2 id="composite-proof-title">A different entrance.<br>The same home.</h2>
+            <div><p class="fg-cdoor-kicker">Fitted by us</p><h2 id="composite-proof-title">A different entrance.<br>The same home.</h2>
                 <p>For this Milton Keynes home, we fitted an anthracite grey Rustic Renown style door with a full-height glazed sidelight. White on the inside keeps the hallway bright.</p>
                 <p>We survey the opening, check the threshold and hardware, then return with our own installers. Your new door comes with a ten-year insurance-backed installation guarantee.</p>
                 <a class="fg-cdoor-link" href="<?php echo esc_url(home_url('/case-studies/composite-front-door-milton-keynes/')); ?>">See this installation <span aria-hidden="true">↗</span></a>
@@ -201,7 +201,7 @@ $reviews = fenster_review_cards(2, 'front door');
 
     <section class="fg-cdoor-section fg-cdoor-quote" id="fenster-product-quote" aria-labelledby="composite-quote-title">
         <div class="fg-cdoor-shell fg-cdoor-quote__grid">
-            <div><p class="fg-cdoor-kicker">05 / Put a price to it</p><h2 id="composite-quote-title">Your door.<br> Your specification.<br> Your quote.</h2><p>Choose the style, sizes, colour, glass and handles in our online tool. We confirm the final specification and price after survey.</p><p>If you would rather build the quote with us, <a href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">book a free consultation</a>.</p><a class="button fg-cdoor-quote__mobile" href="<?php echo esc_url($quote_url); ?>">Open the quote tool <span aria-hidden="true">↗</span></a></div>
+            <div><p class="fg-cdoor-kicker">Put a price to it</p><h2 id="composite-quote-title">Your door.<br> Your specification.<br> Your quote.</h2><p>Choose the style, sizes, colour, glass and handles in our online tool. We confirm the final specification and price after survey.</p><p>If you would rather build the quote with us, <a href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">book a free consultation</a>.</p><a class="button fg-cdoor-quote__mobile" href="<?php echo esc_url($quote_url); ?>">Open the quote tool <span aria-hidden="true">↗</span></a></div>
             <div class="fg-cdoor-quote__card" data-quote-card>
                 <div class="fg-cdoor-quote__toolbar"><span>Composite door designer</span><a href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
                 <div class="fg-cdoor-quote__frame" data-quote-frame-wrap data-quote-autoload="visible" data-lenis-prevent data-quote-url="<?php echo esc_url($quote_url); ?>">
