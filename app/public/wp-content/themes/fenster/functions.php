@@ -38,6 +38,7 @@ $fenster_required_files = [
     'inc/enquiries.php',
     'inc/adminbase.php',
     'inc/google-ads-conversions.php',
+    'inc/quote-collections.php',
     'inc/generated-pages.php',
     'inc/location-page-data.php',
     'inc/scan-links.php',
