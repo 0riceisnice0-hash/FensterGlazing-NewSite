@@ -211,6 +211,8 @@ html:has(.fg-cdoor-page) { scroll-behavior: auto; }
 .fg-cdoor-assist .fg-cdq__pip { background: #cad8cf; }
 .fg-cdoor-assist .fg-cdq__pip.is-done { background: #26814e; }
 .fg-cdoor-assist .fg-cdq__reveal-art { background: white; }
+.fg-cdoor-assist .fg-cdq__reveal-words { display: grid; gap: 12px; }
+.fg-cdoor-assist .fg-cdq__why:empty { display: none; }
 
 .fg-cdoor-enquiry { background: white; color: var(--cd-ink); }
 .fg-cdoor-enquiry .fg-cdoor-kicker { color: #26814e; }
