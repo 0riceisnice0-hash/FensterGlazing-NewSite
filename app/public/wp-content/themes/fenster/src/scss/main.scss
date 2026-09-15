@@ -53480,18 +53480,11 @@ html.fg-blinds-reveal-locked {
    flow, and `100svh` there is a moving target as the browser chrome hides. */
 @media (min-width: 1024px) and (min-height: 700px) {
 
-  /* `proximity`, not `mandatory`. Mandatory traps a reader on any section
-     that ever grows past the viewport - a longer FAQ answer, a wrapped
-     heading at an odd width - with no way to reach the rest of it. Proximity
-     settles the scroll onto a section boundary when it is near one, which is
-     the behaviour that was actually missing, and costs nothing when it is
-     not. */
-  html:has(.generated-page--composite-doors) { scroll-snap-type: y proximity; }
-
+  /* Keep normal page scrolling. Section snapping competes with Lenis
+     and repeatedly pulls wheel/trackpad movement toward section boundaries. */
   .generated-page--composite-doors > section,
   .generated-page--composite-doors .fg-finish > section {
     min-height: calc(100svh - 73px);
-    scroll-snap-align: start;
     /* The header is sticky and 73px, so a section aligned to the top of the
        scrollport would start underneath it. */
     scroll-margin-top: 73px;
