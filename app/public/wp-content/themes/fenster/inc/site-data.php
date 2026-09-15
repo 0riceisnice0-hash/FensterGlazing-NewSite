@@ -415,8 +415,8 @@ function fenster_site_data(): array
             'composite-doors' => [
                 ['label' => 'Collections', 'value' => 'Six to choose from'],
                 ['label' => 'Door slab', 'value' => '44.5mm insulated GRP'],
-                ['label' => 'Break-in guarantee', 'value' => '£5,000'],
-                ['label' => 'Guarantee', 'value' => '10 years'],
+                ['label' => 'Break-in guarantee', 'value' => 'Up to £5,000; terms apply'],
+                ['label' => 'Installation guarantee', 'value' => '10 years, insurance-backed'],
             ],
             'integral-blinds' => [
                 ['label' => 'Maintenance', 'value' => 'Maintenance-free'],
@@ -1239,7 +1239,7 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-signature-entrance-1920w.webp', 'alt' => 'Pale blue Signature composite front door with decorative glass'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/chatsworth-double-lite-1400w.webp', 'alt' => 'A glazed composite front door beneath a canopy on a brick house'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/chatsworth-double-lite-1400w.webp', 'alt' => 'Pale composite entrance door with twin Chatsworth glazed panels'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp', 'alt' => 'Dark contemporary composite entrance door with a long pull handle'],

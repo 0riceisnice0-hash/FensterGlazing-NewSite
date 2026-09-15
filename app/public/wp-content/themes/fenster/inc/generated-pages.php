@@ -283,7 +283,7 @@ function fenster_gsc_seo_overrides(): array
         ],
         'composite-doors' => [
             'title_tag' => 'Composite Doors Milton Keynes | Secure Front Doors',
-            'meta_description' => 'Composite doors with insulated slabs, secure locking, colour choices and survey-led fitting across Milton Keynes, Northampton and nearby towns.',
+            'meta_description' => 'Composite doors in Milton Keynes, fitted by our own team. Browse Distinction styles, colours and glass, see a real installation and get a fitted quote.',
         ],
         'upvc-doors' => [
             'title_tag' => 'uPVC Doors Milton Keynes | Secure Low-Maintenance Doors',

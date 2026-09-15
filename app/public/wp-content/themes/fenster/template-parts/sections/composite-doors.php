@@ -176,13 +176,13 @@ $reviews = fenster_review_cards(2, 'front door');
 
     <section class="fg-cdoor-section fg-cdoor-proof" aria-labelledby="composite-proof-title">
         <div class="fg-cdoor-shell fg-cdoor-proof__grid">
-            <figure><?php $photo($asset('hero/fenster-mk-front-door-1280w.webp'), 'Our completed anthracite composite front door and glazed sidelight installation in Milton Keynes'); ?><figcaption>Milton Keynes · August 2026</figcaption></figure>
+            <figure><?php $photo($asset('hero/fenster-mk-front-door-1280w.webp'), 'Our completed anthracite composite front door and glazed sidelight installation in Milton Keynes'); ?><figcaption>Milton Keynes · Fitted by our team</figcaption></figure>
             <div><p class="fg-cdoor-kicker">04 / Fitted by us</p><h2 id="composite-proof-title">A different entrance.<br>The same home.</h2>
                 <p>For this Milton Keynes home, we fitted an anthracite grey Rustic Renown style door with a full-height glazed sidelight. White on the inside keeps the hallway bright.</p>
                 <p>We survey the opening, check the threshold and hardware, then return with our own installers. Your new door comes with a ten-year insurance-backed installation guarantee.</p>
                 <a class="fg-cdoor-link" href="<?php echo esc_url(home_url('/case-studies/composite-front-door-milton-keynes/')); ?>">See this installation <span aria-hidden="true">↗</span></a>
                 <?php if (! empty($reviews)) : $review = $reviews[0]; ?>
-                    <blockquote class="fg-cdoor-review"><p>“<?php echo esc_html(wp_trim_words((string) ($review['quote'] ?? ''), 48, '…')); ?>”</p><footer><?php echo esc_html((string) ($review['author'] ?? 'Customer review')); ?> · <a href="<?php echo esc_url((string) ($review['url'] ?? fenster_google_reviews_url())); ?>" target="_blank" rel="noopener">Read the full review</a></footer></blockquote>
+                    <blockquote class="fg-cdoor-review"><p>“<?php echo esc_html(wp_trim_words((string) ($review['quote'] ?? ''), 48, '…')); ?>”</p><footer><?php echo esc_html((string) ($review['author'] ?? 'Customer review')); ?> · Google review · <a href="<?php echo esc_url((string) (! empty($review['url']) ? $review['url'] : fenster_google_reviews_url())); ?>" target="_blank" rel="noopener">Read in full</a></footer></blockquote>
                 <?php endif; ?>
             </div>
         </div>
@@ -216,3 +216,4 @@ $reviews = fenster_review_cards(2, 'front door');
         </div>
     </section>
 </article>
+<?php fenster_render_faq_page_schema($content['faqs'] ?? []); ?>
