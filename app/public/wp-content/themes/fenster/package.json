@@ -4,7 +4,10 @@
   "private": true,
   "description": "Hardcoded AI-maintained WordPress theme for Fenster Glazing.",
   "scripts": {
-    "build": "npm run build:css && npm run build:js",
+    "build": "npm run build:css && npm run build:js && npm run build:composite",
+    "build:composite": "npm run build:composite:css && npm run build:composite:js",
+    "build:composite:css": "sass src/scss/composite-page.scss assets/css/composite-page.css --style=compressed --no-source-map",
+    "build:composite:js": "esbuild src/js/composite-page.js --bundle --minify --target=es2019 --outfile=assets/js/composite-page.js",
     "build:css": "sass src/scss/main.scss assets/css/main.css --style=compressed --no-source-map",
     "build:js": "esbuild src/js/main.js --bundle --minify --outfile=assets/js/main.js",
     "encode:product-videos": "node scripts/encode-product-scroll-videos.cjs",

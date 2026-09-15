@@ -3278,7 +3278,9 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
   renderCalendar();
 });
 
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+// The rebuilt composite catalogue uses native scrolling. Its many interactive
+// choices must not sit inside an interpolated document scroll loop.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.querySelector('[data-composite-page]')) {
   const lenis = new Lenis({
     anchors: {
       offset: -88,
@@ -12384,7 +12386,9 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
   const frame = root.querySelector('[data-fg-quiz-frame]');
   const pips = Array.from(root.querySelectorAll('[data-fg-quiz-pip]'));
   const count = root.querySelector('[data-fg-quiz-count]');
-  if (!panel || !result || !frame || !steps.length) return;
+  if (!panel || !result || !steps.length) return;
+  steps.forEach((step) => step.querySelector('h3')?.setAttribute('tabindex', '-1'));
+  const focusStep = () => steps[at]?.querySelector('h3')?.focus({ preventScroll: true });
 
   const artBase = root.dataset.fgQuizArt || '';
   const artVer = root.dataset.fgQuizVer || '';
@@ -12447,24 +12451,27 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
     const colourLine = root.querySelector('[data-fg-quiz-colour]');
     if (colourLine) {
       const name = colourNames[String(prefs.c)];
-      if (name) { colourLine.textContent = 'Shown in ' + name; colourLine.removeAttribute('hidden'); }
+      if (name) { colourLine.textContent = (frame ? 'Shown in ' : 'Chosen colour: ') + name; colourLine.removeAttribute('hidden'); }
       else colourLine.setAttribute('hidden', '');
     }
     const poa = root.querySelector('[data-fg-quiz-poa]');
     if (poa) { if (door.p) poa.removeAttribute('hidden'); else poa.setAttribute('hidden', ''); }
 
-    frame.innerHTML = '';
-    const iframe = document.createElement('iframe');
-    iframe.src = quoteFor(door.k, prefs.c);
-    iframe.title = 'Design and price the ' + door.n + ' online';
-    iframe.loading = 'lazy';
-    frame.appendChild(iframe);
+    if (frame) {
+      frame.innerHTML = '';
+      const iframe = document.createElement('iframe');
+      iframe.src = quoteFor(door.k, prefs.c);
+      iframe.title = 'Design and price the ' + door.n + ' online';
+      iframe.loading = 'lazy';
+      frame.appendChild(iframe);
+    }
 
     steps.forEach((s) => s.setAttribute('hidden', ''));
     result.removeAttribute('hidden');
     root.classList.add('is-revealed');
     pips.forEach((p) => p.classList.add('is-done'));
     if (count) count.textContent = 'Your door';
+    if (explain) root.querySelector('[data-fg-quiz-name]')?.focus({ preventScroll: true });
 
     try {
       /* Built from the path rather than `location.href`. A URL carrying
@@ -12504,12 +12511,12 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
       btn.addEventListener('click', () => {
         const raw = btn.dataset.fgQuizAnswer;
         prefs[id] = raw === '' ? null : Number(raw);
-        if (index + 1 < steps.length) { at = index + 1; paint(); }
+        if (index + 1 < steps.length) { at = index + 1; paint(); focusStep(); }
         else finish();
       });
     });
     const back = step.querySelector('[data-fg-quiz-back]');
-    if (back) back.addEventListener('click', () => { at = Math.max(0, index - 1); paint(); });
+    if (back) back.addEventListener('click', () => { at = Math.max(0, index - 1); paint(); focusStep(); });
   });
 
   const resetBtn = root.querySelector('[data-fg-quiz-reset]');
@@ -12519,9 +12526,10 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
       at = 0;
       result.setAttribute('hidden', '');
       root.classList.remove('is-revealed');
-      frame.innerHTML = '';
+      if (frame) frame.innerHTML = '';
       pips.forEach((p) => p.classList.remove('is-done'));
       paint();
+      focusStep();
       try { window.history.replaceState({}, '', window.location.pathname); } catch (e) { /* nothing to undo */ }
     });
   }
