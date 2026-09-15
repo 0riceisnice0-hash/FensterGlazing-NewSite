@@ -69,6 +69,71 @@ $reviews = fenster_review_cards(2, 'front door');
         </div>
     </section>
 
+    <section class="fg-cdoor-section fg-cdoor-distinction" aria-labelledby="composite-distinction-title">
+        <div class="fg-cdoor-shell fg-cdoor-distinction__grid">
+            <figure>
+                <img src="<?php echo esc_url($asset('gallery/ruby-red-entrance-800w.webp')); ?>"
+                    srcset="<?php echo esc_attr($asset('gallery/ruby-red-entrance-480w.webp') . ' 480w, ' . $asset('gallery/ruby-red-entrance-800w.webp') . ' 800w'); ?>"
+                    sizes="(max-width: 600px) calc(100vw - 36px), 34vw" width="800" height="1000" loading="lazy" decoding="async"
+                    alt="A red Distinction composite front door with decorative glass and a long brushed handle">
+                <figcaption>A Distinction entrance door, shown with decorative glass and a long pull handle.</figcaption>
+            </figure>
+            <div class="fg-cdoor-distinction__content">
+                <p class="fg-cdoor-kicker">Product information</p>
+                <h2 id="composite-distinction-title">Why we fit Distinction composite doors.</h2>
+                <p class="fg-cdoor-distinction__lede">Distinction make the door slab. We specify it as part of a complete doorset, with the frame, glass, threshold and locking chosen for your opening and fitted by our own team.</p>
+                <dl class="fg-cdoor-distinction__facts">
+                    <div><dt>Made in layers</dt><dd>A high-impact GRP skin, water-resistant polymer sub-frame, engineered timber reinforcement, central board and a CFC-free polyurethane core.</dd></div>
+                    <div><dt>Independently tested</dt><dd>Distinction publish testing to BS 6375-1 for weather performance, with acoustic results of 26 dB OITC and 29 dB STC for the slab.</dd></div>
+                    <div><dt>25-year slab warranty</dt><dd>The manufacturer covers the slab's structure and surface. Glass, hardware and our installation have their own terms and guarantees.</dd></div>
+                    <div><dt>A proven UK system</dt><dd>Distinction report more than four million doors installed since 2004, accounting for one in four UK entrance doors.</dd></div>
+                </dl>
+                <a class="button button--steel" href="<?php echo esc_url(home_url('/why-distinction/')); ?>">Read why we fit Distinction <span aria-hidden="true">↗</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-cdoor-section fg-cdoor-build" aria-labelledby="composite-build-title">
+        <div class="fg-cdoor-shell">
+            <div class="fg-cdoor-build__grid">
+                <figure><?php $photo($asset('anatomy/slab-cutaway-trim-341w.webp'), 'Cutaway of the GRP skin, insulated core and reinforced structure of a Distinction composite door'); ?><figcaption>The layers inside a 44.5mm Distinction slab.</figcaption></figure>
+                <div><p class="fg-cdoor-kicker">Built for everyday life</p><h2 id="composite-build-title">More to it than<br>a good first impression.</h2>
+                    <p>The woodgrain comes from real oak. Beneath it, the slab combines insulation, reinforcement and water-resistant edges.</p>
+                    <dl class="fg-cdoor-build__facts">
+                        <div><dt>GRP outer skin</dt><dd>A textured, low-maintenance surface. Clean with warm water and a soft cloth.</dd></div>
+                        <div><dt>Foam-filled core</dt><dd>Polyurethane insulation within the 44.5mm slab helps your entrance hold its heat.</dd></div>
+                        <div><dt>Reinforced structure</dt><dd>Engineered wood stiles and a central board support the slab.</dd></div>
+                        <div><dt>Water-resistant edges</dt><dd>Polymer rails protect the edges of the door through changing weather.</dd></div>
+                    </dl>
+                </div>
+            </div>
+            <div class="fg-cdoor-security"><strong><small>Up to</small>£5,000<span>Break-in guarantee</span></strong><p>Every door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. If either lock component fails in a break-in, you are covered for up to £5,000 in compensation. Terms apply and are confirmed before you order.</p></div>
+        </div>
+    </section>
+
+    <section class="fg-cdoor-section fg-cdoor-spec" aria-labelledby="composite-spec-title">
+        <div class="fg-cdoor-shell fg-cdoor-spec__grid">
+            <div class="fg-cdoor-spec__content">
+                <p class="fg-cdoor-kicker">The complete doorset</p>
+                <h2 id="composite-spec-title">The slab is only part of the door.</h2>
+                <p class="fg-cdoor-spec__lede">A good slab can still make a poor entrance if the frame, glass, threshold or fitting is wrong. We settle the complete specification after measuring the opening.</p>
+                <dl class="fg-cdoor-spec__facts">
+                    <div><dt>Warmth</dt><dd>The insulated core reduces heat transfer through the slab. The U-value belongs to the complete doorset, so we confirm it for your chosen frame, glass and threshold.</dd></div>
+                    <div><dt>Weather</dt><dd>The slab has published BS 6375-1 weather testing. Survey and installation still decide how the finished entrance manages seals, drainage and exposure.</dd></div>
+                    <div><dt>Access and layout</dt><dd>Opening direction, hinge side, low thresholds, side panels and the step outside are agreed before manufacture. They cannot be corrected with a different colour or handle later.</dd></div>
+                    <div><dt>Fitting and aftercare</dt><dd>Our team removes the old door, fits and seals the new doorset, checks the lock and leaves you with care guidance and a ten-year insurance-backed installation guarantee.</dd></div>
+                </dl>
+            </div>
+            <figure>
+                <img src="<?php echo esc_url($asset('gallery/three-quarter-glass-1400w.webp')); ?>"
+                    srcset="<?php echo esc_attr($asset('gallery/three-quarter-glass-480w.webp') . ' 480w, ' . $asset('gallery/three-quarter-glass-800w.webp') . ' 800w, ' . $asset('gallery/three-quarter-glass-1400w.webp') . ' 1400w'); ?>"
+                    sizes="(max-width: 600px) calc(100vw - 36px), 36vw" width="1400" height="1050" loading="lazy" decoding="async"
+                    alt="A Distinction composite entrance door with a large glazed panel">
+                <figcaption>Frame, glazing, threshold and slab are specified as one complete entrance.</figcaption>
+            </figure>
+        </div>
+    </section>
+
     <section class="fg-cdoor-section fg-cdoor-range" id="composite-range" aria-labelledby="composite-range-title" data-cdoor-range>
         <div class="fg-cdoor-shell">
             <header class="fg-cdoor-heading">
@@ -165,48 +230,6 @@ $reviews = fenster_review_cards(2, 'front door');
         </div>
     </div>
 
-    <section class="fg-cdoor-section fg-cdoor-build" aria-labelledby="composite-build-title">
-        <div class="fg-cdoor-shell">
-            <div class="fg-cdoor-build__grid">
-                <figure><?php $photo($asset('anatomy/slab-cutaway-trim-341w.webp'), 'Cutaway of the GRP skin, insulated core and reinforced structure of a Distinction composite door'); ?><figcaption>The layers inside a 44.5mm Distinction slab.</figcaption></figure>
-                <div><p class="fg-cdoor-kicker">Built for everyday life</p><h2 id="composite-build-title">More to it than<br>a good first impression.</h2>
-                    <p>The woodgrain comes from real oak. Beneath it, the slab combines insulation, reinforcement and water-resistant edges.</p>
-                    <dl class="fg-cdoor-build__facts">
-                        <div><dt>GRP outer skin</dt><dd>A textured, low-maintenance surface. Clean with warm water and a soft cloth.</dd></div>
-                        <div><dt>Foam-filled core</dt><dd>Polyurethane insulation within the 44.5mm slab helps your entrance hold its heat.</dd></div>
-                        <div><dt>Reinforced structure</dt><dd>Engineered wood stiles and a central board support the slab.</dd></div>
-                        <div><dt>Water-resistant edges</dt><dd>Polymer rails protect the edges of the door through changing weather.</dd></div>
-                    </dl>
-                </div>
-            </div>
-            <div class="fg-cdoor-security"><strong><small>Up to</small>£5,000<span>Break-in guarantee</span></strong><p>Every door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. If either lock component fails in a break-in, you are covered for up to £5,000 in compensation. Terms apply and are confirmed before you order.</p></div>
-        </div>
-    </section>
-
-    <section class="fg-cdoor-section fg-cdoor-distinction" aria-labelledby="composite-distinction-title">
-        <div class="fg-cdoor-shell fg-cdoor-distinction__grid">
-            <figure>
-                <img src="<?php echo esc_url($asset('gallery/ruby-red-entrance-800w.webp')); ?>"
-                    srcset="<?php echo esc_attr($asset('gallery/ruby-red-entrance-480w.webp') . ' 480w, ' . $asset('gallery/ruby-red-entrance-800w.webp') . ' 800w'); ?>"
-                    sizes="(max-width: 600px) calc(100vw - 36px), 34vw" width="800" height="1000" loading="lazy" decoding="async"
-                    alt="A red Distinction composite front door with decorative glass and a long brushed handle">
-                <figcaption>A Distinction entrance door, shown with decorative glass and a long pull handle.</figcaption>
-            </figure>
-            <div class="fg-cdoor-distinction__content">
-                <p class="fg-cdoor-kicker">Product information</p>
-                <h2 id="composite-distinction-title">Why we fit Distinction composite doors.</h2>
-                <p class="fg-cdoor-distinction__lede">Distinction make the door slab. We specify it as part of a complete doorset, with the frame, glass, threshold and locking chosen for your opening and fitted by our own team.</p>
-                <dl class="fg-cdoor-distinction__facts">
-                    <div><dt>Made in layers</dt><dd>A high-impact GRP skin, water-resistant polymer sub-frame, engineered timber reinforcement, central board and a CFC-free polyurethane core.</dd></div>
-                    <div><dt>Independently tested</dt><dd>Distinction publish testing to BS 6375-1 for weather performance, with acoustic results of 26 dB OITC and 29 dB STC for the slab.</dd></div>
-                    <div><dt>25-year slab warranty</dt><dd>The manufacturer covers the slab's structure and surface. Glass, hardware and our installation have their own terms and guarantees.</dd></div>
-                    <div><dt>A proven UK system</dt><dd>Distinction report more than four million doors installed since 2004, accounting for one in four UK entrance doors.</dd></div>
-                </dl>
-                <a class="button button--steel" href="<?php echo esc_url(home_url('/why-distinction/')); ?>">Read why we fit Distinction <span aria-hidden="true">↗</span></a>
-            </div>
-        </div>
-    </section>
-
     <section class="fg-cdoor-section fg-cdoor-proof" aria-labelledby="composite-proof-title">
         <div class="fg-cdoor-shell fg-cdoor-proof__grid">
             <figure><?php $photo($asset('hero/fenster-mk-front-door-1280w.webp'), 'Our completed anthracite composite front door and glazed sidelight installation in Milton Keynes'); ?><figcaption>Milton Keynes · Fitted by our team</figcaption></figure>
@@ -241,26 +264,18 @@ $reviews = fenster_review_cards(2, 'front door');
         </div>
     </section>
 
-    <div class="fg-cdoor-assist fg-cdoor-shell">
-        <details data-cdoor-assist>
-            <summary><span><strong>Still choosing a style?</strong><span>Try the five-question door finder.</span></span><span aria-hidden="true">+</span></summary>
-            <div>
-                <?php get_template_part('template-parts/components/composite-door-quiz', null, [
-                    'heading' => 'Find your door.',
-                    'intro' => 'Five questions about your home and the details you like. We will suggest a style to start with.',
-                    'result_heading' => 'Your starting point',
-                    'open_label' => 'Design this door',
-                    'embed_result' => false,
-                    'caveat' => 'A starting point, based on your answers. You can explore all 142 styles in the range above.',
-                ]); ?>
-                <noscript><p><a href="#composite-range">Browse all door styles above</a>. The door finder needs JavaScript.</p></noscript>
+    <section id="fenster-enquiry" class="fg-enquiry" aria-labelledby="composite-enquiry-title">
+        <div class="container fg-enquiry__grid">
+            <div class="fg-enquiry__copy">
+                <p class="eyebrow">Request a quote</p>
+                <h2 id="composite-enquiry-title">Tell us about your front door.</h2>
+                <p>A photograph and rough sizes are useful. Send what you have and we will help you settle the style, glass, threshold and hardware.</p>
+                <div class="fg-contact-list">
+                    <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '')); ?>"><?php echo esc_html($brand['phone'] ?? ''); ?></a>
+                    <a href="mailto:<?php echo esc_attr($brand['email'] ?? ''); ?>"><?php echo esc_html($brand['email'] ?? ''); ?></a>
+                </div>
             </div>
-        </details>
-    </div>
-
-    <section class="fg-cdoor-section fg-cdoor-enquiry" id="fenster-enquiry" aria-labelledby="composite-enquiry-title">
-        <div class="fg-cdoor-shell fg-cdoor-enquiry__grid"><div><p class="fg-cdoor-kicker">Talk to our team</p><h2 id="composite-enquiry-title">Tell us about<br>your front door.</h2><p>A photograph and rough sizes are useful. Send what you have, and we will help you choose the right style and specification.</p><div class="fg-cdoor-contact"><a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '')); ?>"><?php echo esc_html($brand['phone'] ?? ''); ?></a><a href="mailto:<?php echo esc_attr($brand['email'] ?? ''); ?>"><?php echo esc_html($brand['email'] ?? ''); ?></a></div><p class="fg-cdoor-note">Based in Milton Keynes. We also fit doors across Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. <a href="<?php echo esc_url(home_url('/areas-we-cover/')); ?>">See our service areas</a>.</p></div>
-            <?php get_template_part('template-parts/components/enquiry-form', null, ['class' => 'fg-form fg-cdoor-form', 'source' => 'Composite Doors', 'button_label' => 'Send my door enquiry', 'project_type' => 'Composite doors', 'lock_project_type' => true, 'compact' => true]); ?>
+            <?php get_template_part('template-parts/components/enquiry-form', null, ['class' => 'fg-form', 'source' => 'Composite Doors', 'button_label' => 'Send my door enquiry', 'project_type' => 'Composite doors', 'lock_project_type' => true, 'compact' => true]); ?>
         </div>
     </section>
 </article>
