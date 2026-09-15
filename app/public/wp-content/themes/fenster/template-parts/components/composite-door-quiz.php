@@ -303,7 +303,7 @@ $fg_total = count($fg_questions);
                 ?>
                 <div class="fg-cdq__reveal">
                     <div class="fg-cdq__reveal-art">
-                        <img data-fg-quiz-art-img src="" alt="" width="914" height="2013" decoding="async">
+                        <img data-fg-quiz-art-img alt="" width="914" height="2013" decoding="async">
                     </div>
                     <div class="fg-cdq__reveal-words">
                         <p class="fg-cdq__reveal-kicker"><?php esc_html_e('You are a', 'fenster'); ?></p>

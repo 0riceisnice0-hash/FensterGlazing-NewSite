@@ -1,5 +1,17 @@
 # Fenster Glazing Handover
 
+## Urgent composite overhaul published — 15 September 2026
+
+Live theme is **02dc0f43**, isolated branch
+`codex/composite-doors-live-2026-09-15`, not main. Owner rejected rollback and
+requested the complete overhaul. It is published and verified; see the newest
+`LIVECHANGES.md` entry. The protected SEO test environment was restored to its
+previous files after release verification. The live mobile construction fix and
+two component fixes are also carried in this SEO branch for future releases;
+these follow-up source changes have not been deployed to test.
+The statement below that production is unchanged applies only to the 14 September
+SEO deployment, not this subsequent composite release.
+
 ## SEO work on protected test — 14 September 2026
 
 The non-brand SEO and area-page rebuild is pushed on

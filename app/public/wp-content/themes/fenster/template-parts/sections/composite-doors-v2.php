@@ -136,12 +136,12 @@ $colour_doors_base = (string) ($args['colour_doors_base'] ?? '');
             <div class="container">
                 <div class="fg-wd-cta__inner">
                     <div>
-                        <p class="eyebrow"><?php esc_html_e('The long version', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Why we fit Distinction and not something else.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('Where the thermal figure comes from and what it does not cover, the accreditation, the warranty, and the part that is a judgement rather than a measurement.', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('Your door, properly specified', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('Choose the door. We will check the details.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('At your survey we check the opening, threshold, side panels and hardware, then confirm the specification and guarantee terms before you order.', 'fenster'); ?></p>
                     </div>
                     <p class="fg-wd-cta__action">
-                        <a class="button" href="<?php echo esc_url(home_url('/why-distinction/')); ?>"><?php esc_html_e('Read why we fit them', 'fenster'); ?></a>
+                        <a class="button" href="#fenster-enquiry"><?php esc_html_e('Arrange a free consultation', 'fenster'); ?></a>
                     </p>
                 </div>
             </div>

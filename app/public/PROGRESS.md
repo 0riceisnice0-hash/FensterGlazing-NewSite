@@ -1,5 +1,17 @@
 # Fenster Glazing Progress Log
 
+## 2026-09-15 — Composite doors overhaul live
+
+Owner reported the live composite page broken, then explicitly requested an
+overhaul rather than restoration. Published the complete product page from an
+isolated `e5b312a7` release line, with an additional mobile construction layout
+fix, a working consultation CTA and no empty image request from the hidden quiz.
+Live theme **02dc0f43**; five changed files, zero deletions, full-tree residual 0.
+Desktop/mobile and interactive selectors checked, five public routes HTTP 200.
+SiteGround proxy purge confirmed OK. Protected SEO test files restored.
+See `LIVECHANGES.md` for the exact revision and backup. SEO branch carries the
+follow-up fixes to prevent a later release regressing this page.
+
 Last updated: 2026-09-14
 
 Newest first. **The current START HERE block is directly below**; older ones are

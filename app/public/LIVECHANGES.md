@@ -1,5 +1,30 @@
 # Fenster Glazing Live Changes Runbook
 
+## Live composite doors overhaul — 15 September 2026
+
+Production theme is **02dc0f43d9f087ab5044c73da9d80a64a0b4e200**, branch
+`codex/composite-doors-live-2026-09-15`, based on live `e5b312a7`.
+Owner explicitly requested an overhaul instead of restoring an older version.
+The legacy composite PHP was being served with the newer shared styling.
+The complete composite hero, range, construction, security, finishes and quiz
+now render together. The consultation CTA replaces a link to unpublished
+`/why-distinction/`; that route remains held back. A mobile-only CSS fix stacks
+the construction explorer and gives its drawing a 390px container.
+
+Exactly five theme files changed; no deletions. Full-tree checks proved the
+pre-deploy theme matched `e5b312a7` and the final theme matches `02dc0f43`, with
+zero residual differences. Backup and manifests:
+`/tmp/fenster-composite-e10437a3/previous-live/` and sibling files.
+Tested on protected test before live; original SEO test files restored after.
+Live WordPress cache flushed and SiteGround socket purge returned `msg:OK`.
+Plain live URL verified: one H1, correct canonical, 142 door styles, no loaded
+broken images, no why-distinction links. Collection switching, slab controls,
+glass and colour previews checked; mobile construction confirmed at 390px.
+Homepage, composite doors, heritage aluminium doors, casement windows and
+Aylesbury landing page all returned HTTP 200. No enquiry was submitted.
+Keep this fix when preparing future SEO releases; do not reapply the old
+composite PHP holdback or deploy main wholesale.
+
 Last updated: 2026-09-09
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
