@@ -53687,3 +53687,26 @@ html.fg-blinds-reveal-locked {
 
   .fg-cdq__progress { margin-bottom: 0.6rem; }
 }
+
+/* Keep the construction drawing and layer names legible on small screens.
+   Later desktop overrides previously reinstated two columns below 860px. */
+@media (max-width: 860px) {
+  .generated-page--composite-doors {
+    .fg-cd3-anatomy__explorer { grid-template-columns: minmax(0, 1fr); }
+    .fg-cd3-anatomy__media {
+      width: 100%;
+      height: 390px;
+      max-height: none;
+      aspect-ratio: auto;
+    }
+    .fg-cd3-slab {
+      width: 150px;
+      max-width: 55%;
+      height: auto;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .fg-cd3-layer__name { overflow-wrap: normal; word-break: normal; }
+  }
+}
