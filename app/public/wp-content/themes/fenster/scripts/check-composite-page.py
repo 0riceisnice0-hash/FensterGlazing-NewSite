@@ -65,8 +65,15 @@ def check(name, condition):
     checks[name] = bool(condition)
 
 
+normalise = lambda s: re.sub(r'\s+', ' ', s).strip()
 headings = article.find(lambda n: n.tag == 'h1')
-check('one descriptive H1', len(headings) == 1 and 'composite doors' in headings[0].text().lower())
+check('one product-led H1', len(headings) == 1 and normalise(headings[0].text()) == 'Distinction composite doors')
+why_distinction_links = article.find(lambda n: n.tag == 'a' and urlsplit(n.attrs.get('href', '')).path == '/why-distinction/')
+check('Why Distinction is linked in the hero and product information', len(why_distinction_links) >= 2)
+hero_facts = article.find(lambda n: 'fg-cdoor-hero__facts' in n.attrs.get('class', ''))
+check('hero carries three concrete facts', len(hero_facts) == 1 and len(hero_facts[0].find(lambda n: n.tag == 'li')) == 3)
+product_info = article.find(lambda n: n.attrs.get('aria-labelledby') == 'composite-distinction-title')
+check('Distinction product information is present', len(product_info) == 1 and all(term in normalise(product_info[0].text()) for term in ['BS 6375-1', '25-year slab warranty', 'CFC-free polyurethane core', 'four million doors']))
 ids = [n.attrs['id'] for n in document.walk() if 'id' in n.attrs]
 duplicates = [value for value, count in collections.Counter(ids).items() if count > 1]
 check('unique document IDs', not duplicates)
@@ -79,7 +86,6 @@ schemas = [json.loads(n.text()) for n in document.find(lambda n: n.tag == 'scrip
 faq_schemas = [s for s in schemas if s.get('@type') == 'FAQPage']
 faq_section, = article.find(lambda n: n.attrs.get('aria-labelledby') == 'composite-faq-title')
 visible_faqs = faq_section.find(lambda n: n.tag == 'details')
-normalise = lambda s: re.sub(r'\s+', ' ', s).strip()
 visible_answers = [normalise(n.find(lambda c: c.tag == 'p')[0].text()) for n in visible_faqs]
 schema_answers = [normalise(n['acceptedAnswer']['text']) for n in faq_schemas[0]['mainEntity']] if len(faq_schemas) == 1 else []
 check('six FAQ answers match structured data exactly', len(visible_answers) == 6 and visible_answers == schema_answers)

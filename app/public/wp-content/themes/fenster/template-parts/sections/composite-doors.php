@@ -50,12 +50,17 @@ $reviews = fenster_review_cards(2, 'front door');
         <div class="fg-cdoor-shell fg-cdoor-hero__inner">
             <div class="fg-cdoor-hero__copy">
                 <p class="fg-cdoor-kicker">Composite doors in Milton Keynes</p>
-                <h1 id="composite-title">Composite doors.<br>Made for your home.</h1>
+                <h1 id="composite-title">Distinction composite doors</h1>
                 <p class="fg-cdoor-lead">Distinction composite doors, made to your specification and fitted by our own team. Choose the style, colour and glass. We take care of the survey and installation.</p>
                 <div class="fg-cdoor-actions">
                     <a class="button" href="#fenster-product-quote">Get a quote <span aria-hidden="true">↗</span></a>
-                    <a class="fg-cdoor-link fg-cdoor-link--light" href="#composite-range">Explore the door styles <span aria-hidden="true">↓</span></a>
+                    <a class="button button--steel" href="<?php echo esc_url(home_url('/why-distinction/')); ?>">Why Distinction <span aria-hidden="true">↗</span></a>
                 </div>
+                <ul class="fg-cdoor-hero__facts" aria-label="Composite door facts">
+                    <li><strong>44.5mm</strong><span>insulated slab</span></li>
+                    <li><strong><?php echo (int) $door_count; ?></strong><span>door styles</span></li>
+                    <li><strong>10 years</strong><span>installation guarantee</span></li>
+                </ul>
                 <div class="fg-cdoor-hero__credential">
                     <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/partners/distinction-doors.png'); ?>" alt="Distinction Doors" width="473" height="107">
                     <p>Approved installer<br><span>Our surveyors. Our fitters. Your door.</span></p>
@@ -175,6 +180,30 @@ $reviews = fenster_review_cards(2, 'front door');
                 </div>
             </div>
             <div class="fg-cdoor-security"><strong><small>Up to</small>£5,000<span>Break-in guarantee</span></strong><p>Every door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. If either lock component fails in a break-in, you are covered for up to £5,000 in compensation. Terms apply and are confirmed before you order.</p></div>
+        </div>
+    </section>
+
+    <section class="fg-cdoor-section fg-cdoor-distinction" aria-labelledby="composite-distinction-title">
+        <div class="fg-cdoor-shell fg-cdoor-distinction__grid">
+            <figure>
+                <img src="<?php echo esc_url($asset('gallery/ruby-red-entrance-800w.webp')); ?>"
+                    srcset="<?php echo esc_attr($asset('gallery/ruby-red-entrance-480w.webp') . ' 480w, ' . $asset('gallery/ruby-red-entrance-800w.webp') . ' 800w'); ?>"
+                    sizes="(max-width: 600px) calc(100vw - 36px), 34vw" width="800" height="1000" loading="lazy" decoding="async"
+                    alt="A red Distinction composite front door with decorative glass and a long brushed handle">
+                <figcaption>A Distinction entrance door, shown with decorative glass and a long pull handle.</figcaption>
+            </figure>
+            <div class="fg-cdoor-distinction__content">
+                <p class="fg-cdoor-kicker">Product information</p>
+                <h2 id="composite-distinction-title">Why we fit Distinction composite doors.</h2>
+                <p class="fg-cdoor-distinction__lede">Distinction make the door slab. We specify it as part of a complete doorset, with the frame, glass, threshold and locking chosen for your opening and fitted by our own team.</p>
+                <dl class="fg-cdoor-distinction__facts">
+                    <div><dt>Made in layers</dt><dd>A high-impact GRP skin, water-resistant polymer sub-frame, engineered timber reinforcement, central board and a CFC-free polyurethane core.</dd></div>
+                    <div><dt>Independently tested</dt><dd>Distinction publish testing to BS 6375-1 for weather performance, with acoustic results of 26 dB OITC and 29 dB STC for the slab.</dd></div>
+                    <div><dt>25-year slab warranty</dt><dd>The manufacturer covers the slab's structure and surface. Glass, hardware and our installation have their own terms and guarantees.</dd></div>
+                    <div><dt>A proven UK system</dt><dd>Distinction report more than four million doors installed since 2004, accounting for one in four UK entrance doors.</dd></div>
+                </dl>
+                <a class="button button--steel" href="<?php echo esc_url(home_url('/why-distinction/')); ?>">Read why we fit Distinction <span aria-hidden="true">↗</span></a>
+            </div>
         </div>
     </section>
 
