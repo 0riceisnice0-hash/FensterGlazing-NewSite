@@ -301,3 +301,38 @@ show no page-level horizontal overflow. Live theme revision is
 `a1d357f8afd4578390cae42eedfb69527066438e`. Additional rollback archives are
 `~/fenster-pre-composite-depth-20260915.tar.gz` and
 `~/fenster-pre-why-distinction-20260915.tar.gz`.
+
+### Follow-up: final hierarchy, canvas and shared form
+
+The owner's final review supersedes the earlier decision to retain an optional
+finder. The quiz, its template call, route-specific styles and query-string
+opening code are removed. The page now reads in decision order: why Distinction,
+construction and security, complete-doorset specification, styles, glass,
+colour, handles, installed proof, FAQs, quote and enquiry.
+
+A new complete-doorset section explains why slab figures are not the whole
+specification. It covers full-doorset U-values, weather performance, frame and
+glass choice, threshold and access decisions, hinge side, side panels, survey,
+installation and aftercare. Its photograph is unique on the page.
+
+The route wrapper and all informational/configuration sections are transparent,
+so the site's fixed page gradient remains the continuous canvas. Hairline rules
+provide section boundaries without white, grey and blue bands. The hero keeps
+its photographic dark scrim. The closing enquiry uses the standard `fg-enquiry`
+and `fg-form` treatment used elsewhere on the site, with product-page spacing
+and a two-column compact field grid on desktop.
+
+Protected and public checks pass **162/162**: correct hierarchy, no quiz, one
+shared form, six visible/schema-matched FAQs, 142 unique styles, all referenced
+assets present, no duplicate IDs and no repeated raster image bytes. At
+1280×720, the new product-information, construction, complete-doorset, range,
+proof, FAQ, quote and enquiry sections measure 618px, 617px, 579px, 703px,
+559px, 463px, 626px and 644px. There is no page-level horizontal overflow at
+desktop or 390px.
+
+Live theme revision is `4f2d47e9c615b05ff85a89d4b76c1d81804bfae8`.
+The combined protected-test revision is
+`893a12f237fc367305dba247e72e0f36da4c6dce`. The live deployment was guarded
+against exact full-theme revision `49bbb55a661ac66dca77fc8d8c564cb67b6a1386`,
+finished with a zero full-theme residual and saved
+`~/fenster-pre-composite-order-20260915.tar.gz`.
