@@ -23,6 +23,8 @@ foreach ($pages as $slug => $page) {
     $xp = new DOMXPath($doc);
     if ($xp->query('//h1')->length !== 1) { $errors[] = "$slug: expected one H1"; }
     if ($xp->query('//form')->length !== 1) { $errors[] = "$slug: expected one enquiry form"; }
+    if ($xp->query('//section[contains(concat(" ", normalize-space(@class), " "), " fg-local__hero ")]//form')->length !== 1) { $errors[] = "$slug: enquiry form is not in the hero"; }
+    if ($xp->query('//section[contains(concat(" ", normalize-space(@class), " "), " fg-local__hero ")]//figure[contains(concat(" ", normalize-space(@class), " "), " fg-local__hero-media ")]')->length !== 0) { $errors[] = "$slug: hero still contains the replaced image"; }
     if ($xp->query('//*[@id="' . $enquiry_id . '"]')->length !== 1) { $errors[] = "$slug: missing or duplicate enquiry anchor"; }
     $ids = [];
     foreach ($xp->query('//*[@id]') as $element) {

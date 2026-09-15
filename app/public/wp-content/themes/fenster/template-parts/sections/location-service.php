@@ -48,8 +48,7 @@ $take_image = static function (array $images) use (&$used, $image_key): ?array {
     return null;
 };
 $images = fenster_location_images($product_slug);
-$hero = $take_image($images);
-$feature = $is_double ? $take_image((array) fenster_data('product_media.casement-windows.gallery', [])) : $take_image(array_slice($images, 1));
+$feature = $is_double ? $take_image((array) fenster_data('product_media.casement-windows.gallery', [])) : $take_image($images);
 $tiles = [];
 if ($is_double) {
     foreach ($content['related'] as $tile_slug) {
@@ -92,7 +91,12 @@ if (fenster_price_guides_enabled()) {
             <a class="button button--steel fg-local__phone" href="<?php echo esc_url($phone_url); ?>"><?php echo esc_html('Talk to us: ' . $phone); ?></a>
             <p class="fg-local__service-note"><?php echo esc_html('Serving ' . $town . ' from our Milton Keynes showroom.'); ?></p>
         </div>
-        <?php if ($hero) : ?><figure class="fg-local__hero-media"><img <?php echo fenster_location_image_attrs($hero, ['loading' => 'eager', 'fetchpriority' => 'high']); ?>><figcaption><?php echo esc_html($hero['alt']); ?></figcaption></figure><?php endif; ?>
+        <aside class="fg-local__hero-form fg-local__form" id="fenster-enquiry" aria-labelledby="local-hero-enquiry-title">
+            <p class="eyebrow">Request a quote</p>
+            <h2 id="local-hero-enquiry-title"><?php echo esc_html('Ask about ' . $label . ' in ' . $town . '.'); ?></h2>
+            <p>Send your postcode, rough sizes and any photographs you have. We will review the job and come back to you.</p>
+            <?php get_template_part('template-parts/components/enquiry-form', null, ['class' => 'fg-form', 'source' => $labels[$product_slug] . ' - ' . $town, 'project_type' => $labels[$product_slug] . ' in ' . $town, 'project_options' => [$labels[$product_slug] . ' in ' . $town, 'Windows', 'Doors', 'Bifold or sliding doors', 'Repairs or replacement glass'], 'button_label' => 'Send enquiry', 'compact' => true]); ?>
+        </aside>
     </div></section>
     <div class="container fg-local__reassurance" aria-label="Installation reassurance">
         <a href="<?php echo esc_url(home_url('/about/')); ?>"><strong>Our own installers</strong><span>From survey to fitting.</span></a>
@@ -124,7 +128,6 @@ if (fenster_price_guides_enabled()) {
     <?php get_template_part('template-parts/components/order-process', null, ['class' => 'fg-local__process', 'steps' => $process_steps, 'copy' => $process_copy, 'action_label' => 'Send your project details', 'action_href' => '#fenster-enquiry']); ?>
     <?php fenster_render_faq_page_schema($faqs); ?>
     <section class="fg-local__faq"><div class="container fg-local__faq-grid"><div><p class="eyebrow">Your questions</p><h2><?php echo esc_html('Buying ' . $label . ' in ' . $town . '.'); ?></h2><p>Product choices, pricing and what happens before we fit.</p></div><div><?php foreach ($faqs as $faq) : ?><details><summary><?php echo esc_html($faq['question']); ?></summary><p><?php echo esc_html($faq['answer']); ?></p></details><?php endforeach; ?></div></div></section>
-    <section class="fg-local__enquiry" id="fenster-enquiry"><div class="container fg-local__enquiry-grid"><div><p class="eyebrow">Tell us about the job</p><h2><?php echo esc_html('Ask about ' . $label . ' in ' . $town . '.'); ?></h2><p>Send your details and any photographs or drawings. We will come back to you to discuss the options.</p><a class="button" href="<?php echo esc_url($phone_url); ?>"><?php echo esc_html('Call ' . $phone); ?></a></div><div class="fg-local__form"><?php get_template_part('template-parts/components/enquiry-form', null, ['class' => 'fg-form', 'source' => $labels[$product_slug] . ' - ' . $town, 'project_type' => $labels[$product_slug] . ' in ' . $town, 'project_options' => [$labels[$product_slug] . ' in ' . $town, 'Windows', 'Doors', 'Bifold or sliding doors', 'Repairs or replacement glass'], 'button_label' => 'Send enquiry', 'compact' => true]); ?></div></div></section>
     <?php get_template_part('template-parts/components/review-showcase', null, ['class' => 'fg-local__reviews', 'heading_override' => 'What our customers say.', 'limit' => 7, 'prioritise_context' => $product_slug]); ?>
     <?php if ($links !== []) : ?><section class="fg-local__links"><div class="container"><p class="eyebrow">Keep comparing</p><h2>Product guides and local services.</h2><?php get_template_part('template-parts/components/link-cards', null, ['links' => array_values($links), 'show_images' => false]); ?></div></section><?php endif; ?>
 </article>
