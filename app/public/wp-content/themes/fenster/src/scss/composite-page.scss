@@ -1,4 +1,5 @@
 /* Dedicated composite page. One spacing owner per section; no viewport floors. */
+html:has(.fg-cdoor-page) { scroll-behavior: auto; }
 .fg-cdoor-page {
   --cd-ink: #062e38;
   --cd-muted: #52676b;
@@ -20,7 +21,7 @@
   button { cursor: pointer; }
   a, button, select, summary { touch-action: manipulation; }
   a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visible {
-    outline: 3px solid #31ad69; outline-offset: 4px;
+    outline: 3px solid #26814e; outline-offset: 4px;
   }
   img { display: block; max-width: 100%; }
   .button { min-height: 48px; border-radius: 6px; gap: 22px; font-size: 16px; }
@@ -221,7 +222,7 @@
 .fg-cdoor-enquiry .fg-cdoor-form { padding: 0; background: none; border: 0; box-shadow: none; gap: 14px; }
 .fg-cdoor-form label { color: var(--cd-ink); }
 .fg-cdoor-page .fg-cdoor-form input:not([type='hidden']):not([type='checkbox']),
-.fg-cdoor-page .fg-cdoor-form textarea { background: #f8faf8; border: 1px solid #859b91; color: var(--cd-ink); font-weight: 400; }
+.fg-cdoor-page .fg-cdoor-form textarea { background: #f8faf8; border: 1px solid #758b80; color: var(--cd-ink); font-weight: 400; }
 .fg-cdoor-page .fg-cdoor-form input::placeholder,
 .fg-cdoor-page .fg-cdoor-form textarea::placeholder { color: var(--cd-muted); opacity: 1; }
 .fg-cdoor-page .fg-cdoor-form label em,
