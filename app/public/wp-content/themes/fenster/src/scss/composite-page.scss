@@ -203,6 +203,19 @@ html:has(.fg-cdoor-page) { scroll-behavior: auto; }
 .fg-cdoor-quote__outline::after { content: ''; position: absolute; right: 5px; top: 61px; height: 2px; width: 10px; background: #718a7c; }
 .fg-cdoor-page .fg-cdoor-quote__mobile { display: none; }
 
+/* Keep the site's shared enquiry treatment, with the compact product-page rhythm. */
+.fg-cdoor-page > .fg-enquiry { padding-block: 40px; }
+.fg-cdoor-page > .fg-enquiry .fg-enquiry__grid { grid-template-columns: minmax(300px,.76fr) minmax(0,1.24fr); gap: 32px; }
+.fg-cdoor-page > .fg-enquiry .fg-enquiry__copy,
+.fg-cdoor-page > .fg-enquiry .fg-form { padding: 28px; }
+.fg-cdoor-page > .fg-enquiry .fg-enquiry-form__compact-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px 14px; }
+.fg-cdoor-page > .fg-enquiry .fg-enquiry-form__compact-wide { grid-column: 1 / -1; }
+.fg-cdoor-page > .fg-enquiry .fg-form input,
+.fg-cdoor-page > .fg-enquiry .fg-form select { padding-block: 9px; }
+.fg-cdoor-page > .fg-enquiry .fg-form textarea { min-height: 76px; height: 76px; }
+.fg-cdoor-page > .fg-enquiry .fg-form label { gap: 4px; font-size: 13px; }
+.fg-cdoor-page > .fg-enquiry .fg-enquiry-form__footer { gap: 14px; }
+
 @media (max-width: 1100px) {
   .fg-cdoor-shell { width: calc(100% - 48px); }
   .fg-cdoor-choice { column-gap: 36px; }
@@ -237,6 +250,7 @@ html:has(.fg-cdoor-page) { scroll-behavior: auto; }
   .fg-cdoor-quote__grid br { display: none; }
   .fg-cdoor-quote__card { display: none; }
   .fg-cdoor-page .fg-cdoor-quote__mobile { display: inline-flex; margin-top: 24px; }
+  .fg-cdoor-page > .fg-enquiry .fg-enquiry__grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .fg-cdoor-page { --cd-space: 30px; font-size: 16px; }
@@ -308,6 +322,11 @@ html:has(.fg-cdoor-page) { scroll-behavior: auto; }
   .fg-cdoor-proof figure { width: 100%; }
   .fg-cdoor-proof figure img { height: 365px; object-fit: contain; background: #e7ece7; }
   .fg-cdoor-faq summary { font-size: 15px; padding: 17px 0; }
+  .fg-cdoor-page > .fg-enquiry { padding-block: 30px; }
+  .fg-cdoor-page > .fg-enquiry .fg-enquiry__copy,
+  .fg-cdoor-page > .fg-enquiry .fg-form { padding: 22px; }
+  .fg-cdoor-page > .fg-enquiry .fg-enquiry-form__compact-grid { grid-template-columns: 1fr; }
+  .fg-cdoor-page > .fg-enquiry .fg-enquiry-form__compact-wide { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fg-cdoor-page *, .fg-cdoor-page *::before, .fg-cdoor-page *::after { animation: none !important; transition: none !important; }
