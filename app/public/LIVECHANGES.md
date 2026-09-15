@@ -1,5 +1,19 @@
 # Fenster Glazing Live Changes Runbook
 
+## Composite scrolling follow-up — 15 September 2026
+
+**Current live theme: c6853022a1bda96909362cbfb73bbc3462ccd174**, same isolated
+composite release branch. Owner reported laggy scrolling after the overhaul.
+Confirmed desktop root `scroll-snap-type: y proximity` and section snap targets
+were active alongside Lenis. Removed those two page-only snapping rules; kept
+the layout and shared scrolling controller. Rebuilt CSS, tested scrolling on
+protected test, published two files with exact baseline/residual checks and
+purged the proxy (`msg:OK`). Public page now resolves root and section snapping
+to `none`; scrolling checked in browser. SEO test files restored afterwards.
+Durable server backups: `~/fenster-pre-composite-20260915.tar.gz` (overhaul) and
+`~/fenster-pre-composite-scroll-20260915.tar.gz` (scrolling follow-up).
+Do not reintroduce document snapping on this page while Lenis is active.
+
 ## Live composite doors overhaul — 15 September 2026
 
 Production theme is **02dc0f43d9f087ab5044c73da9d80a64a0b4e200**, branch

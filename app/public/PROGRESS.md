@@ -1,5 +1,13 @@
 # Fenster Glazing Progress Log
 
+## 2026-09-15 — Composite scrolling fixed live
+
+Live **c6853022** supersedes `02dc0f43`. Removed document and section scroll
+snapping on composite doors after reproducing its conflict with Lenis.
+Two-file CSS/source release, verified on protected test and production;
+full-tree residual 0, cache purge OK, prior SEO test files restored. Changes
+also preserved in this branch for future deployments.
+
 ## 2026-09-15 — Composite doors overhaul live
 
 Owner reported the live composite page broken, then explicitly requested an

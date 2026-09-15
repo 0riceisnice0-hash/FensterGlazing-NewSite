@@ -1,5 +1,10 @@
 # Fenster Glazing Handover
 
+**Latest live revision is c6853022**, superseding `02dc0f43` below. The follow-up
+removes composite-only vertical scroll snapping that competed with Lenis.
+Verified on test and public live, proxy purged, previous SEO test files restored.
+The fix is also present in this SEO branch. See `LIVECHANGES.md`.
+
 ## Urgent composite overhaul published — 15 September 2026
 
 Live theme is **02dc0f43**, isolated branch
