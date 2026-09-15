@@ -170,7 +170,7 @@ $reviews = fenster_review_cards(2, 'front door');
                     </dl>
                 </div>
             </div>
-            <div class="fg-cdoor-security"><strong>£5,000<span>Break-in guarantee</span></strong><p>Every door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. If either lock component fails in a break-in, you are covered for up to £5,000 in compensation. Terms apply and are confirmed before you order.</p></div>
+            <div class="fg-cdoor-security"><strong><small>Up to</small>£5,000<span>Break-in guarantee</span></strong><p>Every door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. If either lock component fails in a break-in, you are covered for up to £5,000 in compensation. Terms apply and are confirmed before you order.</p></div>
         </div>
     </section>
 
@@ -202,7 +202,7 @@ $reviews = fenster_review_cards(2, 'front door');
                 <div class="fg-cdoor-quote__toolbar"><span>Composite door designer</span><a href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener">Open in a new tab ↗</a></div>
                 <div class="fg-cdoor-quote__frame" data-quote-frame-wrap data-quote-autoload="visible" data-lenis-prevent data-quote-url="<?php echo esc_url($quote_url); ?>">
                     <div class="fg-cdoor-quote__placeholder"><span class="fg-cdoor-quote__outline" aria-hidden="true"></span><p>Opening your door designer…</p><noscript><a href="<?php echo esc_url($quote_url); ?>">Open the quote tool</a></noscript></div>
-                    <iframe data-quote-iframe-src="<?php echo esc_url($quote_url); ?>" title="Composite door quote tool" loading="lazy" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe data-quote-iframe-src="<?php echo esc_url($quote_url); ?>" title="Composite door quote tool" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

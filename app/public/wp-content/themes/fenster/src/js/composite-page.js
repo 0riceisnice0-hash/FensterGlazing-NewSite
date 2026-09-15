@@ -29,7 +29,7 @@ if (page) {
       panels[active].querySelector('.fg-cdoor-range__grid').hidden = matches.length === 0;
       panels[active].querySelector('[data-cdoor-empty]').hidden = matches.length !== 0;
       count.textContent = matches.length
-        ? `${offset * size + 1}–${Math.min((offset + 1) * size, matches.length)} of ${matches.length} styles`
+        ? `${offset * size + 1}–${Math.min((offset + 1) * size, matches.length)} of ${matches.length} ${matches.length === 1 ? 'style' : 'styles'}`
         : '0 matching styles';
       prev.disabled = offset === 0;
       next.disabled = (offset + 1) * size >= matches.length;
@@ -77,6 +77,7 @@ if (page) {
         picker.setAttribute('aria-busy', 'false');
         image.removeAttribute('srcset');
         image.src = candidate.src;
+        image.classList.toggle('is-sample', choice.dataset.kind === 'Paint sample');
         image.alt = `${choice.dataset.name}: ${choice.dataset.kind.toLowerCase()}`;
         name.textContent = choice.dataset.name;
         kind.textContent = choice.dataset.kind;
@@ -96,6 +97,12 @@ if (page) {
   questions.forEach(detail => detail.addEventListener('toggle', () => {
     if (detail.open) questions.forEach(other => { if (other !== detail) other.open = false; });
   }));
+  // Visibility already defers this iframe through the shared quote loader.
+  // A second native lazy gate can strand a previously hidden frame at blank.
+  const quoteFrame = page.querySelector('.fg-cdoor-quote__frame iframe');
+  quoteFrame?.addEventListener('load', () => {
+    if (quoteFrame.getAttribute('src')) quoteFrame.parentElement.setAttribute('data-cdoor-frame-ready', 'true');
+  });
   const assist = page.querySelector('[data-cdoor-assist]');
   // Shared quiz links must reveal their result even though the optional finder
   // is collapsed for visitors who have not asked to use it.
