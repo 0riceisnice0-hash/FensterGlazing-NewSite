@@ -87,7 +87,9 @@ function fenster_case_studies(): array
     $fitter_tom = $fitter('Tom Carter', 'Installer', 'unnamed-8.jpg');
     $fitter_johnnie = $fitter('Johnnie Greenwell', 'Installer', '1.png');
     $fitter_andy = $fitter('Andy McCullagh', 'Service Engineer', '7.png');
-    $fitter_zac = $fitter('Zac Rugman', 'Installer', '8.png');
+    /* Zac Rugman left the business (owner instruction, 2026-09-16) and is off
+       Meet the Team, so there is no profile for a credit to link to. The jobs he
+       worked on still credit Shane Gowing, who was on all of them. */
     $fitter_shane = $fitter('Shane Gowing', 'Installer', '20250617_1628580-scaled.jpg');
     $fitter_aaron = $fitter('Aaron Isaacs', 'Installer', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
     /* Not fitters. Both are named on the Bletchley study, where the people who
@@ -1255,7 +1257,7 @@ function fenster_case_studies(): array
                 'One lift-out secondary glazing unit',
                 'White slim aluminium frames throughout',
             ],
-            'installers' => [$fitter_shane, $fitter_zac],
+            'installers' => [$fitter_shane],
             /* MUST be an array. `fenster_case_study_card()` tests
                `is_array($study['card_image'])` and silently falls back to
                images[0] otherwise, which on an all-portrait study is the exact
@@ -1413,7 +1415,7 @@ function fenster_case_studies(): array
                 'Two magnets on the frame, one to tilt and one to raise and lower',
                 'Obscure glass, with a keyed white handle',
             ],
-            'installers' => [$fitter_shane, $fitter_zac],
+            'installers' => [$fitter_shane],
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-luton-leagrave-integral-blinds.mp4',
                 'poster' => $img . 'cs-luton-leagrave-integral-blinds-poster.jpg',
@@ -1554,7 +1556,7 @@ function fenster_case_studies(): array
                 'Flush, timber-style window sightlines',
                 'Energy efficient double glazing throughout',
             ],
-            'installers' => [$fitter_zac, $fitter_shane],
+            'installers' => [$fitter_shane],
             'images' => [
                 ['src' => $img . 'cs-leighton-buzzard-slide-fold-closed.jpg', 'caption' => 'The slide and fold door closed, forming a secure glazed wall across the opening.'],
                 ['src' => $img . 'cs-leighton-buzzard-slide-fold-opening.jpg', 'caption' => 'Opening the door part way, one panel at a time.'],
@@ -2114,7 +2116,7 @@ function fenster_case_studies(): array
                 'Two bar glazing on both, with the existing toplights retained',
                 'Jet Black finish with black handles',
             ],
-            'installers' => [$fitter_zac, $fitter_shane],
+            'installers' => [$fitter_shane],
             /* The first entry is spent on the hero and the card, so it is the
                open shot, which belongs to no pair. That leaves the gallery
                itself reading after, before, after, before, then indoors. */

@@ -621,7 +621,7 @@ $wall = [
              THE TWO NAMED PEOPLE ARE THE TWO SERVICE ENGINEERS AND NOBODY ELSE.
              Owner-confirmed 2026-08-06, and `data/pages.json` agrees: Andy
              McCullagh and Steven Welch are the only two whose role reads
-             Service Engineer. Tom Carter, Johnnie Greenwell, Zac Rugman and
+             Service Engineer. Tom Carter, Johnnie Greenwell and
              Shane Gowing are Installers, and putting their faces under this
              heading would contradict it. Note Steve Freezer is a Technical
              Advisor and a different person from Steven Welch: two Steves, the

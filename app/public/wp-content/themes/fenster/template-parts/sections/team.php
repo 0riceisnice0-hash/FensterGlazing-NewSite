@@ -34,6 +34,14 @@ foreach ($sections as $index => $section) {
         continue;
     }
 
+    /* Zac Rugman left the business (owner instruction, 2026-09-16). The source
+       record in data/pages.json is left alone so the image indexing below, which
+       is derived from the section index rather than a running counter, still
+       lines every other person up with their own photograph. */
+    if ($name === 'Zac Rugman') {
+        continue;
+    }
+
     $image = $images[$index - 2]['src'] ?? '';
     $alt = $images[$index - 2]['alt'] ?? $name;
 
@@ -80,7 +88,9 @@ $aaron_member = [
     'image' => '/wp-content/themes/fenster/assets/team/aaron-isaacs-cropped-bw.jpg',
     'alt' => 'Aaron Isaacs',
 ];
-$insert_after = array_search('Zac Rugman', array_column($members, 'name'), true);
+// Aaron sat directly after Zac Rugman, so with Zac gone the anchor moves up
+// one to Johnnie Greenwell, which keeps Aaron in front of Shane Gowing.
+$insert_after = array_search('Johnnie Greenwell', array_column($members, 'name'), true);
 if ($insert_after === false) {
     $members[] = $aaron_member;
 } else {
