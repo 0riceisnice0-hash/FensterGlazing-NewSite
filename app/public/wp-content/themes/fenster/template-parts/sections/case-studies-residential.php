@@ -136,7 +136,7 @@ if ($is_archive) :
                         $cta_copy = __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster');
                     } elseif ($is_repair) {
                         $cta_title = __('Something not working at your place?', 'fenster');
-                        $cta_copy = __('A repair cannot be priced by a tool the way a new window can, so tell us what it is doing on the repair form. Quoting is normally free and often needs no visit.', 'fenster');
+                        $cta_copy = __('A repair cannot be priced by a tool the way a new window can, so tell us what it is doing on the repair form. Quoting is free and often needs no visit.', 'fenster');
                     }
                     ?>
                     <h2><?php echo esc_html($cta_title); ?></h2>

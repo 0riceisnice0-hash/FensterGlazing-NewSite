@@ -36,8 +36,10 @@
  * markup below, and every group in the markup is reachable from some symptom.
  *
  * NOT CLAIMED ANYWHERE: response times, callout windows, same-day or emergency
- * service, a guarantee on repair work. Quoting being normally free and usually
- * remote IS claimed, because the owner stated it; see Repair Service Facts.
+ * service, a guarantee on repair work. Quoting being FREE and usually remote IS
+ * claimed, because the owner stated it; see Repair Service Facts. It read
+ * "normally free" until 2026-09-16, when he settled it: "yeah quoting is free".
+ * Do not hedge it again.
  *
  * @package Fenster
  */
@@ -821,8 +823,8 @@ $wall = [
 
     <?php /* ---------- How it works ------------------------------------------
              Replaces the shared order-process rail, which describes buying
-             windows. The office process, owner-supplied: quoting is normally
-             free, and most faults never need a visit. */ ?>
+             windows. The office process, owner-supplied: quoting is free, and
+             most faults never need a visit. */ ?>
     <section class="fg-rp-process" aria-labelledby="fg-rp-process-title">
         <div class="container">
             <div class="fg-rp-process__head">
@@ -843,7 +845,7 @@ $wall = [
                 <li>
                     <span><?php esc_html_e('03', 'fenster'); ?></span>
                     <h3><?php esc_html_e('If it needs looking at, we come', 'fenster'); ?></h3>
-                    <p><?php esc_html_e('Normally free of charge, and you get the figure before you decide.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Free of charge, and you get the figure before you decide.', 'fenster'); ?></p>
                 </li>
                 <li>
                     <span><?php esc_html_e('04', 'fenster'); ?></span>

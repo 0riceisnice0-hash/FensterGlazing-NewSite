@@ -613,11 +613,11 @@ function fenster_site_data(): array
 
                The charge line states the condition, because the condition is
                the whole point of it: it is a floor on the work and applies only
-               if the customer goes ahead. Quoting is normally free. */
+               if the customer goes ahead. Quoting itself is free. */
             'window-and-door-repairs' => [
                 ['label' => 'We repair', 'value' => 'Windows and doors, any installer'],
                 ['label' => 'Materials', 'value' => 'uPVC, aluminium, composite'],
-                ['label' => 'Quoting', 'value' => 'Normally free, often without a visit'],
+                ['label' => 'Quoting', 'value' => 'Free, often without a visit'],
                 ['label' => 'Minimum charge', 'value' => '£96 inc VAT, only if you go ahead'],
             ],
             /* Two flap types, not three. The old strip listed "Manual, lockable,
@@ -2588,7 +2588,7 @@ function fenster_site_data(): array
                     ['title' => 'We diagnose before we quote', 'copy' => 'We fit these systems every week, so we know what a symptom usually means before we arrive. A window that will not lock is almost always the mechanism, not the whole window.'],
                     ['title' => 'Repair first, where repair is right', 'copy' => 'If the frame is sound, a repair is the sensible answer and we will say so. We will also tell you when it is not worth it, which is the more useful half of that advice.'],
                     ['title' => 'Windows and doors, any installer', 'copy' => 'uPVC, aluminium and composite, whether we fitted it or somebody else did. Parts availability on older systems is the one thing that decides it.'],
-                    ['title' => 'Fairly priced', 'copy' => 'Priced off a set list rather than judged on the doorstep, so the same fault costs the same whoever we send. Quoting is normally free and usually does not need a visit.'],
+                    ['title' => 'Fairly priced', 'copy' => 'Priced off a set list rather than judged on the doorstep, so the same fault costs the same whoever we send. Quoting is free, and usually does not need a visit.'],
                     ['title' => 'Our own engineers', 'copy' => 'The same team that installs, not a subcontractor sent out under our name.'],
                 ],
                 'faqs' => [
@@ -2612,7 +2612,7 @@ function fenster_site_data(): array
                        "what it comes to" is open-ended. Do not reintroduce
                        open-ended phrasing next to the from-figure. */
                     ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT. The price depends on which part your window or door needs, and you will know the exact figure before any work begins. Nothing changes on the day without a conversation. Tell us what it is doing, send a photograph if you can, and we will come back to you.'],
-                    ['question' => 'Do you charge to come out and quote a repair?', 'answer' => 'Normally, no. Most faults we can diagnose and price without coming out at all, from a description and a photograph or two, and where it does need looking at, that visit is normally free.'],
+                    ['question' => 'Do you charge to come out and quote a repair?', 'answer' => 'No. Quoting is free. Most faults we can diagnose and price without coming out at all, from a description and a photograph or two, and where it does need looking at, that visit is free as well.'],
                     ['question' => 'Do you repair windows and doors you did not fit?', 'answer' => 'Yes, and most of our repair work is exactly that. We fit uPVC, aluminium and composite systems every week, so we know the hardware other installers use. The only real limit is parts: on a very old system the gear may no longer be made.'],
                     ['question' => 'My double glazing has gone misty. Is that a repair?', 'answer' => 'It is a glass job rather than a hardware one. The seal around the double glazed unit has failed and moisture is in the cavity, which cannot be dried out, but the glass changes on its own and the frame stays. See our replacement glazed units page for how that works.'],
                     ['question' => 'Can you still get parts for an older window or door?', 'answer' => 'Usually. Hardware is more standardised than it looks, and a mechanism is matched on backset, centres and faceplate rather than on the brand of the window. Where a part genuinely is obsolete we will tell you, and we will say what the alternatives are rather than leaving you with a window that does not lock.'],
