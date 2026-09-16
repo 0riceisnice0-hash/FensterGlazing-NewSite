@@ -265,6 +265,7 @@ function fenster_legend_search_documents(): array
         'handle-options',
         'colour-options',
         'commercial-projects',
+        'repair-case-studies',
         'aluminium-flush-windows',
         'aluminium-sliding-doors',
         'book-a-consultation',

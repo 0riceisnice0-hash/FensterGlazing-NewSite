@@ -684,6 +684,47 @@ $wall = [
         </div>
     </section>
 
+    <?php /* ---------- Repair case studies ------------------------------------
+             Proof, on the page that makes the claim. These are the repair
+             studies and only the repair studies: `fenster_case_studies_of_type`
+             keeps installations out, and the archive they link to is
+             /repair-case-studies/, which exists for exactly this reason. The
+             strip renders nothing if there are no repair studies yet, so this
+             cannot leave an empty heading behind. */ ?>
+    <?php
+    $repair_cards = [];
+    if (function_exists('fenster_case_studies_of_type') && function_exists('fenster_case_study_card')) {
+        foreach (fenster_case_studies_of_type('repair') as $repair_short => $repair_study) {
+            $repair_cards[] = fenster_case_study_card((string) $repair_short, $repair_study);
+            if (count($repair_cards) === 3) {
+                break;
+            }
+        }
+    }
+    ?>
+    <?php if ($repair_cards !== []) : ?>
+        <section class="fg-cs-strip" aria-labelledby="fg-rp-cases-title">
+            <div class="container">
+                <div class="fg-cs-strip__head">
+                    <p class="eyebrow"><?php esc_html_e('Repairs we have done', 'fenster'); ?></p>
+                    <h2 id="fg-rp-cases-title"><?php esc_html_e('What was wrong, and what we did about it.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Real repair visits, photographed on the day, on windows and doors we did not fit.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-cs-strip__grid">
+                    <?php foreach ($repair_cards as $repair_card) : ?>
+                        <?php get_template_part('template-parts/components/case-study-card', null, [
+                            'card' => $repair_card,
+                            'heading' => 'h3',
+                        ]); ?>
+                    <?php endforeach; ?>
+                </div>
+                <div class="button-row fg-cs-strip__cta">
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/repair-case-studies/')); ?>"><?php esc_html_e('See all repair case studies', 'fenster'); ?></a>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <?php /* ---------- The parts wall ---------------------------------------
              "We can source most parts for most systems" proved rather than
              asserted. Fourteen real components from five handle families and

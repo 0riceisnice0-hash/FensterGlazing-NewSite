@@ -156,9 +156,10 @@ $is_home = $slug === 'home';
    prefix a migrated study fell through to the generic generated-page template,
    which rendered one image and no gallery because it knows nothing about the
    curated data. */
-$is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true)
+$is_case_study = in_array($slug, ['case-studies', 'commercial-projects', 'repair-case-studies'], true)
     || str_starts_with($slug, 'case-studies/')
-    || str_starts_with($slug, 'commercial-projects/');
+    || str_starts_with($slug, 'commercial-projects/')
+    || str_starts_with($slug, 'repair-case-studies/');
 $is_team = $slug === 'meet-the-team';
 $is_obscure_glass = $slug === 'obscured-glass';
 $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true);
@@ -1717,6 +1718,7 @@ $virtual_page_titles = [
     'areas-we-cover' => 'Areas We Cover',
     'commercial-areas' => 'Commercial Areas',
     'commercial-projects' => 'Commercial Projects',
+    'repair-case-studies' => 'Repair Case Studies',
     'flat-rooflights' => 'Flat Rooflights',
 ];
 if (

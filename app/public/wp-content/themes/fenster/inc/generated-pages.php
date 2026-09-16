@@ -1562,6 +1562,39 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    /* The repair archive. Separate from /case-studies/ because a reader looking
+       for proof that we fix a handle is not looking at installations, and the
+       repairs service page is where this is linked from. */
+    if ($slug === 'repair-case-studies' && function_exists('fenster_case_studies')) {
+        $repair_links = [];
+        $repair_og = '';
+        foreach (fenster_case_studies() as $repair_slug => $repair_study) {
+            if (fenster_case_study_base($repair_study) !== 'repair-case-studies') {
+                continue;
+            }
+            if ($repair_og === '') {
+                $repair_og = (string) ($repair_study['images'][0]['src'] ?? '');
+            }
+            $repair_links[] = ['url' => home_url('/repair-case-studies/' . $repair_slug . '/'), 'label' => (string) ($repair_study['title'] ?? '')];
+        }
+
+        return $page_cache[$slug] = [
+            'slug' => 'repair-case-studies',
+            'title' => 'Repair Case Studies',
+            'url' => home_url('/repair-case-studies/'),
+            'seo' => [
+                'title_tag' => 'Window and Door Repair Case Studies | Fenster Glazing',
+                'meta_description' => 'Real Fenster repairs across Milton Keynes, Bedfordshire and Buckinghamshire: handles, hinges, bifold gear and broken glass, with what was wrong and what was done.',
+                'canonical' => 'https://fensterglazing.com/repair-case-studies/',
+                'robots' => 'max-image-preview:large',
+                'og_image' => $repair_og,
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => $repair_links,
+        ];
+    }
+
     if ($slug === 'case-studies' && function_exists('fenster_case_studies')) {
         $studies = fenster_case_studies();
         $first = is_array($studies) ? (reset($studies) ?: []) : [];
@@ -1593,8 +1626,21 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
-    if ((str_starts_with($slug, 'case-studies/') || str_starts_with($slug, 'commercial-projects/')) && function_exists('fenster_case_study')) {
-        $base = str_starts_with($slug, 'commercial-projects/') ? 'commercial-projects/' : 'case-studies/';
+    if (
+        (
+            str_starts_with($slug, 'case-studies/')
+            || str_starts_with($slug, 'commercial-projects/')
+            || str_starts_with($slug, 'repair-case-studies/')
+        )
+        && function_exists('fenster_case_study')
+    ) {
+        $base = 'case-studies/';
+        foreach (['commercial-projects/', 'repair-case-studies/'] as $candidate_base) {
+            if (str_starts_with($slug, $candidate_base)) {
+                $base = $candidate_base;
+                break;
+            }
+        }
         $short_slug = substr($slug, strlen($base));
         $study = fenster_case_study($short_slug);
         /* A study only answers on its own base, so a commercial slug under
@@ -2214,6 +2260,7 @@ function fenster_maybe_render_llms_txt(): void
     $lines[] = '- [About Fenster](' . home_url('/about/') . '): who runs it, and the team.';
     $lines[] = '- [Case studies](' . home_url('/case-studies/') . '): completed residential jobs, photographed on the day.';
     $lines[] = '- [Commercial projects](' . home_url('/commercial-projects/') . '): completed commercial schemes.';
+    $lines[] = '- [Repair case studies](' . home_url('/repair-case-studies/') . '): window and door repairs we have carried out.';
     $lines[] = '- [Why trust Fenster](' . home_url('/why-trust-fenster/') . '): accreditations and what each one covers.';
     $lines[] = '- [Constructionline Gold](' . home_url('/constructionline-gold/') . ')';
     $lines[] = '- [SSIP health and safety](' . home_url('/ssip-health-and-safety/') . ')';
@@ -2365,7 +2412,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance', 'why-distinction'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'repair-case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance', 'why-distinction'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

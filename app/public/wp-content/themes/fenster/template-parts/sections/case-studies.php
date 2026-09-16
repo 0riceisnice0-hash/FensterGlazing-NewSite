@@ -526,19 +526,23 @@ if (! function_exists('fenster_case_related_cards')) {
  * and commercial detail pages continue to use the pages.json data below.
  */
 $curated_base = '';
-foreach (['case-studies/', 'commercial-projects/'] as $candidate) {
+foreach (['case-studies/', 'commercial-projects/', 'repair-case-studies/'] as $candidate) {
     if (str_starts_with($slug, $candidate)) {
         $curated_base = $candidate;
         break;
     }
 }
 $case_short_slug = $curated_base !== '' ? substr($slug, strlen($curated_base)) : '';
-$is_curated_archive = in_array($slug, ['case-studies', 'commercial-projects'], true);
+$is_curated_archive = in_array($slug, ['case-studies', 'commercial-projects', 'repair-case-studies'], true);
 $curated_study = $case_short_slug !== '' && function_exists('fenster_case_study') ? fenster_case_study($case_short_slug) : null;
 /* Only render a study on its own base, so a commercial slug under
    /case-studies/ is left to the redirect rather than served twice. */
 $is_curated_detail = is_array($curated_study) && fenster_case_study_base($curated_study) . '/' === $curated_base;
 $curated_is_commercial = $slug === 'commercial-projects' || str_starts_with($slug, 'commercial-projects/');
+/* The third kind. Repairs render through the same curated renderer as the other
+   two, with their own headings and their own call to action: the instant quote
+   tool prices new windows and doors and cannot price a broken handle. */
+$curated_is_repair = $slug === 'repair-case-studies' || str_starts_with($slug, 'repair-case-studies/');
 
 if ($is_curated_archive || $is_curated_detail) {
     get_template_part('template-parts/sections/case-studies-residential', null, [
@@ -546,6 +550,7 @@ if ($is_curated_archive || $is_curated_detail) {
         'short_slug' => $case_short_slug,
         'is_archive' => $is_curated_archive,
         'is_commercial' => $curated_is_commercial,
+        'is_repair' => $curated_is_repair,
         'quote_url' => home_url('/online-quote/'),
         'phone' => $phone,
         'email' => $email,

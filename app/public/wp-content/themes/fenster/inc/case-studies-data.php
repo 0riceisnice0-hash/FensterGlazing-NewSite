@@ -42,6 +42,11 @@ function fenster_case_studies(): array
     $slidefold = esc_url(home_url('/slide-fold-doors/'));
     $sash = esc_url(home_url('/sliding-sash-windows/'));
     $secondary = esc_url(home_url('/secondary-glazing/'));
+    /* Repair studies link to the service they belong to rather than to a
+       product page: a repair has no specification to send a reader to. */
+    $repairs = esc_url(home_url('/window-and-door-repairs/'));
+    $glazing = esc_url(home_url('/double-glazing-replacement/'));
+    $flaps = esc_url(home_url('/cat-and-dog-flaps/'));
     $team = esc_url(home_url('/meet-the-team/'));
     $team_img = FENSTER_THEME_URI . '/assets/images/imported/';
 
@@ -2187,6 +2192,283 @@ function fenster_case_studies(): array
                 'meta_description' => 'A real Fenster project in Wolverton: white Roseview Charisma Rose sash windows fitted to a red-brick Milton Keynes home.',
             ],
         ],
+        /*
+         * REPAIR CASE STUDIES, added 2026-09-16 from Andy McCullagh's own job
+         * photographs and the AdminBase job record for each visit.
+         *
+         * THESE ARE A THIRD TYPE AND A THIRD ARCHIVE. `type` is Repair, so
+         * `fenster_case_study_base()` routes them to /repair-case-studies/ and
+         * they stay out of the residential archive and out of the product-page
+         * strips, which ask for 'residential' by default.
+         *
+         * NO ADDRESSES AND NO CUSTOMER NAMES. The AdminBase screenshots carry a
+         * house number, a street, a postcode, a phone number and an email
+         * address for every one of these jobs, and none of it is published: the
+         * area and the month are what a reader needs and they are all that is
+         * taken from them. Several came through letting or estate agents and
+         * those firms are not named either, on the same rule the commercial
+         * studies follow.
+         *
+         * ANDY McCULLAGH DID ALL SIX. He is a Service Engineer on Meet the Team,
+         * which is the right job title for this work and is why these carry him
+         * rather than an installer.
+         *
+         * WHAT IS WRITTEN IS WHAT THE PHOTOGRAPHS SHOW. A repair visit leaves
+         * far less evidence than an installation, so nothing a photograph does
+         * not prove is claimed: no system names, no product codes, and no
+         * guarantee, because the ten year cover is on NEW windows and doors and
+         * does not apply to a repair. See the note above `window-and-door-repairs`
+         * in site-data.php.
+         */
+        'window-handle-replacement-haddenham' => [
+            'title' => 'Window handle replacement, Haddenham',
+            'location' => 'Haddenham, Buckinghamshire',
+            'type' => 'Repair',
+            'date' => '2026-06-10',
+            'summary' => 'A window handle that had snapped off its spindle, replaced with a new locking handle in one visit.',
+            'lead' => 'The handle had broken away from the spindle it turns. That leaves a window which cannot be locked and cannot be opened properly, on a frame and a pane with nothing wrong with them at all.',
+            'products' => [
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'One window handle'],
+                ['label' => 'Fault', 'value' => 'Handle snapped at the spindle'],
+                ['label' => 'Fitted', 'value' => 'New white locking handle'],
+                ['label' => 'Visits', 'value' => 'One'],
+            ],
+            'overview' => [
+                'A uPVC window handle turns a square spindle, and that spindle drives the locking gear along the edge of the sash. When the handle parts company with it, as this one had, nothing moves: the window will not lock, and it will not open on demand either. The photograph of the old parts is the whole fault, in three pieces on the windowsill.',
+                'The <a href="' . $repairs . '">repair</a> was a new white locking handle on the existing fixing centres, so nothing had to be drilled out or filled, and the key lock came back with it. That last part matters upstairs, which is where this window is.',
+                'This is the smallest job we do. It is also the one most often turned into a quotation for a whole new window, and it does not need to be: the frame, the glass and the gear were all sound.',
+            ],
+            'installed' => [
+                'One white locking window handle',
+                'Fitted to the existing fixing centres',
+                'Key lock returned to the window',
+                'Frame and glass left in place',
+            ],
+            'installers' => [$fitter_andy],
+            'team_label' => 'Service engineer',
+            'images' => [
+                ['src' => $img . 'cs-repair-haddenham-handle-new.jpg', 'caption' => 'The new locking handle on the finished window.'],
+                ['src' => $img . 'cs-repair-haddenham-handle-broken.jpg', 'caption' => 'The old handle off in pieces: the body, the spindle and the broken keep.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-haddenham-handle-new.jpg', 'caption' => 'The new locking handle on the finished window.'],
+            'seo' => [
+                'title_tag' => 'Window Handle Replacement, Haddenham | Fenster Glazing',
+                'meta_description' => 'A Fenster repair in Haddenham, Buckinghamshire: a window handle snapped at the spindle, replaced with a new locking handle in a single visit.',
+            ],
+        ],
+        'door-pane-replacement-sharnbrook' => [
+            'title' => 'Door pane replacement, Sharnbrook',
+            'location' => 'Sharnbrook, Bedford',
+            'type' => 'Repair',
+            'date' => '2026-06-09',
+            'summary' => 'A shattered toughened pane in a uPVC back door, cleared and reglazed with a new unit in the door that was already there.',
+            'lead' => 'The top pane of the back door had gone. Toughened glass is meant to break like this, into small blunt pieces that stay in the frame, but it leaves a door you cannot see through and cannot leave overnight.',
+            'products' => [
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+                ['label' => 'Replacement glazing', 'url' => $glazing],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'One door pane'],
+                ['label' => 'Fault', 'value' => 'Toughened unit shattered'],
+                ['label' => 'Fitted', 'value' => 'New sealed unit, same door'],
+                ['label' => 'Door', 'value' => 'Kept, with its locks'],
+            ],
+            'overview' => [
+                'Toughened glass does not crack across, it crazes all at once, and the pieces are held where they are by the beads and the seal. That is the safety behaviour working, and it is why the door in the before photograph is still standing there in one piece with a pane nobody can see through.',
+                'The door itself was sound, so the job was the <a href="' . $glazing . '">glass</a> and nothing else. The beads came out, the broken unit was cleared, the rebate was cleaned and a new sealed unit went into the same door leaf. The locks, the hinges and the frame were not touched, and the door closed and locked afterwards as it had before.',
+                'The house is a let, which is the usual reason a broken pane has to be dealt with as its own job on its own day rather than rolled into anything else.',
+            ],
+            'installed' => [
+                'New sealed unit in the existing door',
+                'Broken toughened glass cleared and taken away',
+                'Beads and gaskets refitted',
+                'Locks, hinges and frame untouched',
+            ],
+            'installers' => [$fitter_andy],
+            'team_label' => 'Service engineer',
+            'images' => [
+                ['src' => $img . 'cs-repair-sharnbrook-pane-shattered.jpg', 'caption' => 'Before: the toughened pane crazed right across and held in by the beads.'],
+                ['src' => $img . 'cs-repair-sharnbrook-door-before.jpg', 'caption' => 'The same door open, with the broken pane still in the leaf.'],
+                ['src' => $img . 'cs-repair-sharnbrook-door-after.jpg', 'caption' => 'After: the new unit in the same door, seen from inside.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-sharnbrook-door-after.jpg', 'caption' => 'After: the new unit in the same door, seen from inside.'],
+            'seo' => [
+                'title_tag' => 'Door Glass Replacement, Sharnbrook | Fenster Glazing',
+                'meta_description' => 'A Fenster repair in Sharnbrook, Bedford: a shattered toughened pane in a uPVC back door, reglazed with a new sealed unit in the existing door.',
+            ],
+        ],
+        'bifold-door-repair-hockliffe' => [
+            'title' => 'Bifold door hinge and running gear, Hockliffe',
+            'location' => 'Hockliffe, Bedfordshire',
+            'type' => 'Repair',
+            'date' => '2026-06-05',
+            'summary' => 'An anthracite aluminium bifold that had stopped running cleanly, with a worn hinge replaced and the carriage and track worked through.',
+            'lead' => 'A bifold lives on its hinges and its rollers. When one hinge wears, the leaf sits lower than it should, the gap at the meeting stile closes up, and the whole set starts to bind on the way round.',
+            'products' => [
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+                ['label' => 'Aluminium bifold doors', 'url' => $bifold],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'Bifold hinge and running gear'],
+                ['label' => 'Door', 'value' => 'Anthracite aluminium bifold'],
+                ['label' => 'Fitted', 'value' => 'Replacement hinge, matched'],
+                ['label' => 'Also done', 'value' => 'Carriage and track checked'],
+            ],
+            'overview' => [
+                'The hinge that came off is in one of the photographs, on its own on the carpet. A bifold hinge is a substantial piece of gear, adjustable in two directions, and it carries a door leaf that is mostly glass. It was replaced like for like, in black to match the rest of the set, on the fixings already in the frame.',
+                'The bottom of a <a href="' . $bifold . '">bifold</a> matters as much as the top. The carriage runs in the threshold track, and grit in that track wears rollers and pulls a set out of line, so the track was cleared and the running gear checked before the doors were reset and run round on it.',
+                'Nothing was replaced that did not need replacing. The doors, the glass and the frame are the ones that were there; what changed is the hardware they hang and roll on.',
+            ],
+            'installed' => [
+                'One bifold hinge replaced, matched to the set',
+                'Carriage and bottom track cleared and checked',
+                'Doors reset and run through on their track',
+                'Existing doors, glass and frame kept',
+            ],
+            'installers' => [$fitter_andy],
+            'team_label' => 'Service engineer',
+            'images' => [
+                ['src' => $img . 'cs-repair-hockliffe-bifold-hinge.jpg', 'caption' => 'The replacement hinge on the frame, fitted and adjusted.'],
+                ['src' => $img . 'cs-repair-hockliffe-bifold-carriage.jpg', 'caption' => 'The bottom of the leaf, where the carriage runs in the threshold track.'],
+                ['src' => $img . 'cs-repair-hockliffe-bifold-hinge-old.jpg', 'caption' => 'The worn hinge, off the door.'],
+                ['src' => $img . 'cs-repair-hockliffe-bifold-threshold.jpg', 'caption' => 'The threshold track, cleared and checked before the doors went back on it.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-hockliffe-bifold-hinge.jpg', 'caption' => 'The replacement hinge on the frame, fitted and adjusted.'],
+            'seo' => [
+                'title_tag' => 'Bifold Door Repair, Hockliffe | Fenster Glazing',
+                'meta_description' => 'A Fenster repair in Hockliffe, Bedfordshire: a worn hinge replaced on an anthracite aluminium bifold, with the carriage and threshold track checked through.',
+            ],
+        ],
+        'cat-flap-bifold-door-leckhampstead' => [
+            'title' => 'Cat flap fitted into a bifold door, Leckhampstead',
+            'location' => 'Leckhampstead, Buckinghamshire',
+            'type' => 'Repair',
+            'date' => '2026-05-13',
+            'summary' => 'A new sealed unit with the cat flap built into it, fitted into an existing white uPVC bifold door, and the doors checked for locking afterwards.',
+            'lead' => 'A cat flap is not cut into a double glazed pane. The flap goes into a new sealed unit made around it, and that unit takes the place of the one already in the door.',
+            'products' => [
+                ['label' => 'Cat and dog flaps', 'url' => $flaps],
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'Cat flap into a bifold door'],
+                ['label' => 'Route', 'value' => 'A new sealed unit'],
+                ['label' => 'Door', 'value' => 'Existing white uPVC bifold'],
+                ['label' => 'Also done', 'value' => 'Doors checked for locking'],
+            ],
+            'overview' => [
+                'Cutting a hole in a sealed unit destroys it. The two panes and the seal between them are one component, and the moment that seal is broken the unit mists. So a <a href="' . $flaps . '">cat flap</a> in a glazed door means a new unit with the flap sealed into it where it is made, and that is what went into this door.',
+                'The unit went into the leaf that was already there. Nothing was replaced above the glass line, the doors kept their own handles and hardware, and the flap sits low in the pane where a cat expects to find it.',
+                'The last thing on the job was the locking. A bifold that has had a leaf worked on wants checking across the whole set rather than on the one door, so it was run round, closed and locked before we left.',
+            ],
+            'installed' => [
+                'A new sealed unit with the cat flap sealed into it',
+                'Fitted into the existing bifold door leaf',
+                'Doors run through and checked for locking',
+                'Existing frame, handles and finish kept',
+            ],
+            'installers' => [$fitter_andy],
+            'team_label' => 'Service engineer',
+            'images' => [
+                ['src' => $img . 'cs-repair-leckhampstead-bifold-catflap.jpg', 'caption' => 'The finished doors from the terrace, with the cat flap in the pane nearest the frame.'],
+                ['src' => $img . 'cs-repair-leckhampstead-bifold-inside.jpg', 'caption' => 'The same doors from inside, onto the terrace and the garden beyond it.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-leckhampstead-bifold-catflap.jpg', 'caption' => 'The finished doors from the terrace, with the cat flap in the pane nearest the frame.'],
+            'seo' => [
+                'title_tag' => 'Cat Flap Fitted Into a Bifold Door, Leckhampstead | Fenster Glazing',
+                'meta_description' => 'A Fenster job in Leckhampstead, Buckinghamshire: a cat flap sealed into a new double glazed unit and fitted into an existing uPVC bifold door.',
+            ],
+        ],
+        /* The AdminBase screenshot for this one reads "Wed 6" with the month off
+           the top of the capture, so the date is the Wednesday that fits the rest
+           of the record and `date_confirmed` is false, which stops the page
+           printing a date it cannot stand behind. Folders 2 and 3 of the owner's
+           source set are the same window and the same garden; he confirmed on
+           2026-09-16 that they are one job, so they are one study. */
+        'window-hinge-replacement-kempston' => [
+            'title' => 'Window hinge replacement, Kempston',
+            'location' => 'Kempston, Bedford',
+            'type' => 'Repair',
+            'date' => '2026-05-06',
+            'date_confirmed' => false,
+            'summary' => 'Worn friction stays replaced on the casement windows of a Kempston home, with the original frames, glass and handles all kept.',
+            'lead' => 'Friction stays are the arms that hold a casement open and take its weight while it is. They wear, and a window on worn stays drops on its frame, catches on the way shut and stops sealing along the bottom.',
+            'products' => [
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'Friction stays replaced'],
+                ['label' => 'Windows', 'value' => 'Existing uPVC casements'],
+                ['label' => 'Kept', 'value' => 'Frames, glass and handles'],
+                ['label' => 'Visits', 'value' => 'One'],
+            ],
+            'overview' => [
+                'The close photograph shows the fault better than any description of it: the stay sitting in the bottom of the frame, the track around it worn and dirty, on a window that has been opened and shut for years. Nothing is wrong with the window above that line.',
+                'Replacing a stay means taking the sash out, lifting the old arms off the sash and the frame, and fitting new ones on the same fixing points. The screws out on the sill in the second photograph are the whole job: every stay that came off, and every one that went back on.',
+                'The frames, the glass and the handles are the ones the house already had. A <a href="' . $repairs . '">repair</a> like this is the reason we quote before assuming a window needs replacing at all.',
+            ],
+            'installed' => [
+                'Replacement friction stays',
+                'Sashes taken out and rehung',
+                'Existing frames, glass and handles kept',
+            ],
+            'installers' => [$fitter_andy],
+            'team_label' => 'Service engineer',
+            'images' => [
+                ['src' => $img . 'cs-repair-kempston-stay-old.jpg', 'caption' => 'The worn stay in the bottom of the frame, before it came off.'],
+                ['src' => $img . 'cs-repair-kempston-fixings.jpg', 'caption' => 'The fixings out on the sill, one set for every stay on the window.'],
+                ['src' => $img . 'cs-repair-kempston-window-open.jpg', 'caption' => 'The window open on its new stays.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-kempston-window-open.jpg', 'caption' => 'The window open on its new stays.'],
+            'seo' => [
+                'title_tag' => 'Window Hinge Replacement, Kempston | Fenster Glazing',
+                'meta_description' => 'A Fenster repair in Kempston, Bedford: worn friction stays replaced on existing uPVC casement windows, with the frames, glass and handles kept.',
+            ],
+        ],
+        'window-hinge-replacement-middleton' => [
+            'title' => 'Window hinge replacement, Middleton',
+            'location' => 'Middleton, Milton Keynes',
+            'type' => 'Repair',
+            'date' => '2026-04-01',
+            'summary' => 'Friction stays replaced on a first-floor bedroom window in Middleton, with the sashes out and back in the same morning.',
+            'lead' => 'A three-part casement at the front of the house, with the openers dropping on their stays. The sashes came out onto a covered worktop, the old stays came off, and the new ones went back on the same fixings.',
+            'products' => [
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'Friction stays replaced'],
+                ['label' => 'Window', 'value' => 'First-floor casement, three parts'],
+                ['label' => 'Kept', 'value' => 'Frame, sashes and glass'],
+                ['label' => 'Visits', 'value' => 'One'],
+            ],
+            'overview' => [
+                'Taking the sash out is most of this job. The opener comes off its stays onto a protected surface, both arms are unscrewed from the sash and the frame, and the new pair goes on in the same places. The old stays in the photograph are what was carrying the window until that morning.',
+                'It is worth saying what did not happen. No frame came out of the wall, no glass was disturbed, nothing had to be made good afterwards, and the room was back in use the same day. A <a href="' . $repairs . '">hardware repair</a> is a different kind of visit to a window replacement, and it is the one most first-floor windows actually need.',
+                'The house is managed through a letting agent, which is how a lot of these reach us: one window, one fault, one visit, on a house somebody is living in.',
+            ],
+            'installed' => [
+                'Replacement friction stays',
+                'Sashes taken out and rehung',
+                'Existing frame, sashes and glass kept',
+                'Surfaces covered, and cleared the same day',
+            ],
+            'installers' => [$fitter_andy],
+            'team_label' => 'Service engineer',
+            'images' => [
+                ['src' => $img . 'cs-repair-middleton-stays-out.jpg', 'caption' => 'The opener out of the frame, with the old stays on the covered worktop.'],
+                ['src' => $img . 'cs-repair-middleton-window-after.jpg', 'caption' => 'The window back together on its new stays.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-middleton-window-after.jpg', 'caption' => 'The window back together on its new stays.'],
+            'seo' => [
+                'title_tag' => 'Window Hinge Replacement, Middleton, Milton Keynes | Fenster Glazing',
+                'meta_description' => 'A Fenster repair in Middleton, Milton Keynes: worn friction stays replaced on a first-floor casement window, with the frame and glass kept.',
+            ],
+        ],
     ];
 
     // Newest first, so the archive and related sections stay in date order
@@ -2228,9 +2510,19 @@ function fenster_case_study(string $short_slug): ?array
  */
 function fenster_case_study_base(array $study): string
 {
-    return strtolower((string) ($study['type'] ?? 'Residential')) === 'commercial'
-        ? 'commercial-projects'
-        : 'case-studies';
+    $type = strtolower((string) ($study['type'] ?? 'Residential'));
+
+    /* Three types, three archives. A study answers on its own base only, which
+       is what stops one appearing under two routes and duplicating itself. */
+    if ($type === 'commercial') {
+        return 'commercial-projects';
+    }
+
+    if ($type === 'repair') {
+        return 'repair-case-studies';
+    }
+
+    return 'case-studies';
 }
 
 /**

@@ -17,6 +17,15 @@ if (! defined('ABSPATH')) {
 $args = is_array($args ?? null) ? $args : [];
 $is_archive = ! empty($args['is_archive']);
 $is_commercial = ! empty($args['is_commercial']);
+/* The repair archive and repair detail pages. A repair is neither a home
+   installation nor a commercial scheme: the reader is checking whether we will
+   come out and fix one thing, so the copy and the call to action both change.
+   The instant quote tool is kept off these pages entirely, because it prices new
+   windows and doors and cannot price a broken handle. Repairs route to the
+   repairs service page and to the phone instead. */
+$is_repair = ! empty($args['is_repair']);
+$repairs_url = home_url('/window-and-door-repairs/');
+$repairs_archive_url = home_url('/repair-case-studies/');
 $short_slug = (string) ($args['short_slug'] ?? '');
 $quote_url = (string) ($args['quote_url'] ?? home_url('/online-quote/'));
 /* The instant quote tool prices domestic windows and doors. It cannot price a
@@ -29,7 +38,13 @@ $commercial_enquiry_url = home_url('/commercial-glazing/#commercial-enquiry');
    and residential at /case-studies/, so each archive only builds cards for its
    own type. A detail page still needs the full set for related links. */
 if ($is_archive && function_exists('fenster_case_studies_of_type')) {
-    $studies = fenster_case_studies_of_type($is_commercial ? 'commercial' : 'residential');
+    $archive_type = 'residential';
+    if ($is_commercial) {
+        $archive_type = 'commercial';
+    } elseif ($is_repair) {
+        $archive_type = 'repair';
+    }
+    $studies = fenster_case_studies_of_type($archive_type);
 } else {
     $studies = function_exists('fenster_case_studies') ? fenster_case_studies() : [];
 }
@@ -62,11 +77,23 @@ if ($is_archive) :
     <article class="fg-cs fg-cs--archive">
         <header class="fg-cs-head">
             <div class="container">
-                <p class="eyebrow"><?php echo esc_html($is_commercial ? __('Commercial projects', 'fenster') : __('Case studies', 'fenster')); ?></p>
-                <h1><?php echo esc_html($is_commercial ? __('Commercial projects', 'fenster') : __('Recent installations', 'fenster')); ?></h1>
-                <p class="fg-cs-head__lead"><?php echo esc_html($is_commercial
-                    ? __('Buildings we have glazed for other businesses, with the scope, the constraints and what was actually fitted.', 'fenster')
-                    : __('See the most recent of our 1,000+ installations in the case studies below.', 'fenster')); ?></p>
+                <?php
+                $head_eyebrow = __('Case studies', 'fenster');
+                $head_title = __('Recent installations', 'fenster');
+                $head_lead = __('See the most recent of our 1,000+ installations in the case studies below.', 'fenster');
+                if ($is_commercial) {
+                    $head_eyebrow = __('Commercial projects', 'fenster');
+                    $head_title = __('Commercial projects', 'fenster');
+                    $head_lead = __('Buildings we have glazed for other businesses, with the scope, the constraints and what was actually fitted.', 'fenster');
+                } elseif ($is_repair) {
+                    $head_eyebrow = __('Repairs', 'fenster');
+                    $head_title = __('Repair case studies', 'fenster');
+                    $head_lead = __('Repairs we have carried out on windows and doors, whoever fitted them: what was wrong, what was done and what was kept.', 'fenster');
+                }
+                ?>
+                <p class="eyebrow"><?php echo esc_html($head_eyebrow); ?></p>
+                <h1><?php echo esc_html($head_title); ?></h1>
+                <p class="fg-cs-head__lead"><?php echo esc_html($head_lead); ?></p>
             </div>
         </header>
 
@@ -93,15 +120,27 @@ if ($is_archive) :
         <section class="fg-cs-cta">
             <div class="container fg-cs-cta__inner">
                 <div>
-                    <h2><?php echo esc_html($is_commercial ? __('Have a building that needs glazing?', 'fenster') : __('Want windows or doors like these?', 'fenster')); ?></h2>
-                    <p><?php echo esc_html($is_commercial
-                        ? __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster')
-                        : __('Price your project in minutes with our instant quote tool, or talk it through with the team first.', 'fenster')); ?></p>
+                    <?php
+                    $cta_title = __('Want windows or doors like these?', 'fenster');
+                    $cta_copy = __('Price your project in minutes with our instant quote tool, or talk it through with the team first.', 'fenster');
+                    if ($is_commercial) {
+                        $cta_title = __('Have a building that needs glazing?', 'fenster');
+                        $cta_copy = __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster');
+                    } elseif ($is_repair) {
+                        $cta_title = __('Something not working at your place?', 'fenster');
+                        $cta_copy = __('Send a photograph of the fault and we will quote it. Quoting is normally free and often needs no visit.', 'fenster');
+                    }
+                    ?>
+                    <h2><?php echo esc_html($cta_title); ?></h2>
+                    <p><?php echo esc_html($cta_copy); ?></p>
                 </div>
                 <div class="fg-cs-cta__actions">
                     <?php if ($is_commercial) : ?>
                         <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-glazing/')); ?>"><?php esc_html_e('Commercial glazing', 'fenster'); ?></a>
+                    <?php elseif ($is_repair) : ?>
+                        <a class="button" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Window and door repairs', 'fenster'); ?></a>
+                        <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($args['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), (string) ($args['phone'] ?? '01908 429200'))); ?></a>
                     <?php else : ?>
                         <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
@@ -135,7 +174,13 @@ $date_confirmed = ($study['date_confirmed'] ?? true) !== false;
 $date_display = ($date_iso !== '' && $date_confirmed)
     ? date_i18n($is_commercial ? 'F Y' : 'j F Y', (int) strtotime($date_iso))
     : '';
-$date_label = $is_commercial ? __('Completed', 'fenster') : __('Installed', 'fenster');
+/* "Installed" is wrong on a repair, which is a visit rather than an install. */
+$date_label = __('Installed', 'fenster');
+if ($is_commercial) {
+    $date_label = __('Completed', 'fenster');
+} elseif ($is_repair) {
+    $date_label = __('Repaired', 'fenster');
+}
 $lead = (string) ($study['lead'] ?? ($study['summary'] ?? ''));
 $overview = is_array($study['overview'] ?? null) ? $study['overview'] : [];
 $specs = is_array($study['specs'] ?? null) ? $study['specs'] : [];
@@ -297,7 +342,18 @@ $related = array_slice($related, 0, 3);
 <?php
 ob_start();
 ?>
-<a class="fg-cs-back" href="<?php echo esc_url(home_url($is_commercial ? '/commercial-projects/' : '/case-studies/')); ?>"><?php echo esc_html($is_commercial ? __('All commercial projects', 'fenster') : __('All case studies', 'fenster')); ?></a>
+<?php
+$back_url = home_url('/case-studies/');
+$back_label = __('All case studies', 'fenster');
+if ($is_commercial) {
+    $back_url = home_url('/commercial-projects/');
+    $back_label = __('All commercial projects', 'fenster');
+} elseif ($is_repair) {
+    $back_url = $repairs_archive_url;
+    $back_label = __('All repair case studies', 'fenster');
+}
+?>
+<a class="fg-cs-back" href="<?php echo esc_url($back_url); ?>"><?php echo esc_html($back_label); ?></a>
 <p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
 <h1><?php echo esc_html($title); ?></h1>
 <p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
@@ -307,6 +363,8 @@ ob_start();
 <div class="fg-cs-hero__actions">
     <?php if ($is_commercial) : ?>
         <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
+    <?php elseif ($is_repair) : ?>
+        <a class="button" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Book a repair', 'fenster'); ?></a>
     <?php else : ?>
         <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
     <?php endif; ?>
@@ -451,6 +509,8 @@ $hero_intro_html = ob_get_clean();
                     <?php endif; ?>
                     <?php if ($is_commercial) : ?>
                         <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
+                    <?php elseif ($is_repair) : ?>
+                        <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Book a repair', 'fenster'); ?></a>
                     <?php else : ?>
                         <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                     <?php endif; ?>
@@ -458,7 +518,7 @@ $hero_intro_html = ob_get_clean();
 
                 <?php if (! empty($installed)) : ?>
                     <div class="fg-cs-aside__block">
-                        <span class="fg-cs-aside__label"><?php esc_html_e('What we fitted', 'fenster'); ?></span>
+                        <span class="fg-cs-aside__label"><?php echo esc_html($is_repair ? __('What we did', 'fenster') : __('What we fitted', 'fenster')); ?></span>
                         <ul class="fg-cs-fitted">
                             <?php foreach ($installed as $item) : ?>
                                 <li><?php echo esc_html((string) $item); ?></li>
@@ -671,7 +731,7 @@ $hero_intro_html = ob_get_clean();
     <?php if (! empty($related)) : ?>
         <section class="fg-cs-more">
             <div class="container">
-                <h2 class="fg-cs-more__title"><?php esc_html_e('More case studies', 'fenster'); ?></h2>
+                <h2 class="fg-cs-more__title"><?php echo esc_html($is_repair ? __('More repairs', 'fenster') : __('More case studies', 'fenster')); ?></h2>
                 <div class="fg-cs-grid">
                     <?php foreach ($related as $card) : ?>
                         <?php $render_card($card); ?>
@@ -684,15 +744,27 @@ $hero_intro_html = ob_get_clean();
     <section class="fg-cs-cta">
         <div class="container fg-cs-cta__inner">
             <div>
-                <h2><?php echo esc_html($is_commercial ? __('Have a project like this?', 'fenster') : __('Want the same for your home?', 'fenster')); ?></h2>
-                <p><?php echo esc_html($is_commercial
-                    ? __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster')
-                    : __('Price it in minutes with our instant quote tool, or explore the products used on this project.', 'fenster')); ?></p>
+                <?php
+                $detail_cta_title = __('Want the same for your home?', 'fenster');
+                $detail_cta_copy = __('Price it in minutes with our instant quote tool, or explore the products used on this project.', 'fenster');
+                if ($is_commercial) {
+                    $detail_cta_title = __('Have a project like this?', 'fenster');
+                    $detail_cta_copy = __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster');
+                } elseif ($is_repair) {
+                    $detail_cta_title = __('Got one like this?', 'fenster');
+                    $detail_cta_copy = __('We repair windows and doors whoever fitted them. Send a photograph of the fault and we will quote it.', 'fenster');
+                }
+                ?>
+                <h2><?php echo esc_html($detail_cta_title); ?></h2>
+                <p><?php echo esc_html($detail_cta_copy); ?></p>
             </div>
             <div class="fg-cs-cta__actions">
                 <?php if ($is_commercial) : ?>
                     <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-projects/')); ?>"><?php esc_html_e('All commercial projects', 'fenster'); ?></a>
+                <?php elseif ($is_repair) : ?>
+                    <a class="button" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Window and door repairs', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url($repairs_archive_url); ?>"><?php esc_html_e('All repair case studies', 'fenster'); ?></a>
                 <?php else : ?>
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>

@@ -37,6 +37,7 @@ $footer_company = [
     ['label' => 'Why Distinction Doors', 'url' => home_url('/why-distinction/')],
     ['label' => 'Case Studies', 'url' => home_url('/case-studies/')],
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
+    ['label' => 'Repair Case Studies', 'url' => home_url('/repair-case-studies/')],
     ['label' => 'Contact', 'url' => home_url('/contact/')],
     ['label' => 'Instant Quote', 'url' => home_url('/online-quote/')],
     ['label' => 'Book a Free Consultation', 'url' => home_url('/book-a-consultation/')],
