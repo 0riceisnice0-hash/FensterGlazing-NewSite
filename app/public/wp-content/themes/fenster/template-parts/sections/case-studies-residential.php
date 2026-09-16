@@ -25,6 +25,14 @@ $is_commercial = ! empty($args['is_commercial']);
    repairs service page and to the phone instead. */
 $is_repair = ! empty($args['is_repair']);
 $repairs_url = home_url('/window-and-door-repairs/');
+/* THE REPAIR ROUTE IS A FORM, NOT A PRICE. Owner, 2026-09-16: "they all
+   contacted through a form, you cant instant price repairs." A repair has no
+   specification to price from, so every call to action on these pages goes to
+   the repair request form on the repairs page, which is where the office picks
+   it up, and never to the instant quote tool. `#fenster-enquiry` is that form's
+   own anchor, and the button on the repairs page calls it "Request a repair",
+   so these use the same words for the same thing. */
+$repairs_form_url = home_url('/window-and-door-repairs/#fenster-enquiry');
 $repairs_archive_url = home_url('/repair-case-studies/');
 $short_slug = (string) ($args['short_slug'] ?? '');
 $quote_url = (string) ($args['quote_url'] ?? home_url('/online-quote/'));
@@ -88,7 +96,7 @@ if ($is_archive) :
                 } elseif ($is_repair) {
                     $head_eyebrow = __('Repairs', 'fenster');
                     $head_title = __('Repair case studies', 'fenster');
-                    $head_lead = __('Repairs we have carried out on windows and doors, whoever fitted them: what was wrong, what was done and what was kept.', 'fenster');
+                    $head_lead = __('Repairs we have carried out on windows and doors, whoever fitted them: what was wrong, what was done and what was kept. Every one of these came in through the repair form.', 'fenster');
                 }
                 ?>
                 <p class="eyebrow"><?php echo esc_html($head_eyebrow); ?></p>
@@ -128,7 +136,7 @@ if ($is_archive) :
                         $cta_copy = __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster');
                     } elseif ($is_repair) {
                         $cta_title = __('Something not working at your place?', 'fenster');
-                        $cta_copy = __('Send a photograph of the fault and we will quote it. Quoting is normally free and often needs no visit.', 'fenster');
+                        $cta_copy = __('A repair cannot be priced by a tool the way a new window can, so tell us what it is doing on the repair form. Quoting is normally free and often needs no visit.', 'fenster');
                     }
                     ?>
                     <h2><?php echo esc_html($cta_title); ?></h2>
@@ -139,7 +147,7 @@ if ($is_archive) :
                         <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-glazing/')); ?>"><?php esc_html_e('Commercial glazing', 'fenster'); ?></a>
                     <?php elseif ($is_repair) : ?>
-                        <a class="button" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Window and door repairs', 'fenster'); ?></a>
+                        <a class="button" href="<?php echo esc_url($repairs_form_url); ?>"><?php esc_html_e('Request a repair', 'fenster'); ?></a>
                         <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($args['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), (string) ($args['phone'] ?? '01908 429200'))); ?></a>
                     <?php else : ?>
                         <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
@@ -364,7 +372,7 @@ if ($is_commercial) {
     <?php if ($is_commercial) : ?>
         <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
     <?php elseif ($is_repair) : ?>
-        <a class="button" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Book a repair', 'fenster'); ?></a>
+        <a class="button" href="<?php echo esc_url($repairs_form_url); ?>"><?php esc_html_e('Request a repair', 'fenster'); ?></a>
     <?php else : ?>
         <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
     <?php endif; ?>
@@ -510,7 +518,7 @@ $hero_intro_html = ob_get_clean();
                     <?php if ($is_commercial) : ?>
                         <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                     <?php elseif ($is_repair) : ?>
-                        <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Book a repair', 'fenster'); ?></a>
+                        <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($repairs_form_url); ?>"><?php esc_html_e('Request a repair', 'fenster'); ?></a>
                     <?php else : ?>
                         <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                     <?php endif; ?>
@@ -752,7 +760,7 @@ $hero_intro_html = ob_get_clean();
                     $detail_cta_copy = __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster');
                 } elseif ($is_repair) {
                     $detail_cta_title = __('Got one like this?', 'fenster');
-                    $detail_cta_copy = __('We repair windows and doors whoever fitted them. Send a photograph of the fault and we will quote it.', 'fenster');
+                    $detail_cta_copy = __('We repair windows and doors whoever fitted them. Tell us what it is doing on the repair form and we will come back with a price.', 'fenster');
                 }
                 ?>
                 <h2><?php echo esc_html($detail_cta_title); ?></h2>
@@ -763,7 +771,7 @@ $hero_intro_html = ob_get_clean();
                     <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-projects/')); ?>"><?php esc_html_e('All commercial projects', 'fenster'); ?></a>
                 <?php elseif ($is_repair) : ?>
-                    <a class="button" href="<?php echo esc_url($repairs_url); ?>"><?php esc_html_e('Window and door repairs', 'fenster'); ?></a>
+                    <a class="button" href="<?php echo esc_url($repairs_form_url); ?>"><?php esc_html_e('Request a repair', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url($repairs_archive_url); ?>"><?php esc_html_e('All repair case studies', 'fenster'); ?></a>
                 <?php else : ?>
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
