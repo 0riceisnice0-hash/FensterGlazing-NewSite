@@ -2285,7 +2285,7 @@ function fenster_case_studies(): array
             'overview' => [
                 'Toughened glass does not crack across, it crazes all at once, and the pieces are held where they are by the beads and the seal. That is the safety behaviour working, and it is why the door in the before photograph is still standing there in one piece with a pane nobody can see through.',
                 'The door itself was sound, so the job was the <a href="' . $glazing . '">glass</a> and nothing else. The beads came out, the broken unit was cleared, the rebate was cleaned and a new sealed unit went into the same door leaf. The locks, the hinges and the frame were not touched, and the door closed and locked afterwards as it had before.',
-                'It reached us as a repair form on the website. Broken glass is the clearest case for that route: the fault is obvious, the size is measurable, and the office can price and book it without anyone travelling to look first.',
+                'Broken glass is the clearest case there is for describing a fault on a form rather than waiting for a visit: it is obvious, it is measurable, and the office can price and book it before anyone travels.',
             ],
             'installed' => [
                 'New sealed unit in the existing door',
@@ -2455,7 +2455,7 @@ function fenster_case_studies(): array
             'overview' => [
                 'Taking the sash out is most of this job. The opener comes off its stays onto a protected surface, both arms are unscrewed from the sash and the frame, and the new pair goes on in the same places. The old stays in the photograph are what was carrying the window until that morning.',
                 'It is worth saying what did not happen. No frame came out of the wall, no glass was disturbed, nothing had to be made good afterwards, and the room was back in use the same day. A <a href="' . $repairs . '">hardware repair</a> is a different kind of visit to a window replacement, and it is the one most first-floor windows actually need.',
-                'This one came in through the repair form on the website, the way all of these do. A repair cannot be priced by a tool the way a new window can, so what is written in that form is what the office quotes from: one window, one fault, one visit, on a house somebody is living in.',
+                'A repair cannot be priced by a tool the way a new window can, so what gets written on the form is what the office quotes from. One window, one fault, one visit, on a house somebody is living in.',
             ],
             'installed' => [
                 'Replacement friction stays',

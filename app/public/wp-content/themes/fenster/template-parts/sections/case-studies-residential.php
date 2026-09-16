@@ -474,7 +474,23 @@ $hero_intro_html = ob_get_clean();
                    because this is a claim about a real customer. */
                 $priced_by = (string) ($study['priced_by'] ?? '');
                 ?>
-                <?php if (! $is_commercial && $priced_by === 'consultation') : ?>
+                <?php if ($is_repair) : ?>
+                    <?php /* A REPAIR IS NEVER PRICED BY THE TOOL. Owner, 2026-09-16:
+                             "they all contacted through a form, you cant instant price
+                             repairs." Without this branch every repair study inherited
+                             the default below and told the reader, in the customer's
+                             name, that they had priced a broken handle through the
+                             instant quote tool. */ ?>
+                    <p class="fg-cs-quote-note">
+                        <?php
+                        printf(
+                            /* translators: %s: repair request form link */
+                            esc_html__('This customer came to us through our %s.', 'fenster'),
+                            '<a href="' . esc_url($repairs_form_url) . '">' . esc_html__('repair form', 'fenster') . '</a>'
+                        );
+                        ?>
+                    </p>
+                <?php elseif (! $is_commercial && $priced_by === 'consultation') : ?>
                     <p class="fg-cs-quote-note">
                         <?php
                         printf(
