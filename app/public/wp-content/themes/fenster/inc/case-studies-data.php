@@ -106,6 +106,49 @@ function fenster_case_studies(): array
     $director_adam = $fitter('Adam Butcher', 'Commercial Director', 'adam-butcher-scaled.jpg');
 
     $cache = [
+        'cowboy-builder-window-fix-loughton-milton-keynes' => [
+            'title' => 'uPVC casement window, Loughton',
+            'location' => 'Loughton, Milton Keynes',
+            'type' => 'Residential',
+            'date' => '2026-09-08',
+            'summary' => 'A badly fitted window left by a cowboy builder, replaced with a two-tone Liniar uPVC casement and finished cleanly inside and out.',
+            'lead' => 'The previous window installation had been left with rough edges, heavy sealant and an untidy finish around the opening. We took it out and fitted one new Liniar uPVC casement in its place.',
+            'products' => [
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+            ],
+            'colour' => ['label' => 'Anthracite grey', 'url' => $colour_anthracite_upvc],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'One uPVC casement window'],
+                ['label' => 'System', 'value' => 'Liniar uPVC'],
+                ['label' => 'Colour', 'value' => 'Anthracite grey outside, white inside'],
+                ['label' => 'Brief', 'value' => 'Correct a poor previous installation'],
+            ],
+            'overview' => [
+                'The old kitchen window had been fitted badly by a cowboy builder. The before photographs show the rough perimeter, exposed edges and heavy sealant left around the frame. This was not a small hardware repair. The right answer was to remove the window and start again with the opening.',
+                'We fitted one new <a href="' . $casement . '">Liniar uPVC casement window</a>, then sealed and finished it neatly against the brickwork outside and the tiled reveal inside. The customer kept the same simple one-window layout, but the frame, opener and finish were replaced as one complete installation.',
+                'The new frame is <a href="' . $colour_anthracite_upvc . '">anthracite grey</a> outside to sit with the surrounding rainwater goods and exterior details, with white inside against the kitchen tiles. The customer obtained the initial price online, then a sales visit confirmed the measurements and final details before Aaron fitted it.',
+            ],
+            'installed' => [
+                'One Liniar uPVC casement window',
+                'Anthracite grey outside, white inside',
+                'Old poorly fitted window removed',
+                'Opening sealed and finished inside and out',
+            ],
+            'installers' => [$fitter_aaron],
+            'images' => [
+                ['src' => $img . 'cs-upvc-window-installation-fix-after-exterior.jpg', 'caption' => 'The finished Liniar uPVC casement in anthracite grey, fitted neatly into the brick opening.'],
+                ['src' => $img . 'cs-upvc-window-installation-fix-after-interior.jpg', 'caption' => 'The completed window from the kitchen, with a white frame and a clean finish against the tiled reveal.'],
+                ['src' => $img . 'cs-upvc-window-installation-fix-before-wide.jpg', 'caption' => 'Before: the old window and the rough finish left around the opening by the previous installer.'],
+                ['src' => $img . 'cs-upvc-window-installation-fix-before-frame-edge.jpg', 'caption' => 'Before: a close view of the poorly finished frame edge and perimeter seal.'],
+                ['src' => $img . 'cs-upvc-window-installation-fix-before-reveal.jpg', 'caption' => 'Before: exposed and uneven finishing where the old frame met the brick reveal.'],
+            ],
+            'gallery_shape' => 'tall',
+            'seo' => [
+                'title_tag' => 'Cowboy Builder Window Fix, Milton Keynes | Fenster Glazing',
+                'meta_description' => 'A cowboy builder window installation corrected in Loughton, Milton Keynes, with a new two-tone Liniar uPVC casement fitted by Aaron.',
+            ],
+        ],
+
         /*
          * Headrow Court is the first Commercial entry in this system; the other
          * commercial studies still sit in the legacy pages.json records. Project
