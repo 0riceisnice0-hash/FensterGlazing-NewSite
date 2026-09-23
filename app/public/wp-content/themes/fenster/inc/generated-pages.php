@@ -603,7 +603,9 @@ function fenster_gsc_seo_overrides(): array
         ],
         'about' => [
             'title_tag' => 'About Fenster Glazing | Local Windows & Doors Experts',
-            'meta_description' => 'Fenster Glazing are window and door experts. We install windows and doors across Milton Keynes, Northampton and Buckinghamshire.',
+            // Owner-approved 2026-09-23. "Our own installers" is scoped to windows and
+            // doors on purpose: roofline and some commercial work are subcontracted.
+            'meta_description' => 'Founded in 2018 by Adam Butcher and Nick Baker. Windows and doors fitted by our own installers, from our showroom in Bradwell Abbey, Milton Keynes.',
         ],
         'are-my-windows-energy-efficient' => [
             'meta_description' => 'Learn how energy-efficient windows can improve comfort, warmth and bills in your Milton Keynes home, with advice from Fenster Glazing.',
