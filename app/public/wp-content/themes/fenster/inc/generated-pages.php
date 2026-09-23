@@ -1890,6 +1890,20 @@ function fenster_gone_slugs(): array
     ];
 }
 
+/* A gone route has to be a 404 to WordPress as well, not only to the router.
+   Live's database still holds published posts at two of these addresses:
+   `nick-test-baboon`, a test page titled "Construction: Linkedin", and
+   `our-new-website`. WordPress resolved those requests to the post before the
+   router sent the 410, so Rank Math built the gone page's head from the post:
+   its title, "index, follow" and a canonical. Emptying the query here means
+   WordPress finds nothing, so the head is the same 404 head every other
+   missing page gets, and the router still answers 410. */
+add_filter('request', 'fenster_gone_slug_request', 0);
+function fenster_gone_slug_request(array $query_vars): array
+{
+    return isset(fenster_gone_slugs()[strtolower(fenster_current_generated_slug())]) ? ['error' => '404'] : $query_vars;
+}
+
 /**
  * Permanent redirects for duplicate, renamed and superseded routes.
  * Returns the destination slug, or '' when the slug should not redirect.
