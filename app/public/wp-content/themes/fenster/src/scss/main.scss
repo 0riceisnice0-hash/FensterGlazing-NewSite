@@ -19072,7 +19072,7 @@ a.fg-cs-card__pill:focus-visible {
    that a reader (and a crawler) scans down. */
 .fg-about-glance__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
   gap: clamp(1.5rem, 3.4vw, 3rem);
   align-items: start;
 }
@@ -19089,7 +19089,7 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-about-glance__table th,
 .fg-about-glance__table td {
-  padding: 0.62rem 1rem;
+  padding: 0.5rem 1rem;
   text-align: left;
   vertical-align: top;
   line-height: 1.45;
@@ -19101,7 +19101,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-about-glance__table th {
-  width: 34%;
+  width: 28%;
   color: var(--color-steel);
   font-size: 0.86rem;
   font-weight: 800;

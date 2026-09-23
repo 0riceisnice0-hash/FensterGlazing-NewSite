@@ -161,10 +161,6 @@ $about_faqs = [
         'answer' => 'Adam Butcher and Nick Baker started Fenster in 2018 and are still here every day. Nick runs sales and the showroom, and Adam runs the commercial side.',
     ],
     [
-        'question' => 'Where are you based?',
-        'answer' => 'Our showroom and office are at ' . $address_line . '. The showroom is open ' . (string) ($brand['showroom_hours'] ?? 'Monday to Friday, 8.30am to 5pm') . ', and you do not need an appointment.',
-    ],
-    [
         'question' => 'Which areas do you cover?',
         'answer' => 'Milton Keynes and the towns around it, across Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. Commercial work goes further, so tell us where the building is.',
     ],
@@ -182,7 +178,7 @@ $about_faqs = [
     ],
     [
         'question' => 'Can I get a price online?',
-        'answer' => 'Yes. Build the job on our quote tool with your sizes, styles, colours and glass, and most people have a real figure inside ten minutes. It asks for your contact details before it shows the price. If you would rather talk it through, book a free consultation and we price the job at your property.',
+        'answer' => 'Yes. Build the job on our quote tool with your sizes, styles, colours and glass, and most people have a real figure inside ten minutes. It asks for your contact details before it shows the price, or you can book a free consultation and we price it at your property.',
     ],
 ];
 
@@ -332,8 +328,8 @@ $routes = [
                         <h3><?php echo esc_html($audience['title']); ?></h3>
                         <p><?php echo esc_html($audience['copy']); ?></p>
                         <div class="button-row">
-                            <?php foreach ($audience['links'] as $link) : ?>
-                                <a class="button button--light" href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a>
+                            <?php foreach ($audience['links'] as $link_index => $link) : ?>
+                                <a class="button<?php echo $link_index > 0 ? ' button--steel' : ''; ?>" href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a>
                             <?php endforeach; ?>
                         </div>
                     </li>
