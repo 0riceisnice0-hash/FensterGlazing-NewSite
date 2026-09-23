@@ -434,7 +434,7 @@ $gallery = [
     ['file' => 'upvc-gallery-half-glazed-stone-reveal.webp', 'position' => 'center 40%', 'caption' => __('Half-glazed door in a stone wall', 'fenster'), 'alt' => __('Half-glazed uPVC door with a flat panel below, set in a stone wall', 'fenster')],
     ['file' => 'upvc-gallery-anthracite-render-wall.webp', 'position' => 'center 50%', 'caption' => __('Anthracite, fully glazed', 'fenster'), 'alt' => __('Fully glazed anthracite uPVC door in a rendered wall beside a patio', 'fenster')],
     ['file' => 'upvc-gallery-woodgrain-side-panels.webp', 'position' => 'center 50%', 'caption' => __('Woodgrain door with side panels', 'fenster'), 'alt' => __('Woodgrain uPVC front door with glazed side panels either side, seen from inside the porch', 'fenster')],
-    ['file' => 'upvc-gallery-anthracite-glazed-brick.webp', 'position' => 'center 50%', 'caption' => __('Obscure glass, full height', 'fenster'), 'alt' => __('Anthracite uPVC door with full-height obscure glass in a red brick wall', 'fenster')],
+    ['file' => 'upvc-gallery-anthracite-glazed-brick.webp', 'position' => 'center 50%', 'caption' => __('Full-height glass in a brick wall', 'fenster'), 'alt' => __('Anthracite uPVC door with full-height clear glass in a red brick wall', 'fenster')],
 ];
 ?>
 <section class="fg-cw-gallery fg-cw-gallery--light" aria-labelledby="fg-upd-gallery-title">
