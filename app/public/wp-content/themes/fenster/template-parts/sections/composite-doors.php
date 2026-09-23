@@ -61,7 +61,11 @@ get_template_part('template-parts/components/product-pulse', null, [
     'usps' => [
         ['label' => 'Insulated slab', 'value' => '44.5mm'],
         ['label' => 'Door styles', 'value' => (string) $door_count],
-        ['label' => 'Colours', 'value' => count($colours) . ' options'],
+        // Not a count: the swatches on this page are a selection of the standard
+        // range, and any RAL can be matched beyond it (owner, 2026-07-29). A
+        // count of them read as the size of the range, which it is not (owner,
+        // 2026-09-23: "27 colour options is incorrect").
+        ['label' => 'Colours', 'value' => 'Any RAL'],
         ['label' => 'Guarantee', 'value' => '10 years'],
     ],
 ]);
