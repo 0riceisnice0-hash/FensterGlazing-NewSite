@@ -184,7 +184,10 @@ $commercial_sectors = [
    estimator nothing. These are things that are either true or not. */
 $commercial_proof_points = [
     ['value' => 'Nationwide', 'label' => 'commercial coverage across England and Wales'],
-    ['value' => 'In-house', 'label' => 'fitters, not subcontracted labour'],
+    /* Was "In-house: fitters, not subcontracted labour". Untrue: owner,
+       2026-09-23, commercial work sometimes uses subcontractors, and the
+       site says nothing about who fits commercial jobs either way. */
+    ['value' => 'Surveyed', 'label' => 'measured on site, not taken off the drawing'],
     ['value' => 'Occupied', 'label' => 'buildings phased, sequenced and handed back daily'],
     ['value' => 'No minimum', 'label' => 'one failed unit or a whole facade'],
 ];
