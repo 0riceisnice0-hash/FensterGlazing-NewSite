@@ -59,7 +59,7 @@ get_template_part('template-parts/components/product-pulse', null, [
     'slug' => 'composite-doors',
     'title' => 'Distinction composite doors',
     'usps' => [
-        ['label' => 'Slab', 'value' => '44.5mm insulated'],
+        ['label' => 'Insulated slab', 'value' => '44.5mm'],
         ['label' => 'Door styles', 'value' => (string) $door_count],
         ['label' => 'Colours', 'value' => count($colours) . ' options'],
         ['label' => 'Guarantee', 'value' => '10 years'],
