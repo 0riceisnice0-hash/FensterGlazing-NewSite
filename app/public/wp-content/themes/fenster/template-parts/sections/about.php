@@ -62,7 +62,7 @@ $prices_url = home_url('/window-door-prices-milton-keynes/');
 $facts = [
     ['value' => '2018', 'label' => 'trading since'],
     ['value' => '1,000+', 'label' => 'installations completed'],
-    ['value' => 'In-house', 'label' => 'fitters on every home, never subcontracted'],
+    ['value' => 'In-house', 'label' => 'window and door fitters, never subcontracted'],
     ['value' => '10 years', 'label' => 'insurance-backed guarantee'],
 ];
 
@@ -114,10 +114,10 @@ $address_line = implode(', ', array_map('strval', $address));
 /* Who we work with, and the at-a-glance table, added 2026-09-23 on the owner's
    brief. Two rules hold both of them to the rest of this site:
    - FITTING IS OURS ON HOMES, AND SAID ONLY OF HOMES. Owner, 2026-09-23:
-     residential work is never subcontracted, commercial sometimes is, and the
-     commercial side is not to be pushed on it either way. So every "our own
-     installers" line here is scoped to homes, and the commercial copy says
-     nothing about who fits.
+     windows and doors in homes are never subcontracted; roofline and some
+     commercial work are, and neither is to be pushed on it either way. So
+     every "our own installers" line here is scoped to windows and doors on
+     homes, and nothing says who fits roofline or commercial work.
    - THE GUARANTEE IS STATED POSITIVELY AND SCOPED TO NEW WINDOWS AND DOORS.
      No list of what it does not cover in anything new (2026-08-02 ruling);
      the older note in the accreditations band predates that and is left for
@@ -125,7 +125,7 @@ $address_line = implode(', ', array_map('strval', $address));
 $audiences = [
     [
         'title' => 'Homeowners',
-        'copy' => 'Replacement windows and doors, roof lanterns, integral blinds, secondary glazing, new glass and repairs. Price it on our quote tool or book a free consultation, and our own installers fit it.',
+        'copy' => 'Replacement windows and doors, roof lanterns, integral blinds, secondary glazing, new glass and repairs. Price it on our quote tool or book a free consultation, and our own installers fit the windows and doors.',
         'links' => [
             ['label' => 'View windows', 'url' => home_url('/windows-milton-keynes/')],
             ['label' => 'View doors', 'url' => home_url('/doors-milton-keynes/')],
@@ -149,7 +149,7 @@ $glance = [
     ['label' => 'Areas covered', 'value' => 'Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire'],
     ['label' => 'For homes', 'value' => 'Windows, doors, roof lanterns, integral blinds, secondary glazing, replacement glass and repairs'],
     ['label' => 'For commercial buildings', 'value' => 'Windows, doors, curtain walling, shopfronts, louvres and replacement glazing'],
-    ['label' => 'Fitting', 'value' => 'Our own installers on every home, never subcontracted'],
+    ['label' => 'Fitting', 'value' => 'Windows and doors in homes fitted by our own installers, never subcontracted'],
     ['label' => 'Guarantee', 'value' => 'Ten years, insurance-backed, on new windows and doors'],
     ['label' => 'Registrations', 'value' => 'FENSA registered, Constructionline Gold, SSIP assessed'],
     ['label' => 'Pricing', 'value' => 'Online on our quote tool, or at a free consultation at your property'],
@@ -166,7 +166,7 @@ $about_faqs = [
     ],
     [
         'question' => 'Who fits the windows and doors?',
-        'answer' => 'On homes, our own installers, never subcontracted. The people who survey the job work for us too.',
+        'answer' => 'In homes, our own installers, never subcontracted. The people who survey the job work for us too.',
     ],
     [
         'question' => 'Do you work on commercial buildings?',
@@ -200,7 +200,7 @@ $routes = [
             <div class="fg-about-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('About Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Simple, honest glazing.', 'fenster'); ?></h1>
-                <p class="fg-about-hero__lead"><?php esc_html_e('Fenster exists to make windows and doors straightforward: a fair price you can get in minutes, people who know what they are fitting, and a company that is still here long after the scaffolding has gone. We started in 2018, our showroom is in Milton Keynes, and every home we fit is surveyed and fitted by our own people.', 'fenster'); ?></p>
+                <p class="fg-about-hero__lead"><?php esc_html_e('Fenster exists to make windows and doors straightforward: a fair price you can get in minutes, people who know what they are fitting, and a company that is still here long after the scaffolding has gone. We started in 2018, our showroom is in Milton Keynes, and the windows and doors we fit in your home are surveyed and fitted by our own people.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
@@ -294,7 +294,7 @@ $routes = [
                 <p>
                     <a href="<?php echo esc_url($founder_link('Adam Butcher')); ?>"><?php esc_html_e('Adam Butcher', 'fenster'); ?></a><?php esc_html_e(' and ', 'fenster'); ?><a href="<?php echo esc_url($founder_link('Nick Baker')); ?>"><?php esc_html_e('Nick Baker', 'fenster'); ?></a><?php esc_html_e(' founded Fenster in 2018 and are still here every day. Nick runs sales and the showroom. Adam runs the commercial side, from schools and care homes to full curtain walling. The name is the German word for window.', 'fenster'); ?>
                 </p>
-                <p><?php esc_html_e('Behind them is a team from the trade, not a call centre: fitters with decades on the tools between them, service engineers, surveyors, and an office that answers its own phone at any hour.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Behind them is a team from the trade: fitters with decades on the tools between them, service engineers, surveyors and an office team, with phone lines answered around the clock.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button button--light" href="<?php echo esc_url(home_url('/meet-the-team/')); ?>"><?php esc_html_e('Meet the team', 'fenster'); ?></a>
                 </div>

@@ -62,11 +62,11 @@ function fenster_site_data(): array
                the `founder` property on the business schema so the names, roles
                and profile links cannot drift between them. `anchor` is the id
                their card carries on /meet-the-team/ (sanitize_title of the name).
-               `linkedin` feeds `sameAs` on their Person nodes; leave it empty
-               rather than guess a URL. */
+               `linkedin` feeds `sameAs` on their Person nodes; both owner-supplied
+               2026-09-23. Leave one empty rather than guess a URL. */
             'founders' => [
-                ['name' => 'Adam Butcher', 'role' => 'Commercial Director', 'anchor' => 'adam-butcher', 'linkedin' => ''],
-                ['name' => 'Nick Baker', 'role' => 'Sales Director', 'anchor' => 'nick-baker', 'linkedin' => ''],
+                ['name' => 'Adam Butcher', 'role' => 'Commercial Director', 'anchor' => 'adam-butcher', 'linkedin' => 'https://www.linkedin.com/in/adam-butcher-037241262/'],
+                ['name' => 'Nick Baker', 'role' => 'Sales Director', 'anchor' => 'nick-baker', 'linkedin' => 'https://www.linkedin.com/in/nicholas-baker-7a6528194/'],
             ],
             // Fallback only. When the Places API is configured, the canonical
             // review and write-review URLs are built from the place ID in
