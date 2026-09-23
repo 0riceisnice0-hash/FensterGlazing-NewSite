@@ -406,3 +406,67 @@ get_template_part('template-parts/components/privacy-glass-card', null, [
         </div>
     </div>
 </section>
+
+<?php /* 7. OUR WORK. Added 2026-09-23 on the owner's suggestion: every other
+         bespoke product route closes on a gallery of its own installs and this
+         one had none. Six photographs, all Fenster jobs, owner-supplied from his
+         own folder, and NONE OF THEM ALREADY ON THIS PAGE: the white shiplap back
+         door, the cat flap door, the anthracite shiplap door and the white French
+         doors on decking are used above, and the rosewood detail above is cropped
+         from the rosewood door, so both it and its wide shot stay out. The same
+         house is not shown twice. A stable door was left out because a person is
+         visible through its glass.
+
+         `fg-cw-gallery`, the component flush casement, tilt and turn, heritage
+         doors and replacement glazing use, WITH ITS LIGHT VARIANT. The base
+         component paints a steel band, and a band this size is well over half a
+         viewport, which STYLE.md has banned since 2026-09-02. `--light` puts it
+         on the page canvas instead; the mosaic, lightbox, captions and mobile
+         swipe rail are the shared ones.
+
+         CAPTIONS NAME A COLOUR ONLY WHERE IT IS UNAMBIGUOUS. The door in the
+         stone reveal reads as either cream or agate grey in the photograph, so
+         its caption says neither. Every file was stripped of EXIF on import. */
+$gallery_base = '/wp-content/themes/fenster/assets/images/products/upvc-doors/gallery/';
+$gallery = [
+    ['file' => 'upvc-gallery-anthracite-garden-room.webp', 'position' => 'center 45%', 'caption' => __('Anthracite door and sidelight on a garden room', 'fenster'), 'alt' => __('Anthracite uPVC door with a glazed sidelight and two matching windows on a timber-clad garden room', 'fenster')],
+    ['file' => 'upvc-gallery-white-french-doors-garden.webp', 'position' => 'center 72%', 'caption' => __('White French doors onto the garden', 'fenster'), 'alt' => __('White uPVC French doors in the back wall of a brick house, opening onto the garden', 'fenster')],
+    ['file' => 'upvc-gallery-half-glazed-stone-reveal.webp', 'position' => 'center 40%', 'caption' => __('Half-glazed door in a stone wall', 'fenster'), 'alt' => __('Half-glazed uPVC door with a flat panel below, set in a stone wall', 'fenster')],
+    ['file' => 'upvc-gallery-anthracite-render-wall.webp', 'position' => 'center 50%', 'caption' => __('Anthracite, fully glazed', 'fenster'), 'alt' => __('Fully glazed anthracite uPVC door in a rendered wall beside a patio', 'fenster')],
+    ['file' => 'upvc-gallery-woodgrain-side-panels.webp', 'position' => 'center 50%', 'caption' => __('Woodgrain door with side panels', 'fenster'), 'alt' => __('Woodgrain uPVC front door with glazed side panels either side, seen from inside the porch', 'fenster')],
+    ['file' => 'upvc-gallery-anthracite-glazed-brick.webp', 'position' => 'center 50%', 'caption' => __('Obscure glass, full height', 'fenster'), 'alt' => __('Anthracite uPVC door with full-height obscure glass in a red brick wall', 'fenster')],
+];
+?>
+<section class="fg-cw-gallery fg-cw-gallery--light" aria-labelledby="fg-upd-gallery-title">
+    <div class="container">
+        <div class="fg-cw-gallery__head">
+            <div>
+                <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                <h2 id="fg-upd-gallery-title"><?php esc_html_e('uPVC doors, fitted by us.', 'fenster'); ?></h2>
+            </div>
+            <p>
+                <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Every photograph here is a Fenster installation: front, back and garden doors, in different colours, glass and openings. Click any image for a closer look.', 'fenster'); ?></span>
+                <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Every photograph is a Fenster installation. Tap any for a closer look.', 'fenster'); ?></span>
+            </p>
+        </div>
+
+        <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('uPVC door gallery', 'fenster'); ?>">
+            <?php foreach ($gallery as $index => $shot) : ?>
+                <?php $full = fenster_generated_url($gallery_base . $shot['file']); ?>
+                <figure>
+                    <a href="<?php echo esc_url($full); ?>" data-fg-gallery-lightbox
+                        aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $shot['alt'])); ?>">
+                        <img <?php echo fenster_image_attr_string($gallery_base . $shot['file'], [
+                            'alt' => $shot['alt'],
+                            'loading' => 'lazy',
+                            'decoding' => 'async',
+                            'sizes' => '(max-width: 860px) 82vw, ' . ($index === 0 ? '40vw' : '28vw'),
+                            'style' => 'object-position: ' . $shot['position'],
+                        ]); ?>>
+                        <figcaption><?php echo esc_html($shot['caption']); ?></figcaption>
+                    </a>
+                </figure>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>

@@ -41079,6 +41079,37 @@ html.fg-blinds-reveal-locked {
     }
 }
 
+/* Light variant, added 2026-09-23 for /upvc-doors/. The base component paints
+   a steel band, and at this size that is well over half a viewport, which
+   STYLE.md has banned since 2026-09-02 ("wow is light"). This one sits on the
+   page canvas: transparent, ink heading, muted copy, its own padding because
+   it is not inside a `.fg-cw` wrapper. The mosaic is shortened so the whole
+   section fits the 707px budget at 1440x780. Everything else is shared. */
+.fg-cw-gallery--light {
+  padding: clamp(2rem, 4vh, 3rem) 0;
+  background: transparent;
+}
+
+.fg-cw-gallery--light h2 {
+  color: var(--color-steel);
+}
+
+.fg-cw-gallery--light .fg-cw-gallery__head > p {
+  max-width: 46ch;
+  margin: 0;
+  color: rgba(6, 33, 42, 0.72);
+}
+
+.fg-cw-gallery--light .fg-cw-gallery__mosaic {
+  height: clamp(380px, 34vw, 480px);
+}
+
+@media (max-width: 860px) {
+  .fg-cw-gallery--light .fg-cw-gallery__mosaic {
+    height: auto;
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Colour hub rail (/colour-options/)
    Replaced the coverflow on 2026-07-29. The owner's reference is the Sheerline
