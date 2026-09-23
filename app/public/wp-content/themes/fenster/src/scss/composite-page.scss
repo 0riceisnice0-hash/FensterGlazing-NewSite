@@ -38,25 +38,6 @@ html:has(.fg-cdoor-page) { scroll-behavior: smooth; }
 .fg-cdoor-heading { display: grid; grid-template-columns: 1.12fr 1fr; align-items: end; gap: 48px; margin-bottom: 24px; }
 .fg-cdoor-heading > p { max-width: 52ch; color: var(--cd-muted); }
 
-.fg-cdoor-hero { position: relative; background: #062e38; color: white; isolation: isolate; }
-.fg-cdoor-hero__image { position: absolute; inset: 0 0 0 auto; width: 65%; z-index: -1; overflow: hidden; }
-.fg-cdoor-hero__image img { width: 100%; height: 100%; object-fit: cover; object-position: center 57%; }
-.fg-cdoor-hero__image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #062e38 0%, rgba(6,46,56,.8) 16%, rgba(6,46,56,.15) 39%, transparent 65%); }
-.fg-cdoor-hero__inner { min-height: 550px; height: min(620px, calc(100svh - 73px)); display: flex; align-items: center; padding-block: 36px; }
-.fg-cdoor-hero__copy { max-width: 490px; }
-.fg-cdoor-hero .fg-cdoor-kicker { color: #8cdfb0; }
-.fg-cdoor-hero .fg-cdoor-lead { margin: 24px 0 28px; font-size: 18px; max-width: 43ch; color: #f1f5f5; }
-.fg-cdoor-hero .fg-cdoor-actions { gap: 20px; }
-.fg-cdoor-hero .button--steel { background: #062e38; border-color: rgba(255,255,255,.58); color: white; }
-.fg-cdoor-hero .button--steel:hover { background: #0b3c47; border-color: white; }
-.fg-cdoor-hero__facts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; margin-top: 26px !important; }
-.fg-cdoor-hero__facts li { display: grid; gap: 2px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,.3); }
-.fg-cdoor-hero__facts strong { font-size: 17px; line-height: 1.2; }
-.fg-cdoor-hero__facts span { color: #cfdddf; font-size: 11px; line-height: 1.3; }
-.fg-cdoor-hero__credential { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.22); display: flex; align-items: center; gap: 18px; }
-.fg-cdoor-hero__credential img { width: 128px; height: auto; padding: 7px; background: #fff; border-radius: 2px; }
-.fg-cdoor-hero__credential p { font-size: 14px; font-weight: 650; }
-.fg-cdoor-hero__credential span { font-size: 13px; font-weight: 400; color: #cfdddf; }
 
 .fg-cdoor-range { padding-top: var(--cd-space); }
 .fg-cdoor-range__tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; border-bottom: 1px solid var(--cd-line); padding-bottom: 16px; }
@@ -226,9 +207,6 @@ html:has(.fg-cdoor-page) { scroll-behavior: smooth; }
 }
 @media (max-width: 860px) {
   .fg-cdoor-page { --cd-space: 32px; }
-  .fg-cdoor-hero__copy { max-width: 420px; }
-  .fg-cdoor-hero__image { width: 70%; }
-  .fg-cdoor-hero__inner { min-height: 530px; height: auto; }
   .fg-cdoor-page h1 { font-size: 44px; }
   .fg-cdoor-heading { gap: 24px; }
   .fg-cdoor-tabs { flex-wrap: nowrap; overflow-x: auto; padding: 3px 2px 10px; max-width: 100%; }
@@ -257,25 +235,6 @@ html:has(.fg-cdoor-page) { scroll-behavior: smooth; }
   .fg-cdoor-shell { width: calc(100% - 36px); }
   .fg-cdoor-page h1 { font-size: 38px; }
   .fg-cdoor-page h2 { font-size: 30px; }
-  .fg-cdoor-hero { background: transparent; color: var(--cd-ink); }
-  .fg-cdoor-hero .fg-cdoor-kicker { color: #26814e; }
-  .fg-cdoor-hero .fg-cdoor-lead,
-  .fg-cdoor-hero__credential span { color: var(--cd-muted); }
-  .fg-cdoor-hero__facts li { border-color: var(--cd-line); }
-  .fg-cdoor-hero__facts span { color: var(--cd-muted); }
-  .fg-cdoor-hero .button--steel { border-color: var(--cd-ink); }
-  .fg-cdoor-hero .fg-cdoor-link--light { color: var(--cd-ink); }
-  .fg-cdoor-hero__image { position: relative; width: 100%; height: 285px; z-index: 0; }
-  .fg-cdoor-hero__image img { object-position: center 54%; }
-  .fg-cdoor-hero__image::after { display: none; }
-  .fg-cdoor-hero__inner { min-height: 0; padding-block: 0 30px; position: relative; margin-top: -2px; }
-  .fg-cdoor-hero__copy { max-width: none; }
-  .fg-cdoor-hero .fg-cdoor-lead { font-size: 16px; margin: 18px 0 22px; }
-  .fg-cdoor-hero .fg-cdoor-actions { gap: 18px; }
-  .fg-cdoor-hero__credential { margin-top: 24px; padding-top: 18px; gap: 14px; border-color: var(--cd-line); }
-  .fg-cdoor-hero__credential img { width: 100px; }
-  .fg-cdoor-hero__credential p { font-size: 12px; }
-  .fg-cdoor-hero__credential span { font-size: 11px; }
   .fg-cdoor-heading { display: block; margin-bottom: 20px; }
   .fg-cdoor-heading > p { margin-top: 14px; }
   .fg-cdoor-range__grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }

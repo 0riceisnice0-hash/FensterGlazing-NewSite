@@ -39,36 +39,34 @@ $first_glass = $glass_doors[0];
 $first_colour = $colour_preview($colours[0]);
 $reviews = fenster_review_cards(2, 'front door');
 ?>
-<article class="fg-cdoor-page" data-composite-page>
-    <section class="fg-cdoor-hero" aria-labelledby="composite-title">
-        <div class="fg-cdoor-hero__image">
-            <img src="<?php echo esc_url($asset('gallery/chatsworth-double-lite-1400w.webp')); ?>"
-                srcset="<?php echo esc_attr($asset('gallery/chatsworth-double-lite-800w.webp') . ' 800w, ' . $asset('gallery/chatsworth-double-lite-1400w.webp') . ' 1400w'); ?>"
-                sizes="(max-width: 760px) 100vw, 64vw" width="1400" height="1094" fetchpriority="high" loading="eager"
-                alt="A glazed composite front door beneath a canopy on a brick house">
-        </div>
-        <div class="fg-cdoor-shell fg-cdoor-hero__inner">
-            <div class="fg-cdoor-hero__copy">
-                <p class="fg-cdoor-kicker">Composite doors in Milton Keynes</p>
-                <h1 id="composite-title">Distinction composite doors</h1>
-                <p class="fg-cdoor-lead">Distinction composite doors, made to your specification and fitted by our own team. Choose the style, colour and glass. We take care of the survey and installation.</p>
-                <div class="fg-cdoor-actions">
-                    <a class="button" href="#fenster-product-quote">Get a quote <span aria-hidden="true">↗</span></a>
-                    <a class="button button--steel" href="<?php echo esc_url(home_url('/why-distinction/')); ?>">Why Distinction <span aria-hidden="true">↗</span></a>
-                </div>
-                <ul class="fg-cdoor-hero__facts" aria-label="Composite door facts">
-                    <li><strong>44.5mm</strong><span>insulated slab</span></li>
-                    <li><strong><?php echo (int) $door_count; ?></strong><span>door styles</span></li>
-                    <li><strong>10 years</strong><span>installation guarantee</span></li>
-                </ul>
-                <div class="fg-cdoor-hero__credential">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/partners/distinction-doors.png'); ?>" alt="Distinction Doors" width="473" height="107">
-                    <p>Approved installer<br><span>Our surveyors. Our fitters. Your door.</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
+<?php
+/* THE HERO AND THE SPEC STRIP ARE THE SHARED PRODUCT ONES, OWNER 2026-09-23:
+   "the hero looks in a different format to the other product pages". This
+   page had its own tall split hero with facts and a credential inside it; it
+   now uses the same `fg-hero--compact` band and `product-pulse` strip as uPVC
+   doors, heritage doors and roof lanterns, with the same image as before.
 
+   BOTH SIT OUTSIDE `.fg-cdoor-page` ON PURPOSE. That wrapper's stylesheet sets
+   h1 and h2 sizes, zeroes paragraph margins and turns every `.button` that is
+   not steel green, which would repaint the white "Instant pricing" button and
+   resize the heading. Outside it, `main.css` styles them exactly as it does on
+   every other product route. */
+get_template_part('template-parts/components/composite-shared-hero', null, [
+    'image' => $asset('gallery/chatsworth-double-lite-1400w.webp'),
+    'srcset' => $asset('gallery/chatsworth-double-lite-800w.webp') . ' 800w, ' . $asset('gallery/chatsworth-double-lite-1400w.webp') . ' 1400w',
+]);
+get_template_part('template-parts/components/product-pulse', null, [
+    'slug' => 'composite-doors',
+    'title' => 'Distinction composite doors',
+    'usps' => [
+        ['label' => 'Slab', 'value' => '44.5mm insulated'],
+        ['label' => 'Door styles', 'value' => (string) $door_count],
+        ['label' => 'Colours', 'value' => count($colours) . ' options'],
+        ['label' => 'Guarantee', 'value' => '10 years'],
+    ],
+]);
+?>
+<article class="fg-cdoor-page" data-composite-page>
     <section class="fg-cdoor-section fg-cdoor-distinction" aria-labelledby="composite-distinction-title">
         <div class="fg-cdoor-shell fg-cdoor-distinction__grid">
             <figure>
