@@ -135,7 +135,7 @@ $photo = static function (string $key) use ($photos): array {
     <div class="container">
         <div class="fg-upd-config__head">
             <p class="eyebrow"><?php esc_html_e('How it opens', 'fenster'); ?></p>
-            <h2 id="fg-upd-config-title"><?php esc_html_e('One leaf, or a pair.', 'fenster'); ?></h2>
+            <h2 id="fg-upd-config-title"><?php esc_html_e('One door, or a pair.', 'fenster'); ?></h2>
             <p><?php esc_html_e('That is the choice underneath everything else, and it is decided by the opening and how the room gets used.', 'fenster'); ?></p>
         </div>
         <div class="fg-upd-config__grid">
