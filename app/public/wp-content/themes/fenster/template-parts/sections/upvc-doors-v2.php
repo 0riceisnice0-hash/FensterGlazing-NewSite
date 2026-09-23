@@ -142,7 +142,7 @@ $photo = static function (string $key) use ($photos): array {
             <?php
             $configs = [
                 [
-                    'title' => __('A single leaf', 'fenster'),
+                    'title' => __('A single door', 'fenster'),
                     'copy' => __('The everyday one. Front, back, side or utility, hinged on the side that keeps the path clear.', 'fenster'),
                     'image' => 'upvc-door-white-shiplap-brick.webp',
                     'alt' => __('White uPVC back door glazed over a shiplap panel in a brick opening', 'fenster'),
