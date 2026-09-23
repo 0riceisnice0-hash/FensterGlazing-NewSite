@@ -151,7 +151,7 @@ $photo = static function (string $key) use ($photos): array {
                 ],
                 [
                     'title' => __('French doors', 'fenster'),
-                    'copy' => __('Two leaves opening from the centre onto a garden. One is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
+                    'copy' => __('Two doors opening from the centre onto a garden. One is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
                     'image' => 'upvc-door-white-french-decking.webp',
                     'alt' => __('White uPVC French doors opening onto decking', 'fenster'),
                     'link' => home_url('/french-doors/'),
@@ -190,8 +190,8 @@ $photo = static function (string $key) use ($photos): array {
             <div class="fg-cw-split__text">
                 <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
                 <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into, whatever shape or size that is.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as the arched one here: to the hole in your wall, whatever shape that hole is in.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The leaf can be split across the middle too, so the top half opens on its own and the bottom stays shut. That is a stable door, and it is the same door underneath.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The door, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as the arched one here: to the hole in your wall, whatever shape that hole is in.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The door can be split across the middle too, so the top half opens on its own and the bottom stays shut. That is a stable door, and it is the same door underneath.', 'fenster'); ?></p>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
@@ -220,7 +220,7 @@ $photo = static function (string $key) use ($photos): array {
             $ways = [
                 [
                     'label' => __('The style', 'fenster'),
-                    'copy' => __('Transoms and mullions divide the leaf, and every opening they make takes glass or a panel, flat or shiplap. The designer opens on a set of styles and none of them is fixed.', 'fenster'),
+                    'copy' => __('Transoms and mullions divide the door, and every opening they make takes glass or a panel, flat or shiplap. The designer opens on a set of styles and none of them is fixed.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
                     'alt' => __('Anthracite uPVC door panelled top to bottom in shiplap, with no glazed opening', 'fenster'),
                 ],
@@ -383,7 +383,7 @@ get_template_part('template-parts/components/privacy-glass-card', null, [
 
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The lock, and the two upgrades worth asking for.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
+                <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the door, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is the first upgrade worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
                 <?php /* LAMINATED IS THE SECOND UPGRADE AND IT BELONGS HERE, not on
                          the glass card above, because the reason to have it is
