@@ -1038,6 +1038,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug];
     }
 
+    /* A 410 route has no page, whatever the scrape recorded for it. Without
+       this the gone response wore the old record's head: `/nick-test-baboon/`
+       returned 410 titled "Nationwide Commercial Glazing: Precision Delivery
+       and Gold-Standard Compliance", with a canonical, social tags and
+       breadcrumb schema for a page that is not there. */
+    if (isset(fenster_gone_slugs()[$slug])) {
+        return $page_cache[$slug] = null;
+    }
+
     if ($slug === 'home') {
         $index = fenster_generated_pages_index();
         $page = $index['home'] ?? [
@@ -1924,6 +1933,16 @@ function fenster_redirect_target(string $slug): string
         'healthcare_safeguarding_in_construction' => 'healthcare-construction',
         'enquire-now' => 'online-quote',
         'instant-pricing' => 'online-quote',
+        /* Never a page, here or on the old site: none of the 2,523
+           fensterglazing.com URLs the Wayback Machine holds from 2018 to 2026
+           is /instant-quote/. It is the address people guess from the
+           header's "Instant Quote" button, and it was being linked. In the
+           access logs for 24 August to 22 September 2026, Legend put it in
+           chat replies (three visitors followed it to a 404), a Facebook post
+           links /instant-quote, and AdsBot-Google checked it on 17 and 18
+           September, which suggests an ad or asset in the Ads account points
+           at it too. */
+        'instant-quote' => 'online-quote',
         'obscure-glass' => 'obscured-glass',
         'upvc-colours' => 'colour-options',
         'aluminium-colours' => 'colour-options',
@@ -2065,7 +2084,13 @@ function fenster_maybe_render_generated_page(): void
 
     $redirect_target = fenster_redirect_target($slug);
     if ($redirect_target !== '') {
-        wp_safe_redirect(home_url('/' . $redirect_target . '/'), 301);
+        /* Keep the query string, as the two redirects above already do. Paid
+           and social clicks arrive tagged, and the browser reads `gclid`,
+           `gbraid` and `wbraid` from the landing URL to report the ad click
+           (`inc/ad-attribution.php`), so dropping the query here turned a
+           tagged click on a redirected address into direct traffic. */
+        $target = home_url('/' . $redirect_target . '/');
+        wp_safe_redirect($query !== '' ? $target . '?' . $query : $target, 301);
         exit;
     }
 
@@ -2076,6 +2101,8 @@ function fenster_maybe_render_generated_page(): void
         }
         status_header(410);
         nocache_headers();
+        // 404.php says "removed" rather than "not found" for these.
+        set_query_var('fenster_gone', true);
         include get_query_template('404');
         exit;
     }
@@ -2311,6 +2338,38 @@ function fenster_maybe_render_generated_sitemap(): void
         exit;
     }
 
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+
+    foreach (fenster_generated_sitemap_entries() as $entry) {
+        echo "  <url>\n";
+        echo '    <loc>' . esc_xml($entry['loc']) . "</loc>\n";
+        echo '    <changefreq>' . esc_xml($entry['changefreq']) . "</changefreq>\n";
+        echo "  </url>\n";
+    }
+
+    echo "</urlset>\n";
+    exit;
+}
+
+/**
+ * Every URL the sitemap publishes, in sitemap order, as
+ * `['loc' => absolute URL, 'changefreq' => string]`.
+ *
+ * Split out of the renderer on 2026-09-23 so the 404 page suggests from the
+ * same list (`inc/not-found.php`): a route is offered as a closest match
+ * exactly when it is published, and there is no second list to keep in step.
+ * The XML the renderer prints from it is byte-for-byte what it printed before.
+ */
+function fenster_generated_sitemap_entries(): array
+{
+    static $entries = null;
+
+    if ($entries !== null) {
+        return $entries;
+    }
+
+    $list = [];
     $seen = [];
     $excluded_slugs = [
         'case-studies/template-new' => true,
@@ -2327,9 +2386,6 @@ function fenster_maybe_render_generated_sitemap(): void
     ];
     $location_matrix_pages = fenster_location_matrix_pages();
     $commercial_county_pages = fenster_commercial_county_pages();
-
-    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-    echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
     foreach (fenster_generated_pages_payload()['pages'] ?? [] as $page) {
         $slug = (string) ($page['slug'] ?? '');
@@ -2357,10 +2413,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
 
         $seen[$loc] = true;
-        echo "  <url>\n";
-        echo '    <loc>' . esc_xml($loc) . "</loc>\n";
-        echo '    <changefreq>' . esc_xml($page['slug'] === 'home' ? 'weekly' : 'monthly') . "</changefreq>\n";
-        echo "  </url>\n";
+        $list[] = ['loc' => $loc, 'changefreq' => $page['slug'] === 'home' ? 'weekly' : 'monthly'];
     }
 
     foreach ($location_matrix_pages as $page) {
@@ -2370,10 +2423,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
 
         $seen[$loc] = true;
-        echo "  <url>\n";
-        echo '    <loc>' . esc_xml($loc) . "</loc>\n";
-        echo "    <changefreq>monthly</changefreq>\n";
-        echo "  </url>\n";
+        $list[] = ['loc' => $loc, 'changefreq' => 'monthly'];
     }
 
     foreach ($commercial_county_pages as $page) {
@@ -2383,10 +2433,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
 
         $seen[$loc] = true;
-        echo "  <url>\n";
-        echo '    <loc>' . esc_xml($loc) . "</loc>\n";
-        echo "    <changefreq>monthly</changefreq>\n";
-        echo "  </url>\n";
+        $list[] = ['loc' => $loc, 'changefreq' => 'monthly'];
     }
 
     if (fenster_price_guides_enabled()) {
@@ -2397,10 +2444,7 @@ function fenster_maybe_render_generated_sitemap(): void
             }
 
             $seen[$loc] = true;
-            echo "  <url>\n";
-            echo '    <loc>' . esc_xml($loc) . "</loc>\n";
-            echo "    <changefreq>monthly</changefreq>\n";
-            echo "  </url>\n";
+            $list[] = ['loc' => $loc, 'changefreq' => 'monthly'];
         }
     }
 
@@ -2423,10 +2467,7 @@ function fenster_maybe_render_generated_sitemap(): void
         $virtual_loc = fenster_generated_url((string) ($virtual_page['seo']['canonical'] ?? ''));
         if ($virtual_loc && ! isset($seen[$virtual_loc])) {
             $seen[$virtual_loc] = true;
-            echo "  <url>\n";
-            echo '    <loc>' . esc_xml($virtual_loc) . "</loc>\n";
-            echo "    <changefreq>monthly</changefreq>\n";
-            echo "  </url>\n";
+            $list[] = ['loc' => $virtual_loc, 'changefreq' => 'monthly'];
         }
     }
 
@@ -2439,18 +2480,10 @@ function fenster_maybe_render_generated_sitemap(): void
             continue;
         }
         $seen[$loc] = true;
-        echo "  <url>
-";
-        echo '    <loc>' . esc_xml($loc) . "</loc>
-";
-        echo '    <changefreq>' . esc_xml((string) ($extra['changefreq'] ?? 'monthly')) . "</changefreq>
-";
-        echo "  </url>
-";
+        $list[] = ['loc' => $loc, 'changefreq' => (string) ($extra['changefreq'] ?? 'monthly')];
     }
 
-    echo "</urlset>\n";
-    exit;
+    return $entries = $list;
 }
 
 // The theme serves its own complete sitemap; the core one would advertise a

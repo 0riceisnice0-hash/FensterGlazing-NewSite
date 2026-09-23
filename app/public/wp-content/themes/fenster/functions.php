@@ -39,6 +39,8 @@ $fenster_required_files = [
     'inc/adminbase.php',
     'inc/google-ads-conversions.php',
     'inc/generated-pages.php',
+    // The 404 and 410 pages: closest-match suggestions and their stylesheet.
+    'inc/not-found.php',
     'inc/scan-links.php',
     /* HOMEPAGE 3.0, the Rightmove-UX homepage. Self-contained: this file,
        its template part, `src/home30/` and `assets/home30/`. It is host

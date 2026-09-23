@@ -5,11 +5,11 @@
   "description": "Hardcoded AI-maintained WordPress theme for Fenster Glazing.",
   "scripts": {
     "build": "npm run build:css && npm run build:js",
-    "build:css": "sass src/scss/main.scss assets/css/main.css --style=compressed --no-source-map",
+    "build:css": "sass src/scss/main.scss:assets/css/main.css src/scss/not-found.scss:assets/css/not-found.css --style=compressed --no-source-map",
     "build:js": "esbuild src/js/main.js --bundle --minify --outfile=assets/js/main.js",
     "encode:product-videos": "node scripts/encode-product-scroll-videos.cjs",
     "watch": "npm-run-all --parallel watch:css watch:js",
-    "watch:css": "sass src/scss/main.scss assets/css/main.css --style=expanded --watch",
+    "watch:css": "sass src/scss/main.scss:assets/css/main.css src/scss/not-found.scss:assets/css/not-found.css --style=expanded --watch",
     "watch:js": "esbuild src/js/main.js --bundle --sourcemap --outfile=assets/js/main.js --watch",
     "build:home30": "npm run build:home30:css && npm run build:home30:js",
     "build:home30:css": "sass src/home30/home30.scss assets/home30/home30.css --style=compressed --no-source-map",
