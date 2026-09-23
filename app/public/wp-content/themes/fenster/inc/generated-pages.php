@@ -2739,6 +2739,39 @@ function fenster_render_faq_page_schema(array $faqs, int $limit = 0): void
     );
 }
 
+/**
+ * The founders as schema.org Person nodes, from `brand.founders`.
+ * Name, role, their /meet-the-team/ card and LinkedIn where one is set.
+ * Nothing else: no email and no phone, the same rule the team page follows.
+ */
+function fenster_founder_schema_people(array $brand): array
+{
+    $people = [];
+
+    foreach ((array) ($brand['founders'] ?? []) as $founder) {
+        $name = trim((string) ($founder['name'] ?? ''));
+        if ($name === '') {
+            continue;
+        }
+
+        $person = [
+            '@type' => 'Person',
+            'name' => $name,
+            'jobTitle' => (string) ($founder['role'] ?? ''),
+            'url' => home_url('/meet-the-team/#' . ($founder['anchor'] ?? sanitize_title($name))),
+        ];
+
+        $linkedin = trim((string) ($founder['linkedin'] ?? ''));
+        if ($linkedin !== '') {
+            $person['sameAs'] = [$linkedin];
+        }
+
+        $people[] = $person;
+    }
+
+    return $people;
+}
+
 function fenster_render_site_schema(): void
 {
     $brand = fenster_data('brand', []);
@@ -2824,6 +2857,10 @@ function fenster_render_site_schema(): void
             'Hertfordshire',
         ],
         'foundingDate' => '2018-08',
+        // Read from `brand.founders`, the same data the About page names them
+        // from. Each points at the person's card on /meet-the-team/, which is
+        // also the `url` that page's own Person nodes carry, so the two join.
+        'founder' => fenster_founder_schema_people($brand),
         'currenciesAccepted' => 'GBP',
         // Company number 11579136 and VAT 305818213, owner-supplied. These are
         // the two values that disambiguate this business from every other firm

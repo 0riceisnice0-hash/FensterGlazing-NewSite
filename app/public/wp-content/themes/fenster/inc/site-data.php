@@ -58,6 +58,16 @@ function fenster_site_data(): array
                a showroom opening-hours block must not carry the phone line. */
             'hours' => 'Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.',
             'showroom_hours' => 'Monday to Friday, 8.30am to 5pm',
+            /* The two founders, owner-confirmed, read by the About page and by
+               the `founder` property on the business schema so the names, roles
+               and profile links cannot drift between them. `anchor` is the id
+               their card carries on /meet-the-team/ (sanitize_title of the name).
+               `linkedin` feeds `sameAs` on their Person nodes; leave it empty
+               rather than guess a URL. */
+            'founders' => [
+                ['name' => 'Adam Butcher', 'role' => 'Commercial Director', 'anchor' => 'adam-butcher', 'linkedin' => ''],
+                ['name' => 'Nick Baker', 'role' => 'Sales Director', 'anchor' => 'nick-baker', 'linkedin' => ''],
+            ],
             // Fallback only. When the Places API is configured, the canonical
             // review and write-review URLs are built from the place ID in
             // inc/google-reviews.php. Never point these at a Google search

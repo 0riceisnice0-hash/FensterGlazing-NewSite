@@ -149,6 +149,14 @@ foreach ($members as $member) {
         $person['image'] = fenster_generated_url($member_image);
     }
 
+    // The founders' LinkedIn profiles live in `brand.founders`, shared with
+    // the business schema's `founder` property.
+    foreach ((array) ($brand['founders'] ?? []) as $founder) {
+        if (($founder['name'] ?? '') === $member_name && trim((string) ($founder['linkedin'] ?? '')) !== '') {
+            $person['sameAs'] = [trim((string) $founder['linkedin'])];
+        }
+    }
+
     $team_schema_people[] = $person;
 }
 

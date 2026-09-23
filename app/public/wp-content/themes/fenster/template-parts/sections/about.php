@@ -62,7 +62,7 @@ $prices_url = home_url('/window-door-prices-milton-keynes/');
 $facts = [
     ['value' => '2018', 'label' => 'trading since'],
     ['value' => '1,000+', 'label' => 'installations completed'],
-    ['value' => 'In-house', 'label' => 'fitters, never subcontracted'],
+    ['value' => 'In-house', 'label' => 'fitters on every home, never subcontracted'],
     ['value' => '10 years', 'label' => 'insurance-backed guarantee'],
 ];
 
@@ -99,6 +99,93 @@ $accreditations = [
     ['src' => $team . 'cropped-ssip.png', 'alt' => 'SSIP health and safety assessed', 'url' => home_url('/ssip-health-and-safety/'), 'title' => 'SSIP assessed', 'copy' => 'Independently assessed health and safety, required on most commercial and public sector work.'],
 ];
 
+$founders = is_array($brand['founders'] ?? null) ? $brand['founders'] : [];
+$founder_link = static function (string $name) use ($founders): string {
+    foreach ($founders as $founder) {
+        if (($founder['name'] ?? '') === $name) {
+            return home_url('/meet-the-team/#' . ($founder['anchor'] ?? sanitize_title($name)));
+        }
+    }
+    return home_url('/meet-the-team/');
+};
+
+$address_line = implode(', ', array_map('strval', $address));
+
+/* Who we work with, and the at-a-glance table, added 2026-09-23 on the owner's
+   brief. Two rules hold both of them to the rest of this site:
+   - FITTING IS OURS ON HOMES, AND SAID ONLY OF HOMES. Owner, 2026-09-23:
+     residential work is never subcontracted, commercial sometimes is, and the
+     commercial side is not to be pushed on it either way. So every "our own
+     installers" line here is scoped to homes, and the commercial copy says
+     nothing about who fits.
+   - THE GUARANTEE IS STATED POSITIVELY AND SCOPED TO NEW WINDOWS AND DOORS.
+     No list of what it does not cover in anything new (2026-08-02 ruling);
+     the older note in the accreditations band predates that and is left for
+     the owner. */
+$audiences = [
+    [
+        'title' => 'Homeowners',
+        'copy' => 'Replacement windows and doors, roof lanterns, integral blinds, secondary glazing, new glass and repairs. Price it on our quote tool or book a free consultation, and our own installers fit it.',
+        'links' => [
+            ['label' => 'View windows', 'url' => home_url('/windows-milton-keynes/')],
+            ['label' => 'View doors', 'url' => home_url('/doors-milton-keynes/')],
+        ],
+    ],
+    [
+        'title' => 'Commercial clients',
+        'copy' => 'Contractors, schools, care homes, offices and property owners. Windows, doors, curtain walling, shopfronts, louvres and replacement glazing, specified to the drawings. Constructionline Gold and SSIP assessed.',
+        'links' => [
+            ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+        ],
+    ],
+];
+
+$glance = [
+    ['label' => 'Trading name', 'value' => (string) ($brand['name'] ?? 'Fenster Glazing')],
+    ['label' => 'Registered company', 'value' => 'Fenster Glazing & Locks Ltd, company number 11579136'],
+    ['label' => 'Founded', 'value' => '2018, by Adam Butcher and Nick Baker'],
+    ['label' => 'Showroom and office', 'value' => $address_line],
+    ['label' => 'Opening hours', 'value' => (string) ($brand['hours'] ?? '')],
+    ['label' => 'Areas covered', 'value' => 'Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire'],
+    ['label' => 'For homes', 'value' => 'Windows, doors, roof lanterns, integral blinds, secondary glazing, replacement glass and repairs'],
+    ['label' => 'For commercial buildings', 'value' => 'Windows, doors, curtain walling, shopfronts, louvres and replacement glazing'],
+    ['label' => 'Fitting', 'value' => 'Our own installers on every home, never subcontracted'],
+    ['label' => 'Guarantee', 'value' => 'Ten years, insurance-backed, on new windows and doors'],
+    ['label' => 'Registrations', 'value' => 'FENSA registered, Constructionline Gold, SSIP assessed'],
+    ['label' => 'Pricing', 'value' => 'Online on our quote tool, or at a free consultation at your property'],
+];
+
+$about_faqs = [
+    [
+        'question' => 'When did Fenster start?',
+        'answer' => 'Adam Butcher and Nick Baker started Fenster in 2018 and are still here every day. Nick runs sales and the showroom, and Adam runs the commercial side.',
+    ],
+    [
+        'question' => 'Where are you based?',
+        'answer' => 'Our showroom and office are at ' . $address_line . '. The showroom is open ' . (string) ($brand['showroom_hours'] ?? 'Monday to Friday, 8.30am to 5pm') . ', and you do not need an appointment.',
+    ],
+    [
+        'question' => 'Which areas do you cover?',
+        'answer' => 'Milton Keynes and the towns around it, across Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. Commercial work goes further, so tell us where the building is.',
+    ],
+    [
+        'question' => 'Who fits the windows and doors?',
+        'answer' => 'On homes, our own installers, never subcontracted. The people who survey the job work for us too.',
+    ],
+    [
+        'question' => 'Do you work on commercial buildings?',
+        'answer' => 'Yes. Adam runs our commercial side, working for contractors, schools, care homes, offices and property owners. We are Constructionline Gold and SSIP assessed.',
+    ],
+    [
+        'question' => 'What guarantee do new windows and doors come with?',
+        'answer' => 'A ten year insurance-backed guarantee, underwritten so it still stands if we ever stop trading. Eligible installations are registered with FENSA, who send your certificate directly to you.',
+    ],
+    [
+        'question' => 'Can I get a price online?',
+        'answer' => 'Yes. Build the job on our quote tool with your sizes, styles, colours and glass, and most people have a real figure inside ten minutes. It asks for your contact details before it shows the price. If you would rather talk it through, book a free consultation and we price the job at your property.',
+    ],
+];
+
 $routes = [
     ['title' => 'Get an instant price', 'copy' => 'Your sizes, your finishes, a real figure in minutes.', 'url' => $quote_url, 'primary' => true],
     ['title' => 'Book a free consultation', 'copy' => 'We go through the options and price the job at the property, at no charge.', 'url' => $consult_url],
@@ -117,7 +204,7 @@ $routes = [
             <div class="fg-about-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('About Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Simple, honest glazing.', 'fenster'); ?></h1>
-                <p class="fg-about-hero__lead"><?php esc_html_e('Fenster exists to make windows and doors straightforward: a fair price you can get in minutes, people who know what they are fitting, and a company that is still here long after the scaffolding has gone. We started in 2018, our showroom is in Milton Keynes, and everyone who surveys, fits and answers the phone works for us.', 'fenster'); ?></p>
+                <p class="fg-about-hero__lead"><?php esc_html_e('Fenster exists to make windows and doors straightforward: a fair price you can get in minutes, people who know what they are fitting, and a company that is still here long after the scaffolding has gone. We started in 2018, our showroom is in Milton Keynes, and every home we fit is surveyed and fitted by our own people.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
@@ -208,7 +295,9 @@ $routes = [
             <div class="fg-about-founders__copy" data-fg-about-reveal>
                 <p class="eyebrow"><?php esc_html_e('Who runs it', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Run by the two people who started it.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Adam Butcher and Nick Baker founded Fenster in 2018 and are still here every day. Nick runs sales and the showroom. Adam runs the commercial side, from schools and care homes to full curtain walling. The name is the German word for window.', 'fenster'); ?></p>
+                <p>
+                    <a href="<?php echo esc_url($founder_link('Adam Butcher')); ?>"><?php esc_html_e('Adam Butcher', 'fenster'); ?></a><?php esc_html_e(' and ', 'fenster'); ?><a href="<?php echo esc_url($founder_link('Nick Baker')); ?>"><?php esc_html_e('Nick Baker', 'fenster'); ?></a><?php esc_html_e(' founded Fenster in 2018 and are still here every day. Nick runs sales and the showroom. Adam runs the commercial side, from schools and care homes to full curtain walling. The name is the German word for window.', 'fenster'); ?>
+                </p>
                 <p><?php esc_html_e('Behind them is a team from the trade, not a call centre: fitters with decades on the tools between them, service engineers, surveyors, and an office that answers its own phone at any hour.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button button--light" href="<?php echo esc_url(home_url('/meet-the-team/')); ?>"><?php esc_html_e('Meet the team', 'fenster'); ?></a>
@@ -218,15 +307,37 @@ $routes = [
                 <li data-fg-about-reveal>
                     <figure class="fg-about-founder">
                         <img <?php echo $img($team . 'adam-butcher-scaled.jpg', ['alt' => 'Adam Butcher, Commercial Director', 'loading' => 'lazy']); ?>>
-                        <figcaption><strong><?php esc_html_e('Adam Butcher', 'fenster'); ?></strong><span><?php esc_html_e('Commercial Director', 'fenster'); ?></span></figcaption>
+                        <figcaption><strong><a href="<?php echo esc_url($founder_link('Adam Butcher')); ?>"><?php esc_html_e('Adam Butcher', 'fenster'); ?></a></strong><span><?php esc_html_e('Commercial Director', 'fenster'); ?></span></figcaption>
                     </figure>
                 </li>
                 <li data-fg-about-reveal style="--fg-about-delay: 0.1s;">
                     <figure class="fg-about-founder">
                         <img <?php echo $img($team . 'unnamed-5.jpg', ['alt' => 'Nick Baker, Sales Director', 'loading' => 'lazy']); ?>>
-                        <figcaption><strong><?php esc_html_e('Nick Baker', 'fenster'); ?></strong><span><?php esc_html_e('Sales Director', 'fenster'); ?></span></figcaption>
+                        <figcaption><strong><a href="<?php echo esc_url($founder_link('Nick Baker')); ?>"><?php esc_html_e('Nick Baker', 'fenster'); ?></a></strong><span><?php esc_html_e('Sales Director', 'fenster'); ?></span></figcaption>
                     </figure>
                 </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="fg-about-audience">
+        <div class="container">
+            <div class="fg-about-audience__head" data-fg-about-reveal>
+                <p class="eyebrow"><?php esc_html_e('Who we work with', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Homes, schools, offices and care homes.', 'fenster'); ?></h2>
+            </div>
+            <ul class="fg-about-audience__grid">
+                <?php foreach ($audiences as $index => $audience) : ?>
+                    <li class="fg-about-audience__item" data-fg-about-reveal style="--fg-about-delay: <?php echo esc_attr(number_format($index * 0.07, 2)); ?>s;">
+                        <h3><?php echo esc_html($audience['title']); ?></h3>
+                        <p><?php echo esc_html($audience['copy']); ?></p>
+                        <div class="button-row">
+                            <?php foreach ($audience['links'] as $link) : ?>
+                                <a class="button button--light" href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </section>
@@ -306,6 +417,36 @@ $routes = [
             </figure>
         </div>
     </section>
+
+    <section class="fg-about-glance">
+        <div class="container fg-about-glance__grid">
+            <div class="fg-about-glance__head" data-fg-about-reveal>
+                <p class="eyebrow"><?php esc_html_e('At a glance', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Fenster, in plain facts.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The short version, for anyone checking us out before they get in touch.', 'fenster'); ?></p>
+            </div>
+            <table class="fg-about-glance__table" data-fg-about-reveal>
+                <tbody>
+                    <?php foreach ($glance as $row) : ?>
+                        <?php if ($row['value'] === '') { continue; } ?>
+                        <tr>
+                            <th scope="row"><?php echo esc_html($row['label']); ?></th>
+                            <td><?php echo esc_html($row['value']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <?php
+    get_template_part('template-parts/components/faq-block', null, [
+        'faqs' => $about_faqs,
+        'eyebrow' => 'Questions',
+        'heading' => 'Straight answers about who we are.',
+        'id' => 'fg-about-faq-title',
+    ]);
+    ?>
 
     <?php
     get_template_part('template-parts/components/review-showcase', null, [
