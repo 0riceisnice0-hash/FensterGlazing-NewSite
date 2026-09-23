@@ -22,12 +22,17 @@
   align-items: start;
 }
 
+.fg-not-found h1 {
+  text-wrap: balance;
+}
+
 .fg-not-found__lead {
   max-width: 36rem;
   margin: 1rem 0 0;
   color: rgba(6, 33, 42, 0.76);
   font-size: 1.1rem;
   line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .fg-not-found__label {

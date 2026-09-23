@@ -1144,8 +1144,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'images' => [],
             'links' => [],
         ];
-        $page['seo']['title_tag'] = $launch_seo_overrides[$slug]['title_tag'];
-        $page['seo']['meta_description'] = $launch_seo_overrides[$slug]['meta_description'];
+        /* `?? null` is what the missing key already produced, without the
+           warning. Twenty-two GSC overrides carry a description and no title
+           (/what-are-integral-blinds/, /soundproof-windows/ among them), so
+           every one of those pages logged "Undefined array key" on each
+           render, and test, which displays errors, printed it above the
+           header. The title still falls back to the page name exactly as
+           before. */
+        $page['seo']['title_tag'] = $launch_seo_overrides[$slug]['title_tag'] ?? null;
+        $page['seo']['meta_description'] = $launch_seo_overrides[$slug]['meta_description'] ?? null;
         $page['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
         $page['seo']['robots'] = 'max-image-preview:large';
         if ($slug === 'book-a-consultation') {

@@ -26,11 +26,11 @@ get_header();
         <div class="fg-not-found__main">
             <?php if ($fenster_gone) : ?>
                 <p class="eyebrow"><?php esc_html_e('Page removed', 'fenster'); ?></p>
-                <h1 id="fg-not-found-title"><?php esc_html_e('That page has been taken down.', 'fenster'); ?></h1>
-                <p class="fg-not-found__lead"><?php esc_html_e('We removed it on purpose and it is not coming back. You can still get a price online, book a free consultation or carry on from one of the pages here.', 'fenster'); ?></p>
+                <h1 id="fg-not-found-title"><?php esc_html_e('That page has gone.', 'fenster'); ?></h1>
+                <p class="fg-not-found__lead"><?php esc_html_e('We took it down on purpose and it is not coming back. You can still get a price online, book a free consultation or carry on from one of the pages here.', 'fenster'); ?></p>
             <?php else : ?>
                 <p class="eyebrow"><?php esc_html_e('Page not found', 'fenster'); ?></p>
-                <h1 id="fg-not-found-title"><?php esc_html_e('We could not find that page.', 'fenster'); ?></h1>
+                <h1 id="fg-not-found-title"><?php esc_html_e('That page is not here.', 'fenster'); ?></h1>
                 <p class="fg-not-found__lead"><?php esc_html_e('The link may be out of date, or the address may have a typo in it. You can still get a price online, book a free consultation or carry on from one of the pages here.', 'fenster'); ?></p>
             <?php endif; ?>
 
