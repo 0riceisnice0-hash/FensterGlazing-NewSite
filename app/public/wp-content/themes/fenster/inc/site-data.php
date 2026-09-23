@@ -2466,7 +2466,6 @@ function fenster_site_data(): array
                     ['question' => 'Are uPVC doors good for front doors?', 'answer' => 'Yes. Front, rear, side or utility, all on the same system, with the style drawn to suit the opening and the multi-point locking that comes as standard.'],
                     ['question' => 'How secure are uPVC doors?', 'answer' => 'Every door we fit has a multi-point mechanism as standard, throwing hooks or bolts into the frame at several points up the door. The cylinder that comes with it is a one star, and a three star cylinder is an upgrade worth asking for, because it is the part that resists snapping.'],
                     ['question' => 'Can uPVC doors be coloured?', 'answer' => 'Thirteen foils, bonded to the profile at the factory rather than painted on. Most carry a woodgrain you can feel and a few are smooth. The colour is the outside face and inside is white as standard, or the same colour on both faces if you prefer.'],
-                    ['question' => 'Can I include side panels or glass?', 'answer' => 'Yes. Glazing, sidelights and privacy glass can be included where the opening and design allow.'],
                     ['question' => 'Will a uPVC door be made to measure?', 'answer' => 'Yes. We check the opening, threshold, frame, hardware and access requirements before manufacture.'],
                 ],
             ],
