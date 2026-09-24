@@ -14,6 +14,50 @@ sequence rather than ten competing starting points.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## 2026-09-24 — Every WindowCAD payload is kept and handed to FieldOS (LIVE, `inc/adminbase.php` only)
+
+Owner: *"why are windowcad leads not coming in with the quote and sales
+contract attached"*, then *"its the api im intrested in. you just said they
+throw away everything exept name etc. so store that info"*.
+
+- **WHAT WINDOWCAD SENDS, READ FROM ITS OWN DESIGNER BUNDLE.** The account's
+  CRM hook (`apiUrl` = this webhook, events `Door_designer_submitted` and
+  `Retail_designer_submitted`, `addPrintToPDFButton` on) makes the browser that
+  finishes the quote post `{ supplierUsername, username, json, appType,
+  accountType, event?, pdf? }`. `json` is the priced project: every item with
+  product, style, colours, glass, hardware, size, price and a picture of it
+  outside and inside, the total with VAT, the customer's View in 3D link and
+  signatures. That is why real quotes are 3-10MB. This file kept `Name`, `Email`
+  and `Phone` out of it and dropped the rest.
+- **PRINT TO CRM WAS MAKING DUPLICATE LEADS.** The office's Print to CRM button
+  posts the same project again with `event: "Pdf"` and the Quotation or Sales
+  Contract PDF in `pdf`. It went through the submission path: a new private
+  enquiry, a new AdminBase lead and a conversion, every time, and the PDF was
+  thrown away. Any `event` other than a designer submission now makes none of
+  those.
+- **KEPT OUTSIDE THE WEB ROOT, NOT IN UPLOADS.** `fenster-private/windowcad/`
+  beside `public_html`, gzipped, one file per SHA-256. nginx on this host serves
+  a static file under `public_html` before Apache's rewrite, so a folder in there
+  is not private whatever `.htaccess` says. Only bodies carrying a 24 hex
+  WindowCAD project id are kept, with a daily bound of 500 on an open webhook.
+- **FORWARDED TO FIELDOS**, which puts the quote, the drawings and the PDF on
+  the residential lead: options `fenster_fieldos_windowcad_url` and
+  `fenster_fieldos_windowcad_key` (not autoloaded; the key's other half is the
+  FieldOS Worker secret `WINDOWCAD_KEY`). A failed forward leaves a marker in
+  `pending/`; the hourly `fenster_windowcad_forward_pending` event, or
+  `wp fenster windowcad forward`, sends it. FieldOS stores the same bytes once,
+  so a retry doubles nothing.
+- **Verified:** a WordPress-free harness (18 checks) and the real handler on
+  test (office print answered 200, no enquiry, payload kept byte for byte,
+  marker left with no FieldOS configured). On live, after the one-file
+  transplant, the pages and the webhook answer as before and live reached
+  FieldOS with the key.
+- **NOT CHANGED, BUT FOUND: the quote value sent with every WindowCAD
+  conversion has always been £0.** `fenster_windowcad_price_from_fields()` looks
+  for a price in `infoProperties`, which never carries one; the real figure is
+  `json.price`, inc VAT. Changing it moves Google Ads and Meta conversion values,
+  so it is left for the owner.
+
 ## 2026-09-10 — The 3D showroom is gone, and so are the two dead links it left on live (LIVE as `e5b312a7`)
 
 Owner: *"get rid of the 3d showroom entirely, including the links on the windows
