@@ -264,14 +264,31 @@ function fenster_windowcad_request_allowed(WP_REST_Request $request): bool|WP_Er
     return true;
 }
 
+/**
+ * The decoded payload, once per request: a quote is several megabytes and
+ * both the fields and the project id are read from it.
+ */
+function fenster_windowcad_payload_data(WP_REST_Request $request): array
+{
+    // Held with the request itself: an object id alone can be handed to the
+    // next request once this one is freed.
+    static $last = null;
+    if ($last === null || $last[0] !== $request) {
+        $data = $request->get_json_params();
+        if (! is_array($data) || empty($data)) {
+            // WindowCAD's fetch() sends no content type, so the body arrives as text.
+            $parsed = json_decode((string) $request->get_body(), true);
+            $data = is_array($parsed) ? $parsed : [];
+        }
+        $last = [$request, $data];
+    }
+
+    return $last[1];
+}
+
 function fenster_windowcad_payload_fields(WP_REST_Request $request): array
 {
-    $data = $request->get_json_params();
-    if (! is_array($data) || empty($data)) {
-        $raw = (string) $request->get_body();
-        $decoded = json_decode($raw, true);
-        $data = is_array($decoded) ? $decoded : [];
-    }
+    $data = fenster_windowcad_payload_data($request);
 
     $properties = $data['json']['infoProperties'] ?? $data['infoProperties'] ?? [];
     $fields = [];
@@ -303,17 +320,257 @@ function fenster_windowcad_log(string $message, array $context = []): void
     error_log('Fenster WindowCAD: ' . $message . ' ' . wp_json_encode($safe_context));
 }
 
+/*
+ * EVERYTHING WINDOWCAD SENDS IS KEPT, AND HANDED ON TO FIELDOS. 2026-09-24.
+ *
+ * Zac: "why are windowcad leads not coming in with the quote and sales
+ * contract attached ... they throw away everything except name etc. so store
+ * that info." The account's CRM hook posts the whole priced quote here: every
+ * item with its product, style, colours, glass, hardware, size, price and a
+ * picture of it, the total with VAT, and - when the office presses Print to
+ * CRM - the Quotation or Sales Contract PDF itself. This file kept the name,
+ * email and phone out of it and let the rest go.
+ *
+ * Now each payload is written whole, gzipped, OUTSIDE the web root (this host's
+ * nginx serves any static file under public_html before Apache's rewrite
+ * runs, so a folder in there is not private), and forwarded to FieldOS, which
+ * puts the quote on the residential lead. A forward that fails leaves a marker
+ * in pending/ and the hourly retry sends it; FieldOS takes the same bytes only
+ * once, so a retry can never double anything.
+ *
+ * What the body is, read from WindowCAD 7.2.0's designer on 2026-09-24:
+ * { supplierUsername, username, json, appType, accountType, event?, pdf? }.
+ * `json.id` is WindowCAD's project id, the same id its notice to info@ links.
+ * `event` is absent for a customer's own submission and names the office's
+ * action otherwise ("Pdf", "Project_status_changed", "Order",
+ * "Project_created") - none of which is a new lead.
+ */
+
+function fenster_windowcad_store_dir(): string
+{
+    $configured = fenster_adminbase_config_value('FENSTER_WINDOWCAD_STORE_DIR', 'fenster_windowcad_store_dir');
+    if ($configured !== '') {
+        return rtrim($configured, '/\\');
+    }
+
+    // Bedrock's .../public_html/web/wp/ and a plain install's .../public/ both
+    // climb out of everything the server can serve.
+    $dir = rtrim(ABSPATH, '/\\');
+    while (in_array(basename($dir), ['wp', 'web', 'public_html', 'public'], true)) {
+        $dir = dirname($dir);
+    }
+
+    return $dir . '/fenster-private/windowcad';
+}
+
+function fenster_fieldos_windowcad_target(): array
+{
+    return [
+        'url' => fenster_adminbase_config_value('FENSTER_FIELDOS_WINDOWCAD_URL', 'fenster_fieldos_windowcad_url'),
+        'key' => fenster_adminbase_config_value('FENSTER_FIELDOS_WINDOWCAD_KEY', 'fenster_fieldos_windowcad_key'),
+    ];
+}
+
+/** WindowCAD's project id: a 24 character hex id. Anything else is not a WindowCAD project. */
+function fenster_windowcad_project_id(array $data): string
+{
+    $id = $data['json']['id'] ?? $data['id'] ?? '';
+
+    return is_string($id) && preg_match('/^[0-9a-f]{24}$/i', $id) ? strtolower($id) : '';
+}
+
+function fenster_windowcad_event(array $data): string
+{
+    $event = $data['event'] ?? '';
+
+    return is_string($event) ? sanitize_key($event) : '';
+}
+
+/**
+ * Writes the body once, gzipped, and leaves a pending marker for the forward.
+ * Returns the stored file name, or '' when nothing was kept.
+ */
+function fenster_windowcad_keep_payload(string $body, string $received_at): string
+{
+    $dir = fenster_windowcad_store_dir();
+    $month = gmdate('Y-m', strtotime($received_at) ?: time());
+    if (! wp_mkdir_p($dir . '/' . $month) || ! wp_mkdir_p($dir . '/pending')) {
+        fenster_windowcad_log('payload not kept: the store folder could not be made');
+
+        return '';
+    }
+
+    $sha = hash('sha256', $body);
+    $name = $month . '/' . $sha . '.json.gz';
+    $path = $dir . '/' . $name;
+    if (! file_exists($path)) {
+        // A bound on what an open webhook can write in a day. Fenster gets a
+        // handful of real quotes a day; this is two orders of magnitude above.
+        $today = 'fenster_wc_kept_' . gmdate('Ymd');
+        $kept_today = (int) get_transient($today);
+        if ($kept_today >= 500) {
+            fenster_windowcad_log('payload not kept: the daily bound is reached', ['kept' => $kept_today]);
+
+            return '';
+        }
+        $gz = gzencode($body, 6);
+        if ($gz === false || file_put_contents($path, $gz, LOCK_EX) === false) {
+            fenster_windowcad_log('payload not kept: the write failed', ['bytes' => strlen($body)]);
+
+            return '';
+        }
+        set_transient($today, $kept_today + 1, DAY_IN_SECONDS);
+        file_put_contents(
+            $dir . '/pending/' . $sha,
+            (string) wp_json_encode(['file' => $name, 'received_at' => $received_at, 'enquiry_id' => 0]),
+            LOCK_EX
+        );
+    }
+
+    return $name;
+}
+
+/** Sends one payload to FieldOS. True once FieldOS has it. */
+function fenster_windowcad_forward(string $body, int $enquiry_id, string $received_at): bool
+{
+    $target = fenster_fieldos_windowcad_target();
+    if ($target['url'] === '' || $target['key'] === '') {
+        return false;
+    }
+
+    $response = wp_remote_post($target['url'], [
+        'timeout' => 20,
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $target['key'],
+            'X-Fenster-Enquiry-Id' => (string) $enquiry_id,
+            'X-Fenster-Received-At' => $received_at,
+        ],
+        'body' => $body,
+        'data_format' => 'body',
+    ]);
+    if (is_wp_error($response)) {
+        fenster_windowcad_log('forward to FieldOS failed', ['error' => $response->get_error_message()]);
+
+        return false;
+    }
+    $status = (int) wp_remote_retrieve_response_code($response);
+    if ($status < 200 || $status >= 300) {
+        fenster_windowcad_log('forward to FieldOS refused', [
+            'status' => $status,
+            'body' => substr((string) wp_remote_retrieve_body($response), 0, 200),
+        ]);
+
+        return false;
+    }
+
+    return true;
+}
+
+/** Keeps the payload, then hands it on; the marker goes once FieldOS has it. */
+function fenster_windowcad_hand_on(string $body, string $kept, int $enquiry_id, string $received_at): void
+{
+    if (fenster_windowcad_forward($body, $enquiry_id, $received_at)) {
+        if ($kept !== '') {
+            @unlink(fenster_windowcad_store_dir() . '/pending/' . basename($kept, '.json.gz'));
+        }
+    } elseif ($kept !== '' && $enquiry_id > 0) {
+        // The retry sends the enquiry id too.
+        $marker = fenster_windowcad_store_dir() . '/pending/' . basename($kept, '.json.gz');
+        if (file_exists($marker)) {
+            file_put_contents(
+                $marker,
+                (string) wp_json_encode(['file' => $kept, 'received_at' => $received_at, 'enquiry_id' => $enquiry_id]),
+                LOCK_EX
+            );
+        }
+    }
+}
+
+add_action('init', 'fenster_schedule_windowcad_forward');
+function fenster_schedule_windowcad_forward(): void
+{
+    if (! wp_next_scheduled('fenster_windowcad_forward_pending')) {
+        wp_schedule_event(time() + HOUR_IN_SECONDS, 'hourly', 'fenster_windowcad_forward_pending');
+    }
+}
+
+/** The hourly retry: whatever FieldOS has not acknowledged, oldest first. */
+add_action('fenster_windowcad_forward_pending', 'fenster_windowcad_forward_pending');
+function fenster_windowcad_forward_pending(int $limit = 20): array
+{
+    $dir = fenster_windowcad_store_dir();
+    $markers = glob($dir . '/pending/*') ?: [];
+    usort($markers, static fn (string $a, string $b): int => filemtime($a) <=> filemtime($b));
+    $sent = 0;
+    $failed = 0;
+    foreach (array_slice($markers, 0, $limit) as $marker) {
+        $meta = json_decode((string) file_get_contents($marker), true);
+        $file = is_array($meta) ? (string) ($meta['file'] ?? '') : '';
+        $gz = $file !== '' ? @file_get_contents($dir . '/' . $file) : false;
+        $body = $gz !== false ? gzdecode($gz) : false;
+        if ($body === false) {
+            fenster_windowcad_log('pending payload unreadable', ['marker' => basename($marker)]);
+            $failed++;
+            continue;
+        }
+        if (fenster_windowcad_forward($body, (int) ($meta['enquiry_id'] ?? 0), (string) ($meta['received_at'] ?? gmdate('c')))) {
+            @unlink($marker);
+            $sent++;
+        } else {
+            $failed++;
+        }
+    }
+
+    return ['sent' => $sent, 'failed' => $failed, 'waiting' => max(0, count($markers) - $sent)];
+}
+
+if (defined('WP_CLI') && WP_CLI) {
+    WP_CLI::add_command('fenster windowcad forward', static function (): void {
+        WP_CLI::line((string) wp_json_encode(fenster_windowcad_forward_pending(200)));
+    });
+}
+
 function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_Response|WP_Error
 {
+    $received_at = gmdate('c');
+    $body = (string) $request->get_body();
+    $data = fenster_windowcad_payload_data($request);
+    $project_id = fenster_windowcad_project_id($data);
+    $event = fenster_windowcad_event($data);
+    // Kept first, before anything below can turn it away: it is the only copy.
+    $kept = $project_id !== '' ? fenster_windowcad_keep_payload($body, $received_at) : '';
+
     $fields = fenster_windowcad_payload_fields($request);
     fenster_windowcad_log('submission received', [
         'content_type' => (string) $request->get_header('content-type'),
-        'body_length' => strlen((string) $request->get_body()),
+        'body_length' => strlen($body),
         'fields' => $fields,
+        'project' => $project_id,
+        'event' => $event,
+        'kept' => $kept !== '',
     ]);
+
+    // The office printing the quotation or the sales contract to CRM, or
+    // changing the project's status, posts the same project again. It is never a
+    // new lead: no enquiry, no AdminBase lead and no conversion, which is what
+    // every Print to CRM used to produce. It goes to FieldOS, where the PDF lands
+    // on the lead the customer's own submission made.
+    if ($event !== '' && ! str_ends_with($event, '_designer_submitted')) {
+        fenster_windowcad_hand_on($body, $kept, 0, $received_at);
+
+        return new WP_REST_Response([
+            'status' => 'success',
+            'message' => 'Kept for FieldOS.',
+            'event' => $event,
+        ], 200);
+    }
 
     if (empty($fields)) {
         fenster_windowcad_log('empty payload rejected');
+        if ($kept !== '') {
+            fenster_windowcad_hand_on($body, $kept, 0, $received_at);
+        }
 
         return new WP_REST_Response([
             'status' => 'error',
@@ -440,11 +697,17 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             '_fenster_marketing_consent' => $marketing_consent ? '1' : '0',
             '_fenster_windowcad_fields' => wp_json_encode($fields),
             '_fenster_windowcad_fingerprint' => $fingerprint,
+            '_fenster_windowcad_project' => $project_id,
+            '_fenster_windowcad_payload' => $kept,
         ];
         foreach ($meta as $key => $value) {
             update_post_meta((int) $enquiry_id, $key, $value);
         }
     }
+
+    // The whole quote to FieldOS before anything slower runs; the hourly retry
+    // covers it if FieldOS cannot be reached now.
+    fenster_windowcad_hand_on($body, $kept, is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id, $received_at);
 
     // Record the completion for the dashboard before attempting AdminBase, so
     // attribution never depends on the office CRM being reachable. The lead
