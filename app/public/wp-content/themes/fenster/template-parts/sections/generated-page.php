@@ -1781,8 +1781,8 @@ if ($slug === 'areas-we-cover') {
         ],
     ];
     $service_shortcuts = [
-        ['title' => __('Double glazing', 'fenster'), 'url' => home_url('/double-glazing-milton-keynes/')],
-        ['title' => __('Windows', 'fenster'), 'url' => home_url('/windows-milton-keynes/')],
+        // One link since 28/09/2026: /double-glazing-milton-keynes/ now 301s to the windows hub.
+        ['title' => __('Double glazing and windows', 'fenster'), 'url' => home_url('/windows-milton-keynes/')],
         ['title' => __('Doors', 'fenster'), 'url' => home_url('/doors-milton-keynes/')],
         ['title' => __('Bifold doors', 'fenster'), 'url' => home_url('/aluminium-bifold-doors/')],
         ['title' => __('Roof lanterns', 'fenster'), 'url' => home_url('/roof-lanterns/')],
@@ -2238,7 +2238,8 @@ $add_related_routes = static function (array $target_slugs) use ($add_related_ro
 };
 
 if ($is_product && ! $is_commercial && ! $is_commercial_county) {
-    $add_related_route('double-glazing-milton-keynes', 'Double Glazing Milton Keynes');
+    // The head-term anchor, pointing at the page that now holds the head term.
+    $add_related_route('windows-milton-keynes', 'Double Glazing Milton Keynes');
     $add_related_route('window-door-prices-milton-keynes', 'Window and Door Prices Milton Keynes');
     $add_related_route('areas-we-cover', 'Areas We Cover');
 
@@ -2392,7 +2393,6 @@ if (count($related_links) < 6) {
     $add_related_routes([
         'windows-milton-keynes',
         'doors-milton-keynes',
-        'double-glazing-milton-keynes',
         'window-door-prices-milton-keynes',
         'areas-we-cover',
         'aluminium-windows',

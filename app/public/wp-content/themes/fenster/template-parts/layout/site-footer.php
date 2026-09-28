@@ -7,8 +7,12 @@
 
 $brand = fenster_data('brand', []);
 $footer_products = [
-    ['label' => 'Double Glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['label' => 'Windows and doors', 'url' => home_url('/windows-milton-keynes/')],
+    /* 28/09/2026: /double-glazing-milton-keynes/ was consolidated into the
+       windows hub, so the head-term anchor points there, and the second row,
+       which pointed there already, goes to the doors hub, which had no
+       footer link. */
+    ['label' => 'Double Glazing Milton Keynes', 'url' => home_url('/windows-milton-keynes/')],
+    ['label' => 'Doors', 'url' => home_url('/doors-milton-keynes/')],
     ['label' => 'Aluminium glazing', 'url' => home_url('/aluminium-windows/')],
     ['label' => 'Bifolds and sliders', 'url' => home_url('/aluminium-bifold-doors/')],
     ['label' => 'Roof lanterns', 'url' => home_url('/roof-lanterns/')],

@@ -13,8 +13,8 @@ if (is_singular('post') && $post_slug === 'what-is-double-glazing-and-how-does-i
         'title' => 'Turn double glazing research into a practical quote.',
         'copy' => 'Fenster can help compare windows, doors, replacement glass and frame choices around the rooms you want to improve.',
         'links' => [
-            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/'), 'meta' => 'Windows, doors and replacement glass'],
-            ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Browse the main window styles'],
+            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Double glazed windows, fitted locally'],
+            ['label' => 'Doors in Milton Keynes', 'url' => home_url('/doors-milton-keynes/'), 'meta' => 'Front, patio, French and bifold doors'],
             ['label' => 'Start an online quote', 'url' => home_url('/online-quote/'), 'meta' => 'Get a guide price before survey'],
         ],
     ];

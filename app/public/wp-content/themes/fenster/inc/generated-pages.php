@@ -260,12 +260,14 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Double Glazing Milton Keynes | See Your Price Online',
             'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Design your windows or doors online and see a guide price straight away, or book a free consultation.',
         ],
-        // Also the landing page for "replacement windows", "uPVC windows" and
-        // "window installer" in Milton Keynes, so the title carries the intent
-        // those searches use rather than the bare category word.
+        // The head-term page since 28/09/2026, when /double-glazing-milton-keynes/
+        // was consolidated into it (see fenster_redirect_target()), so the title
+        // leads with "double glazing". Still the landing page for "replacement
+        // windows", "uPVC windows" and "window installer" in Milton Keynes, so
+        // the title keeps the intent those searches use too.
         'windows-milton-keynes' => [
-            'title_tag' => 'Replacement Windows Milton Keynes | uPVC & Aluminium',
-            'meta_description' => 'Replacement windows in Milton Keynes: uPVC, aluminium, flush, sash and heritage. See your price online in minutes, or book a survey with our local fitters.',
+            'title_tag' => 'Double Glazing & Replacement Windows Milton Keynes',
+            'meta_description' => 'Double glazing and replacement windows in Milton Keynes: uPVC, aluminium, sash and heritage. See your price online, or book a survey with our local fitters.',
         ],
         'aluminium-windows' => [
             'title_tag' => 'Aluminium Windows Milton Keynes | Instant Online Price',
@@ -834,7 +836,7 @@ function fenster_price_guide_pages(): array
                 ['spec' => 'Eight-window house package', 'details' => 'Typical mix of 600 x 900, 1200 x 1200 and 1800 x 1200 windows, survey-confirmed before order', 'price' => 'To confirm from WindowCAD'],
             ],
             'moves' => ['Number of windows', 'Frame size and opening style', 'Glass specification and texture', 'Trickle vents', 'Colour and handle finish', 'Removal and fitting conditions'],
-            'links' => ['window-door-prices-milton-keynes', 'double-glazing-milton-keynes', 'casement-windows'],
+            'links' => ['window-door-prices-milton-keynes', 'windows-milton-keynes', 'casement-windows'],
         ],
         'aluminium-window-prices' => [
             'title' => 'Aluminium Window Prices',
@@ -1931,11 +1933,23 @@ function fenster_redirect_target(string $slug): string
         return $moved_commercial[$slug];
     }
 
+    /* '/double-glazing-milton-keynes/' WAS THE HEAD-TERM PAGE UNTIL 28/09/2026,
+       and is now consolidated into the windows hub. The SEO audit of that day
+       (section 5) found it rebuilt on the shared town template on 15 September,
+       85-87% word for word the same as the Aylesbury, Bedford and Bletchley
+       pages, at position 40.4 with 24 internal links, while Google ranked
+       /windows-milton-keynes/ for the same query (9th organic from Milton
+       Keynes, 153 internal links). Owner: "go option a". The windows hub
+       carries the head-term title in fenster_gsc_seo_overrides(). It has to be
+       answered here, before the matrix rule below, which would otherwise send
+       it to /double-glazing/. */
+    if ($slug === 'double-glazing-milton-keynes') {
+        return 'windows-milton-keynes';
+    }
+
     // Main product pages already own Milton Keynes intent. Keep legacy matrix
     // URLs useful for visitors, but consolidate their equity to that parent.
-    // '/double-glazing-milton-keynes/' is exempt: it is the deliberate
-    // head-term landing page, not a matrix duplicate, and must stay live.
-    if (str_ends_with($slug, '-milton-keynes') && $slug !== 'double-glazing-milton-keynes') {
+    if (str_ends_with($slug, '-milton-keynes')) {
         $product_slug = substr($slug, 0, -strlen('-milton-keynes'));
         if (isset(fenster_location_matrix_products()[$product_slug])) {
             return $product_slug;

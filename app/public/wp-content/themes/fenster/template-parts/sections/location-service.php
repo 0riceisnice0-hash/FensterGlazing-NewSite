@@ -889,7 +889,8 @@ $local_points = [
     ],
 ];
 $service_route_map = [
-    'double-glazing' => 'double-glazing-milton-keynes',
+    // The Milton Keynes double glazing page is the windows hub since 28/09/2026.
+    'double-glazing' => 'windows-milton-keynes',
     'bow-bay-windows' => 'windows-milton-keynes',
     'french-casement-windows' => 'windows-milton-keynes',
 ];
@@ -1656,7 +1657,7 @@ if (
                 </div>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/double-glazing-milton-keynes/')); ?>"><?php esc_html_e('View the Milton Keynes guide', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/windows-milton-keynes/')); ?>"><?php esc_html_e('View the Milton Keynes guide', 'fenster'); ?></a>
                 </div>
                 <div class="fg-location-local-guide__links">
                     <a href="<?php echo esc_url($service_route_url); ?>"><?php echo esc_html('Compare ' . $service_name); ?></a>

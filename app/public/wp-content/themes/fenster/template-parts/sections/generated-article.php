@@ -41,7 +41,7 @@ $article_next_steps_map = [
         'title' => 'What the U-value means for your rooms and your bills.',
         'copy' => 'A lower U-value means less heat escaping. We can tell you the real figure for each window we fit, so you can compare like with like rather than headline claims.',
         'links' => [
-            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/'), 'meta' => 'Windows, doors and replacement glass'],
+            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Double glazed windows, fitted locally'],
             ['label' => 'Casement windows', 'url' => home_url('/casement-windows/'), 'meta' => 'A+ rated options with real figures'],
             ['label' => 'See your price online', 'url' => home_url('/online-quote/'), 'meta' => 'A guide price in minutes'],
         ],
@@ -91,8 +91,8 @@ $article_next_steps_map = [
         'title' => 'Turn double glazing research into a practical quote.',
         'copy' => 'We can help compare windows, doors, replacement glass and frame choices around the rooms you want to improve.',
         'links' => [
-            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/'), 'meta' => 'Windows, doors and replacement glass'],
-            ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Browse the main window styles'],
+            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Double glazed windows, fitted locally'],
+            ['label' => 'Doors in Milton Keynes', 'url' => home_url('/doors-milton-keynes/'), 'meta' => 'Front, patio, French and bifold doors'],
             ['label' => 'Start an online quote', 'url' => home_url('/online-quote/'), 'meta' => 'Get a guide price before survey'],
         ],
     ],
@@ -245,8 +245,18 @@ foreach (array_slice(array_values($related_links), 0, 8) as $link) {
     if ($url === '' || $text === '') {
         continue;
     }
-    $product_links[] = ['url' => $url, 'text' => fenster_blog_sentence_case($text)];
+    /* A link to an address that now redirects goes straight to where it lands
+       (/double-glazing-milton-keynes/ became the windows hub on 28/09/2026). */
     $path = trim((string) wp_parse_url($url, PHP_URL_PATH), '/');
+    $redirect = $path !== '' && function_exists('fenster_redirect_target') ? fenster_redirect_target($path) : '';
+    if ($redirect !== '') {
+        $path = $redirect;
+        $url = home_url('/' . $redirect . '/');
+    }
+    if (in_array($url, array_column($product_links, 'url'), true)) {
+        continue;
+    }
+    $product_links[] = ['url' => $url, 'text' => fenster_blog_sentence_case($text)];
     if ($path !== '' && ! str_contains($path, '/')) {
         $products = array_merge($products, fenster_blog_page_products($path));
     }
