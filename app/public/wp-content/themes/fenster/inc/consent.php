@@ -325,7 +325,9 @@ function fenster_render_cookie_consent(): void
                 return;
             }
 
-            window.fetch('<?php echo esc_js(esc_url_raw($clarity_stylesheet)); ?>', {
+            var stylesheetUrl = '<?php echo esc_js(esc_url_raw($clarity_stylesheet)); ?>';
+
+            window.fetch(stylesheetUrl, {
                 credentials: 'same-origin',
                 cache: 'force-cache'
             })
@@ -337,6 +339,25 @@ function fenster_render_cookie_consent(): void
                     return response.text();
                 })
                 .then(function (css) {
+                    /* main.css points at its fonts and images relative to itself
+                       ("../fonts/Gibson-Bold.woff2"). Inlined into a <style>
+                       those resolve against the page instead, so every tracked
+                       view asked for /fonts/Gibson-*.woff2 and .otf: six
+                       uncached WordPress 404s of about 100 KB each, 500 to 1,000
+                       a day in the live log (28/09/2026). Resolve them against
+                       the stylesheet's own address first. */
+                    css = css.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g, function (match, quote, address) {
+                        if (/^(?:[a-z][a-z0-9+.-]*:|\/|#)/i.test(address)) {
+                            return match;
+                        }
+
+                        try {
+                            return 'url(' + quote + new URL(address, stylesheetUrl).href + quote + ')';
+                        } catch (error) {
+                            return match;
+                        }
+                    });
+
                     var style = document.createElement('style');
                     style.id = 'fenster-clarity-replay-css';
                     style.setAttribute('data-clarity-unmask', 'true');
