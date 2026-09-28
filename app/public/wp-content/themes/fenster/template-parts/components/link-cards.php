@@ -30,7 +30,7 @@ foreach ($links as $link) {
         continue;
     }
 
-    $image = function_exists('fenster_link_card_image') ? fenster_link_card_image($url) : '';
+    $image = ($args['show_images'] ?? true) && function_exists('fenster_link_card_image') ? fenster_link_card_image($url) : '';
     if ($image !== '') {
         $carded[] = ['url' => $url, 'text' => $text, 'image' => $image];
     } else {

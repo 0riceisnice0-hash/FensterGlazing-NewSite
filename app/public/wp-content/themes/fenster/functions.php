@@ -52,6 +52,10 @@ $fenster_required_files = [
        Read by the homepage finder and by `/online-quote/`, so it sits outside
        the home-30 strand rather than inside it. */
     'inc/quote-collections.php',
+    /* The town landing pages' product editorial and photographs. Ported on
+       28/09/2026 from the 15 September SEO release live runs
+       (origin/codex/seo-live-release-2026-09), so test shows live's town pages. */
+    'inc/location-page-data.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {

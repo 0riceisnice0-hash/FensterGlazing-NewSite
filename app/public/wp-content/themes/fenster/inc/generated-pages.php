@@ -705,6 +705,22 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
             $source['seo']['meta_description'] = $gsc_seo_overrides[$slug]['meta_description'];
         }
         $source['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
+        // The landing page now answers a product decision, rather than repeating
+        // a generic local-supplier claim. Keep its snippet aligned with that page.
+        // (From the 15 September SEO release live runs, ported 28/09/2026.)
+        $source['seo']['title_tag'] = $products[$product_slug] . ' ' . $town_label
+            . ($product_slug === 'double-glazing' ? ' | Windows & Doors Fitted' : ' | Supply & Fit');
+        $location_description = sprintf(
+            '%s in %s. Compare %s.',
+            $products[$product_slug], $town_label, (string) $product_profile['decision']
+        );
+        foreach ([' Supplied and fitted by our own team.', ' Book a free consultation.'] as $sentence) {
+            if (strlen($location_description . $sentence) <= 160) {
+                $location_description .= $sentence;
+            }
+        }
+        $source['seo']['meta_description'] = $location_description;
+        $source['seo']['image'] = (string) fenster_data('product_media.' . $product_slug . '.hero.src', '');
         unset($source['seo']['robots']);
 
         return $source;

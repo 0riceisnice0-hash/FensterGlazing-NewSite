@@ -87,7 +87,9 @@ endif;
 <a class="fg-cs-card" href="<?php echo esc_url((string) $card['url']); ?>"<?php echo $archive_index !== null ? ' data-fg-case-study-card data-fg-case-study-index="' . esc_attr((string) $archive_index) . '"' : ''; ?>>
     <div class="fg-cs-card__media">
         <?php if (is_array($card['image'] ?? null)) : ?>
-            <img src="<?php echo esc_url((string) ($card['image']['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($card['image']['caption'] ?? $card['title'] ?? '')); ?>" loading="lazy">
+            <img <?php echo ! empty($args['responsive_images'])
+                ? fenster_location_image_attrs(['src' => (string) ($card['image']['src'] ?? ''), 'alt' => (string) ($card['image']['caption'] ?? $card['title'] ?? '')], ['sizes' => '(max-width: 860px) calc(100vw - 32px), 600px'])
+                : fenster_image_attr_string((string) ($card['image']['src'] ?? ''), ['alt' => (string) ($card['image']['caption'] ?? $card['title'] ?? ''), 'loading' => 'lazy']); ?>>
         <?php endif; ?>
     </div>
     <div class="fg-cs-card__body">
