@@ -1,0 +1,925 @@
+/* ==========================================================================
+   BLOG, 2026-09-28. The /blog/ hub, the scheduled posts, the imported guides
+   and the "From the blog" band on product pages. Built to assets/blog/blog.css
+   by `npm run build:blog` and enqueued by inc/blog-posts.php only where one of
+   those renders, after main.css, whose tokens it uses.
+
+   Its own bundle, like Homepage 3.0, so it ships without touching main.scss.
+   Everything is under the fg-journal- namespace; the older fg-blog-post- and
+   fg-article- rules in main.scss no longer match anything and are harmless.
+
+   STYLE.md holds: light grounds only, the green-then-steel button pair, type
+   under --fg-font-size-max, cards at 8px radius, and every section inside one
+   1440x780 viewport except the article body and the enquiry form, which are
+   the long content that rule allows for.
+   ========================================================================== */
+
+$fg-journal-wide: 1100px;
+$fg-journal-mid: 820px;
+$fg-journal-narrow: 560px;
+
+.fg-journal,
+.fg-journal-hub,
+.fg-journal-related {
+  color: var(--color-ink);
+}
+
+.fg-journal-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: clamp(1rem, 2vw, 1.4rem);
+
+  .eyebrow {
+    margin-bottom: 0.4rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+    line-height: 1.15;
+  }
+
+  .button {
+    flex: 0 0 auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Cards
+   -------------------------------------------------------------------------- */
+
+.fg-journal-cards {
+  display: grid;
+  gap: clamp(0.9rem, 1.8vw, 1.4rem);
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (min-width: $fg-journal-narrow) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.fg-journal-cards--three {
+  @media (min-width: $fg-journal-mid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.fg-journal-cards--two {
+  @media (min-width: $fg-journal-mid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* A single post lies across the row, photograph beside the words. */
+.fg-journal-cards--one {
+  @media (min-width: $fg-journal-narrow) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: $fg-journal-mid) {
+    .fg-journal-card {
+      flex-direction: row;
+    }
+
+    .fg-journal-card__media {
+      flex: 0 0 42%;
+      aspect-ratio: 16 / 10;
+    }
+
+    .fg-journal-card__body {
+      justify-content: center;
+      padding: clamp(1.2rem, 2.4vw, 2rem);
+    }
+
+    .fg-journal-card__title {
+      font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    }
+
+    .fg-journal-card__summary {
+      font-size: var(--fg-text-base);
+      -webkit-line-clamp: 3;
+    }
+  }
+}
+
+.fg-journal-cards--four {
+  @media (min-width: $fg-journal-mid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: $fg-journal-wide) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.fg-journal-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+
+  &:hover {
+    border-color: rgba(46, 172, 102, 0.45);
+    box-shadow: var(--fg-shadow-lg);
+    transform: translateY(-2px);
+
+    .fg-journal-card__media img {
+      transform: scale(1.03);
+    }
+
+    .fg-journal-card__title {
+      color: var(--color-accent-dark);
+    }
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+.fg-journal-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-soft);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 420ms ease;
+  }
+}
+
+.fg-journal-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem 1.1rem;
+}
+
+.fg-journal-card__meta {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--fg-text-xs);
+  letter-spacing: 0.02em;
+}
+
+.fg-journal-card__title {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.3;
+  transition: color 180ms ease;
+}
+
+.fg-journal-card__summary {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: var(--fg-text-md);
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* On a phone a list of full cards is a long scroll of photographs, so below
+   560px every card but the hub's featured one becomes a row: a small photo
+   beside the date and title. */
+@media (max-width: #{$fg-journal-narrow - 1px}) {
+  .fg-journal-cards:not(.fg-journal-cards--one) .fg-journal-card:not(.fg-journal-card--feature) {
+    flex-direction: row;
+    align-items: stretch;
+
+    .fg-journal-card__media {
+      flex: 0 0 34%;
+      aspect-ratio: auto;
+      min-height: 6.5rem;
+    }
+
+    .fg-journal-card__body {
+      justify-content: center;
+      padding: 0.75rem 0.85rem;
+    }
+
+    .fg-journal-card__summary {
+      display: none;
+    }
+  }
+}
+
+/* The hub's grid carries eight cards in two rows, which only fits one desktop
+   viewport without the summaries; the titles say what each post is. On a
+   single column there is room, and the summary helps. */
+.fg-journal-cards--four .fg-journal-card__summary {
+  @media (min-width: $fg-journal-mid) {
+    display: none;
+  }
+}
+
+/* And the photographs a little shallower: at 16:9 the section measured 738px
+   at 1440x780, 31px over the 707px under the header. */
+.fg-journal-cards--four .fg-journal-card__media {
+  @media (min-width: $fg-journal-mid) {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+.fg-journal-card--feature {
+  box-shadow: var(--fg-shadow-md);
+
+  .fg-journal-card__media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .fg-journal-card__body {
+    gap: 0.5rem;
+    padding: clamp(1rem, 2vw, 1.4rem) clamp(1rem, 2.2vw, 1.6rem) clamp(1.1rem, 2.2vw, 1.5rem);
+  }
+
+  .fg-journal-card__meta {
+    color: var(--color-accent-dark);
+    font-weight: 700;
+  }
+
+  .fg-journal-card__title {
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    line-height: 1.18;
+  }
+
+  .fg-journal-card__summary {
+    font-size: var(--fg-text-base);
+    -webkit-line-clamp: 3;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hub
+   -------------------------------------------------------------------------- */
+
+.fg-journal-hub-hero {
+  padding: clamp(1.75rem, 3.6vw, 3rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-journal-hub-hero__grid {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+.fg-journal-hub-hero__copy {
+  h1 {
+    margin: 0.2rem 0 1rem;
+    font-size: clamp(2.3rem, 3.6vw, var(--fg-font-size-max));
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+}
+
+.fg-journal-hub-hero__lead {
+  max-width: 34rem;
+  margin: 0 0 1rem;
+  color: var(--color-steel-90);
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.fg-journal-hub-hero__cadence {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  color: var(--color-steel);
+  font-size: var(--fg-text-md);
+  font-weight: 700;
+
+  &::before {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    content: '';
+  }
+}
+
+.fg-journal-hub-grid {
+  padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.fg-journal-hub-older {
+  padding: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.fg-journal-list {
+  display: grid;
+  gap: 0 clamp(1.5rem, 4vw, 3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $fg-journal-mid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    text-decoration: none;
+
+    &:hover strong {
+      color: var(--color-accent-dark);
+    }
+  }
+
+  strong {
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  span {
+    flex: 0 0 auto;
+    color: var(--color-muted);
+    font-size: var(--fg-text-sm);
+  }
+}
+
+.fg-journal-ask {
+  padding: 0 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.fg-journal-ask__panel {
+  display: grid;
+  gap: 1.25rem 2rem;
+  align-items: center;
+  padding: clamp(1.4rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2.2rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  h2 {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.35rem, 2vw, 1.7rem);
+    line-height: 1.2;
+  }
+
+  p:not(.eyebrow) {
+    max-width: 40rem;
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.4rem;
+  }
+
+  .button-row {
+    margin: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Article
+   -------------------------------------------------------------------------- */
+
+.fg-journal-hero {
+  padding: clamp(1.75rem, 3.6vw, 3rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-journal-hero__grid {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.fg-journal-hero--media .fg-journal-hero__grid {
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.fg-journal-hero:not(.fg-journal-hero--media) .fg-journal-hero__copy {
+  max-width: 54rem;
+}
+
+.fg-journal-hero__eyebrow a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+.fg-journal-hero__copy {
+  h1 {
+    margin: 0.2rem 0 1rem;
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+
+  .button-row {
+    margin-top: 1.4rem;
+  }
+}
+
+.fg-journal-hero__lead {
+  max-width: 40rem;
+  margin: 0 0 1rem;
+  color: var(--color-steel-90);
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.fg-journal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+
+  > * + *::before {
+    margin: 0 0.6rem;
+    color: var(--color-line);
+    content: '|';
+  }
+}
+
+.fg-journal-hero__media {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: var(--fg-shadow-lg);
+  aspect-ratio: 4 / 3;
+  max-height: clamp(320px, calc(100svh - var(--site-header-total-height, 73px) - 7rem), 520px);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 899px) {
+    order: -1;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+.fg-journal-layout {
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* The same two columns as the hero, so the title, lead and contents share a
+   left edge and the photograph and the words share a right one. The column is
+   562px at 1440, about 70 characters a line. */
+.fg-journal-layout--contents {
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+}
+
+.fg-journal-contents {
+  margin-bottom: 1.75rem;
+
+  @media (min-width: 1024px) {
+    max-width: 19rem;
+  }
+
+  details {
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  summary {
+    padding: 0.85rem 1rem;
+    color: var(--color-steel);
+    cursor: pointer;
+    font-size: var(--fg-text-xs);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 1rem 0.9rem;
+    list-style: none;
+  }
+
+  li + li {
+    margin-top: 0.5rem;
+  }
+
+  a {
+    color: var(--color-muted);
+    font-size: var(--fg-text-md);
+    line-height: 1.35;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-ink);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    position: sticky;
+    top: calc(var(--site-header-total-height, 73px) + 1.5rem);
+    max-height: calc(100svh - var(--site-header-total-height, 73px) - 3rem);
+    margin-bottom: 0;
+    overflow: auto;
+
+    details {
+      border: 0;
+      border-left: 2px solid var(--color-line);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    summary {
+      padding: 0 0 0.75rem 1rem;
+      cursor: default;
+      list-style: none;
+      pointer-events: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    ul {
+      padding: 0 0 0 1rem;
+    }
+  }
+}
+
+.fg-journal-body {
+  max-width: 42rem;
+  margin: 0 auto;
+  color: var(--color-ink);
+  font-size: 1.075rem;
+  line-height: 1.75;
+
+  .fg-journal-layout--contents & {
+    @media (min-width: 1024px) {
+      max-width: none;
+      margin: 0;
+    }
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  p {
+    margin: 0 0 1.15em;
+  }
+
+  .fg-journal-body__lead {
+    color: var(--color-steel-90);
+    font-size: 1.18rem;
+    line-height: 1.65;
+  }
+
+  h2 {
+    margin: 2em 0 0.6em;
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    line-height: 1.2;
+    scroll-margin-top: calc(var(--site-header-total-height, 73px) + 1.5rem);
+    text-wrap: balance;
+  }
+
+  h3 {
+    margin: 1.6em 0 0.45em;
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  ul {
+    margin: 0 0 1.25em;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    margin: 0.45em 0;
+    padding-left: 1.45em;
+  }
+
+  li::before {
+    position: absolute;
+    top: 0.72em;
+    left: 0.25em;
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: var(--color-accent);
+    content: '';
+  }
+}
+
+/* The column's width, or the photograph's own width if that is less
+   (--fg-figure-max, set on the figure); a tall one is cropped at 560px. */
+.fg-journal-figure {
+  margin: 2.2rem 0;
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: var(--fg-figure-max, 100%);
+    height: auto;
+    max-height: 560px;
+    margin: 0 auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  figcaption {
+    margin-top: 0.6rem;
+    color: var(--color-muted);
+    font-size: var(--fg-text-sm);
+    line-height: 1.45;
+    text-align: center;
+  }
+}
+
+.fg-journal-next {
+  padding: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.fg-journal-next__panel {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--fg-shadow-md);
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+}
+
+.fg-journal-next__copy {
+  .eyebrow {
+    margin-bottom: 0.4rem;
+  }
+
+  h2 {
+    margin: 0 0 0.6rem;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    line-height: 1.2;
+  }
+
+  p:not(.eyebrow) {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+}
+
+.fg-journal-next__routes {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.fg-journal-route {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-soft);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease;
+
+  strong {
+    font-weight: 700;
+  }
+
+  span {
+    color: var(--color-muted);
+    font-size: var(--fg-text-md);
+  }
+
+  &:hover {
+    border-color: rgba(46, 172, 102, 0.55);
+    background: #ffffff;
+  }
+}
+
+.fg-journal-products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.3rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: inline-flex;
+    padding: 0.42rem 0.8rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--color-steel);
+    font-size: var(--fg-text-sm);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent-dark);
+    }
+  }
+}
+
+.fg-journal-more {
+  padding: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+/* --------------------------------------------------------------------------
+   Enquiry. `.fg-form` is styled for dark panels by default, so the light
+   treatment the old blog template had is repeated here under its own scope.
+   -------------------------------------------------------------------------- */
+
+.fg-journal-enquiry {
+  padding: 0 0 clamp(2.4rem, 4.6vw, 3.6rem);
+}
+
+.fg-journal-enquiry__grid {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+  align-items: start;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  }
+}
+
+.fg-journal-enquiry__copy {
+  h2 {
+    margin: 0.5rem 0 0.75rem;
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+    line-height: 1.16;
+  }
+
+  > p {
+    margin: 0 0 1.1rem;
+    color: var(--color-muted);
+    line-height: 1.62;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1.35rem;
+    color: var(--color-steel);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  li::before {
+    position: absolute;
+    top: 0.42em;
+    left: 0;
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    content: '';
+  }
+}
+
+.fg-journal-enquiry .fg-form {
+  padding: clamp(1.1rem, 2.3vw, 1.7rem);
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--color-ink);
+  box-shadow: var(--fg-shadow-lg);
+
+  label,
+  label > span,
+  .fg-enquiry-form__footer small,
+  small {
+    color: var(--color-steel);
+  }
+
+  label > span {
+    font-weight: 800;
+  }
+
+  em {
+    color: var(--color-muted);
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 52px;
+    border: 1px solid rgba(0, 45, 58, 0.2);
+    background: #ffffff;
+    color: var(--color-ink);
+    box-shadow: inset 0 1px 0 rgba(0, 45, 58, 0.04);
+  }
+
+  textarea {
+    min-height: 140px;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: rgba(46, 172, 102, 0.72);
+    outline: 3px solid rgba(46, 172, 102, 0.16);
+    outline-offset: 0;
+  }
+
+  .fg-enquiry-form__consent {
+    border: 1px solid rgba(0, 45, 58, 0.14);
+    background: var(--color-soft);
+    color: var(--color-muted);
+  }
+
+  .fg-enquiry-form__consent a {
+    color: var(--color-steel);
+    font-weight: 800;
+  }
+
+  @media (max-width: 860px) {
+    padding: 1rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   "From the blog" on product, hub and town pages
+   -------------------------------------------------------------------------- */
+
+.fg-journal-related {
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0 clamp(2.5rem, 5vw, 3.5rem);
+
+  > .container {
+    padding-top: clamp(1.5rem, 3vw, 2.25rem);
+    border-top: 1px solid var(--color-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-journal-card,
+  .fg-journal-card__media img,
+  .fg-journal-route {
+    transition: none;
+  }
+
+  .fg-journal-card:hover,
+  .fg-journal-card:hover .fg-journal-card__media img {
+    transform: none;
+  }
+}

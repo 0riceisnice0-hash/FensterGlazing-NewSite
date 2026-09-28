@@ -18,6 +18,14 @@ $title = (string) ($args['title'] ?? ($page['title'] ?? 'Fenster Glazing'));
 $hero_intro = (string) ($args['hero_intro'] ?? ($page['seo']['meta_description'] ?? 'Find useful Fenster Glazing information, product guidance and contact details.'));
 $hero_media_src = (string) ($args['hero_media_src'] ?? (($images[0]['src'] ?? '') ?: '/wp-content/themes/fenster/assets/images/imported/Aluminium-Windows-16.jpg'));
 $slug = (string) ($page['slug'] ?? '');
+
+/* The /blog/ hub has its own template since 2026-09-28: the scheduled posts
+   only. Category, tag and paged archives still use the cards below. */
+if ($slug === 'blog' && locate_template('template-parts/sections/blog-hub.php') !== '') {
+    get_template_part('template-parts/sections/blog-hub', null, $args);
+    return;
+}
+
 $is_archive = (bool) ($args['is_archive'] ?? false);
 $is_utility = (bool) ($args['is_utility'] ?? false);
 $phone = (string) ($brand['phone'] ?? '01908 429200');

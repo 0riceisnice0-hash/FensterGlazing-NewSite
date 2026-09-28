@@ -312,6 +312,11 @@ function fenster_site_data(): array
                 ],
             ],
             ['label' => 'About Us', 'url' => home_url('/about/')],
+            /* Added 2026-09-28 ("link to them"). The header's contents need
+               998px, so between the mobile menu (860px) and 1040px this item is
+               the one that goes, in fenster_render_critical_head_assets(),
+               rather than the header wrapping onto two lines. */
+            ['label' => 'Blog', 'url' => home_url('/blog/'), 'classes' => ['site-nav__item--blog']],
             ['label' => 'Contact', 'url' => home_url('/contact/')],
             ['label' => 'Instant Quote', 'url' => home_url('/online-quote/'), 'classes' => ['site-nav__quote']],
             ['label' => 'Free Consultation', 'url' => home_url('/book-a-consultation/'), 'classes' => ['site-nav__consultation']],

@@ -2913,3 +2913,823 @@ function fenster_blog_post_page(string $slug): ?array
         ],
     ];
 }
+
+/* -------------------------------------------------------------------------
+   BLOG PRESENTATION, 2026-09-28.
+
+   The /blog/ hub, the scheduled posts and the imported guides from the old
+   site share one article layout (template-parts/sections/blog-article.php),
+   one card (template-parts/components/blog-card.php) and one stylesheet,
+   assets/blog/blog.css, built from src/blog/blog.scss by `npm run build:blog`.
+   It is its own bundle for the same reason Homepage 3.0 is: nothing here
+   touches main.scss, so it ships without splicing a compiled stylesheet.
+
+   Owner instruction, 2026-09-28: "link to them. only the new ones." Product,
+   hub and town pages link to the scheduled posts that name their product
+   (template-parts/components/blog-related.php, included from footer.php), and
+   the hub lists the scheduled posts only. The imported guides keep their own
+   addresses and search traffic, get the same layout, and are not promoted.
+   ------------------------------------------------------------------------- */
+
+/**
+ * The imported guides that render through the article layout, 36 of them.
+ * Used to load the stylesheet in <head>; a guide missing from this list still
+ * gets it, later, from fenster_blog_print_stylesheet_fallback(). The GGF
+ * standards page is not here: it has its own template.
+ */
+function fenster_blog_legacy_article_slugs(): array
+{
+    return [
+        'a-guide-to-understanding-u-values', 'all-you-need-to-know-about-louvre-vents',
+        'apecs-ingenious-locks-and-hardware', 'are-my-windows-energy-efficient',
+        'benefits-of-upvc-windows-for-your-home', 'choosing-the-right-colour-for-your-front-door',
+        'choosing-the-right-front-door-for-your-home', 'condensation-on-new-windows',
+        'consider-composite-doors-for-your-home', 'consider-energy-efficient-windows-for-your-home',
+        'deal-with-condensation', 'difference-between-french-doors-and-sliding-patio-doors',
+        'different-types-of-window-frame-materials', 'door-maintenance',
+        'guide-noise-insulation-for-windows',
+        'how-to-check-whether-your-planned-home-improvements-are-legal',
+        'how-to-choose-the-right-style-windows-for-your-home', 'how-to-clean-your-upvc-windows-at-home',
+        'how-to-know-when-to-replace-windows', 'how-to-prevent-window-condensation-in-winter',
+        'replacing-windows-doors-in-wolverton-mk', 'soundproof-windows',
+        'soundproofing-solutions-how-to-choose-windows-for-a-quieter-home',
+        'stable-doors-traditional-charm-meets-modern-efficiency-and-security',
+        'the-history-of-upvc-windows', 'what-are-double-glazed-glass-windows', 'what-are-integral-blinds',
+        'what-are-the-different-methods-of-installation-for-a-sash-window',
+        'what-front-doors-provide-the-best-security-for-your-home', 'what-is-a-door-lintel',
+        'what-is-the-difference-between-upvc-vs-composite-doors', 'which-is-better-triple-or-acoustic-glazing',
+        'why-choose-fenster-over-anglian', 'window-and-door-design', 'window-maintenance',
+        'windows-as-home-investments',
+    ];
+}
+
+/**
+ * 'hub', 'post', 'article' or '' for any other route.
+ */
+function fenster_blog_route_kind(string $slug): string
+{
+    $slug = trim($slug, '/');
+
+    if ($slug === 'blog') {
+        return 'hub';
+    }
+
+    if (fenster_blog_post($slug) !== null) {
+        return 'post';
+    }
+
+    return in_array($slug, fenster_blog_legacy_article_slugs(), true) ? 'article' : '';
+}
+
+function fenster_blog_current_slug(): string
+{
+    $page = get_query_var('fenster_generated_page');
+    if (is_array($page) && isset($page['slug'])) {
+        return trim((string) $page['slug'], '/');
+    }
+
+    return function_exists('fenster_current_generated_slug') ? fenster_current_generated_slug() : '';
+}
+
+add_action('wp_enqueue_scripts', 'fenster_blog_enqueue_styles', 20);
+function fenster_blog_enqueue_styles(): void
+{
+    $slug = fenster_blog_current_slug();
+
+    if (fenster_blog_route_kind($slug) === '' && fenster_blog_posts_for_page($slug) === []) {
+        return;
+    }
+
+    $path = FENSTER_THEME_DIR . '/assets/blog/blog.css';
+    if (! file_exists($path)) {
+        return;
+    }
+
+    wp_enqueue_style('fenster-blog', FENSTER_THEME_URI . '/assets/blog/blog.css', ['fenster-main'], filemtime($path) . '-' . filesize($path));
+}
+
+/**
+ * Called by every blog template. When the stylesheet was not enqueued in
+ * <head>, it is printed where the template starts, so a route the lists above
+ * do not know about is late rather than unstyled.
+ */
+function fenster_blog_print_stylesheet_fallback(): void
+{
+    static $printed = false;
+
+    if ($printed || wp_style_is('fenster-blog', 'done')) {
+        return;
+    }
+
+    $path = FENSTER_THEME_DIR . '/assets/blog/blog.css';
+    if (! file_exists($path)) {
+        return;
+    }
+
+    $printed = true;
+    printf(
+        '<link rel="stylesheet" id="fenster-blog-fallback-css" href="%s">',
+        esc_url(add_query_arg('ver', filemtime($path) . '-' . filesize($path), FENSTER_THEME_URI . '/assets/blog/blog.css'))
+    );
+}
+
+/**
+ * Products a page stands for, as named in each post's 'products' list. The two
+ * hubs and the double glazing pages stand for a family; a town page stands for
+ * its product, so /composite-doors-aylesbury/ links to the composite door posts.
+ */
+function fenster_blog_product_families(): array
+{
+    return [
+        'windows' => [
+            'windows', 'casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'aluminium-windows',
+            'aluminium-flush-windows', 'tilt-turn-windows', 'heritage-windows', 'bow-bay-windows',
+            'french-casement-windows', 'secondary-glazing',
+        ],
+        'doors' => [
+            'composite-doors', 'upvc-doors', 'aluminium-bifold-doors', 'slide-fold-doors', 'aluminium-sliding-doors',
+            'patio-doors', 'french-doors', 'aluminium-doors', 'heritage-aluminium-doors',
+        ],
+        'double-glazing' => ['double-glazing', 'windows', 'double-glazing-replacement', 'casement-windows'],
+    ];
+}
+
+function fenster_blog_page_products(string $slug): array
+{
+    $slug = trim($slug, '/');
+    $product_families = fenster_blog_product_families();
+    $families = [
+        'windows-milton-keynes' => $product_families['windows'],
+        'doors-milton-keynes' => $product_families['doors'],
+        'double-glazing-milton-keynes' => $product_families['double-glazing'],
+        'double-glazing' => $product_families['double-glazing'],
+    ];
+
+    if (isset($families[$slug])) {
+        return $families[$slug];
+    }
+
+    if (function_exists('fenster_slug_matches_location_matrix') && fenster_slug_matches_location_matrix($slug)) {
+        foreach (array_keys(fenster_location_matrix_towns()) as $town_slug) {
+            if (str_ends_with($slug, '-' . $town_slug)) {
+                $product = substr($slug, 0, -strlen('-' . $town_slug));
+
+                return $families[$product] ?? [$product];
+            }
+        }
+    }
+
+    return [$slug];
+}
+
+/**
+ * Published posts that name this page's product, newest first, then posts on
+ * the rest of its family (a door page takes door posts, a window page window
+ * posts) until there are three. Empty for the blog's own pages and for any
+ * page outside those families that no post names, so the band only appears
+ * where it is relevant.
+ */
+function fenster_blog_posts_for_page(string $slug, int $limit = 3): array
+{
+    static $cache = [];
+
+    $slug = trim($slug, '/');
+    if ($slug === '' || $slug === 'home' || str_contains($slug, '/') || fenster_blog_route_kind($slug) !== '') {
+        return [];
+    }
+
+    $key = $slug . ':' . $limit;
+    if (isset($cache[$key])) {
+        return $cache[$key];
+    }
+
+    $products = fenster_blog_page_products($slug);
+    $family = [];
+    foreach (['windows', 'doors'] as $family_name) {
+        $members = fenster_blog_product_families()[$family_name];
+        if (array_intersect($products, $members) !== []) {
+            $family = array_merge($family, $members);
+        }
+    }
+
+    $matches = [];
+    $near = [];
+    foreach (fenster_live_blog_posts() as $post_slug => $post) {
+        $post_products = (array) ($post['products'] ?? []);
+        if (array_intersect($products, $post_products) !== []) {
+            $matches[$post_slug] = $post;
+        } elseif ($family !== [] && array_intersect($family, $post_products) !== []) {
+            $near[$post_slug] = $post;
+        }
+    }
+
+    return $cache[$key] = array_slice($matches + $near, 0, $limit, true);
+}
+
+/**
+ * "More from the blog" under an article: posts sharing a product first, then
+ * the newest, never the page itself.
+ */
+function fenster_blog_more_posts(string $exclude_slug, array $products = [], int $limit = 3): array
+{
+    $related = [];
+    $rest = [];
+
+    foreach (fenster_live_blog_posts() as $slug => $post) {
+        if ($slug === $exclude_slug) {
+            continue;
+        }
+
+        if ($products !== [] && array_intersect($products, (array) ($post['products'] ?? [])) !== []) {
+            $related[$slug] = $post;
+        } else {
+            $rest[$slug] = $post;
+        }
+    }
+
+    return array_slice($related + $rest, 0, $limit, true);
+}
+
+function fenster_blog_image_exists(string $src): bool
+{
+    if ($src === '') {
+        return false;
+    }
+
+    $path = function_exists('fenster_theme_asset_path_from_url') ? fenster_theme_asset_path_from_url($src) : '';
+
+    return $path === '' || is_file($path);
+}
+
+/**
+ * A post's photographs, first-named product first. Only files that exist, so
+ * a card can never render an empty frame.
+ */
+function fenster_blog_post_image_pool(array $post, bool $first_product_only = false): array
+{
+    $pool = [];
+    $seen = [];
+    $products = array_values((array) ($post['products'] ?? []));
+
+    if ($first_product_only) {
+        $products = array_slice($products, 0, 1);
+    }
+
+    foreach ($products as $product_slug) {
+        $media = fenster_data('product_media.' . $product_slug, []);
+        if (! is_array($media)) {
+            continue;
+        }
+
+        $candidates = array_merge(
+            [$media['hero'] ?? null, $media['card'] ?? null],
+            (array) ($media['gallery'] ?? [])
+        );
+
+        foreach ($candidates as $candidate) {
+            $src = is_array($candidate) ? (string) ($candidate['src'] ?? '') : '';
+            if ($src === '' || isset($seen[$src]) || ! fenster_blog_image_exists($src)) {
+                continue;
+            }
+
+            $seen[$src] = true;
+            $pool[] = ['src' => $src, 'alt' => (string) ($candidate['alt'] ?? '')];
+        }
+    }
+
+    /* Photographs under 900px wide go to the back, keeping their order. Several
+       gallery shots are 600x450 and turned soft when one led an article or
+       filled its column; they still serve as a card once the larger ones are
+       used. */
+    $sharp = [];
+    $small = [];
+    foreach ($pool as $image) {
+        $dimensions = function_exists('fenster_image_dimensions') ? fenster_image_dimensions($image['src']) : [];
+        if ((int) ($dimensions['width'] ?? 0) >= 900) {
+            $sharp[] = $image;
+        } else {
+            $small[] = $image;
+        }
+    }
+
+    return array_merge($sharp, $small);
+}
+
+/**
+ * The card photograph for a post. Pass the same $used array for every card on
+ * a page and no photograph repeats while the post has another to offer.
+ */
+function fenster_blog_post_card_image(array $post, array &$used): ?array
+{
+    $pool = fenster_blog_post_image_pool($post);
+
+    foreach ($pool as $image) {
+        if (! isset($used[$image['src']])) {
+            $used[$image['src']] = true;
+
+            return $image;
+        }
+    }
+
+    return $pool[0] ?? null;
+}
+
+function fenster_blog_word_count(string $text): int
+{
+    return count(preg_split('/\s+/u', trim(wp_strip_all_tags($text)), -1, PREG_SPLIT_NO_EMPTY));
+}
+
+/**
+ * Minutes to read, at 220 words a minute, never less than one.
+ */
+function fenster_blog_reading_minutes(array $sections, string $lead = ''): int
+{
+    $words = fenster_blog_word_count($lead);
+
+    foreach ($sections as $section) {
+        $words += fenster_blog_word_count((string) ($section['heading'] ?? ''));
+        foreach ((array) ($section['body'] ?? []) as $paragraph) {
+            $words += fenster_blog_word_count((string) $paragraph);
+        }
+    }
+
+    return max(1, (int) ceil($words / 220));
+}
+
+function fenster_blog_post_summary(array $post): string
+{
+    $summary = trim((string) ($post['meta_description'] ?? ''));
+    if ($summary !== '') {
+        return $summary;
+    }
+
+    foreach ((array) ($post['sections'] ?? []) as $section) {
+        foreach ((array) ($section['body'] ?? []) as $paragraph) {
+            if (trim((string) $paragraph) !== '') {
+                return wp_trim_words((string) $paragraph, 28);
+            }
+        }
+    }
+
+    return '';
+}
+
+function fenster_blog_post_meta_line(array $post, bool $with_reading_time = true): string
+{
+    $parts = [];
+    $date = (string) ($post['publish_date'] ?? '');
+    if ($date !== '') {
+        $parts[] = date_i18n('j F Y', (int) strtotime($date));
+    }
+    if ($with_reading_time) {
+        $parts[] = sprintf('%d min read', fenster_blog_reading_minutes((array) ($post['sections'] ?? [])));
+    }
+
+    return implode(' · ', $parts);
+}
+
+/**
+ * The old site wrote headings in Title Case and some in capitals. Posts and
+ * the rest of the site use sentence case, so imported headings are shown in
+ * sentence case. A heading already in sentence case is returned untouched,
+ * names on the list below keep their capitals, and the words stay the same,
+ * so nothing changes for search.
+ */
+function fenster_blog_sentence_case(string $text): string
+{
+    $text = trim((string) preg_replace('/\s+/u', ' ', $text));
+    // The old site numbered some headings ("2. Maximising returns") and ended
+    // others with a colon; neither belongs on a heading here.
+    $text = trim((string) preg_replace(['/^\d+[.)]\s+/u', '/\s*:$/u'], '', $text));
+    if ($text === '') {
+        return $text;
+    }
+
+    $words = preg_split('/\s+/u', $text);
+    $letters_only = (string) preg_replace('/[^\p{L}]/u', '', $text);
+    $is_capitals = $letters_only !== '' && mb_strtoupper($letters_only) === $letters_only && mb_strlen($letters_only) > 3;
+
+    $phrases = ['Glass and Glazing Federation', 'Fenster Glazing', 'Milton Keynes', 'Wolverton Conservation Area', 'Anglian Home Improvements'];
+    $keep = [
+        'upvc' => 'uPVC', 'pvcu' => 'PVCu', 'pvc' => 'PVC', 'ggf' => 'GGF', 'diy' => 'DIY', 'uk' => 'UK', 'apecs' => 'APECS',
+        'fensa' => 'FENSA', 'cpa' => 'CPA', 'ral' => 'RAL', 'i' => 'I', "i'm" => "I'm", "i\u{2019}m" => "I\u{2019}m",
+        'u-value' => 'U-value', 'u-values' => 'U-values', '3d' => '3D', 'a+' => 'A+', 'fenster' => 'Fenster',
+        'anglian' => 'Anglian', 'ingenious' => 'Ingenious', 'french' => 'French', 'wolverton' => 'Wolverton',
+        'victorian' => 'Victorian', 'georgian' => 'Georgian', 'edwardian' => 'Edwardian', 'england' => 'England',
+        'britain' => 'Britain', 'british' => 'British', 'mk' => 'MK',
+    ];
+
+    // Title Case when a third or more of the words after the first are
+    // capitalised. Names that keep their capitals anyway are not counted.
+    $capitalised = 0;
+    $counted = 0;
+    foreach (array_slice($words, 1) as $word) {
+        $core = (string) preg_replace('/^[^\p{L}\p{N}]+|[^\p{L}\p{N}+]+$/u', '', $word);
+        if ($core === '' || ! preg_match('/^\p{L}/u', $core) || isset($keep[mb_strtolower($core)])) {
+            continue;
+        }
+        $counted++;
+        if (preg_match('/^\p{Lu}/u', $core)) {
+            $capitalised++;
+        }
+    }
+
+    // 0.30, not a third: "What is the difference between uPVC & Composite
+    // Doors?" has two capitals in six and was left alone at 0.34. Across all
+    // 36 guides' titles and headings that is the only one the lower line moves.
+    $is_title_case = $counted >= 1 && $capitalised / $counted >= 0.30;
+    if (! $is_capitals && ! $is_title_case) {
+        return $text;
+    }
+
+    $placeholders = [];
+    foreach ($phrases as $index => $phrase) {
+        $token = "\u{E000}" . $index . "\u{E001}";
+        $text = (string) preg_replace('/' . preg_quote($phrase, '/') . '/iu', $token, $text, -1, $count);
+        if ($count > 0) {
+            $placeholders[$token] = $phrase;
+        }
+    }
+
+    $out = [];
+    // The first word of the heading, and the first after a question or an
+    // exclamation, starts a sentence. After a colon the heading carries on.
+    $starts_sentence = true;
+    foreach (preg_split('/(\s+)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE) as $piece) {
+        if ($piece === '' || preg_match('/^\s+$/u', $piece)) {
+            $out[] = $piece;
+            continue;
+        }
+
+        if (str_contains($piece, "\u{E000}")) {
+            $out[] = $piece;
+            $starts_sentence = (bool) preg_match('/[?!]$/u', $piece);
+            continue;
+        }
+
+        preg_match('/^([^\p{L}\p{N}]*)(.*?)([^\p{L}\p{N}+]*)$/u', $piece, $parts);
+        $lead = $parts[1] ?? '';
+        $core = $parts[2] ?? $piece;
+        $trail = $parts[3] ?? '';
+        $lower = mb_strtolower($core);
+
+        if (! preg_match('/\p{L}/u', $core)) {
+            $out[] = $piece;
+            continue;
+        }
+
+        if (isset($keep[$lower])) {
+            $core = $keep[$lower];
+        } elseif (preg_match('/^\p{Lu}$/u', $core) && ($core !== 'A' || str_starts_with($trail, ','))) {
+            // A letter standing for itself: "Ratings: A, B, C Rated". "A" on
+            // its own is the article unless a list of letters follows it.
+        } elseif ($starts_sentence) {
+            $core = mb_strtoupper(mb_substr($lower, 0, 1)) . mb_substr($lower, 1);
+        } else {
+            $core = $lower;
+        }
+
+        $out[] = $lead . $core . $trail;
+        $starts_sentence = (bool) preg_match('/[?!]$/u', $trail);
+    }
+
+    return strtr(implode('', $out), $placeholders);
+}
+
+function fenster_blog_heading_id(string $heading, array &$used): string
+{
+    $id = sanitize_title($heading);
+    $id = $id !== '' ? $id : 'section';
+    $base = $id;
+    $suffix = 2;
+
+    while (isset($used[$id])) {
+        $id = $base . '-' . $suffix++;
+    }
+
+    $used[$id] = true;
+
+    return $id;
+}
+
+/**
+ * Whether a line opens with a lowercase letter. "uPVC" and "eBay" do not count:
+ * a lowercase first letter followed by a capital is a name, not a continuation.
+ */
+function fenster_blog_starts_lowercase(string $line): bool
+{
+    return (bool) preg_match('/^\p{Ll}(?!\p{Lu})/u', $line);
+}
+
+/**
+ * The old site's importer split a paragraph wherever it met a link or bold
+ * text, so "To know more about high quality", "energy-efficient windows" and
+ * "we offer, get in touch..." arrived as three paragraphs. 53 sentences across
+ * the guides were broken this way (28/09/2026). This puts them back together.
+ *
+ * A line ending in . ! ? : or ; is finished and is never joined onto. Otherwise
+ * the next line joins it when it plainly continues the sentence:
+ * - it opens with punctuation, a dash ("Energy cost savings" + "- When you
+ *   use..."), a quotation mark, or a stray letter from a split word ("a" +
+ *   "t info@...");
+ * - this line ends on a word no sentence ends on ("the", "of", "while", "at
+ *   least") or on an opening bracket;
+ * - it opens in lowercase or with a figure ("25% more") after a line that
+ *   opened with a capital, or in lowercase after a fragment of five words;
+ * - it is a short link ("Secured by Design standards") with the sentence
+ *   carrying on after it.
+ * The lowercase-after-a-fragment rule is off inside a list whose lead-in ended
+ * in a colon, where "an extension to your property" and "loft or garage
+ * conversions" are separate items, unless the line is too long to be an item.
+ * A numbered step is never joined.
+ *
+ * Some guides were partly reworded before 2026-09-28 and the rewrite left the
+ * old link text behind with the tail of the old sentence: "get in touch with us
+ * for practical advice." then "touch with our team here at Fenster Glazing"
+ * then ". Our knowledgeable team can...". A lowercase fragment of eight words
+ * or fewer after a finished sentence, followed by a line opening with . , or ;
+ * is that leftover: the fragment goes, and so does the old clause, keeping any
+ * whole sentence after it ("Our knowledgeable team can...").
+ */
+function fenster_blog_join_legacy_lines(array $lines): array
+{
+    $lines = array_values(array_filter(array_map(
+        // A stray asterisk the old editor used as a bullet.
+        static fn ($line): string => trim((string) preg_replace('/^\*\s*/u', '', trim((string) $line))),
+        $lines
+    ), static fn (string $line): bool => $line !== ''));
+    $finished = '/[.!?:;]["\'\x{201D}\x{2019})\]]*$/u';
+    $carries_on = '/^(?:[,.;:)\]\x{2013}\x{2014}]|\p{Ll}(?!\p{Lu}))/u';
+    $joined = [];
+    $in_list = false;
+    $open_words = 'the|a|an|of|to|for|with|by|from|and|or|as|at|in|on|our|your|their|its|is|are|was|were|be|than|that|this|these|those|into|about|between|such|like|including|include|includes|via|per|least|while|whereas|which|new';
+    $count = count($lines);
+
+    for ($i = 0; $i < $count; $i++) {
+        $line = $lines[$i];
+        if ($line === '') {
+            continue;
+        }
+
+        $last = $joined === [] ? null : $joined[count($joined) - 1];
+        $last_finished = $last === null || preg_match($finished, $last);
+        $next = $lines[$i + 1] ?? '';
+        $words = count(preg_split('/\s+/u', $line));
+
+        if ($last_finished && fenster_blog_starts_lowercase($line) && ! preg_match($finished, $line)
+            && $words <= 8 && preg_match('/^[,.;]/u', $next)) {
+            $lines[$i + 1] = str_starts_with($next, '.')
+                ? ltrim(substr($next, 1))
+                : (string) (preg_split('/[.!?]\s+(?=\p{Lu})/u', $next, 2)[1] ?? '');
+            continue;
+        }
+
+        $glue = null;
+
+        if (! $last_finished) {
+            $last_opens_capital = (bool) preg_match('/^["\'\x{201C}\x{2018}(]?[\p{Lu}\d]/u', $last);
+            $last_is_fragment = count(preg_split('/\s+/u', $last)) <= 5;
+
+            if (preg_match('/^[,.;:!?)\]]/u', $line)) {
+                $glue = '';
+            } elseif (preg_match('/^[\x{2013}\x{2014}]\S/u', $line)) {
+                $glue = '';
+            } elseif (preg_match('/^(?:[\x{2013}\x{2014}]|-)\s/u', $line)) {
+                $glue = ' ';
+            } elseif (preg_match('/[(\[]$/u', $last)) {
+                $glue = '';
+            } elseif (preg_match('/^(?![ai]\s)\p{Ll}\s/u', $line)) {
+                $glue = '';
+            } elseif (preg_match('/^["\x{201C}\x{2018}]/u', $line)) {
+                $glue = ' ';
+            } elseif (preg_match('/\b(?:' . $open_words . ')$/iu', $last)) {
+                $glue = ' ';
+            } elseif ($last_opens_capital && fenster_blog_starts_lowercase($line)) {
+                $glue = ' ';
+            } elseif ($last_opens_capital && preg_match('/^\d(?!\d*[.)]\s)/u', $line)) {
+                $glue = ' ';
+            } elseif ($last_is_fragment && fenster_blog_starts_lowercase($line) && (! $in_list || mb_strlen($line) > 60)) {
+                $glue = ' ';
+            } elseif (! $in_list && $words <= 5 && preg_match('/^\p{L}/u', $line) && ! fenster_blog_starts_lowercase($line) && ! preg_match($finished, $line) && preg_match($carries_on, $next)) {
+                $glue = ' ';
+            }
+        }
+
+        if ($glue === null) {
+            $joined[] = $line;
+            if (str_ends_with($line, ':')) {
+                $in_list = true;
+            } elseif (mb_strlen($line) > 110) {
+                $in_list = false;
+            }
+            continue;
+        }
+
+        $joined[count($joined) - 1] = $last . $glue . $line;
+    }
+
+    return array_values(array_filter($joined, static fn (string $line): bool => $line !== ''));
+}
+
+/**
+ * Repairs to a guide's sentence once it is whole: the company name and phone
+ * number that were links and fell out ("Here at, we provide...", "call us on
+ * today!"), a sentence left without its full stop, and the dash or comma a
+ * split left at the front.
+ */
+function fenster_blog_repair_legacy_sentence(string $line): string
+{
+    static $phone = null;
+    if ($phone === null) {
+        $brand = function_exists('fenster_data') ? fenster_data('brand', []) : [];
+        $phone = (string) ($brand['phone'] ?? '01908 429200');
+    }
+
+    // "neighbour?s": an apostrophe the export turned into a question mark.
+    $line = (string) preg_replace('/(?<=\p{L})\?(?=s\b)/u', "\u{2019}", $line);
+    $line = (string) preg_replace('/^[\x{2013}\x{2014}-]\s*/u', '', $line);
+    $line = (string) preg_replace('/^,\s*we\b/u', 'At Fenster Glazing, we', $line);
+    $line = (string) preg_replace('/^[,;:]\s*/u', '', $line);
+    $line = (string) preg_replace(['/\bHere at,\s/u', '/\bAt,\s(?=we\b)/u', '/\bteam at offers\b/u'], ['Here at Fenster Glazing, ', 'At Fenster Glazing, ', 'team at Fenster Glazing offers'], $line);
+    $line = (string) preg_replace('/\b(call us on|contact us on|call us at|a call at|ring us on)\s+(?=(?:or|to|today|and)\b)/iu', '$1 ' . $phone . ' ', $line);
+
+    if (fenster_blog_starts_lowercase($line)) {
+        $line = mb_strtoupper(mb_substr($line, 0, 1)) . mb_substr($line, 1);
+    }
+
+    if (preg_match('/[\p{L}\d)]$/u', $line) && count(preg_split('/\s+/u', $line)) > 3) {
+        $line .= '.';
+    }
+
+    return $line;
+}
+
+/**
+ * The imported guides store every line as a paragraph, so a numbered method,
+ * a bold "Label:" step and a bulleted list all arrived as loose lines. This
+ * turns them back into subheadings and lists, after rejoining the sentences
+ * the importer split. Posts are written as prose and never pass through here.
+ */
+function fenster_blog_structure_legacy_body(array $lines): array
+{
+    $lines = fenster_blog_join_legacy_lines($lines);
+    $finished_pattern = '/[.!?]["\'\x{201D})]*$/u';
+    $blocks = [];
+    $count = count($lines);
+
+    for ($i = 0; $i < $count; $i++) {
+        $line = $lines[$i];
+        $next = $lines[$i + 1] ?? '';
+        $previous_finished = $i === 0 || preg_match('/[.!?:;]["\'\x{201D})]*$/u', $lines[$i - 1]);
+        $words = count(preg_split('/\s+/u', $line));
+        $finished = (bool) preg_match($finished_pattern, $line);
+
+        // "1. Use acoustic curtains", a method named before its explanation.
+        // A run of them with nothing between is a list; the last of a run
+        // with no explanation after it lost its text in the import.
+        if (preg_match('/^\d+[.)]\s+(.{2,80})$/u', $line, $m) && ! preg_match('/[.!?]$/u', $m[1])) {
+            if (preg_match('/^\d+[.)]\s/u', $next)) {
+                $items = [];
+                $j = $i;
+                while ($j < $count && preg_match('/^\d+[.)]\s+(.+)$/u', $lines[$j], $item)) {
+                    $items[] = rtrim($item[1], ': ');
+                    $j++;
+                }
+                $blocks[] = ['type' => 'ul', 'items' => $items];
+                $i = $j - 1;
+            } elseif ($next !== '') {
+                $blocks[] = ['type' => 'h3', 'text' => rtrim($m[1], ': ')];
+            }
+            continue;
+        }
+
+        // "Preparation:" followed by its explanation.
+        if (str_ends_with($line, ':') && $words <= 7 && mb_strlen($next) > 90) {
+            $blocks[] = ['type' => 'h3', 'text' => rtrim($line, ': ')];
+            continue;
+        }
+
+        // A lead-in ending with a colon, then two or more short lines: a list.
+        // The list ends where the lines stop looking like its first item,
+        // with or without a full stop.
+        if (str_ends_with($line, ':')) {
+            $items = [];
+            $j = $i + 1;
+            $item_finished = $next !== '' && (bool) preg_match($finished_pattern, $next);
+            while ($j < $count && mb_strlen($lines[$j]) <= 110 && ! str_ends_with($lines[$j], ':')
+                && (bool) preg_match($finished_pattern, $lines[$j]) === $item_finished) {
+                $items[] = fenster_blog_repair_legacy_sentence($lines[$j]);
+                $j++;
+            }
+
+            if (count($items) >= 2) {
+                $blocks[] = ['type' => 'p', 'text' => $line];
+                $blocks[] = ['type' => 'ul', 'items' => array_map(static fn (string $item): string => rtrim($item, '.') . ($item_finished ? '.' : ''), $items)];
+                $i = $j - 1;
+                continue;
+            }
+
+            // A "Label:" with nothing after it lost its text in the import;
+            // a short one with a single line after it ("Locks:") is a
+            // subheading over that line.
+            if ($words <= 7 && $next === '') {
+                continue;
+            }
+            if ($words <= 4) {
+                $blocks[] = ['type' => 'h3', 'text' => rtrim($line, ': ')];
+                continue;
+            }
+        }
+
+        // "Softwood", a bold label standing over its paragraph.
+        if ($previous_finished && ! $finished && ! str_ends_with($line, ':') && $words <= 5
+            && preg_match('/^\p{Lu}/u', $line) && mb_strlen($next) > 90) {
+            $blocks[] = ['type' => 'h3', 'text' => $line];
+            continue;
+        }
+
+        // What is left of a link whose sentence was later rewritten: "contact
+        // form", "Planning Portal", "and we'll get back to you!", ", or that
+        // there are gaps..." once rejoined. Two or three words with no full
+        // stop, or a single lowercase clause, go. A lowercase opening longer
+        // than that is a real sentence that lost its first word to a link
+        // ("louvre vent helps you control airflow..."), so it stays.
+        if ($words <= 3 && ! $finished && ! str_ends_with($line, ':')) {
+            continue;
+        }
+
+        // "Fenster Composite Doors in Milton Keynes": the link that closed a
+        // section, standing alone with no full stop.
+        if ($i === $count - 1 && $words <= 7 && ! $finished && ! str_ends_with($line, ':')) {
+            continue;
+        }
+
+        if (fenster_blog_starts_lowercase($line) && mb_strlen($line) < 90 && ! preg_match('/[.!?]\s+\p{Lu}/u', $line)) {
+            continue;
+        }
+
+        $blocks[] = ['type' => 'p', 'text' => str_ends_with($line, ':') ? $line : fenster_blog_repair_legacy_sentence($line)];
+    }
+
+    // A subheading whose text went with the leftovers above has nothing under it.
+    return array_values(array_filter($blocks, static function (array $block, int $index) use ($blocks): bool {
+        return $block['type'] !== 'h3' || (isset($blocks[$index + 1]) && $blocks[$index + 1]['type'] !== 'h3');
+    }, ARRAY_FILTER_USE_BOTH));
+}
+
+/**
+ * Smaller copies of a blog photograph, keyed by width. scripts/build-blog-images.py
+ * writes them to assets/blog/img/ as <first 12 of md5(theme-relative path)>-<width>w.webp,
+ * so they are found from the source path alone, with no manifest to keep in step.
+ */
+function fenster_blog_image_variants(string $src): array
+{
+    $path = function_exists('fenster_theme_asset_path_from_url') ? fenster_theme_asset_path_from_url($src) : '';
+    if ($path === '') {
+        return [];
+    }
+
+    $relative = str_replace(DIRECTORY_SEPARATOR, '/', ltrim(substr($path, strlen(FENSTER_THEME_DIR)), '/' . DIRECTORY_SEPARATOR));
+    $key = substr(md5($relative), 0, 12);
+    $variants = [];
+
+    foreach ([480, 960, 1440] as $width) {
+        $file = 'assets/blog/img/' . $key . '-' . $width . 'w.webp';
+        if (is_file(FENSTER_THEME_DIR . '/' . $file)) {
+            $variants[$width] = FENSTER_THEME_URI . '/' . $file;
+        }
+    }
+
+    return $variants;
+}
+
+/**
+ * Image attributes for a blog photograph: the copies as a srcset with the given
+ * sizes, the original's dimensions so the frame is reserved, and the original
+ * as the fallback when no copies exist.
+ */
+function fenster_blog_image_attrs(string $src, array $attrs = []): string
+{
+    $variants = fenster_blog_image_variants($src);
+
+    if ($variants !== []) {
+        $srcset = [];
+        foreach ($variants as $width => $url) {
+            $srcset[] = $url . ' ' . $width . 'w';
+        }
+        /* The copies stop below the original's width, so a 900px photograph
+           has only a 480px copy. Offer the original too, or the browser
+           stretches the 480 across a 560px column. */
+        $original_width = (int) (fenster_image_dimensions($src)['width'] ?? 0);
+        if ($original_width > max(array_keys($variants))) {
+            $srcset[] = (function_exists('fenster_generated_url') ? fenster_generated_url($src) : $src) . ' ' . $original_width . 'w';
+        }
+        $attrs['srcset'] = implode(', ', $srcset);
+        $attrs['src'] = $variants[960] ?? reset($variants);
+        $attrs['sizes'] = $attrs['sizes'] ?? '100vw';
+    } else {
+        unset($attrs['sizes']);
+    }
+
+    return fenster_image_attr_string($src, $attrs);
+}

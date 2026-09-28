@@ -1,9 +1,10 @@
 <?php
 /**
- * Article layout for imported blog posts and guides.
- *
- * Renders informational content as a readable article rather than forcing it
- * through the product journey template.
+ * The imported guides from the old site, rendered through the shared article
+ * layout in blog-article.php since 2026-09-28 (owner: "revamp the old blogs
+ * too"). Their words, addresses and titles are unchanged; the layout, heading
+ * case, lists and routes onward are new. generated-page.php still decides which
+ * routes land here and passes the cleaned sections, images and related links.
  *
  * @package Fenster
  */
@@ -13,14 +14,10 @@ if (! defined('ABSPATH')) {
 }
 
 $page = is_array($args['page'] ?? null) ? $args['page'] : get_query_var('fenster_generated_page');
-$brand = is_array($args['brand'] ?? null) ? $args['brand'] : fenster_data('brand', []);
 $sections = is_array($args['sections'] ?? null) ? $args['sections'] : ($page['sections'] ?? []);
 $images = is_array($args['images'] ?? null) ? $args['images'] : ($page['images'] ?? []);
 $related_links = is_array($args['related_links'] ?? null) ? $args['related_links'] : [];
 $title = (string) ($args['title'] ?? ($page['title'] ?? 'Fenster Glazing'));
-$hero_intro = trim((string) ($args['hero_intro'] ?? ''));
-$phone = (string) ($brand['phone'] ?? '01908 429200');
-$phone_href = preg_replace('/\s+/', '', $phone);
 $slug = trim((string) ($page['slug'] ?? ''), '/');
 
 $article_next_steps_map = [
@@ -130,148 +127,144 @@ $article_next_steps_map = [
         ],
     ],
 ];
-/* Scheduled blog posts carry their own next-steps block in the page data;
-   the map above covers the imported guides that predate it. */
-$article_next_steps = $article_next_steps_map[$slug] ?? (is_array($page['next_steps'] ?? null) ? $page['next_steps'] : []);
 
-$article_blocks = [];
-$intro_consumed = false;
+/* The old site's titles carried a second clause after a pipe ("... | Which is
+   Better?"). The title tag keeps it; the H1 shows the question itself. */
+$display_title = fenster_blog_sentence_case(trim(explode(' | ', $title)[0]));
 
-foreach ($sections as $section) {
+/* The sections are rebuilt from the page's own data, not from the $sections
+   generated-page.php passes in. Its filter drops a whole section when the
+   first line is short or stops mid-sentence, and every guide's first section
+   opens with the old site's "ONLINE DESIGNER" menu label, so 4,096 words of
+   these guides never rendered (measured 28/09/2026): all of the stable doors
+   and Anglian guides, 438 words of the Wolverton one, half of triple versus
+   acoustic glazing. Here the boilerplate goes a line at a time, and the
+   sentences the old import split are rejoined before anything is judged. */
+$raw_sections = is_array($page['sections'] ?? null) ? $page['sections'] : $sections;
+$junk_lines = [
+    '/^online designer$/i',
+    '/registered you will be taken to our custom design software/i',
+    '/online designer tool/i',
+    '/visualise your design/i',
+    '/3d rendering/i',
+    '/stay updated with us/i',
+    '/social media channels/i',
+    '/^the best windows milton keynes$/i',
+    '/^commercial glazing: high-quality/i',
+    '/2026 giveaway/i',
+    '/showroom 97-98/i',
+    '/\bwindowcad\b/i',
+    // A partner logo strip and its caption, which named Manchester and
+    // Birmingham in two guides; a breadcrumb; the site footer's sign-off.
+    '/facilitate bespoke/i',
+    '/commercial portfolio/i',
+    '/^knowledge hub/i',
+    '/^our system partners$/i',
+    '/^don.t miss out on exclusive content/i',
+    '/^fenster glazing are expert window & door installers/i',
+    '/^we supply throughout/i',
+];
+$boilerplate_headings = '/^(?:use our quoting engine|related products|our system partners|our products|bedfordshire|northamptonshire|hertfordshire)$/i';
+
+$article_sections = [];
+foreach ($raw_sections as $section) {
     $heading = trim((string) ($section['heading'] ?? ''));
-    $body = array_values(array_filter(array_map(
-        static fn ($line): string => trim((string) $line),
-        $section['body'] ?? []
-    )));
+    $body = [];
+    foreach ((array) ($section['body'] ?? []) as $line) {
+        $line = trim((string) $line);
+        foreach ($junk_lines as $pattern) {
+            if (preg_match($pattern, $line)) {
+                continue 2;
+            }
+        }
+        $body[] = $line;
+    }
 
+    if (preg_match($boilerplate_headings, $heading)) {
+        continue;
+    }
+
+    /* The old site closed every page with the same "Get in touch" paragraph,
+       192 copies of it, 36 in these guides. The enquiry section below does
+       that job now. */
+    if (strcasecmp($heading, 'Get in touch') === 0 && str_starts_with((string) ($body[0] ?? ''), 'We welcome our homeowners to get in touch')) {
+        continue;
+    }
+
+    // The first section repeats the title.
     if ($heading === $title) {
         $heading = '';
     }
 
-    if (! $intro_consumed && $hero_intro !== '' && isset($body[0]) && $body[0] === $hero_intro) {
-        array_shift($body);
-        $intro_consumed = true;
-    }
-
-    if ($heading === '' && empty($body)) {
+    $body = fenster_blog_join_legacy_lines($body);
+    if ($heading === '' && $body === []) {
         continue;
     }
 
-    $article_blocks[] = [
-        'heading' => $heading,
-        'body' => $body,
-    ];
+    $article_sections[] = ['heading' => $heading, 'body' => $body];
 }
 
-$article_images = array_values(array_filter($images, static fn ($image): bool => is_array($image) && ! empty($image['src'])));
-$hero_image = $article_images[0] ?? null;
-$inline_images = array_slice($article_images, 1, 3);
-$inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inline_images) + 1)));
-?>
+/* The first full paragraph opens the page, the same line generated-page.php
+   would have chosen had it seen these sections. */
+$lead = '';
+foreach ($article_sections as $index => $section) {
+    foreach ($section['body'] as $line_index => $line) {
+        if (mb_strlen($line) > 70 && ! str_ends_with($line, ':')) {
+            $lead = fenster_blog_repair_legacy_sentence($line);
+            array_splice($article_sections[$index]['body'], $line_index, 1);
+            if ($article_sections[$index]['heading'] === '' && $article_sections[$index]['body'] === []) {
+                array_splice($article_sections, $index, 1);
+            }
+            break 2;
+        }
+    }
+}
+$lead = $lead !== '' ? $lead : trim((string) ($page['seo']['meta_description'] ?? ''));
 
-<article class="fg-article-page">
-    <section class="fg-article-hero">
-        <div class="container fg-article-hero__grid">
-            <div class="fg-article-hero__copy">
-                <p class="eyebrow"><?php esc_html_e('Advice and guides', 'fenster'); ?></p>
-                <h1><?php echo esc_html($title); ?></h1>
-                <?php if ($hero_intro !== '') : ?>
-                    <p><?php echo esc_html($hero_intro); ?></p>
-                <?php endif; ?>
-            </div>
-            <?php if (is_array($hero_image)) : ?>
-                <figure class="fg-article-hero__media">
-                    <img <?php echo fenster_image_attr_string((string) $hero_image['src'], ['alt' => (string) ($hero_image['alt'] ?? $title), 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
-                </figure>
-            <?php endif; ?>
-        </div>
-    </section>
+/* Photographs that exist, each once. */
+$photographs = [];
+foreach ($images as $image) {
+    if (! is_array($image) || empty($image['src'])) {
+        continue;
+    }
+    $image_url = fenster_generated_url((string) $image['src']);
+    $image_path = fenster_theme_asset_path_from_url($image_url);
+    if ($image_path !== '' && ! is_file($image_path)) {
+        continue;
+    }
+    $photographs[$image_path !== '' ? $image_path : $image_url] = ['src' => (string) $image['src'], 'alt' => (string) ($image['alt'] ?? '')];
+}
+$photographs = array_values($photographs);
 
-    <?php if (! empty($article_next_steps)) : ?>
-        <section class="fg-article-next-steps">
-            <div class="container fg-article-next-steps__inner">
-                <div class="fg-article-next-steps__copy">
-                    <p class="eyebrow"><?php echo esc_html((string) ($article_next_steps['eyebrow'] ?? 'Next step')); ?></p>
-                    <h2><?php echo esc_html((string) ($article_next_steps['title'] ?? 'Plan the next step with us.')); ?></h2>
-                    <p><?php echo esc_html((string) ($article_next_steps['copy'] ?? 'Explore our most relevant products and services for this guide.')); ?></p>
-                </div>
-                <div class="fg-article-next-steps__links">
-                    <?php foreach (array_slice((array) ($article_next_steps['links'] ?? []), 0, 4) as $link) : ?>
-                        <a href="<?php echo esc_url((string) ($link['url'] ?? '#')); ?>">
-                            <strong><?php echo esc_html((string) ($link['label'] ?? 'View option')); ?></strong>
-                            <?php if (! empty($link['meta'])) : ?>
-                                <span><?php echo esc_html((string) $link['meta']); ?></span>
-                            <?php endif; ?>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </section>
-    <?php endif; ?>
+/* The products a guide mentions, which also choose the posts suggested under it. */
+$product_links = [];
+$products = [];
+foreach (array_slice(array_values($related_links), 0, 8) as $link) {
+    $url = fenster_generated_url((string) ($link['url'] ?? ''));
+    $text = trim((string) ($link['text'] ?? ''));
+    if ($url === '' || $text === '') {
+        continue;
+    }
+    $product_links[] = ['url' => $url, 'text' => fenster_blog_sentence_case($text)];
+    $path = trim((string) wp_parse_url($url, PHP_URL_PATH), '/');
+    if ($path !== '' && ! str_contains($path, '/')) {
+        $products = array_merge($products, fenster_blog_page_products($path));
+    }
+}
 
-    <?php if (! empty($article_blocks)) : ?>
-        <section class="fg-article-body">
-            <div class="container fg-article-body__inner">
-                <?php $inline_image_index = 0; ?>
-                <?php foreach ($article_blocks as $block_index => $block) : ?>
-                    <?php if ($block['heading'] !== '') : ?>
-                        <h2><?php echo esc_html($block['heading']); ?></h2>
-                    <?php endif; ?>
-                    <?php foreach ($block['body'] as $paragraph) : ?>
-                        <p><?php echo esc_html($paragraph); ?></p>
-                    <?php endforeach; ?>
-                    <?php
-                    $should_place_image = isset($inline_images[$inline_image_index])
-                        && $block_index > 0
-                        && (($block_index + 1) % $inline_image_gap === 0);
-                    ?>
-                    <?php if ($should_place_image) : ?>
-                        <?php $inline_image = $inline_images[$inline_image_index]; ?>
-                        <figure class="fg-article-body__figure">
-                            <img <?php echo fenster_image_attr_string((string) $inline_image['src'], ['alt' => (string) ($inline_image['alt'] ?? $title), 'loading' => 'lazy']); ?>>
-                        </figure>
-                        <?php $inline_image_index++; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-        </section>
-    <?php endif; ?>
-
-    <section id="fenster-enquiry" class="fg-article-cta">
-        <div class="container fg-article-cta__grid">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('Talk to Fenster', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Thinking about your own windows or doors?', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Our team can help with product advice, survey-led specification and clear pricing for your home or project.', 'fenster'); ?></p>
-                <div class="fg-contact-list">
-                    <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
-                    <a class="text-link" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
-                </div>
-            </div>
-            <?php
-            get_template_part('template-parts/components/enquiry-form', null, [
-                'class' => 'fg-form fg-article-form',
-                'source' => 'Article: ' . $title,
-                'button_label' => 'Send enquiry',
-                'compact' => true,
-            ]);
-            ?>
-        </div>
-    </section>
-
-    <?php if (! empty($related_links)) : ?>
-        <section class="fg-links-band">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow"><?php esc_html_e('Related reading', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Products and services mentioned in this guide', 'fenster'); ?></h2>
-                </div>
-                <div class="generated-links">
-                    <?php foreach (array_slice(array_values($related_links), 0, 18) as $link) : ?>
-                        <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </section>
-    <?php endif; ?>
-</article>
+get_template_part('template-parts/sections/blog-article', null, [
+    'kind' => 'guide',
+    'slug' => $slug,
+    'title' => $display_title,
+    'date' => '',
+    'lead' => $lead,
+    'sections' => $article_sections,
+    'legacy' => true,
+    'hero_image' => $photographs[0] ?? null,
+    'figures' => array_slice($photographs, 1, 3),
+    'next_steps' => $article_next_steps_map[$slug] ?? (is_array($page['next_steps'] ?? null) ? $page['next_steps'] : []),
+    'product_links' => $product_links,
+    'products' => array_values(array_unique($products)),
+    'description' => (string) ($page['seo']['meta_description'] ?? ''),
+    'form_source' => 'Article: ' . $title,
+]);
