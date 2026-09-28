@@ -1968,6 +1968,12 @@ function fenster_redirect_target(string $slug): string
         'upvc-colours' => 'colour-options',
         'aluminium-colours' => 'colour-options',
         'door-designer' => 'online-quote',
+        /* The old site's landing page for its designer ("As soon as you have
+           registered you will be taken to our custom design software"). The
+           designer is /online-quote/ now. In the 30 days to 28 September 2026
+           only crawlers and site auditors requested it, none from WindowCAD.
+           Owner: "if its an old designer thing then update it to the new one". */
+        'window-and-door-design' => 'online-quote',
         'window-handles' => 'handle-options',
     ];
 

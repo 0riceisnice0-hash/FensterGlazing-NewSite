@@ -2932,10 +2932,11 @@ function fenster_blog_post_page(string $slug): ?array
    ------------------------------------------------------------------------- */
 
 /**
- * The imported guides that render through the article layout, 36 of them.
+ * The imported guides that render through the article layout, 35 of them.
  * Used to load the stylesheet in <head>; a guide missing from this list still
  * gets it, later, from fenster_blog_print_stylesheet_fallback(). The GGF
- * standards page is not here: it has its own template.
+ * standards page is not here: it has its own template. Nor is the old
+ * designer's landing page, /window-and-door-design/, which 301s to /online-quote/.
  */
 function fenster_blog_legacy_article_slugs(): array
 {
@@ -2958,7 +2959,7 @@ function fenster_blog_legacy_article_slugs(): array
         'what-are-the-different-methods-of-installation-for-a-sash-window',
         'what-front-doors-provide-the-best-security-for-your-home', 'what-is-a-door-lintel',
         'what-is-the-difference-between-upvc-vs-composite-doors', 'which-is-better-triple-or-acoustic-glazing',
-        'why-choose-fenster-over-anglian', 'window-and-door-design', 'window-maintenance',
+        'why-choose-fenster-over-anglian', 'window-maintenance',
         'windows-as-home-investments',
     ];
 }
