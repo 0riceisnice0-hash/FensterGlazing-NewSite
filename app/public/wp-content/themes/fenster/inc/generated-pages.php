@@ -105,92 +105,6 @@ function fenster_location_matrix_products(): array
     ];
 }
 
-/**
- * Genuine local detail for the Milton Keynes suburbs.
- *
- * These are the routes where being based in Bradwell Abbey is a real
- * advantage, so they get real local knowledge instead of interchangeable
- * copy. Everything here is about the age and type of the housing stock and
- * what that means for glazing, which is verifiable and useful to a customer.
- *
- * Deliberately no claims about work completed in a given area: the case-study
- * section carries proof where it genuinely exists, and stays empty where it
- * does not.
- *
- * 'homes'  what the housing stock actually is
- * 'means'  what that tends to mean for windows and doors
- * 'check'  the practical thing worth knowing before ordering
- */
-function fenster_mk_suburb_profiles(): array
-{
-    $conservation = 'Some streets here sit in a conservation area, which can limit frame styles, materials and colours. It is worth checking with Milton Keynes City Council before you order, and we can suggest styles that usually suit.';
-    $grid_square = 'Original frames and first-generation replacements are now well past their best. Misted units, stiff handles and draughty openers are the usual reasons people call.';
-    $new_build = 'Builder-standard windows and doors are fitted to a budget rather than to your taste. Most upgrades here are about better glass, a colour that suits the house, or opening up the back for an extension.';
-
-    return [
-        'bletchley' => [
-            'homes' => 'Bletchley was a town long before Milton Keynes was drawn around it. You get Victorian and Edwardian terraces near the old station, 1930s bay-fronted semis, and post-war and modern estates further out.',
-            'means' => 'The mix matters. A bay-fronted semi needs the bay rebuilt properly with the right structural support, while a post-war estate house is usually a straight replacement.',
-            'check' => 'Bay windows carry load. Anyone quoting for a bay should be talking to you about how it is supported, not just the frame colour.',
-        ],
-        'wolverton' => [
-            'homes' => 'Wolverton was built for the railway works from 1838, and it still reads that way: long, regular terraces on a tight grid, with later housing around the edges.',
-            'means' => 'Terraced fronts look best when the replacement keeps the original proportions. Flush casements and sliding sash styles usually sit better on these houses than a chunky modern frame.',
-            'check' => $conservation,
-        ],
-        'stony-stratford' => [
-            'homes' => 'A Georgian coaching town on the old Watling Street, with listed buildings, a historic high street and period properties running back from it.',
-            'means' => 'Character comes first here. Sliding sash and flush casement styles, heritage colours and slim sightlines matter more than they would on a modern estate.',
-            'check' => $conservation,
-        ],
-        'newport-pagnell' => [
-            'homes' => 'An old market town with a historic centre, then post-war and modern estates spreading out from it.',
-            'means' => 'Two quite different jobs depending on where you are. Older properties near the centre need sympathetic styling; the estates are usually straightforward replacements.',
-            'check' => $conservation,
-        ],
-        'woburn-sands' => [
-            'homes' => 'Victorian and Edwardian villas alongside later houses and modern extensions, on the Bedfordshire edge of Milton Keynes.',
-            'means' => 'Older villas often have tall, narrow openings that suit a slim frame and a taller glass area. Extensions are usually where bifolds or a roof lantern come in.',
-            'check' => 'If you are glazing an extension as well as replacing windows, price them together. The colour and glass should match across the house.',
-        ],
-        'great-linford' => [
-            'homes' => 'A historic village core with a manor and church, wrapped in 1970s and 1980s new town housing.',
-            'means' => 'Most of the work is on the estate housing, where the original frames or their first replacements are now failing.',
-            'check' => $grid_square,
-        ],
-        'shenley-church-end' => [
-            'homes' => 'Mainly 1980s estate housing built around an older village centre, west of the city.',
-            'means' => 'Consistent house types, so replacements are usually predictable and tidy. Colour choice is where most people spend their time.',
-            'check' => $grid_square,
-        ],
-        'furzton' => [
-            'homes' => '1980s estate housing arranged around Furzton Lake, with a lot of similar house types.',
-            'means' => 'Straightforward replacement work in most cases. Homes facing the lake and open ground get more weather, so seals and drainage matter.',
-            'check' => $grid_square,
-        ],
-        'oldbrook' => [
-            'homes' => '1970s housing close to Central Milton Keynes, among the earlier parts of the new town.',
-            'means' => 'Some of the oldest glazing in the city sits here. Replacing it usually makes an obvious difference to warmth and noise.',
-            'check' => $grid_square,
-        ],
-        'monkston' => [
-            'homes' => '1990s and 2000s estate housing on the eastern side of Milton Keynes.',
-            'means' => 'The original uPVC is now reaching the end of its life. Hardware, hinges and failed units tend to go before the frames look tired.',
-            'check' => 'If only a few units have misted, replacing the glass rather than the whole window is often the sensible option. We will tell you when that is the case.',
-        ],
-        'brooklands' => [
-            'homes' => 'One of the newer parts of Milton Keynes, built from the 2010s onward on the eastern flank.',
-            'means' => 'Houses are recent, so this is upgrade and extension work rather than replacement.',
-            'check' => $new_build,
-        ],
-        'whitehouse' => [
-            'homes' => 'A recent development on the western side of Milton Keynes, built from the 2010s onward.',
-            'means' => 'Newer houses, so the work is usually about improving on the builder specification or glazing an extension.',
-            'check' => $new_build,
-        ],
-    ];
-}
-
 function fenster_location_matrix_town_profiles(): array
 {
     return [
@@ -2376,7 +2290,7 @@ function fenster_maybe_render_generated_sitemap(): void
 {
     $path = trim((string) wp_parse_url(add_query_arg([]), PHP_URL_PATH), '/');
 
-    if (! in_array($path, ['sitemap.xml', 'sitemap_index.xml', 'page-sitemap.xml'], true)) {
+    if (! in_array($path, ['sitemap.xml', 'sitemap_index.xml', 'page-sitemap.xml', 'location-sitemap.xml'], true)) {
         return;
     }
 
@@ -2384,23 +2298,42 @@ function fenster_maybe_render_generated_sitemap(): void
     header('Content-Type: application/xml; charset=' . get_bloginfo('charset'));
     fenster_send_public_cache_headers(3600, 21600);
 
+    /* TWO SITEMAPS SINCE 2026-09-28: the 525 town pages in their own, so Search
+       Console reports their indexing apart from the rest of the site, and a
+       `<lastmod>` wherever the site records an honest date (the town pages'
+       revision day, blog posts' publish days). The index's `<lastmod>` was the
+       time of the request, which told Google nothing; it is now the newest
+       date in each sitemap, and absent when a sitemap has none. */
+    $sitemaps = ['page-sitemap.xml' => [], 'location-sitemap.xml' => []];
+    foreach (fenster_generated_sitemap_entries() as $entry) {
+        $sitemaps[($entry['sitemap'] ?? '') === 'location' ? 'location-sitemap.xml' : 'page-sitemap.xml'][] = $entry;
+    }
+
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+
     if (in_array($path, ['sitemap.xml', 'sitemap_index.xml'], true)) {
-        echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         echo "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
-        echo "  <sitemap>\n";
-        echo '    <loc>' . esc_xml(home_url('/page-sitemap.xml')) . "</loc>\n";
-        echo '    <lastmod>' . esc_xml(gmdate('c')) . "</lastmod>\n";
-        echo "  </sitemap>\n";
+        foreach ($sitemaps as $file => $file_entries) {
+            $dates = array_filter(array_column($file_entries, 'lastmod'));
+            echo "  <sitemap>\n";
+            echo '    <loc>' . esc_xml(home_url('/' . $file)) . "</loc>\n";
+            if ($dates !== []) {
+                echo '    <lastmod>' . esc_xml(max($dates)) . "</lastmod>\n";
+            }
+            echo "  </sitemap>\n";
+        }
         echo "</sitemapindex>\n";
         exit;
     }
 
-    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
 
-    foreach (fenster_generated_sitemap_entries() as $entry) {
+    foreach ($sitemaps[$path] as $entry) {
         echo "  <url>\n";
         echo '    <loc>' . esc_xml($entry['loc']) . "</loc>\n";
+        if (($entry['lastmod'] ?? '') !== '') {
+            echo '    <lastmod>' . esc_xml($entry['lastmod']) . "</lastmod>\n";
+        }
         echo '    <changefreq>' . esc_xml($entry['changefreq']) . "</changefreq>\n";
         echo "  </url>\n";
     }
@@ -2411,12 +2344,13 @@ function fenster_maybe_render_generated_sitemap(): void
 
 /**
  * Every URL the sitemap publishes, in sitemap order, as
- * `['loc' => absolute URL, 'changefreq' => string]`.
+ * `['loc' => absolute URL, 'changefreq' => string]`, plus `'lastmod' =>
+ * 'Y-m-d'` where the site records an honest date and `'sitemap' =>
+ * 'location'` on the town pages (2026-09-28).
  *
  * Split out of the renderer on 2026-09-23 so the 404 page suggests from the
  * same list (`inc/not-found.php`): a route is offered as a closest match
  * exactly when it is published, and there is no second list to keep in step.
- * The XML the renderer prints from it is byte-for-byte what it printed before.
  */
 function fenster_generated_sitemap_entries(): array
 {
@@ -2443,6 +2377,8 @@ function fenster_generated_sitemap_entries(): array
     ];
     $location_matrix_pages = fenster_location_matrix_pages();
     $commercial_county_pages = fenster_commercial_county_pages();
+    $blog_dates = function_exists('fenster_live_blog_posts') ? array_map(static fn (array $post): string => (string) ($post['publish_date'] ?? ''), fenster_live_blog_posts()) : [];
+    $location_revised = function_exists('fenster_location_pages_revised') ? fenster_location_pages_revised() : '';
 
     foreach (fenster_generated_pages_payload()['pages'] ?? [] as $page) {
         $slug = (string) ($page['slug'] ?? '');
@@ -2470,7 +2406,9 @@ function fenster_generated_sitemap_entries(): array
         }
 
         $seen[$loc] = true;
-        $list[] = ['loc' => $loc, 'changefreq' => $page['slug'] === 'home' ? 'weekly' : 'monthly'];
+        $list[] = ['loc' => $loc, 'changefreq' => $page['slug'] === 'home' ? 'weekly' : 'monthly']
+            // The blog's front page changes when a post publishes.
+            + ($slug === 'blog' && $blog_dates !== [] ? ['lastmod' => max($blog_dates)] : []);
     }
 
     foreach ($location_matrix_pages as $page) {
@@ -2480,7 +2418,7 @@ function fenster_generated_sitemap_entries(): array
         }
 
         $seen[$loc] = true;
-        $list[] = ['loc' => $loc, 'changefreq' => 'monthly'];
+        $list[] = ['loc' => $loc, 'changefreq' => 'monthly', 'sitemap' => 'location'] + ($location_revised !== '' ? ['lastmod' => $location_revised] : []);
     }
 
     foreach ($commercial_county_pages as $page) {
@@ -2514,7 +2452,7 @@ function fenster_generated_sitemap_entries(): array
         }
     }
 
-    $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
+    $live_blog_post_slugs = array_keys($blog_dates);
     foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'repair-case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance', 'why-distinction'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
@@ -2524,7 +2462,7 @@ function fenster_generated_sitemap_entries(): array
         $virtual_loc = fenster_generated_url((string) ($virtual_page['seo']['canonical'] ?? ''));
         if ($virtual_loc && ! isset($seen[$virtual_loc])) {
             $seen[$virtual_loc] = true;
-            $list[] = ['loc' => $virtual_loc, 'changefreq' => 'monthly'];
+            $list[] = ['loc' => $virtual_loc, 'changefreq' => 'monthly'] + (($blog_dates[$virtual_slug] ?? '') !== '' ? ['lastmod' => $blog_dates[$virtual_slug]] : []);
         }
     }
 

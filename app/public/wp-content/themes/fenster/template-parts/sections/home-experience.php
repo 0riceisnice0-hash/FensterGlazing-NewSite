@@ -90,18 +90,6 @@ $partners = [
     ['label' => 'Roseview', 'type' => 'Sliding sash windows', 'copy' => 'Sash-specific systems for heritage-style windows with proper period detail.', 'src' => FENSTER_THEME_URI . '/assets/partners/roseview-logo-new.png'],
     ['label' => 'Distinction Doors', 'type' => 'Composite doors', 'copy' => 'Entrance door slabs and styles for secure, practical kerb appeal.', 'src' => FENSTER_THEME_URI . '/assets/partners/distinction-doors.png'],
 ];
-
-$location_links = [
-    ['text' => 'Double Glazing Milton Keynes', 'url' => home_url('/windows-milton-keynes/')],
-    ['text' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
-    ['text' => 'Double Glazing Northampton', 'url' => home_url('/double-glazing-northampton/')],
-    ['text' => 'Double Glazing Bedford', 'url' => home_url('/double-glazing-bedford/')],
-    ['text' => 'Double Glazing Buckingham', 'url' => home_url('/double-glazing-buckingham/')],
-    ['text' => 'Double Glazing Ampthill', 'url' => home_url('/double-glazing-ampthill/')],
-    ['text' => 'Double Glazing Toddington', 'url' => home_url('/double-glazing-toddington/')],
-    ['text' => 'Windows Milton Keynes', 'url' => home_url('/windows-milton-keynes/')],
-    ['text' => 'Doors Milton Keynes', 'url' => home_url('/doors-milton-keynes/')],
-];
 ?>
 
 <article class="generated-page generated-page--home-lab">
@@ -359,18 +347,8 @@ $location_links = [
         </div>
     </section>
 
-    <section class="fg-home-seo-mesh">
-        <div class="container">
-            <div class="fg-home-section-head">
-                <p class="eyebrow"><?php esc_html_e('Local installations', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Double glazing across Milton Keynes and nearby towns.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A few of our main local service areas. Contact us if your town is not listed.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-home-seo-mesh__links">
-                <?php foreach (array_slice($location_links, 0, 10) as $link) : ?>
-                    <a href="<?php echo esc_url(fenster_generated_url((string) $link['url'])); ?>"><?php echo esc_html((string) $link['text']); ?></a>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+    <?php /* Every double glazing town page, 2026-09-28. This block linked five of
+             the 25, and the homepage is the page Google fetches most. The hubs,
+             doors page and areas page it also linked are in the footer. */ ?>
+    <?php get_template_part('template-parts/components/location-town-links', null, ['product' => 'double-glazing']); ?>
 </article>

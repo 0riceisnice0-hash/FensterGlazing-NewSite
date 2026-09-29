@@ -3099,6 +3099,13 @@ function fenster_blog_posts_for_page(string $slug, int $limit = 3): array
         return [];
     }
 
+    /* Not on the 525 product-and-town pages, from 2026-09-28: the band was the
+       same on every town for a product, and those pages are being made
+       distinct (inc/location-town-data.php). The product pages carry it. */
+    if (function_exists('fenster_slug_matches_location_matrix') && fenster_slug_matches_location_matrix($slug)) {
+        return [];
+    }
+
     $key = $slug . ':' . $limit;
     if (isset($cache[$key])) {
         return $cache[$key];

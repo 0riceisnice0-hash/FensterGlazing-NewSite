@@ -283,8 +283,14 @@ function fenster_google_write_review_url(): string
  * curated set backfills so the carousel keeps its card count. When a context
  * is supplied (a product name or a town), matching reviews are promoted so a
  * Milton Keynes page shows Milton Keynes proof.
+ *
+ * A seed orders reviews of equal relevance by a hash of itself, so each town
+ * page shows its own stable selection of the same real reviews rather than
+ * every town repeating the same seven (2026-09-28). One detailed review leads
+ * and the short ones follow, because two pages drawing the same two long
+ * reviews shared 200 words.
  */
-function fenster_review_cards(int $limit = 7, string $context = ''): array
+function fenster_review_cards(int $limit = 7, string $context = '', string $seed = ''): array
 {
     $live = fenster_google_place_details()['reviews'];
     $curated = fenster_data('customer_reviews', []);
@@ -302,6 +308,14 @@ function fenster_review_cards(int $limit = 7, string $context = ''): array
     ));
 
     $cards = array_merge($live, $curated);
+
+    if ($seed !== '') {
+        usort($cards, static fn (array $left, array $right): int => crc32($seed . '|' . ($left['author'] ?? '') . ($left['quote'] ?? '')) <=> crc32($seed . '|' . ($right['author'] ?? '') . ($right['quote'] ?? '')));
+        $is_long = static fn (array $review): bool => str_word_count((string) ($review['quote'] ?? '')) >= 30;
+        $long = array_values(array_filter($cards, $is_long));
+        $short = array_values(array_filter($cards, static fn (array $review): bool => ! $is_long($review)));
+        $cards = array_merge(array_slice($long, 0, 1), $short, array_slice($long, 1));
+    }
 
     $context = strtolower(trim($context));
     if ($context !== '') {

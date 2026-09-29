@@ -1,6 +1,6 @@
 <?php
 /**
- * "From the blog" at the foot of a product, hub or town page: up to three
+ * "From the blog" at the foot of a product or hub page: up to three
  * published posts that name the page's product, newest first, topped up from
  * the rest of its window or door family. Owner, 2026-09-28: "link to them.
  * only the new ones."

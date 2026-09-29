@@ -56,6 +56,8 @@ $fenster_required_files = [
        28/09/2026 from the 15 September SEO release live runs
        (origin/codex/seo-live-release-2026-09), so test shows live's town pages. */
     'inc/location-page-data.php',
+    // Each town's homes, checks, permissions, postcodes and neighbours (2026-09-28).
+    'inc/location-town-data.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {

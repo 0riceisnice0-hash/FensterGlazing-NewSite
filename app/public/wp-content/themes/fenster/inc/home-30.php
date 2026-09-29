@@ -816,6 +816,17 @@ function fenster_h30_town_coordinates(): array
         'stevenage'       => [51.9030, -0.2020],
         'biggleswade'     => [52.0860, -0.2640],
         'sandy'           => [52.1300, -0.2900],
+        /* The rest of the town matrix, and Loughton (2026-09-28): the town
+           pages find the case studies near them from this table too, through
+           fenster_location_case_studies(). */
+        'loughton'        => [52.0290, -0.7890],
+        'stony stratford' => [52.0570, -0.8520],
+        'great linford'   => [52.0680, -0.7660],
+        'shenley church end' => [52.0230, -0.7920],
+        'furzton'         => [52.0130, -0.7730],
+        'oldbrook'        => [52.0320, -0.7550],
+        'monkston'        => [52.0300, -0.7000],
+        'brooklands'      => [52.0460, -0.6840],
     ];
 }
 

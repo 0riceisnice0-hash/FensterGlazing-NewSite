@@ -45,8 +45,6 @@
   &__visit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); border-block: 1px solid rgba(0,45,58,.2); padding-block: 2.6rem; }
   &__visit-grid p { max-width: 51ch; }
   &__visit-details { padding-left: 2rem; border-left: 1px solid rgba(0,45,58,.2); }
-  &__visit-details ul { padding-left: 1.15rem; margin: 0 0 1.4rem; }
-  &__visit-details li { padding-bottom: .35rem; }
   &__address { font-size: .9rem; }
   &__address > span { font-weight: 700; }
   &__address p { margin: .25rem 0 .4rem; }
@@ -54,6 +52,8 @@
   &__case-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.5rem; }
   &__case-grid .fg-cs-card { box-shadow: none; }
   section.fg-local__cases { padding-block: 2rem; }
+  // One line for "Our work in and around Leighton Buzzard.", so the band fits 707px.
+  &__cases h2 { max-width: none; }
   &__case-grid .fg-cs-card__media { height: clamp(180px, 17vw, 230px); aspect-ratio: auto; }
   &__faq-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 4rem; }
   &__faq details { border-top: 1px solid rgba(0,45,58,.25); }
@@ -85,7 +85,6 @@
   &__hero-form .fg-enquiry-form__footer small { font-size: .7rem; line-height: 1.35; }
   &--commercial .fg-local__range-grid p { font-size: .94rem; line-height: 1.55; }
   &__links .fg-link-cards { margin-top: 1rem; }
-  &__process .section-heading { max-width: 760px; }
 }
 @media (max-width: 1024px) {
   .fg-local {
@@ -120,5 +119,29 @@
     &__form { padding: 1rem; }
     &__form .fg-enquiry-form__compact-grid { grid-template-columns: minmax(0,1fr); }
     &__faq-grid { gap: .6rem; }
+  }
+}
+
+// "Where we fit" at the foot of the 21 product pages
+// (template-parts/components/location-town-links.php). Light, like every band
+// taller than half a viewport.
+.fg-town-links {
+  padding-block: 3.5rem;
+  border-top: 1px solid rgba(0,45,58,.14);
+  color: var(--color-ink);
+  .section-heading { max-width: 760px; margin-bottom: 1.8rem; }
+  .section-heading p:not(.eyebrow) { color: #46616a; }
+  &__groups { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem 3.5rem; }
+  h3 { font-size: 1rem; margin: 0 0 .8rem; }
+  ul { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+  a { display: inline-flex; align-items: center; min-height: 40px; padding: .45rem .85rem; border: 1px solid rgba(0,45,58,.18); border-radius: 6px; background: #fff; color: var(--color-steel); font-size: .92rem; text-decoration: none; }
+  a:hover, a:focus-visible { border-color: rgba(46,172,102,.55); }
+}
+@media (max-width: 860px) {
+  .fg-town-links {
+    padding-block: 2.2rem;
+    &__groups { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    ul { gap: .4rem; }
+    a { min-height: 38px; padding: .35rem .7rem; font-size: .88rem; }
   }
 }

@@ -20,10 +20,11 @@ $args = wp_parse_args($args ?? [], [
     'limit' => 7,
     'prioritise_context' => '',
     'heading_override' => 'What Milton Keynes homeowners say',
+    'seed' => '',
 ]);
 
 $summary = fenster_review_summary();
-$reviews = fenster_review_cards((int) $args['limit'], (string) $args['prioritise_context']);
+$reviews = fenster_review_cards((int) $args['limit'], (string) $args['prioritise_context'], (string) $args['seed']);
 $classes = trim('fg-review-showcase ' . (string) $args['class']);
 
 if (empty($reviews)) {

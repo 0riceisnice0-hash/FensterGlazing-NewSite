@@ -23,17 +23,12 @@ $can_price = fenster_quote_can_price($product_slug);
 $quote_url = $is_double ? home_url('/online-quote/') : add_query_arg('product', $product_slug, home_url('/online-quote/'));
 $phone = (string) $brand['phone'];
 $phone_url = 'tel:' . preg_replace('/[^+0-9]/', '', $phone);
-$process_steps = (array) fenster_data('order_process.steps', []);
-$process_copy = (string) fenster_data('order_process.intro', '');
-if (! $can_price) {
-    $process_steps[0]['copy'] = 'Send photographs, approximate sizes and your postcode, or book a free consultation. We review the product and fitting requirements with you and prepare your quote.';
-    $process_copy = 'Your specification and price first, then technical survey, installation and aftercare.';
-}
+/* No order-process rail here (2026-09-28). It was 167 words repeated on all
+   525 town pages; the price FAQ and the reassurance strip say the same, and
+   the product page carries the full rail. */
 $has_installation_cover = ! in_array($product_slug, ['integral-blinds', 'roof-lanterns'], true);
-if (! $has_installation_cover) {
-    $process_steps[3]['copy'] = (string) fenster_data('order_process.aftercare_outside_fensa_and_cpa', '');
-}
-$cases = fenster_case_studies_for_town($town_slug, 2);
+$nearby_work = function_exists('fenster_location_case_studies') ? fenster_location_case_studies($town_slug, $product_slug, 2) : ['cards' => fenster_case_studies_for_town($town_slug, 2), 'in_town' => false];
+$cases = $nearby_work['cards'];
 $used = [];
 $image_key = static fn (array $image): string => fenster_location_photo_key((string) ($image['src'] ?? ''));
 // Reserve case-study photographs first. Product illustrations never claim a town.
@@ -55,15 +50,26 @@ if ($is_double) {
         $tiles[] = ['slug' => $tile_slug, 'label' => $labels[$tile_slug], 'image' => $take_image(fenster_location_images($tile_slug))];
     }
 }
-$suburb = fenster_mk_suburb_profiles()[$town_slug] ?? null;
+/* Every town's own page content (owner, 2026-09-28: bring the shared text
+   "to like under 50%"). See inc/location-town-data.php. */
+$town_guide = function_exists('fenster_location_town_guides') ? (fenster_location_town_guides()[$town_slug] ?? null) : null;
+$nearby = [];
+foreach ((array) ($town_guide['nearby'] ?? []) as $near_slug) {
+    if (isset($towns[$near_slug])) { $nearby[$near_slug] = $towns[$near_slug]; }
+}
+$nearby_names = array_values($nearby);
+$nearby_list = count($nearby_names) > 1 ? implode(', ', array_slice($nearby_names, 0, -1)) . ' and ' . end($nearby_names) : (string) ($nearby_names[0] ?? '');
+$window_products = ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'french-casement-windows', 'tilt-turn-windows', 'bow-bay-windows', 'aluminium-windows', 'aluminium-flush-windows', 'heritage-windows'];
+$permission_thing = $is_double ? 'windows and doors' : (in_array($product_slug, $window_products, true) ? 'windows' : (in_array($product_slug, ['integral-blinds', 'roof-lanterns'], true) ? '' : 'doors'));
 $faqs = [
     ['question' => $content['question'], 'answer' => $content['answer']],
     ['question' => 'How do I get a price for ' . $label . '?', 'answer' => $can_price
         ? 'Build your price online using approximate sizes, or book a free consultation and we price the job with you. Both use the same software and price list. Once you decide to go ahead, a technical survey confirms the measurements and fitting details before anything is made.'
         : 'Send us photographs, approximate sizes and your postcode. We review the specification with you and prepare a quote. You can also book a free consultation to discuss the options at home.'],
-    ['question' => 'Do you supply and fit in ' . $town . '?', 'answer' => 'Yes. We cover ' . $town . ' from our Milton Keynes base. Everyone who surveys and fits works for us. Tell us your postcode and what you want to change when you enquire.'],
-    ['question' => 'When do you take the final measurements?', 'answer' => 'The technical survey takes place after you decide to go ahead and before manufacture. We check the dimensions, access, opening clearances and finishing details. Approximate sizes taken at a consultation are used for the quote.'],
-    ['question' => 'Can I see samples before I choose?', 'answer' => 'Colour swatches come to your free consultation. Full product samples are at our Milton Keynes showroom, where you can compare the frames, handles and opening mechanisms in person.'],
+    ['question' => 'Do you supply and fit in ' . $town . '?', 'answer' => is_array($town_guide)
+        ? 'Yes. We cover ' . $town . ' and its ' . $town_guide['postcodes'] . ' postcodes from our Milton Keynes base, and everyone who surveys and fits works for us.' . ($nearby_list !== '' ? ' Nearby, we also fit ' . $label . ' in ' . $nearby_list . '.' : '')
+        : 'Yes. We cover ' . $town . ' from our Milton Keynes base. Everyone who surveys and fits works for us. Tell us your postcode and what you want to change when you enquire.'],
+    ...(is_array($town_guide) && $permission_thing !== '' ? [['question' => 'Do I need permission to replace ' . $permission_thing . ' in ' . $town . '?', 'answer' => $town_guide['permission']]] : []),
 ];
 $links = [];
 $add_link = static function (string $target, string $text) use (&$links, $slug): void {
@@ -71,6 +77,14 @@ $add_link = static function (string $target, string $text) use (&$links, $slug):
 };
 $add_link($is_double ? 'windows-milton-keynes' : $product_slug, $is_double ? 'Compare all windows' : $labels[$product_slug] . ': full product guide');
 if (! $is_double) { $add_link('double-glazing-' . $town_slug, 'Windows and doors in ' . $town); }
+foreach ($nearby as $near_slug => $near_name) {
+    $add_link($product_slug . '-' . $near_slug, $labels[$product_slug] . ' in ' . $near_name);
+}
+if ($is_double) {
+    foreach ($labels as $town_product => $town_product_label) {
+        if ($town_product !== $product_slug) { $add_link($town_product . '-' . $town_slug, $town_product_label . ' in ' . $town); }
+    }
+}
 foreach ($content['related'] as $related_slug) {
     $target = isset($labels[$related_slug]) && $town_slug !== 'milton-keynes' ? $related_slug . '-' . $town_slug : $related_slug;
     $add_link($target, ($labels[$related_slug] ?? ucwords(str_replace('-', ' ', $related_slug))) . (str_ends_with($target, '-' . $town_slug) ? ' in ' . $town : ''));
@@ -89,7 +103,7 @@ if (fenster_price_guides_enabled()) {
             <p class="fg-local__lead"><?php echo esc_html($content['lead']); ?></p>
             <div class="button-row"><a class="button" href="<?php echo esc_url($can_price ? $quote_url : '#fenster-enquiry'); ?>"><?php echo esc_html($can_price ? 'Get an instant price' : 'Ask for a quote'); ?></a><a class="button" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">Book a free consultation</a></div>
             <a class="button button--steel fg-local__phone" href="<?php echo esc_url($phone_url); ?>"><?php echo esc_html('Talk to us: ' . $phone); ?></a>
-            <p class="fg-local__service-note"><?php echo esc_html('Serving ' . $town . ' from our Milton Keynes showroom.'); ?></p>
+            <p class="fg-local__service-note"><?php echo esc_html('Serving ' . $town . (is_array($town_guide) ? ' (' . $town_guide['postcodes'] . ')' : '') . ' from our Milton Keynes showroom.'); ?></p>
         </div>
         <aside class="fg-local__hero-form fg-local__form" id="fenster-enquiry" aria-labelledby="local-hero-enquiry-title">
             <p class="eyebrow">Request a quote</p>
@@ -115,19 +129,18 @@ if (fenster_price_guides_enabled()) {
             <?php foreach ($content['decisions'] as [$decision_title, $copy, $target]) : ?><div><h3><?php echo esc_html($decision_title); ?></h3><p><?php echo esc_html($copy); ?></p><?php if (is_array(fenster_get_generated_page($target))) : ?><a href="<?php echo esc_url(home_url('/' . $target . '/')); ?>"><?php echo esc_html('View ' . strtolower($decision_title)); ?><span aria-hidden="true"> ↗</span></a><?php endif; ?></div><?php endforeach; ?>
         </div></div>
     </div></section>
+    <?php if (is_array($town_guide)) : ?><section class="fg-local__knowledge"><div class="container"><p class="eyebrow"><?php echo esc_html($town); ?></p><h2><?php echo esc_html($town . ' homes, and what to check first.'); ?></h2><div class="fg-local__knowledge-grid"><p><strong>The homes.</strong> <?php echo esc_html($town_guide['homes']); ?></p><p><strong>What that means.</strong> <?php echo esc_html($town_guide['means']); ?></p><p><strong>Check first.</strong> <?php echo esc_html($town_guide['check']); ?></p></div></div></section><?php endif; ?>
     <?php if ($tiles !== []) : ?><section class="fg-local__range"><div class="container">
         <div class="fg-local__section-head"><div><p class="eyebrow">Windows and doors</p><h2>Compare the styles before choosing a finish.</h2></div><a href="<?php echo esc_url(home_url('/windows-milton-keynes/')); ?>">View all windows <span aria-hidden="true">↗</span></a></div>
         <div class="fg-local__range-grid"><?php foreach ($tiles as $tile) : ?><a href="<?php echo esc_url(home_url('/' . $tile['slug'] . '/')); ?>"><?php if ($tile['image']) : ?><img <?php echo fenster_location_image_attrs($tile['image'], ['sizes' => '(max-width: 760px) calc(50vw - 24px), 290px']); ?>><?php endif; ?><h3><?php echo esc_html($tile['label']); ?><span aria-hidden="true"> ↗</span></h3></a><?php endforeach; ?></div>
     </div></section><?php endif; ?>
     <section class="fg-local__visit"><div class="container fg-local__visit-grid">
         <div><p class="eyebrow"><?php echo esc_html('Your project in ' . $town); ?></p><h2>See the samples. Talk through the job.</h2><p><?php echo esc_html('We cover ' . $town . ' from our base in Milton Keynes. A free consultation brings advice and colour swatches to your home. For full-size product samples, visit the showroom.'); ?></p><a class="button" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">Book a free consultation</a></div>
-        <div class="fg-local__visit-details"><h3>Bring these to the conversation.</h3><ul><li>Photographs of the whole opening, inside and outside.</li><li>Approximate sizes and the postcode for the work.</li><li>Your preferred style, colour and anything you want to work differently.</li></ul><div class="fg-local__address"><span>Our showroom</span><p><?php echo esc_html(is_array($brand['address']) ? implode(', ', $brand['address']) : (string) $brand['address']); ?></p><a href="<?php echo esc_url(home_url('/contact/')); ?>">Opening times and directions <span aria-hidden="true">↗</span></a></div></div>
+        <div class="fg-local__visit-details"><div class="fg-local__address"><span>Our showroom</span><p><?php echo esc_html(is_array($brand['address']) ? implode(', ', $brand['address']) : (string) $brand['address']); ?></p><a href="<?php echo esc_url(home_url('/contact/')); ?>">Opening times and directions <span aria-hidden="true">↗</span></a></div></div>
     </div></section>
-    <?php if (is_array($suburb)) : ?><section class="fg-local__knowledge"><div class="container"><p class="eyebrow"><?php echo esc_html($town); ?></p><h2>Before choosing replacement windows.</h2><div class="fg-local__knowledge-grid"><p><?php echo esc_html($suburb['homes']); ?></p><p><?php echo esc_html($suburb['means']); ?></p><p><?php echo esc_html($suburb['check']); ?></p></div></div></section><?php endif; ?>
-    <?php if ($cases !== []) : ?><section class="fg-local__cases"><div class="container"><div class="fg-local__section-head"><div><p class="eyebrow">Our work</p><h2>From our installation diary.</h2><p>The location, products and photographs from each job.</p></div><a href="<?php echo esc_url(home_url('/case-studies/')); ?>">All case studies <span aria-hidden="true">↗</span></a></div><div class="fg-local__case-grid"><?php foreach ($cases as $case) : ?><?php get_template_part('template-parts/components/case-study-card', null, ['card' => $case, 'heading' => 'h3', 'responsive_images' => true]); ?><?php endforeach; ?></div></div></section><?php endif; ?>
-    <?php get_template_part('template-parts/components/order-process', null, ['class' => 'fg-local__process', 'steps' => $process_steps, 'copy' => $process_copy, 'action_label' => 'Send your project details', 'action_href' => '#fenster-enquiry']); ?>
+    <?php if ($cases !== []) : ?><section class="fg-local__cases"><div class="container"><div class="fg-local__section-head"><div><p class="eyebrow">From our installation diary</p><h2><?php echo esc_html(($nearby_work['in_town'] ? 'Our work in and around ' : 'Our work near ') . $town . '.'); ?></h2><p>The location, products and photographs from each job.</p></div><a href="<?php echo esc_url(home_url('/case-studies/')); ?>">All case studies <span aria-hidden="true">↗</span></a></div><div class="fg-local__case-grid"><?php foreach ($cases as $case) : ?><?php get_template_part('template-parts/components/case-study-card', null, ['card' => $case, 'heading' => 'h3', 'responsive_images' => true]); ?><?php endforeach; ?></div></div></section><?php endif; ?>
     <?php fenster_render_faq_page_schema($faqs); ?>
     <section class="fg-local__faq"><div class="container fg-local__faq-grid"><div><p class="eyebrow">Your questions</p><h2><?php echo esc_html('Buying ' . $label . ' in ' . $town . '.'); ?></h2><p>Product choices, pricing and what happens before we fit.</p></div><div><?php foreach ($faqs as $faq) : ?><details><summary><?php echo esc_html($faq['question']); ?></summary><p><?php echo esc_html($faq['answer']); ?></p></details><?php endforeach; ?></div></div></section>
-    <?php get_template_part('template-parts/components/review-showcase', null, ['class' => 'fg-local__reviews', 'heading_override' => 'What our customers say.', 'limit' => 7, 'prioritise_context' => $product_slug]); ?>
+    <?php get_template_part('template-parts/components/review-showcase', null, ['class' => 'fg-local__reviews', 'heading_override' => 'What our customers say.', 'limit' => 3, 'seed' => $town_slug]); ?>
     <?php if ($links !== []) : ?><section class="fg-local__links"><div class="container"><p class="eyebrow">Keep comparing</p><h2>Product guides and local services.</h2><?php get_template_part('template-parts/components/link-cards', null, ['links' => array_values($links), 'show_images' => false]); ?></div></section><?php endif; ?>
 </article>
