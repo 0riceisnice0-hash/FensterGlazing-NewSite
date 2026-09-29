@@ -331,5 +331,5 @@ function fenster_location_case_studies(string $town_slug, string $product_slug, 
  */
 function fenster_location_pages_revised(): string
 {
-    return '2026-09-28';
+    return '2026-09-29';
 }
