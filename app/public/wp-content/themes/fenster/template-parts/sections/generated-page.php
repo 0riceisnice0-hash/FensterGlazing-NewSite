@@ -2170,8 +2170,12 @@ foreach ($known_locations as $location_slug => $location_label) {
         break;
     }
 }
+/* A route that redirects is not a related link, 2026-09-29: the commercial
+   band was linking /commercial-glazing-milton-keynes/, one of the audit's
+   legacy pages, which now 301s to the commercial hub. */
 $route_exists = static function (string $target_slug) use ($generated_pages, $virtual_page_titles): bool {
-    return $target_slug === 'home' || isset($generated_pages[$target_slug]) || isset($virtual_page_titles[$target_slug]);
+    return ($target_slug === 'home' || isset($generated_pages[$target_slug]) || isset($virtual_page_titles[$target_slug]))
+        && fenster_redirect_target($target_slug) === '';
 };
 /* A MATRIX ROUTE IS NAMED BY THE MATRIX, NOT BY `pages.json`, AND THAT WAS THE
    SEVENTH PLACE THE 2026-08-12 RENAME HAD TO REACH.

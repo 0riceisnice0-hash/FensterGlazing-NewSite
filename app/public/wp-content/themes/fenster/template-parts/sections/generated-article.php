@@ -251,7 +251,7 @@ foreach (array_slice(array_values($related_links), 0, 8) as $link) {
     $redirect = $path !== '' && function_exists('fenster_redirect_target') ? fenster_redirect_target($path) : '';
     if ($redirect !== '') {
         $path = $redirect;
-        $url = home_url('/' . $redirect . '/');
+        $url = fenster_redirect_url($redirect);
     }
     if (in_array($url, array_column($product_links, 'url'), true)) {
         continue;

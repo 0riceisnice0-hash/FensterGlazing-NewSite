@@ -76,7 +76,7 @@ $quote_url = (string) ($args['quote_url'] ?? '');
 
 $repairs = esc_url(home_url('/window-and-door-repairs/'));
 $commercial = esc_url(home_url('/commercial-replacement-glazing/'));
-$obscure = esc_url(home_url('/obscure-glass/'));
+$obscure = esc_url(home_url('/obscured-glass/'));
 $pet_flaps = esc_url(home_url('/cat-and-dog-flaps/'));
 $integral = esc_url(home_url('/integral-blinds/'));
 

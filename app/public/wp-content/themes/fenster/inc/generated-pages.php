@@ -1838,10 +1838,44 @@ function fenster_gone_slug_request(array $query_vars): array
 
 /**
  * Permanent redirects for duplicate, renamed and superseded routes.
- * Returns the destination slug, or '' when the slug should not redirect.
+ * Returns the destination slug, '/' for the homepage, or '' when the slug
+ * should not redirect. Every destination is final: a redirect never lands on
+ * another redirect (checked 2026-09-29 against 30 days of live requests).
+ *
+ * WHERE REDIRECTS LIVE, 2026-09-29. This function is the source of truth. The
+ * 301 Redirects plugin (`wr_redirects` on live) still answers a handful of
+ * scrape-era addresses before WordPress loads, and the site root's .htaccess
+ * only moves www and http to https://fensterglazing.com. Apache `Redirect`
+ * lines must not be used for pages: they match a prefix and append the rest of
+ * the path, which is how /windows/ reached /windows-milton-keynes//.
  */
 function fenster_redirect_target(string $slug): string
 {
+    /* JUNK ON THE END OF A REAL ADDRESS, stripped in one hop. Google Ads'
+       `{ignore}` placeholder arrives literally, and WordPress trimmed its closing
+       brace into a 404 (/sliding-sash-windows/{ignore). A scraper that reads
+       `tel:` links as paths asks for /<page>/tel:01908429200 about forty times a
+       day, a link written without https:// produced
+       /fensterglazing.com/integral-blinds/, and old links carry doubled
+       slashes. The cleaned address only counts when it is a page or itself
+       redirects, so nothing here sends anyone to a new 404. */
+    $clean = strtolower(rawurldecode($slug));
+    $clean = preg_replace('#^(?:www\.)?fensterglazing\.com(?:/|$)#', '', $clean);
+    $clean = preg_replace('#(?:\{ignore\}?|(?:^|/)tel:[+0-9]*)$#', '', $clean);
+    $clean = trim((string) preg_replace('#/{2,}#', '/', $clean), '/');
+    if ($clean !== strtolower($slug)) {
+        if ($clean === '') {
+            return '/';
+        }
+        $clean_target = fenster_redirect_target($clean);
+        if ($clean_target !== '') {
+            return $clean_target;
+        }
+        if (is_array(fenster_get_generated_page($clean))) {
+            return $clean;
+        }
+    }
+
     /* Commercial studies moved from /case-studies/ to /commercial-projects/ on
        2026-07-28. The old routes are indexed, so they 301 rather than 404. Both
        the imported slugs and the new short slugs are covered, because the
@@ -1863,6 +1897,19 @@ function fenster_redirect_target(string $slug): string
         return $moved_commercial[$slug];
     }
 
+    /* A study answers only under its own base (fenster_case_study_base()), so a
+       study asked for under another one goes to its own. Repairs moved to
+       /repair-case-studies/, and the commercial studies added after the list
+       above were never under /case-studies/ at all, yet Google and Bing asked
+       for /case-studies/all-hallows-bedford/ and five more and got 404s (SEO
+       audit 2026-09-28, 8.2 #5). */
+    if (preg_match('#^(case-studies|commercial-projects|repair-case-studies)/([a-z0-9-]+)$#', $slug, $study_path) && function_exists('fenster_case_studies')) {
+        $study = fenster_case_studies()[$study_path[2]] ?? null;
+        if (is_array($study) && fenster_case_study_base($study) !== $study_path[1]) {
+            return fenster_case_study_base($study) . '/' . $study_path[2];
+        }
+    }
+
     /* '/double-glazing-milton-keynes/' WAS THE HEAD-TERM PAGE UNTIL 28/09/2026,
        and is now consolidated into the windows hub. The SEO audit of that day
        (section 5) found it rebuilt on the shared town template on 15 September,
@@ -1875,6 +1922,29 @@ function fenster_redirect_target(string $slug): string
        it to /double-glazing/. */
     if ($slug === 'double-glazing-milton-keynes') {
         return 'windows-milton-keynes';
+    }
+
+    /* THE OLD SITE KEPT ITS PRODUCTS UNDER TWO HUBS: /windows/casement-windows/,
+       /doors/upvc-doors/, and the same again under /windows-milton-keynes/ and
+       /doors-milton-keynes/. Google still asks for them (/windows-milton-keynes/
+       casement-windows/ eight times in the 30 days to 29 September). Apache
+       `Redirect` lines sent /windows/ and /doors/ to double-slash copies of the
+       hubs, and WordPress's 404 guess did the rest in up to three hops, so each
+       is one hop now: the product, or the hub when there is no such product. */
+    if (preg_match('#^(windows|doors)(-milton-keynes)?(?:/([a-z0-9-]+))?(?:/.*)?$#', $slug, $hub_path)) {
+        $hub = $hub_path[1] . '-milton-keynes';
+        $child = $hub_path[3] ?? '';
+        if ($child === '') {
+            if ($slug !== $hub) {
+                return $hub;
+            }
+        } else {
+            $child_target = fenster_redirect_target($child);
+            if ($child_target !== '') {
+                return $child_target;
+            }
+            return is_array(fenster_get_generated_page($child)) ? $child : $hub;
+        }
     }
 
     // Main product pages already own Milton Keynes intent. Keep legacy matrix
@@ -1919,6 +1989,34 @@ function fenster_redirect_target(string $slug): string
            Owner: "if its an old designer thing then update it to the new one". */
         'window-and-door-design' => 'online-quote',
         'window-handles' => 'handle-options',
+        /* 2026-09-29, from the live access logs for 31 August to 29 September
+           and the SEO audit of 28 September (8.2 #2, #5 and #7). Before this,
+           WordPress's 404 guess answered the first two with the Ampthill town
+           page and a noindexed ad landing page. */
+        'double-glazing' => 'windows-milton-keynes',
+        'pricing' => 'online-quote',
+        'team' => 'meet-the-team',
+        'commercial-double-glazing' => 'commercial-glazing',
+        // Indexed with the slash missing; the 404 page used to catch it.
+        'what-are-integral-blindsparent' => 'what-are-integral-blinds',
+        // The showroom's address and opening times are on the contact page.
+        'showroom' => 'contact',
+        'window-showroom' => 'contact',
+        'door-showroom' => 'contact',
+        'design_windows_and_doors' => 'online-quote',
+        // Only crawlers asked for it; it repeated /3d-visualiser/'s H1.
+        'design-your-windows-and-doors' => '3d-visualiser',
+        /* Apache sent these to /other-services/ with a double slash. Locks and
+           hinges are repairs, and the repairs page names them. */
+        'locksmith-services' => 'window-and-door-repairs',
+        'repairs-service' => 'window-and-door-repairs',
+        'glazing-repairs' => 'window-and-door-repairs',
+        /* Three scrape-era pages outside the sitemap but still indexed, with old
+           copy (audit 8.2 #2). The Northamptonshire page had 11,626 impressions
+           in sixteen months. */
+        'double-glazing-northamptonshire' => 'double-glazing-northampton',
+        'double-glazing-buckinghamshire' => 'areas-we-cover',
+        'commercial-glazing-milton-keynes' => 'commercial-glazing',
     ];
 
     if (isset($map[$slug])) {
@@ -1927,9 +2025,20 @@ function fenster_redirect_target(string $slug): string
 
     if (str_ends_with($slug, '-designer')) {
         $base = substr($slug, 0, -strlen('-designer'));
-        if ($base === 'tilt-and-turn-windows') {
-            $base = 'tilt-turn-windows';
-        }
+        /* The old site's designer pages were named after its own products.
+           Replacement glass is priced from its own page, which opens the
+           designer on the glass collection; the WindowCAD one looped on live
+           until 2026-09-29 (see the Redirects Rule in AI.md). */
+        $base = [
+            'tilt-and-turn-windows' => 'tilt-turn-windows',
+            'bifold-doors' => 'aluminium-bifold-doors',
+            'bi-fold-doors' => 'aluminium-bifold-doors',
+            'heritage-doors' => 'heritage-aluminium-doors',
+            'windowcad-replacement-glazing' => 'double-glazing-replacement',
+            'replacement-glazing' => 'double-glazing-replacement',
+            'replacement-glazed' => 'double-glazing-replacement',
+            'replacement-glazed-units' => 'double-glazing-replacement',
+        ][$base] ?? $base;
 
         if (isset(fenster_generated_pages_index()[$base]) || isset(fenster_location_matrix_products()[$base])) {
             return $base;
@@ -1940,6 +2049,24 @@ function fenster_redirect_target(string $slug): string
 
     return '';
 }
+
+/**
+ * The address a fenster_redirect_target() destination lives at.
+ */
+function fenster_redirect_url(string $target): string
+{
+    return $target === '/' ? home_url('/') : home_url('/' . trim($target, '/') . '/');
+}
+
+/* WORDPRESS'S 404 GUESS IS OFF, 2026-09-29. On a 404 it redirected to the
+   first published post whose name began with the one requested, and live's
+   database still holds the old site's pages at theme-routed addresses, so
+   /double-glazing/ went to the Ampthill town page, /pricing/ to a noindexed
+   ad landing page, and /windows/ would have gone to a blog post. The guesses
+   that were right, the old /windows/<product>/ and /doors/<product>/
+   addresses, are rules in fenster_redirect_target() now. Anything else gets
+   the 404 page, which offers the closest published pages (inc/not-found.php). */
+add_filter('do_redirect_guess_404_permalink', '__return_false');
 
 /**
  * Routes that should stay reachable but tell search engines not to index them:
@@ -2048,7 +2175,10 @@ function fenster_maybe_render_generated_page(): void
     $lower_slug = strtolower($slug);
 
     if ($slug !== $lower_slug && (fenster_redirect_target($lower_slug) !== '' || isset(fenster_gone_slugs()[$lower_slug]) || fenster_get_generated_page($lower_slug))) {
-        $target = home_url('/' . $lower_slug . '/');
+        /* Straight to where the lower-case address ends up: /INSTANT-QUOTE/
+           took two hops, lower case first, until 2026-09-29. */
+        $lower_target = fenster_redirect_target($lower_slug);
+        $target = fenster_redirect_url($lower_target !== '' ? $lower_target : $lower_slug);
         wp_safe_redirect($query !== '' ? $target . '?' . $query : $target, 301);
         exit;
     }
@@ -2060,7 +2190,7 @@ function fenster_maybe_render_generated_page(): void
            `gbraid` and `wbraid` from the landing URL to report the ad click
            (`inc/ad-attribution.php`), so dropping the query here turned a
            tagged click on a redirected address into direct traffic. */
-        $target = home_url('/' . $redirect_target . '/');
+        $target = fenster_redirect_url($redirect_target);
         wp_safe_redirect($query !== '' ? $target . '?' . $query : $target, 301);
         exit;
     }

@@ -170,7 +170,7 @@ $media = is_array($args['media'] ?? null) ? $args['media'] : [];
                         <p class="fg-cfg-colour-links">
                             <?php foreach ((array) $config['colours']['links'] as $index => $link) : ?>
                                 <?php if ($index > 0) : ?><span aria-hidden="true">·</span><?php endif; ?>
-                                <a class="text-link" href="<?php echo esc_url(home_url('/' . (string) ($link['slug'] ?? '') . '/')); ?>"><?php echo esc_html((string) ($link['label'] ?? '')); ?></a>
+                                <a class="text-link" href="<?php echo esc_url(home_url('/' . (string) ($link['slug'] ?? '') . '/') . (! empty($link['anchor']) ? '#' . $link['anchor'] : '')); ?>"><?php echo esc_html((string) ($link['label'] ?? '')); ?></a>
                             <?php endforeach; ?>
                         </p>
                     <?php endif; ?>

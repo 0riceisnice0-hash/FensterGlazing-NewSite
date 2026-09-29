@@ -131,8 +131,8 @@ function fenster_configuration_page_data(string $slug): array
             'colours' => [
                 'copy' => 'The colour range is the range of the window you choose rather than anything the configuration decides, so a French pair is available in the full uPVC foil range or in any RAL colour on aluminium.',
                 'links' => [
-                    ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
-                    ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
+                    ['slug' => 'colour-options', 'anchor' => 'upvc-colours', 'label' => 'uPVC colours'],
+                    ['slug' => 'colour-options', 'anchor' => 'aluminium-colours', 'label' => 'Aluminium colours'],
                 ],
             ],
         ],
@@ -174,8 +174,8 @@ function fenster_configuration_page_data(string $slug): array
             'colours' => [
                 'copy' => 'The colour range is the range of the door you choose rather than anything the configuration decides, so a French pair is available in the full uPVC foil range or in any RAL colour on aluminium.',
                 'links' => [
-                    ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
-                    ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
+                    ['slug' => 'colour-options', 'anchor' => 'upvc-colours', 'label' => 'uPVC colours'],
+                    ['slug' => 'colour-options', 'anchor' => 'aluminium-colours', 'label' => 'Aluminium colours'],
                 ],
             ],
         ],
@@ -226,8 +226,8 @@ function fenster_configuration_page_data(string $slug): array
             'colours' => [
                 'copy' => 'The colour range is the range of the window you choose rather than anything the shape decides, so a bay is available in the full uPVC foil range or in any RAL colour on aluminium.',
                 'links' => [
-                    ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
-                    ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
+                    ['slug' => 'colour-options', 'anchor' => 'upvc-colours', 'label' => 'uPVC colours'],
+                    ['slug' => 'colour-options', 'anchor' => 'aluminium-colours', 'label' => 'Aluminium colours'],
                 ],
             ],
         ],
