@@ -2013,9 +2013,14 @@ function fenster_redirect_target(string $slug): string
         'glazing-repairs' => 'window-and-door-repairs',
         /* Three scrape-era pages outside the sitemap but still indexed, with old
            copy (audit 8.2 #2). The Northamptonshire page had 11,626 impressions
-           in sixteen months. */
+           in sixteen months. Each county goes to the page for its main place
+           where we work, not to /areas-we-cover/, the audit's suggestion for
+           Buckinghamshire: that is a list of towns, which Google showed 31 times
+           in the three months to 28 September against 11,952 for the windows
+           hub. Milton Keynes is the county's largest place and our base, and
+           the hub's "Where we fit" band links Aylesbury and Buckingham. */
         'double-glazing-northamptonshire' => 'double-glazing-northampton',
-        'double-glazing-buckinghamshire' => 'areas-we-cover',
+        'double-glazing-buckinghamshire' => 'windows-milton-keynes',
         'commercial-glazing-milton-keynes' => 'commercial-glazing',
     ];
 
