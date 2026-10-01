@@ -97,6 +97,22 @@ if ($insert_after === false) {
     array_splice($members, $insert_after + 1, 0, [$aaron_member]);
 }
 
+$lee_member = [
+    'name' => 'Lee Judge',
+    'role' => 'Installer',
+    'copy' => 'Lee Judge is an installer at Fenster Glazing, fitting new windows and doors for customers across Milton Keynes and the surrounding area. Lee works to leave every job finished: frames sealed, trims on and the room cleaned up before the van is loaded. Outside work, Lee\'s time goes on family, mostly taking the kids to the park, with a bit of motocross when the chance comes up.',
+    'image' => '/wp-content/themes/fenster/assets/team/lee-judge-cropped-bw.jpg',
+    'alt' => 'Lee Judge',
+];
+// Lee joins the end of the installers, after Shane Gowing and in front of the
+// service engineers.
+$insert_after = array_search('Shane Gowing', array_column($members, 'name'), true);
+if ($insert_after === false) {
+    $members[] = $lee_member;
+} else {
+    array_splice($members, $insert_after + 1, 0, [$lee_member]);
+}
+
 $members[] = [
     'name' => 'Legend',
     'role' => 'Chief Meow Officer',
