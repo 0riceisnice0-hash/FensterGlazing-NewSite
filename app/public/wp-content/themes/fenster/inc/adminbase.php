@@ -531,6 +531,78 @@ if (defined('WP_CLI') && WP_CLI) {
     });
 }
 
+/**
+ * PRINT TO CRM GOES TO ADMINBASE AGAIN, 2026-10-01. Owner: "the windowcad print
+ * to crm buttons isnt going to adminbase ... fix pls". On 2026-09-24 (9a33da58)
+ * every office event stopped making a website enquiry and a conversion, which
+ * was right, but it stopped reaching AdminBase as well: for a project the office
+ * built for a phone or showroom customer, Print to CRM is the only way it gets
+ * there. So a Pdf event (Print to CRM on the quotation or the sales contract)
+ * becomes an AdminBase lead with the same fields a customer's quote sends, and
+ * notes naming the document. It still makes no enquiry, dashboard event or
+ * conversion. AdminBase's lead API takes no attachment, so the PDF itself stays
+ * with FieldOS.
+ *
+ * WindowCAD can post the same document twice a minute apart (it did on 29 and
+ * 30 September); an identical body is one AdminBase lead, marked by its hash in
+ * the payload store once AdminBase has it.
+ *
+ * @return array{result: array|WP_Error|null, message: string}
+ */
+function fenster_windowcad_print_to_adminbase(array $data, array $fields, string $body): array
+{
+    $marker_dir = fenster_windowcad_store_dir() . '/adminbase';
+    $marker = $marker_dir . '/' . hash('sha256', $body);
+    if (file_exists($marker)) {
+        fenster_windowcad_log('print to CRM already sent to AdminBase');
+
+        return ['result' => null, 'message' => 'Already sent to AdminBase.'];
+    }
+
+    $full_name = sanitize_text_field((string) ($fields['Name'] ?? $fields['Customer name'] ?? ''));
+    $email = sanitize_email((string) ($fields['Email'] ?? ''));
+    $phone = sanitize_text_field((string) ($fields['Phone'] ?? $fields['Telephone'] ?? ''));
+    if ($full_name === '' || ($email === '' && $phone === '')) {
+        fenster_windowcad_log('print to CRM not sent to AdminBase: no name, or no email and no phone');
+
+        return ['result' => null, 'message' => 'Kept for FieldOS; AdminBase needs a name and an email or phone.'];
+    }
+
+    [$first_name, $last_name] = fenster_adminbase_surname_parts($full_name);
+    [$house_number, $street] = fenster_adminbase_address_parts((string) ($fields['Address'] ?? ''));
+    $pdf = is_array($data['pdf'] ?? null) ? $data['pdf'] : [];
+    $notes = implode("\n", array_filter([
+        'WindowCAD Print to CRM: ' . (sanitize_text_field((string) ($pdf['name'] ?? '')) ?: 'document'),
+        ! empty($pdf['fileName']) ? 'File: ' . sanitize_text_field((string) $pdf['fileName']) : '',
+        ! empty($fields['Reference']) ? 'Reference: ' . sanitize_text_field((string) $fields['Reference']) : '',
+        'WindowCAD project: ' . fenster_windowcad_project_id($data),
+    ]));
+
+    $result = fenster_adminbase_relay([
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'email' => $email,
+        'phone' => $phone,
+        'postcode' => sanitize_text_field((string) ($fields['Post code'] ?? $fields['Postcode'] ?? '')),
+        'house_number' => $house_number,
+        'street' => $street,
+        'notes' => $notes,
+    ]);
+
+    if (is_wp_error($result)) {
+        fenster_windowcad_log('print to CRM AdminBase relay failed', ['error' => $result->get_error_message()]);
+
+        return ['result' => $result, 'message' => $result->get_error_message()];
+    }
+
+    if (wp_mkdir_p($marker_dir)) {
+        file_put_contents($marker, gmdate('c'), LOCK_EX);
+    }
+    fenster_windowcad_log('print to CRM sent to AdminBase', ['status' => (string) ($result['status'] ?? '')]);
+
+    return ['result' => $result, 'message' => 'Sent to AdminBase and kept for FieldOS.'];
+}
+
 function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_Response|WP_Error
 {
     $received_at = gmdate('c');
@@ -553,11 +625,28 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
 
     // The office printing the quotation or the sales contract to CRM, or
     // changing the project's status, posts the same project again. It is never a
-    // new lead: no enquiry, no AdminBase lead and no conversion, which is what
-    // every Print to CRM used to produce. It goes to FieldOS, where the PDF lands
-    // on the lead the customer's own submission made.
+    // new website lead: no enquiry and no conversion, which is what every Print to
+    // CRM used to produce. It goes to FieldOS, where the PDF lands on the lead the
+    // customer's own submission made, and Print to CRM goes to AdminBase too.
     if ($event !== '' && ! str_ends_with($event, '_designer_submitted')) {
         fenster_windowcad_hand_on($body, $kept, 0, $received_at);
+
+        if ($event === 'pdf') {
+            $printed = fenster_windowcad_print_to_adminbase($data, $fields, $body);
+            if (is_wp_error($printed['result'])) {
+                return new WP_REST_Response([
+                    'status' => 'error',
+                    'message' => $printed['result']->get_error_message(),
+                    'event' => $event,
+                ], 500);
+            }
+
+            return new WP_REST_Response([
+                'status' => 'success',
+                'message' => $printed['message'],
+                'event' => $event,
+            ], 200);
+        }
 
         return new WP_REST_Response([
             'status' => 'success',
