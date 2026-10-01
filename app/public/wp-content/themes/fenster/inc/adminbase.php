@@ -543,20 +543,27 @@ if (defined('WP_CLI') && WP_CLI) {
  * conversion. AdminBase's lead API takes no attachment, so the PDF itself stays
  * with FieldOS.
  *
- * WindowCAD can post the same document twice a minute apart (it did on 29 and
- * 30 September); an identical body is one AdminBase lead, marked by its hash in
- * the payload store once AdminBase has it.
+ * ONE ADMINBASE LEAD PER PROJECT PER DOCUMENT. The office reprints: on 29 and 30
+ * September the same quotation went twice about two and a half minutes apart,
+ * once after editing the project, so the bodies and the PDFs differ and a hash
+ * of the body would not catch it. The first Quotation print makes the lead and
+ * a Sales Contract print later makes another, because it is a different
+ * document; a reprint of either sends nothing. Marked in the payload store once
+ * AdminBase has it.
  *
  * @return array{result: array|WP_Error|null, message: string}
  */
 function fenster_windowcad_print_to_adminbase(array $data, array $fields, string $body): array
 {
+    $pdf = is_array($data['pdf'] ?? null) ? $data['pdf'] : [];
+    $project_id = fenster_windowcad_project_id($data);
+    $document = sanitize_text_field((string) ($pdf['name'] ?? '')) ?: 'document';
     $marker_dir = fenster_windowcad_store_dir() . '/adminbase';
-    $marker = $marker_dir . '/' . hash('sha256', $body);
+    $marker = $marker_dir . '/' . ($project_id !== '' ? $project_id . '-' . sanitize_key($document) : hash('sha256', $body));
     if (file_exists($marker)) {
-        fenster_windowcad_log('print to CRM already sent to AdminBase');
+        fenster_windowcad_log('print to CRM not sent again: this document already reached AdminBase', ['project' => $project_id, 'document' => $document]);
 
-        return ['result' => null, 'message' => 'Already sent to AdminBase.'];
+        return ['result' => null, 'message' => 'This document already reached AdminBase.'];
     }
 
     $full_name = sanitize_text_field((string) ($fields['Name'] ?? $fields['Customer name'] ?? ''));
@@ -570,12 +577,11 @@ function fenster_windowcad_print_to_adminbase(array $data, array $fields, string
 
     [$first_name, $last_name] = fenster_adminbase_surname_parts($full_name);
     [$house_number, $street] = fenster_adminbase_address_parts((string) ($fields['Address'] ?? ''));
-    $pdf = is_array($data['pdf'] ?? null) ? $data['pdf'] : [];
     $notes = implode("\n", array_filter([
-        'WindowCAD Print to CRM: ' . (sanitize_text_field((string) ($pdf['name'] ?? '')) ?: 'document'),
+        'WindowCAD Print to CRM: ' . $document,
         ! empty($pdf['fileName']) ? 'File: ' . sanitize_text_field((string) $pdf['fileName']) : '',
         ! empty($fields['Reference']) ? 'Reference: ' . sanitize_text_field((string) $fields['Reference']) : '',
-        'WindowCAD project: ' . fenster_windowcad_project_id($data),
+        'WindowCAD project: ' . $project_id,
     ]));
 
     $result = fenster_adminbase_relay([
