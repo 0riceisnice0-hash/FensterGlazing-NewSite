@@ -113,6 +113,21 @@ if ($insert_after === false) {
     array_splice($members, $insert_after + 1, 0, [$lee_member]);
 }
 
+$dan_member = [
+    'name' => 'Dan Hodson',
+    'role' => 'Installer',
+    'copy' => 'Dan Hodson is an installer at Fenster Glazing, fitting new windows and doors for customers across Milton Keynes and the surrounding area. Like everyone who fits for us, Dan works for Fenster directly. Outside work, Dan spends time with family, follows Aston Villa and enjoys a night at the theatre.',
+    'image' => '/wp-content/themes/fenster/assets/team/dan-hodson-cropped-bw.jpg',
+    'alt' => 'Dan Hodson',
+];
+// Dan follows Lee at the end of the installers.
+$insert_after = array_search('Lee Judge', array_column($members, 'name'), true);
+if ($insert_after === false) {
+    $members[] = $dan_member;
+} else {
+    array_splice($members, $insert_after + 1, 0, [$dan_member]);
+}
+
 $members[] = [
     'name' => 'Legend',
     'role' => 'Chief Meow Officer',
