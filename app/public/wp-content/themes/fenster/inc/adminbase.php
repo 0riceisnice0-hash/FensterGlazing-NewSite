@@ -553,13 +553,59 @@ if (defined('WP_CLI') && WP_CLI) {
  *
  * @return array{result: array|WP_Error|null, message: string}
  */
+/** Where a printed document is marked once AdminBase has it: one per project per document. */
+function fenster_windowcad_print_marker(array $data, string $body): string
+{
+    $project_id = fenster_windowcad_project_id($data);
+    $document = sanitize_text_field((string) ($data['pdf']['name'] ?? '')) ?: 'document';
+
+    return fenster_windowcad_store_dir() . '/adminbase/' . ($project_id !== '' ? $project_id . '-' . sanitize_key($document) : hash('sha256', $body));
+}
+
+/**
+ * A WEBSITE QUOTE THAT NEVER ARRIVED, recovered from Print to CRM, 2026-10-02.
+ * Owner: "Stephen Daniells didnt". The customer's own browser sends their quote
+ * here after WindowCAD has saved it. He finished one at 19:40 on 1 October from
+ * an iPhone on iCloud Private Relay, WindowCAD saved it, and the upload never
+ * reached this site: nothing in the access log from any address. A phone that
+ * closes Safari as the price appears drops a 0.5 to 3 MB upload in flight. So
+ * there was no enquiry and no AdminBase lead until the office printed his
+ * quotation the next morning, and that print carries every field his own
+ * submission would have.
+ *
+ * It is that quote when the project carries a website Tracking value, was made
+ * after enquiries began recording their project on 2026-09-24, and has no
+ * enquiry for that project or for that visitor's journey (a copied project, or
+ * another quote from somebody whose quotes did arrive, is not a lost lead).
+ */
+function fenster_windowcad_is_lost_website_quote(array $data, array $fields, string $project_id): bool
+{
+    $created = strtotime((string) ($data['json']['createdDate'] ?? '')) ?: 0;
+    if ($project_id === '' || $created < strtotime('2026-09-25T00:00:00Z') || ! fenster_windowcad_tracking_field_present($fields)) {
+        return false;
+    }
+
+    $enquiry_with = static fn (string $key, string $value): bool => $value !== '' && (new WP_Query([
+        'post_type' => 'fenster_enquiry',
+        'post_status' => 'any',
+        'posts_per_page' => 1,
+        'fields' => 'ids',
+        'no_found_rows' => true,
+        'meta_key' => $key,
+        'meta_value' => $value,
+    ]))->posts !== [];
+
+    return ! $enquiry_with('_fenster_windowcad_project', $project_id)
+        && ! $enquiry_with('_fenster_journey_ref', fenster_windowcad_tracking_from_fields($fields));
+}
+
 function fenster_windowcad_print_to_adminbase(array $data, array $fields, string $body): array
 {
     $pdf = is_array($data['pdf'] ?? null) ? $data['pdf'] : [];
     $project_id = fenster_windowcad_project_id($data);
     $document = sanitize_text_field((string) ($pdf['name'] ?? '')) ?: 'document';
-    $marker_dir = fenster_windowcad_store_dir() . '/adminbase';
-    $marker = $marker_dir . '/' . ($project_id !== '' ? $project_id . '-' . sanitize_key($document) : hash('sha256', $body));
+    $marker = fenster_windowcad_print_marker($data, $body);
+    $marker_dir = dirname($marker);
     if (file_exists($marker)) {
         fenster_windowcad_log('print to CRM not sent again: this document already reached AdminBase', ['project' => $project_id, 'document' => $document]);
 
@@ -633,8 +679,14 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     // changing the project's status, posts the same project again. It is never a
     // new website lead: no enquiry and no conversion, which is what every Print to
     // CRM used to produce. It goes to FieldOS, where the PDF lands on the lead the
-    // customer's own submission made, and Print to CRM goes to AdminBase too.
-    if ($event !== '' && ! str_ends_with($event, '_designer_submitted')) {
+    // customer's own submission made, and Print to CRM goes to AdminBase too. The
+    // exception is a print of a website quote whose own submission never arrived:
+    // that goes down the customer's path below, late.
+    $recovered = $event === 'pdf' && fenster_windowcad_is_lost_website_quote($data, $fields, $project_id);
+    if ($recovered) {
+        fenster_windowcad_log('website quote recovered from Print to CRM: the customer\'s own submission never arrived', ['project' => $project_id]);
+    }
+    if ($event !== '' && ! str_ends_with($event, '_designer_submitted') && ! $recovered) {
         fenster_windowcad_hand_on($body, $kept, 0, $received_at);
 
         if ($event === 'pdf') {
@@ -738,7 +790,9 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         fenster_windowcad_log('submission has no Tracking field - check the WindowCAD website designer form still includes the Tracking property');
     }
 
-    $notes = 'Lead from WindowCAD';
+    $notes = $recovered
+        ? "Lead from WindowCAD, recovered from the office's Print to CRM: the customer's own submission never reached the website"
+        : 'Lead from WindowCAD';
     if ($journey_ref !== '') {
         $notes .= "\nWebsite tracking: " . $journey_ref;
     } elseif ($marketing_ref !== '') {
@@ -757,7 +811,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         $postcode !== '' ? 'Postcode: ' . $postcode : '',
         $house_number !== '' ? 'House number: ' . $house_number : '',
         $street !== '' ? 'Street: ' . $street : '',
-        'Source: WindowCAD',
+        $recovered ? "Source: WindowCAD (recovered from Print to CRM; the customer's own submission never arrived)" : 'Source: WindowCAD',
         $ads_tracker !== '' ? 'Ads tracker: ' . $ads_tracker : '',
         '',
         'Raw WindowCAD fields:',
@@ -797,6 +851,9 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         ];
         foreach ($meta as $key => $value) {
             update_post_meta((int) $enquiry_id, $key, $value);
+        }
+        if ($recovered) {
+            update_post_meta((int) $enquiry_id, '_fenster_windowcad_recovered', '1');
         }
     }
 
@@ -876,6 +933,14 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             'message' => $result->get_error_message(),
             'enquiry_id' => is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id,
         ], 500);
+    }
+
+    if ($recovered) {
+        // A reprint of this document is not another AdminBase lead.
+        $marker = fenster_windowcad_print_marker($data, $body);
+        if (wp_mkdir_p(dirname($marker))) {
+            file_put_contents($marker, gmdate('c'), LOCK_EX);
+        }
     }
 
     fenster_windowcad_log('adminbase relay succeeded', [
