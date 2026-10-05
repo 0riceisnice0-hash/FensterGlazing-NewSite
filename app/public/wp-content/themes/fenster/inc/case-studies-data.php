@@ -97,6 +97,8 @@ function fenster_case_studies(): array
        worked on still credit Shane Gowing, who was on all of them. */
     $fitter_shane = $fitter('Shane Gowing', 'Installer', '20250617_1628580-scaled.jpg');
     $fitter_aaron = $fitter('Aaron Isaacs', 'Installer', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
+    $fitter_lee = $fitter('Lee Judge', 'Installer', 'lee-judge-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
+    $fitter_dan = $fitter('Dan Hodson', 'Installer', 'dan-hodson-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
     /* Not fitters. Both are named on the Bletchley study, where the people who
        matter are the one who surveyed it and the one who ran it. Roles verified
        against Meet the Team on 2026-08-10 so the anchors and the job titles both
@@ -2258,7 +2260,7 @@ function fenster_case_studies(): array
          * on this archive and on these studies goes to the form on the repairs
          * page, and the copy never implies a repair can be priced by a tool.
          *
-         * ANDY McCULLAGH DID ALL SIX. He is a Service Engineer on Meet the Team,
+         * ANDY McCULLAGH DID THE FIRST SIX. He is a Service Engineer on Meet the Team,
          * which is the right job title for this work and is why these carry him
          * rather than an installer.
          *
@@ -2269,6 +2271,56 @@ function fenster_case_studies(): array
          * does not apply to a repair. See the note above `window-and-door-repairs`
          * in site-data.php.
          */
+        /*
+         * Tattenhoe, added 2026-10-05 from the owner's photographs, his note
+         * ("massive ali sliding door ... it weighed 185kg") and the AdminBase
+         * job sheet, which records the Schüco door, the four-person crew and
+         * the unit being delivered to site on the morning. That sheet carries
+         * the customer's name, address, phone and email and none of it is
+         * published. Dave is David Foord, the Installation Manager, so the
+         * label is "The team" rather than "Installers".
+         */
+        'sliding-door-glass-replacement-tattenhoe' => [
+            'title' => 'Sliding door glass replacement, Tattenhoe',
+            'location' => 'Tattenhoe, Milton Keynes',
+            'type' => 'Repair',
+            'date' => '2026-10-05',
+            'summary' => 'A shattered 185 kg sealed unit in a large Schüco aluminium sliding door, replaced by a four-person team with the door left where it was.',
+            'lead' => 'The big sliding panel at the back of the house had shattered. The door was fine. The glass in it weighed 185 kg, and that is what made this a four-person job rather than an ordinary reglaze.',
+            'products' => [
+                ['label' => 'Window and door repairs', 'url' => $repairs],
+                ['label' => 'Replacement glazing', 'url' => $glazing],
+            ],
+            'specs' => [
+                ['label' => 'Job', 'value' => 'One sliding door pane'],
+                ['label' => 'Door', 'value' => 'Schüco aluminium sliding door'],
+                ['label' => 'Glass', 'value' => 'One 185 kg sealed unit'],
+                ['label' => 'Team', 'value' => 'Four'],
+            ],
+            'overview' => [
+                'Toughened glass does not crack across, it crazes all at once into small blunt pieces that the frame holds where they are. That is the safety behaviour working, and it is why the before photographs show a panel still standing in one piece. It also left a kitchen looking out at a wall of white, and a door nobody would want to slide.',
+                'Nothing was wrong with the door itself, so the frame stayed in the wall and the job was the <a href="' . $glazing . '">glass</a>. A sealed unit this size weighs 185 kg. That is not something two people lift over a threshold and set into a rebate safely, so it was booked as a four-person job, and the new unit was delivered straight to the house on the morning of the fitting rather than being handled twice.',
+                'The broken unit came out, the panel was cleaned down and the new one went into the same leaf of the same door, anthracite grey outside and white inside as before. A <a href="' . $repairs . '">repair</a> like this keeps the door, the locks and the opening exactly as they were, and the after photograph is the reason to ask about one before replacing anything.',
+            ],
+            'installed' => [
+                'One 185 kg sealed unit',
+                'Fitted into the existing sliding panel',
+                'Shattered unit removed',
+                'Door frame left in place',
+            ],
+            'installers' => [$fitter_lee, $fitter_shane, $fitter_dan, $surveyor_david],
+            'team_label' => 'The team',
+            'images' => [
+                ['src' => $img . 'cs-repair-tattenhoe-sliding-door-before.jpg', 'caption' => 'Before: the large sliding panel from the garden, its glass crazed right across.'],
+                ['src' => $img . 'cs-repair-tattenhoe-pane-shattered-inside.jpg', 'caption' => 'Before: the same pane from the kitchen, crazed from one point out to every edge.'],
+                ['src' => $img . 'cs-repair-tattenhoe-sliding-door-after.jpg', 'caption' => 'After: the new 185 kg unit in the same anthracite grey door.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-repair-tattenhoe-sliding-door-after.jpg', 'caption' => 'After: the new 185 kg unit in the same anthracite grey door.'],
+            'seo' => [
+                'title_tag' => 'Sliding Door Glass Replacement, Milton Keynes | Fenster Glazing',
+                'meta_description' => 'A Fenster repair in Tattenhoe, Milton Keynes: a shattered 185 kg sealed unit in a Schüco aluminium sliding door, replaced by a four-person team.',
+            ],
+        ],
         'window-handle-replacement-haddenham' => [
             'title' => 'Window handle replacement, Haddenham',
             'location' => 'Haddenham, Buckinghamshire',
