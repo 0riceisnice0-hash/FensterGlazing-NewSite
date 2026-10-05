@@ -2272,20 +2272,22 @@ function fenster_case_studies(): array
          * in site-data.php.
          */
         /*
-         * Tattenhoe, added 2026-10-05 from the owner's photographs, his note
+         * Tattenhoe, added 2026-10-05 from the owner's photographs and note
          * ("massive ali sliding door ... it weighed 185kg") and the AdminBase
-         * job sheet, which records the Schüco door, the four-person crew and
-         * the unit being delivered to site on the morning. That sheet carries
-         * the customer's name, address, phone and email and none of it is
-         * published. Dave is David Foord, the Installation Manager, so the
-         * label is "The team" rather than "Installers".
+         * job sheet, which records the four-person crew and the unit being
+         * delivered to site on the morning. That sheet carries the customer's
+         * name, address, phone and email and none of it is published. It also
+         * names the door's maker, and the owner asked for the brand to be left
+         * off, 2026-10-05. It came in through the repair form (owner). Dave is
+         * David Foord, the Installation Manager, so the label is "The team"
+         * rather than "Installers".
          */
         'sliding-door-glass-replacement-tattenhoe' => [
             'title' => 'Sliding door glass replacement, Tattenhoe',
             'location' => 'Tattenhoe, Milton Keynes',
             'type' => 'Repair',
             'date' => '2026-10-05',
-            'summary' => 'A shattered 185 kg sealed unit in a large Schüco aluminium sliding door, replaced by a four-person team with the door left where it was.',
+            'summary' => 'A shattered 185 kg sealed unit in a large aluminium sliding door, replaced by a four-person team with the door left where it was.',
             'lead' => 'The big sliding panel at the back of the house had shattered. The door was fine. The glass in it weighed 185 kg, and that is what made this a four-person job rather than an ordinary reglaze.',
             'products' => [
                 ['label' => 'Window and door repairs', 'url' => $repairs],
@@ -2293,7 +2295,7 @@ function fenster_case_studies(): array
             ],
             'specs' => [
                 ['label' => 'Job', 'value' => 'One sliding door pane'],
-                ['label' => 'Door', 'value' => 'Schüco aluminium sliding door'],
+                ['label' => 'Door', 'value' => 'Aluminium sliding door'],
                 ['label' => 'Glass', 'value' => 'One 185 kg sealed unit'],
                 ['label' => 'Team', 'value' => 'Four'],
             ],
@@ -2318,7 +2320,7 @@ function fenster_case_studies(): array
             'card_image' => ['src' => $img . 'cs-repair-tattenhoe-sliding-door-after.jpg', 'caption' => 'After: the new 185 kg unit in the same anthracite grey door.'],
             'seo' => [
                 'title_tag' => 'Sliding Door Glass Replacement, Milton Keynes | Fenster Glazing',
-                'meta_description' => 'A Fenster repair in Tattenhoe, Milton Keynes: a shattered 185 kg sealed unit in a Schüco aluminium sliding door, replaced by a four-person team.',
+                'meta_description' => 'A Fenster repair in Tattenhoe, Milton Keynes: a shattered 185 kg sealed unit in an aluminium sliding door, replaced by a four-person team.',
             ],
         ],
         'window-handle-replacement-haddenham' => [
