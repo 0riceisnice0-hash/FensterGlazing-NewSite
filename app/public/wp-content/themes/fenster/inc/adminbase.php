@@ -696,21 +696,21 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     if ($event !== '' && ! str_ends_with($event, '_designer_submitted') && ! $recovered) {
         $receipt = fenster_windowcad_hand_on($body, $kept, 0, $received_at);
 
-        // ONLY A NEW ENQUIRY GOES TO ADMINBASE (owner, 2026-10-13: "cant a script detect that its a
-        // contract and not a new enquiery. then if new send to adminbase and glasshouse. if not new
-        // then dont pass it over to adminbase, just glasshouse"). Every print used to make an
-        // AdminBase lead, so a customer already being quoted, or one signing their contract, got
-        // another. Glasshouse matches the print to its customer, lead or visit in the same request
-        // and says newEnquiry only for a quotation printed for somebody nobody knew (it makes their
-        // lead itself). A contract or an order is never a new enquiry. If Glasshouse cannot be
-        // reached, a quotation still goes to AdminBase as it always did, so a new customer is never
-        // lost; the hourly retry gives Glasshouse its copy.
+        // ADMINBASE GETS A PRINTED QUOTE UNLESS A BOOKED VISIT EXPECTED IT (owner, 2026-10-13: "repeate
+        // customers and mulitple quotes will fuck this up. only block a lead from goign to adminbase
+        // if a sales visit is booked with the name on the quite. that way we can ensure its expecting
+        // it"). Glasshouse puts the print on its visit in the same request and answers `adminbase`:
+        // false only when it went on a booked sales visit under the quote's surname. A contract or an
+        // order is never a new lead. If Glasshouse cannot be reached, or answers without the flag, a
+        // quotation goes to AdminBase as it always did; the hourly retry gives Glasshouse its copy.
         if ($event === 'pdf') {
             $document = (string) ($data['pdf']['name'] ?? '');
-            $is_quotation = (bool) preg_match('/quot/i', $document) && ! preg_match('/contract|order|commercial/i', $document);
-            $new_enquiry = $receipt === null ? $is_quotation : ! empty($receipt['newEnquiry']);
+            $is_quotation = (bool) preg_match('/quot/i', $document) && ! preg_match('/contract|order/i', $document);
+            $new_enquiry = is_array($receipt) && array_key_exists('adminbase', $receipt)
+                ? (bool) $receipt['adminbase']
+                : $is_quotation;
             if (! $new_enquiry) {
-                fenster_windowcad_log('print to CRM kept for Glasshouse only: not a new enquiry', [
+                fenster_windowcad_log('print to CRM kept for Glasshouse only: its booked visit expected it, or not a quotation', [
                     'project' => $project_id,
                     'document' => $document,
                     'lead' => (string) ($receipt['leadNo'] ?? ''),
@@ -718,7 +718,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
 
                 return new WP_REST_Response([
                     'status' => 'success',
-                    'message' => 'Kept for Glasshouse: not a new enquiry, so not sent to AdminBase.',
+                    'message' => 'Kept for Glasshouse: expected by its booked visit, or not a quotation; not sent to AdminBase.',
                     'event' => $event,
                 ], 200);
             }
