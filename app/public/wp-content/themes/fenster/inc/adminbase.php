@@ -430,12 +430,15 @@ function fenster_windowcad_keep_payload(string $body, string $received_at): stri
     return $name;
 }
 
-/** Sends one payload to FieldOS. True once FieldOS has it. */
-function fenster_windowcad_forward(string $body, int $enquiry_id, string $received_at): bool
+/**
+ * Sends one payload to FieldOS. Its receipt once FieldOS has it (an empty array if it answered with
+ * something other than JSON), null when it does not.
+ */
+function fenster_windowcad_forward(string $body, int $enquiry_id, string $received_at): ?array
 {
     $target = fenster_fieldos_windowcad_target();
     if ($target['url'] === '' || $target['key'] === '') {
-        return false;
+        return null;
     }
 
     $response = wp_remote_post($target['url'], [
@@ -452,7 +455,7 @@ function fenster_windowcad_forward(string $body, int $enquiry_id, string $receiv
     if (is_wp_error($response)) {
         fenster_windowcad_log('forward to FieldOS failed', ['error' => $response->get_error_message()]);
 
-        return false;
+        return null;
     }
     $status = (int) wp_remote_retrieve_response_code($response);
     if ($status < 200 || $status >= 300) {
@@ -461,16 +464,18 @@ function fenster_windowcad_forward(string $body, int $enquiry_id, string $receiv
             'body' => substr((string) wp_remote_retrieve_body($response), 0, 200),
         ]);
 
-        return false;
+        return null;
     }
+    $receipt = json_decode((string) wp_remote_retrieve_body($response), true);
 
-    return true;
+    return is_array($receipt) ? $receipt : [];
 }
 
-/** Keeps the payload, then hands it on; the marker goes once FieldOS has it. */
-function fenster_windowcad_hand_on(string $body, string $kept, int $enquiry_id, string $received_at): void
+/** Keeps the payload, then hands it on; the marker goes once FieldOS has it. FieldOS's receipt, or null. */
+function fenster_windowcad_hand_on(string $body, string $kept, int $enquiry_id, string $received_at): ?array
 {
-    if (fenster_windowcad_forward($body, $enquiry_id, $received_at)) {
+    $receipt = fenster_windowcad_forward($body, $enquiry_id, $received_at);
+    if ($receipt !== null) {
         if ($kept !== '') {
             @unlink(fenster_windowcad_store_dir() . '/pending/' . basename($kept, '.json.gz'));
         }
@@ -485,6 +490,8 @@ function fenster_windowcad_hand_on(string $body, string $kept, int $enquiry_id, 
             );
         }
     }
+
+    return $receipt;
 }
 
 add_action('init', 'fenster_schedule_windowcad_forward');
@@ -514,7 +521,7 @@ function fenster_windowcad_forward_pending(int $limit = 20): array
             $failed++;
             continue;
         }
-        if (fenster_windowcad_forward($body, (int) ($meta['enquiry_id'] ?? 0), (string) ($meta['received_at'] ?? gmdate('c')))) {
+        if (fenster_windowcad_forward($body, (int) ($meta['enquiry_id'] ?? 0), (string) ($meta['received_at'] ?? gmdate('c'))) !== null) {
             @unlink($marker);
             $sent++;
         } else {
@@ -687,9 +694,34 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         fenster_windowcad_log('website quote recovered from Print to CRM: the customer\'s own submission never arrived', ['project' => $project_id]);
     }
     if ($event !== '' && ! str_ends_with($event, '_designer_submitted') && ! $recovered) {
-        fenster_windowcad_hand_on($body, $kept, 0, $received_at);
+        $receipt = fenster_windowcad_hand_on($body, $kept, 0, $received_at);
 
+        // ONLY A NEW ENQUIRY GOES TO ADMINBASE (owner, 2026-10-13: "cant a script detect that its a
+        // contract and not a new enquiery. then if new send to adminbase and glasshouse. if not new
+        // then dont pass it over to adminbase, just glasshouse"). Every print used to make an
+        // AdminBase lead, so a customer already being quoted, or one signing their contract, got
+        // another. Glasshouse matches the print to its customer, lead or visit in the same request
+        // and says newEnquiry only for a quotation printed for somebody nobody knew (it makes their
+        // lead itself). A contract or an order is never a new enquiry. If Glasshouse cannot be
+        // reached, a quotation still goes to AdminBase as it always did, so a new customer is never
+        // lost; the hourly retry gives Glasshouse its copy.
         if ($event === 'pdf') {
+            $document = (string) ($data['pdf']['name'] ?? '');
+            $is_quotation = (bool) preg_match('/quot/i', $document) && ! preg_match('/contract|order|commercial/i', $document);
+            $new_enquiry = $receipt === null ? $is_quotation : ! empty($receipt['newEnquiry']);
+            if (! $new_enquiry) {
+                fenster_windowcad_log('print to CRM kept for Glasshouse only: not a new enquiry', [
+                    'project' => $project_id,
+                    'document' => $document,
+                    'lead' => (string) ($receipt['leadNo'] ?? ''),
+                ]);
+
+                return new WP_REST_Response([
+                    'status' => 'success',
+                    'message' => 'Kept for Glasshouse: not a new enquiry, so not sent to AdminBase.',
+                    'event' => $event,
+                ], 200);
+            }
             $printed = fenster_windowcad_print_to_adminbase($data, $fields, $body);
             if (is_wp_error($printed['result'])) {
                 return new WP_REST_Response([
