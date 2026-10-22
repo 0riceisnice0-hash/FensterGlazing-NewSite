@@ -208,7 +208,7 @@ $first_slug = (string) array_key_first($guides);
                 <div class="fg-care-promise__contact">
                     <a class="button" href="tel:01908429200" data-fg-care-call><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
                     <a class="fg-care-promise__email" href="mailto:info@fensterglazing.com"><?php esc_html_e('info@fensterglazing.com', 'fenster'); ?></a>
-                    <p><?php esc_html_e('Showroom open Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Showroom open Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm. Phone lines open 24/7.', 'fenster'); ?></p>
                 </div>
             </div>
         </section>

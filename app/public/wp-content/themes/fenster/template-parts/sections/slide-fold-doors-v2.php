@@ -404,7 +404,7 @@ $slide_fold_colours = is_array($slide_fold_colours) ? $slide_fold_colours : [];
                 <h2 id="fg-sf-close-title"><?php esc_html_e('Ten minutes with one beats ten minutes reading.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('There is one standing in our Milton Keynes showroom, and it is the door in the film at the top of this page. Slide a panel round, swing it open on its own, and push the run closed until it pulls onto its seals. That is the part no page can do for you.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('Open Monday to Friday, 8.30am to 5pm', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Open Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm', 'fenster'); ?></li>
                     <li><?php esc_html_e('98 Alston Drive, Bradwell Abbey, MK13 9HF', 'fenster'); ?></li>
                 </ul>
                 <?php /* TWO LINKS, NOT FOUR. It carried links to bifold and

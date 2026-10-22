@@ -56,8 +56,8 @@ function fenster_site_data(): array
                `showroom_hours` is the showroom on its own, for anywhere that is
                answering "when can I turn up". Owner instruction, 2026-08-02:
                a showroom opening-hours block must not carry the phone line. */
-            'hours' => 'Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.',
-            'showroom_hours' => 'Monday to Friday, 8.30am to 5pm',
+            'hours' => 'Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm. Phone lines open 24/7.',
+            'showroom_hours' => 'Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm',
             /* The two founders, owner-confirmed, read by the About page and by
                the `founder` property on the business schema so the names, roles
                and profile links cannot drift between them. `anchor` is the id

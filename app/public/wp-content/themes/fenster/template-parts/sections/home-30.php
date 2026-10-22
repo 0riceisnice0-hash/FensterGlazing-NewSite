@@ -470,7 +470,7 @@ $h30_case_url = static function (string $slug): string {
                     </a>
                     <div class="fg-h30-proof__body">
                         <h3>A showroom you can walk into</h3>
-                        <p>Alston Drive, Bradwell Abbey. Monday to Friday, 8.30am to 5pm, with the full samples on the floor rather than in a brochure.</p>
+                        <p>Alston Drive, Bradwell Abbey. Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm, with the full samples on the floor rather than in a brochure.</p>
                         <a href="<?php echo esc_url(home_url('/contact/')); ?>">Find the showroom</a>
                     </div>
                 </article>

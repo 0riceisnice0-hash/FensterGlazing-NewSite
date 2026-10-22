@@ -3001,6 +3001,12 @@ function fenster_render_site_schema(): void
                 'opens' => '08:30',
                 'closes' => '17:00',
             ],
+            [
+                '@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => ['Saturday'],
+                'opens' => '11:00',
+                'closes' => '15:00',
+            ],
         ],
         // Milton Keynes leads, then its own suburbs, then the wider ring. The
         // suburbs are where proximity is a genuine advantage and where the

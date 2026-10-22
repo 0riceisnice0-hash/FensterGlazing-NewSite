@@ -369,7 +369,7 @@ function fenster_legend_verified_business_context(): string
         'Contact: ' . (string) ($brand['phone'] ?? '01908 429200') . '; ' . (string) ($brand['email'] ?? 'info@fensterglazing.com') . '.',
         'Address: ' . $address . '.',
         'Legend is Fenster\'s real black office cat and Chief Meow Officer. Legend\'s dad is Nick Baker, Fenster\'s Sales Director.',
-        'Opening hours: Monday to Friday, 8.30am to 5pm. Phone lines are open 24/7. Fenster is closed at weekends.',
+        'Opening hours: Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm. Phone lines are open 24/7. Showroom is closed on Sundays.',
         'Residential service area: Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire.',
         'Commercial service area: nationwide across England and Wales.',
         'Cat and dog flaps come in two types: a standard flap that locks by hand, and a microchip flap that opens only for a pet whose chip is registered to it. Either goes into a new sealed glass unit, made to order with the aperture already in it because sealed glass cannot be cut, or into a door panel that Fenster cuts. Both routes suit cats and dogs, and both work on doors and windows already in the house as well as new ones. Fenster is an approved SureFlap installer and fits other makes too. Glass takes about a week or two from survey; a panel is quicker. Fenster normally supplies the flap. If a customer asks whether they can supply their own, the answer is yes, but do not offer it unprompted.',

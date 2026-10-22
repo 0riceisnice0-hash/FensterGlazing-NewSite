@@ -401,7 +401,7 @@ $routes = [
                         <?php endforeach; ?>
                     </address>
                 <?php endif; ?>
-                <p class="fg-about-visit__hours"><?php esc_html_e('Monday to Friday, 8.30am to 5pm. Phone lines answered around the clock.', 'fenster'); ?></p>
+                <p class="fg-about-visit__hours"><?php esc_html_e('Monday to Friday, 8.30am to 5pm, Saturday 11am to 3pm. Phone lines answered around the clock.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html('Call ' . $phone); ?></a>
                     <a class="button button--light" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact us', 'fenster'); ?></a>
