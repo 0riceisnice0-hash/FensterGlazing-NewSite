@@ -251,6 +251,78 @@ function fenster_case_studies(): array
          * treatment as Bletchley, Headrow and Heal's. The first pass blurred
          * them so hard they read as grey discs, which is worse than the
          * reflection; these are feathered and invisible at render size. */
+        /* MIDFIELD PRIMARY SCHOOL, ST PAUL'S CRAY. Owner-supplied 2026-11-03.
+         *
+         * A MAIN CONTRACTOR JOB, so the school is named and the contractor is
+         * not, anywhere: copy, captions, filenames or this comment. Same shape
+         * as Heal's. Nothing here claims a repeat relationship, because none
+         * was given.
+         *
+         * FITTED OVER OCTOBER HALF TERM 2026, owner-confirmed, to the week only.
+         * `date_confirmed` is false so no day prints; the 30th orders the
+         * archive and the month is in the `Completed` spec row.
+         *
+         * COUNTS AND SYSTEM ARE THE OWNER'S: eight Liniar uPVC casements, one
+         * aluminium door, Teleflex remote openers on the high level openers. No
+         * U-value is printed, because nothing confirms the glass these carry.
+         * The door system is not named because it was not given.
+         *
+         * SEVEN IMAGES, hero plus six, so the two-column gallery stays even.
+         * Left out: an angled shot with another firm's name and phone number on
+         * a ladder, and two near duplicates. Nobody behind the glass is
+         * identifiable, so nothing is blurred. The hero is portrait, so the
+         * archive card is a 1200x750 band cut from it. */
+        'midfield-primary-school-orpington' => [
+            'title' => 'uPVC windows and an aluminium door, Midfield Primary School',
+            'location' => 'St Paul\'s Cray, Orpington',
+            'type' => 'Commercial',
+            'sector' => 'Schools and education',
+            'service' => 'uPVC windows and an aluminium door',
+            'sector_url' => home_url('/school-and-education-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'date' => '2026-10-30',
+            'date_confirmed' => false,
+            'summary' => 'Eight white Liniar uPVC casement windows and an aluminium double door for Midfield Primary School, fitted over October half term so the classrooms were ready for the children coming back.',
+            'lead' => 'Midfield Primary School is in St Paul\'s Cray, on the edge of Orpington. We replaced eight classroom windows and an external door over the October half term in 2026, and it was finished in time for the children coming back.',
+            'products' => [
+                ['label' => 'School and education glazing', 'url' => home_url('/school-and-education-glazing/')],
+                ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'Windows', 'value' => '8 Liniar uPVC casements, white'],
+                ['label' => 'Door', 'value' => '1 aluminium double door, white'],
+                ['label' => 'Openers', 'value' => 'Teleflex remote openers at high level'],
+                ['label' => 'Completed', 'value' => 'October 2026 half term'],
+            ],
+            'overview' => [
+                'The work came to us through the main contractor running the project at the school. Our part was the glazing: eight white <a href="' . $casement . '">Liniar uPVC casement windows</a> in the classrooms, and a white <a href="' . esc_url(home_url('/commercial-windows-and-doors/')) . '">aluminium double door</a> with a toplight, taking a classroom straight out onto the playground.',
+                'A primary school is empty for one week at October half term, and that week was the programme. The windows and the door were made before the holiday started, so the time on site went on fitting them, and the classrooms were ready when the children came back. This was the first phase of the work at the school, with the second due to start a few weeks later.',
+                'The windows have top-hung openers. Where an opener sits high in the frame, out of reach from the floor, it is worked by a remote opener: a cable runs along the transom from the opener to a control on the wall beside the window, so a teacher can open it from where they stand. The trade calls them Teleflex.',
+                'The door is a pair of white aluminium leaves under a two pane toplight, glazed above and below a solid mid rail, with pull handles at the meeting stiles. It is the classroom\'s way out onto the playground, so it is opened and closed by a whole class at a time, every day of term.',
+            ],
+            'installed' => [
+                '8 Liniar uPVC casement windows, white, with top-hung openers',
+                'Teleflex remote openers to the high level openers',
+                '1 white aluminium double door with a two pane toplight',
+                'Fitted over the October 2026 half term',
+            ],
+            'card_image' => ['src' => $img . 'cs-midfield-primary-card.jpg', 'caption' => 'The white aluminium double door at Midfield Primary School, with the toplight above it.'],
+            'images' => [
+                ['src' => $img . 'cs-midfield-primary-aluminium-doors.jpg', 'caption' => 'The aluminium double door square on, glazed above and below the mid rail, with the two pane toplight over it.'],
+                ['src' => $img . 'cs-midfield-primary-doors-playground.jpg', 'caption' => 'The door from the playground, opening straight out of the classroom.'],
+                ['src' => $img . 'cs-midfield-primary-windows-two-storeys.jpg', 'caption' => 'One elevation finished across both floors, the new white windows against the yellow brick.'],
+                ['src' => $img . 'cs-midfield-primary-windows-ground-floor.jpg', 'caption' => 'Two of the classroom windows square on, each divided into four panes by a mullion and a transom.'],
+                ['src' => $img . 'cs-midfield-primary-window-inside.jpg', 'caption' => 'A window from inside the classroom, with the openers along the top and the remote opener cable running across to the wall.'],
+                ['src' => $img . 'cs-midfield-primary-window-inside-square.jpg', 'caption' => 'The same type of window square on from inside, both top-hung openers closed.'],
+                ['src' => $img . 'cs-midfield-primary-remote-opener.jpg', 'caption' => 'A remote opener close up, fixed to the bottom of the opener with its cable running along the transom.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Midfield Primary School: uPVC Windows and an Aluminium Door',
+                'meta_description' => 'A Fenster commercial project at Midfield Primary School, Orpington: eight Liniar uPVC windows and an aluminium double door, fitted over October half term.',
+            ],
+        ],
         'all-hallows-bedford' => [
             'title' => 'AOV windows, screens and steel doorsets, All Hallows, Bedford',
             'location' => 'Bedford',
