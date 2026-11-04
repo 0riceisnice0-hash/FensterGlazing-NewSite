@@ -18331,8 +18331,11 @@ a.fg-cs-card__pill:focus-visible {
   padding: clamp(4rem, 6.5vw, 6rem) 0;
 }
 
+/* Transparent on purpose (2026-11-04): this was a full-width white band under
+   the hero, a hard seam against the page canvas. Each person is already a
+   white bordered card, which carries the contrast. */
 .fg-team-people {
-  background: #ffffff;
+  background: transparent;
 }
 
 .fg-team-bosses {
