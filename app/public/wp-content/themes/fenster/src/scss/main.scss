@@ -192,10 +192,37 @@ body {
   margin: 0;
   overflow-x: clip;
   color: var(--color-ink);
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
+  /* Solid base only. The gradient itself is painted by `body::before` below.
+     #eef5f4 is the gradient's own top-left stop and the critical-CSS paint in
+     inc/assets.php, so overscroll and first paint match the canvas. */
+  background: #eef5f4;
   font-family: "Gibson", Arial, Helvetica, sans-serif;
   line-height: 1.6;
+}
+
+/* THE PAGE CANVAS: ONE GRADIENT, PINNED TO THE SCREEN, ON EVERY DEVICE.
+   Fixed 2026-11-04. This used to be `background: var(--fg-page-gradient)` with
+   `background-attachment: fixed` on `body`. iOS WebKit (Safari, and every
+   in-app browser on an iPhone: Instagram, Facebook, Gmail) ignores `fixed`,
+   so on phones the gradient was stretched down the whole document instead of
+   the screen, and on the pages whose wrapper painted a second copy the two
+   stretched copies stacked into a murky grey-green. A fixed layer behind the
+   page renders the same way everywhere. It sits at z-index -1 in the root
+   stacking context, so normal-flow sections and their own backgrounds paint
+   over it; every z-index -2 layer in this file is inside an isolated parent.
+   Do not paint `--fg-page-gradient` on any wrapper or section: see the
+   Site-Wide Background Rule in STYLE.md. */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  height: 100vh;
+  height: 100lvh;
+  background: var(--fg-page-gradient);
+  pointer-events: none;
 }
 
 @supports not (overflow: clip) {
@@ -928,9 +955,10 @@ a {
 }
 
 /* Dedicated consultation booking page: an appointment-led counterpart to the quote tool. */
+/* No background: the page canvas comes from `body::before`. A second copy here
+   stacked into a doubled gradient on phones (fixed 2026-11-04). */
 .fg-consultation-page {
   color: var(--color-ink);
-  background: var(--fg-page-gradient);
 }
 
 .fg-consultation-page__hero,
@@ -7239,8 +7267,10 @@ h3 {
   line-height: 1.5;
 }
 
+/* Transparent on purpose: this was a full-width pale band restarting the page
+   canvas. The lead and cards below are white panels and carry the contrast. */
 .fg-pet-flap-guide {
-  background: linear-gradient(180deg, #f7fbf8 0%, #ffffff 100%);
+  background: transparent;
 }
 
 .fg-pet-flap-guide__grid {
@@ -18234,10 +18264,8 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-team-hero {
   padding: clamp(4rem, 7vw, 6.2rem) 0 clamp(3.5rem, 6vw, 5rem);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(232, 241, 240, 0.88)),
-    radial-gradient(circle at 88% 16%, rgba(46, 172, 102, 0.18), transparent 30%),
-    var(--color-soft);
+  /* No background: this painted its own copy of the canvas (pale wash plus a
+     green bloom) over the page gradient. Removed 2026-11-04. */
 }
 
 .fg-team-hero__copy {
@@ -23042,10 +23070,8 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-careers-hero {
   padding: clamp(4rem, 7vw, 6.5rem) 0;
-  background:
-    radial-gradient(circle at 14% 22%, rgba(46, 172, 102, 0.16), transparent 34%),
-    radial-gradient(circle at 86% 14%, rgba(0, 45, 58, 0.14), transparent 32%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(237, 246, 244, 0.72));
+  /* No background: this was a second copy of the page canvas (green and navy
+     blooms over a pale wash) stacked on the real one. Removed 2026-11-04. */
 }
 
 .fg-careers-hero__grid,
@@ -30394,8 +30420,8 @@ html.fg-blinds-reveal-locked {
 
 // Roof lanterns: a dedicated, image-led product journey rather than the shared product template.
 .fg-roof-lantern-page {
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
+  /* No background: the canvas comes from `body::before`. Repainting it here
+     doubled the gradient on phones (fixed 2026-11-04). */
   overflow: clip;
 
   h1,
@@ -31385,7 +31411,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-fensa-page {
-  background: var(--fg-page-gradient);
+  /* No background: the canvas comes from `body::before`. Repainting it here
+     doubled the gradient on phones (fixed 2026-11-04). */
   color: #12363b;
 }
 
@@ -31606,8 +31633,8 @@ html.fg-blinds-reveal-locked {
 
 // Flat rooflights: a separate product journey for fixed, opening, large and walk-on units.
 .fg-flat-rooflight-page {
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
+  /* No background: the canvas comes from `body::before`. Repainting it here
+     doubled the gradient on phones (fixed 2026-11-04). */
   overflow: clip;
 
   h1,
@@ -33805,7 +33832,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Composite doors: approved range correction and one continuous canvas.
-   The canvas is painted once on `body` with background-attachment: fixed.
+   The canvas is painted once, by the fixed `body::before` layer.
    Do not repaint --fg-page-gradient here: a second, scrolling copy over the
    fixed one is what produced the visible banding reported on 2026-07-22. */
 .generated-page--composite-doors .fg-hero__image {
@@ -37051,8 +37078,8 @@ html.fg-blinds-reveal-locked {
    --------------------------------------------------------------------------- */
 
 .fg-heritage-door-page {
-  background: var(--fg-page-gradient);
-  background-attachment: fixed;
+  /* No background: the canvas comes from `body::before`. Repainting it here
+     doubled the gradient on phones (fixed 2026-11-04). */
   overflow: clip;
 
   h1,
@@ -43942,8 +43969,8 @@ html.fg-blinds-reveal-locked {
 /* ---------------------------------------------------------------------------
    /online-quote/ - the instant quote tool page (.fg-oq)
 
-   The page canvas is already painted on `body` with `background-attachment:
-   fixed`, so nothing here repaints `--fg-page-gradient`. See the background
+   The page canvas is already painted by the fixed `body::before` layer,
+   so nothing here repaints `--fg-page-gradient`. See the background
    rule in STYLE.md; repainting it stacks a second, scrolling gradient over the
    fixed one and reads as banding between sections.
 
@@ -45665,11 +45692,11 @@ html.fg-blinds-reveal-locked {
    JavaScript hides the unselected ones, so the no-JS fallback is the whole
    document rather than an empty box.
 
-   THE PAGE CANVAS IS NOT REPAINTED HERE. `body` already paints
-   `--fg-page-gradient` with `background-attachment: fixed`; a second copy on a
+   THE PAGE CANVAS IS NOT REPAINTED HERE. `body::before` already paints
+   `--fg-page-gradient` as a fixed layer; a second copy on a
    route wrapper stacks a scrolling gradient over the fixed one and bands the
    section joins. STYLE.md records that defect against .fg-fensa-page and
-   friends and this page deliberately does not repeat it.
+   friends (fixed 2026-11-04); this page deliberately does not repeat it.
    ------------------------------------------------------------------------- */
 
 .fg-care-hero {
