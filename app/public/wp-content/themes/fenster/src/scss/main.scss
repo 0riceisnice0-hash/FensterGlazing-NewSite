@@ -54468,6 +54468,12 @@ html.fg-blinds-reveal-locked {
   white-space: nowrap;
 }
 
+.fg-hn-tile__from b {
+  color: var(--fg-hn-ink);
+  font-size: var(--fg-hn-t4);
+  font-weight: 600;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .fg-hn-tile:hover .fg-hn-tile__img img {
     transform: scale(1.04);
