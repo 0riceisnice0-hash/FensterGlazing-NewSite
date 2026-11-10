@@ -2,8 +2,10 @@
    styles in the .fg-ha block at the end of src/scss/main.scss.
 
    - Picking a product (the four tiles are real links, so this is only an
-     enhancement) wipes its photo onto the stage and swaps the copy beside it
-     for that product's price, the quote tool's steps and one button.
+     enhancement) wipes its photo onto the stage and turns the bar into the
+     kinds the quote tool prices; each is a link straight into the tool.
+     Conversion first (owner, 10/11/2026): nothing stands between a choice
+     and the tool. Bifolds have one kind, so that tile is a plain link.
    - The chosen product is carried into every price button on the page
      ([data-fg-ha-price]) and into the footer's phone price bar, and kept for
      the visitor's next visit.
@@ -46,10 +48,7 @@ export function initHomeA() {
   const detail = $('[data-fg-ha-detail]');
   const stage = $('[data-fg-ha-stage]');
   const name = $('[data-fg-ha-name]');
-  const from = $('[data-fg-ha-from]');
-  const shots = $('[data-fg-ha-shots]');
-  const choose = $('[data-fg-ha-choose]');
-  const sash = $('[data-fg-ha-sash]');
+  const asks = config.asks || {};
   let current = null;
 
   /* The photo stage: the new photo wipes in over the last (a clip-path mask). */
@@ -76,12 +75,9 @@ export function initHomeA() {
     const p = P[k];
     if (!p || !hero || !lineup || !detail) return;
     current = k;
-    name.textContent = p.name;
-    from.textContent = p.from;
-    const isWindow = p.kind === 'window';
-    if (shots) shots.hidden = !isWindow;
-    if (choose) choose.hidden = isWindow;
-    if (sash) sash.hidden = !isWindow;
+    if (!asks[k]) return;
+    name.textContent = asks[k];
+    $$('[data-fg-ha-types]').forEach((list) => { list.hidden = list.dataset.fgHaTypes !== k; });
     carry(k);
     try { window.localStorage.setItem('fg_ha_pick', k); } catch (_error) { /* storage off */ }
     lineup.hidden = true;
@@ -130,46 +126,6 @@ export function initHomeA() {
     link.removeAttribute('aria-busy');
   }));
 
-  /* The quote tool's screens, enlarged: grows out of the tapped thumbnail at
-     scale .95 and shrinks back into it, 20% faster on the way out. */
-  const box = $('[data-fg-ha-zoombox]');
-  const boxImg = box ? $('img', box) : null;
-  let opener = null;
-  const closeZoom = () => {
-    if (!box || !box.open) return;
-    box.classList.remove('is-open');
-    window.setTimeout(() => { if (box.open) box.close(); }, still() ? 0 : 160);
-  };
-  $$('[data-fg-ha-zoom]').forEach((button) => button.addEventListener('click', () => {
-    const src = button.dataset.fgHaZoom;
-    if (!box || !boxImg || typeof box.showModal !== 'function') {
-      window.open(src, '_blank', 'noopener');
-      return;
-    }
-    const thumb = $('img', button);
-    opener = button;
-    boxImg.src = src;
-    boxImg.alt = thumb ? thumb.alt : '';
-    box.showModal();
-    if (thumb) {
-      const t = thumb.getBoundingClientRect();
-      const d = box.getBoundingClientRect();
-      box.style.transformOrigin = `${Math.round(t.left + t.width / 2 - d.left)}px ${Math.round(t.top + t.height / 2 - d.top)}px`;
-    }
-    void box.offsetWidth;
-    box.classList.add('is-open');
-  }));
-  if (box) {
-    box.addEventListener('cancel', (event) => { event.preventDefault(); closeZoom(); });
-    box.addEventListener('click', (event) => { if (event.target === box || event.target === boxImg) closeZoom(); });
-    box.addEventListener('close', () => {
-      box.classList.remove('is-open');
-      if (opener) opener.focus({ preventScroll: true });
-    });
-    const closeButton = $('[data-fg-ha-zoomclose]', box);
-    if (closeButton) closeButton.addEventListener('click', closeZoom);
-  }
-
   /* Before and after: wipes to "after" once, the first time it is in view,
      unless the visitor has already used the switch. */
   const ba = $('[data-fg-ha-ba]');
@@ -191,12 +147,22 @@ export function initHomeA() {
       touched = true;
       setBA(button.dataset.fgHaBaV === 'after');
     }));
+    /* It used to fire the moment 60% of the frame was in view, which a
+       visitor scrolling past was still above: by the time they looked it had
+       already happened (owner, 10/11/2026). Now the whole frame has to be on
+       screen, and stay there for 900ms, before it plays; scrolling away
+       first cancels it. */
     if (frame && 'IntersectionObserver' in window) {
+      let timer = 0;
       const io = new IntersectionObserver((entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        io.disconnect();
-        window.setTimeout(() => { if (!touched) setBA(true); }, still() ? 0 : 500);
-      }, { threshold: 0.6 });
+        const entry = entries[entries.length - 1];
+        window.clearTimeout(timer);
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.9) return;
+        timer = window.setTimeout(() => {
+          io.disconnect();
+          if (!touched) setBA(true);
+        }, still() ? 0 : 900);
+      }, { threshold: [0, 0.9, 1] });
       io.observe(frame);
     }
   }

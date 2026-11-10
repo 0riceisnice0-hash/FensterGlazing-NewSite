@@ -54282,26 +54282,98 @@ html.fg-blinds-reveal-locked {
   font-size: var(--fg-hn-t4);
 }
 
-.fg-hn-hero__trust {
-  display: flex;
-  flex-direction: column;
-  gap: var(--fg-hn-s3);
-  margin: var(--fg-hn-s8) 0 0;
+/* Reviews and accreditations as the marks themselves (owner, 10/11/2026:
+   the text list "looks shit"). Google, with the score, spans the row; the
+   other three sit under it. White cards lifted off the page, no borders. */
+.fg-hn-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--fg-hn-s2);
+  max-width: 400px;
+  margin: var(--fg-hn-s7) 0 0;
   padding: 0;
   list-style: none;
-  color: var(--fg-hn-muted);
-  font-size: var(--fg-hn-t2);
 }
 
-.fg-hn-hero__trust li {
+.fg-hn-proof li {
+  display: flex;
+  min-width: 0;
+  border-radius: var(--fg-hn-r2);
+  background: var(--fg-hn-white);
+  box-shadow: var(--fg-hn-shadow-1);
+}
+
+.fg-hn-proof li > a,
+.fg-hn-proof li > img {
+  margin: auto;
+}
+
+.fg-hn-proof li > a {
   display: flex;
   align-items: center;
-  gap: var(--fg-hn-s3);
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--fg-hn-ink);
+  text-decoration: none;
 }
 
-.fg-hn-hero__trust img {
+.fg-hn-proof img {
+  display: block;
   width: auto;
-  height: 24px;
+  max-width: 78%;
+  height: 34px;
+  object-fit: contain;
+}
+
+.fg-hn-proof li:not(.fg-hn-proof__google) {
+  height: 64px;
+}
+
+.fg-hn-proof__google {
+  grid-column: 1 / -1;
+  height: 72px;
+}
+
+.fg-hn-proof__google a {
+  gap: var(--fg-hn-s4);
+}
+
+.fg-hn-proof__google img {
+  height: 44px;
+  max-width: none;
+}
+
+.fg-hn-proof__score {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.fg-hn-proof__score b {
+  font-size: var(--fg-hn-t6);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.fg-hn-proof__score small {
+  color: var(--fg-hn-muted);
+  font-size: var(--fg-hn-t1);
+  font-weight: 600;
+}
+
+.fg-hn-proof li:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 761px) {
+  .fg-hn-hero.is-open .fg-hn-hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-hn-hero.is-open .fg-hn-hero__copy {
+    display: none;
+  }
 }
 
 .fg-hn-hero__stagecol {
@@ -54342,6 +54414,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-hn-lineup li {
+  position: relative;
   min-width: 0;
   min-height: 0;
 }
@@ -54384,12 +54457,14 @@ html.fg-blinds-reveal-locked {
   transition: transform 0.6s var(--fg-hn-in);
 }
 
+/* Name and price on the left; the tile's own button sits to their right. */
 .fg-hn-tile__row {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--fg-hn-s4);
+  flex-direction: column;
+  gap: 2px;
+  min-height: 48px;
   margin-top: var(--fg-hn-s4);
+  padding-right: 168px;
 }
 
 .fg-hn-tile__name {
@@ -54402,6 +54477,55 @@ html.fg-blinds-reveal-locked {
   color: var(--fg-hn-muted);
   font-size: var(--fg-hn-t2);
   white-space: nowrap;
+}
+
+/* Straight into the quote tool on that product: no stage, no wait. */
+.fg-hn-tile__cta {
+  position: absolute;
+  right: var(--fg-hn-s5);
+  bottom: var(--fg-hn-s4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fg-hn-s1);
+  min-height: 48px;
+  padding: 0 var(--fg-hn-s4) 0 var(--fg-hn-s5);
+  border-radius: var(--fg-hn-pill);
+  background: var(--fg-hn-accent);
+  box-shadow: var(--fg-hn-shadow-btn);
+  color: var(--fg-hn-white);
+  font-size: var(--fg-hn-t2);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.12s var(--fg-hn-in), opacity 0.16s ease;
+}
+
+.fg-hn-tile__cta:hover,
+.fg-hn-tile__cta:focus-visible {
+  color: var(--fg-hn-white);
+}
+
+.fg-hn-tile__cta:active {
+  transform: scale(0.97);
+}
+
+.fg-hn-tile__cta .fg-hn-ic {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s var(--fg-hn-in);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fg-hn-tile__cta:hover .fg-hn-ic {
+    transform: translateX(2px);
+  }
+}
+
+.fg-hn-lineup.is-out .fg-hn-tile__cta {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .fg-hn-tile__from b {
@@ -54442,9 +54566,9 @@ html.fg-blinds-reveal-locked {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
   grid-template-rows: auto minmax(0, 1fr);
-  gap: var(--fg-hn-s5) var(--fg-hn-s6);
+  gap: var(--fg-hn-s5) var(--fg-hn-s8);
 }
 
 .fg-hn-detail__bar {
@@ -54538,7 +54662,9 @@ html.fg-blinds-reveal-locked {
 .fg-hn-info {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-width: 0;
+  padding: var(--fg-hn-s5) 0;
 }
 
 .fg-hn-info p {
@@ -54546,109 +54672,67 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-hn-info__name {
-  font-size: var(--fg-hn-t4);
+  font-size: var(--fg-hn-t5);
   font-weight: 600;
 }
 
 .fg-hn-info .fg-hn-info__price {
-  margin-top: var(--fg-hn-s1);
-  font-size: var(--fg-hn-t7);
+  margin-top: var(--fg-hn-s2);
+  font-size: clamp(48px, 4.6vw, 72px);
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
 .fg-hn-info__price small {
-  margin-right: var(--fg-hn-s1);
+  margin-right: var(--fg-hn-s2);
+  color: var(--fg-hn-muted);
   font-size: var(--fg-hn-t4);
   letter-spacing: 0;
 }
 
-.fg-hn-tool {
-  margin: var(--fg-hn-s5) 0 0;
-}
-
-.fg-hn-tool__screen {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--fg-hn-r2);
-  background: var(--fg-hn-white);
-  box-shadow: var(--fg-hn-shadow-1);
-}
-
-.fg-hn-tool__screen img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fg-hn-tool__steps,
-.fg-hn-opts {
-  display: flex;
-  align-items: center;
-  gap: var(--fg-hn-s2);
-  margin-top: var(--fg-hn-s3);
+.fg-hn-info .fg-hn-info__vat {
+  margin-top: var(--fg-hn-s2);
   color: var(--fg-hn-muted);
   font-size: var(--fg-hn-t2);
-  font-weight: 600;
 }
 
-.fg-hn-tool__steps button {
-  min-height: 32px;
-  padding: 0 var(--fg-hn-s1);
-  border: 0;
-  background: none;
-  color: var(--fg-hn-muted);
-  font: inherit;
-  cursor: pointer;
-  transition: color 0.2s ease;
+.fg-hn-info__how {
+  display: grid;
+  gap: var(--fg-hn-s3);
+  margin: var(--fg-hn-s6) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fg-hn-t3);
 }
 
-.fg-hn-tool__steps button[aria-pressed="true"],
-.fg-hn-tool__steps button:hover {
-  color: var(--fg-hn-ink);
-  text-decoration: underline;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
+.fg-hn-info__how li {
+  display: flex;
+  align-items: center;
+  gap: var(--fg-hn-s3);
 }
 
-.fg-hn-opts {
-  margin-top: var(--fg-hn-s5);
-}
-
-.fg-hn-stage[data-kind="door"] .fg-hn-tool,
-.fg-hn-stage[data-kind="window"] .fg-hn-opts {
-  display: none;
+.fg-hn-ic--tick {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  stroke: var(--fg-hn-accent);
+  stroke-width: 2;
 }
 
 .fg-hn-info__act {
-  margin-top: auto;
-  padding-top: var(--fg-hn-s5);
+  margin-top: var(--fg-hn-s6);
 }
 
 .fg-hn-info__sash {
   min-height: 24px;
-  margin-top: var(--fg-hn-s3);
+  margin-top: var(--fg-hn-s4);
   font-size: var(--fg-hn-t2);
   text-align: center;
 }
 
 .fg-hn-stage[data-kind="door"] .fg-hn-info__sash {
   visibility: hidden;
-}
-
-/* Doors: the render is the picture, so the price, the steps and the button
-   sit together in the middle of the column. */
-.fg-hn-stage[data-kind="door"] .fg-hn-info {
-  justify-content: center;
-}
-
-.fg-hn-stage[data-kind="door"] .fg-hn-info__act {
-  margin-top: 0;
-  padding-top: var(--fg-hn-s6);
 }
 
 .fg-hn-detail.is-enter .fg-hn-in {
@@ -55058,13 +55142,62 @@ html.fg-blinds-reveal-locked {
     padding: var(--fg-hn-s5) 0 var(--fg-hn-s7);
   }
 
+  /* The copy dissolves into the column so the marks can sit under the
+     products: the products and their buttons come first on a phone. */
   .fg-hn-hero__grid {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     height: auto;
   }
 
   .fg-hn-hero__copy {
-    padding: 0 0 var(--fg-hn-s5);
+    display: contents;
+  }
+
+  .fg-hn-hero__line {
+    margin-bottom: var(--fg-hn-s5);
+  }
+
+  .fg-hn-proof {
+    order: 3;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: none;
+    margin-top: var(--fg-hn-s5);
+  }
+
+  .fg-hn-proof__google {
+    grid-column: auto;
+  }
+
+  .fg-hn-proof li,
+  .fg-hn-proof li:not(.fg-hn-proof__google),
+  .fg-hn-proof__google {
+    height: 56px;
+    border-radius: var(--fg-hn-r1);
+  }
+
+  .fg-hn-proof img,
+  .fg-hn-proof__google img {
+    max-width: 80%;
+    height: 26px;
+  }
+
+  .fg-hn-proof__google a {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .fg-hn-proof__google img {
+    height: 20px;
+  }
+
+  .fg-hn-proof__score b {
+    font-size: var(--fg-hn-t2);
+  }
+
+  .fg-hn-proof__score small {
+    display: none;
   }
 
   .fg-hn-hero__title {
@@ -55078,10 +55211,6 @@ html.fg-blinds-reveal-locked {
     font-size: var(--fg-hn-t3);
   }
 
-  .fg-hn-hero__trust {
-    display: none;
-  }
-
   .fg-hn-lineup,
   .fg-hn-detail {
     position: relative;
@@ -55089,18 +55218,28 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-hn-lineup {
-    grid-template-rows: 184px 184px;
+    grid-template-rows: 236px 236px;
     gap: var(--fg-hn-s2);
   }
 
   .fg-hn-tile {
-    padding: var(--fg-hn-s4) var(--fg-hn-s3) var(--fg-hn-s3);
+    padding: var(--fg-hn-s4) var(--fg-hn-s3) 60px;
     border-radius: var(--fg-hn-r2);
   }
 
   .fg-hn-tile__row {
     display: block;
+    min-height: 0;
     margin-top: var(--fg-hn-s2);
+    padding-right: 0;
+  }
+
+  .fg-hn-tile__cta {
+    right: var(--fg-hn-s2);
+    bottom: var(--fg-hn-s2);
+    left: var(--fg-hn-s2);
+    min-height: 44px;
+    padding: 0 var(--fg-hn-s2);
   }
 
   .fg-hn-tile__name {
@@ -55115,7 +55254,7 @@ html.fg-blinds-reveal-locked {
 
   .fg-hn-detail {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 200px auto;
+    grid-template-rows: auto 260px auto;
     gap: var(--fg-hn-s3);
   }
 
@@ -55160,27 +55299,27 @@ html.fg-blinds-reveal-locked {
     font-size: var(--fg-hn-t3);
   }
 
+  .fg-hn-info {
+    padding: var(--fg-hn-s2) 0 0;
+  }
+
   .fg-hn-info .fg-hn-info__price {
-    margin-top: 0;
-    font-size: var(--fg-hn-t6);
+    margin-top: var(--fg-hn-s1);
+    font-size: 44px;
+  }
+
+  .fg-hn-info__how {
+    gap: var(--fg-hn-s2);
+    margin-top: var(--fg-hn-s4);
+    font-size: var(--fg-hn-t2);
   }
 
   .fg-hn-info__price small {
     font-size: var(--fg-hn-t3);
   }
 
-  /* The tool's screens are too small to read on a phone: the line says it. */
-  .fg-hn-stage .fg-hn-tool {
-    display: none;
-  }
-
-  .fg-hn-stage[data-kind] .fg-hn-opts {
-    display: flex;
-    margin-top: var(--fg-hn-s2);
-  }
-
   .fg-hn-info__act {
-    padding-top: var(--fg-hn-s4);
+    margin-top: var(--fg-hn-s5);
   }
 
   .fg-hn-info__act .fg-hn-btn--lg {
@@ -55988,14 +56127,21 @@ html.fg-blinds-reveal-locked {
   margin-top: var(--fg-ha-s2);
 }
 
-/* The chosen product: name, a price bigger than the name with its note right
-   under it, the quote tool's own steps, one button. */
+/* The chosen category (conversion first, owner 10/11/2026): back, the
+   question, then the kinds the quote tool prices. Every kind is a link
+   straight into the tool, with its button on it. Same tile layout as the
+   four products, so the bar reads as the same object turning over. */
 .fg-ha-state--chosen {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  gap: var(--fg-ha-s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fg-ha-s3);
+}
+
+.fg-ha-typesbar {
+  display: flex;
   align-items: center;
-  padding: 0 var(--fg-ha-s3) 0 var(--fg-ha-s2);
+  gap: var(--fg-ha-s4);
+  padding: var(--fg-ha-s1) var(--fg-ha-s1) 0;
 }
 
 .fg-ha-back {
@@ -56019,125 +56165,66 @@ html.fg-blinds-reveal-locked {
   color: var(--fg-ha-ink);
 }
 
-.fg-ha-chosen__name {
-  margin-top: var(--fg-ha-s1);
-  font-size: var(--fg-ha-t5);
-  line-height: 1.1;
+.fg-ha-typesbar__ask {
+  margin: 0;
+  font-size: var(--fg-ha-t4);
+  font-weight: 600;
+  line-height: 1.2;
   outline: none;
 }
 
-.fg-ha-chosen__price {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--fg-ha-s2);
-  margin: var(--fg-ha-s1) 0 0;
-  color: var(--fg-ha-muted);
-  font-size: var(--fg-ha-t3);
+.fg-ha-picks--types {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.fg-ha-chosen__price b {
-  color: var(--fg-ha-ink);
-  font-size: var(--fg-ha-t6);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.fg-ha-shots {
-  display: grid;
-  grid-template-columns: repeat(3, 136px);
-  gap: var(--fg-ha-s3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-ha-shots li {
-  margin: 0;
-  transition: opacity var(--fg-ha-in-t) ease, transform var(--fg-ha-in-t) var(--fg-ha-in);
-}
-
-.fg-ha-shots li:nth-child(2) {
-  transition-delay: 30ms;
-}
-
-.fg-ha-shots li:nth-child(3) {
-  transition-delay: 60ms;
-}
-
-.fg-ha-shot {
-  display: block;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--fg-ha-ink);
-  font: inherit;
-  text-align: left;
-  cursor: zoom-in;
-  transition: transform 0.2s var(--fg-ha-in);
-}
-
-.fg-ha-shot:active {
-  transform: scale(0.97);
-}
-
-.fg-ha-shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--fg-ha-r1);
-  background: var(--fg-ha-white);
-  box-shadow: var(--fg-ha-shadow-1);
-  transition: box-shadow 0.2s ease;
-}
-
-.fg-ha-shot span {
-  display: block;
-  margin-top: var(--fg-ha-s2);
-  font-size: var(--fg-ha-t1);
-  font-weight: 600;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .fg-ha-shot:hover img {
-    box-shadow: var(--fg-ha-shadow-2);
-  }
-}
-
-.fg-ha-choose {
-  max-width: 14em;
-  margin: 0;
-  color: var(--fg-ha-muted);
-  font-size: var(--fg-ha-t4);
-  line-height: 1.35;
-}
-
-.fg-ha-choose b {
-  display: block;
-  color: var(--fg-ha-ink);
-  font-weight: 600;
-}
-
-.fg-ha-choose[hidden],
-.fg-ha-shots[hidden],
-.fg-ha-go [hidden] {
+.fg-ha-picks--types[hidden] {
   display: none;
 }
 
-.fg-ha-go {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--fg-ha-s3);
+/* Outer radius r2 (14px) with 8px of padding: the photo inside is 6px. */
+.fg-ha-pick--type {
+  padding: var(--fg-ha-s2);
+  border-radius: var(--fg-ha-r2);
+  background: var(--fg-ha-soft);
 }
 
-.fg-ha-go .fg-ha-link {
+.fg-ha-pick--type .fg-ha-pick__img {
+  width: 96px;
+  height: 96px;
+  border-radius: 6px;
+}
+
+.fg-ha-pick__cta {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 36px;
+  margin-top: var(--fg-ha-s2);
+  padding: 0 var(--fg-ha-s4);
+  border-radius: var(--fg-ha-pill);
+  background: var(--fg-ha-accent);
+  box-shadow: var(--fg-ha-shadow-btn);
+  color: #ffffff;
   font-size: var(--fg-ha-t2);
+  font-weight: 600;
+  transition: transform 0.2s var(--fg-ha-in);
+}
+
+.fg-ha-pick--type:active .fg-ha-pick__cta {
+  transform: scale(0.97);
+}
+
+/* The kinds rise in 30ms apart as the bar turns over. */
+.fg-ha-picks--types:not([hidden]) li {
+  animation: fg-ha-rise var(--fg-ha-in-t) var(--fg-ha-in) both;
+}
+
+.fg-ha-picks--types li:nth-child(2) {
+  animation-delay: 30ms;
+}
+
+.fg-ha-picks--types li:nth-child(3) {
+  animation-delay: 60ms;
 }
 
 /* The two states share one grid cell: the new one comes in as the old leaves. */
@@ -56150,7 +56237,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-ha-state--chosen[hidden] {
-  display: grid !important;
+  display: flex !important;
 }
 
 .fg-ha-state[hidden] {
@@ -56165,11 +56252,6 @@ html.fg-blinds-reveal-locked {
 
 .fg-ha-state:not([hidden]) {
   transition: opacity var(--fg-ha-in-t) ease 60ms, transform var(--fg-ha-in-t) var(--fg-ha-in) 60ms, visibility 0s;
-}
-
-.fg-ha-state[hidden] .fg-ha-shots li {
-  opacity: 0;
-  transform: translateY(8px);
 }
 
 /* On arrival: the card opens out of a smaller rounded frame, then the panel
@@ -56275,63 +56357,7 @@ html.fg-blinds-reveal-locked {
   stroke-width: 2;
 }
 
-/* The quote tool's screen, enlarged. It grows out of the thumbnail that was
-   tapped (initHomeA sets the origin) and shrinks back into it. */
-.fg-ha-zoom {
-  width: min(900px, 100vw - 32px);
-  max-width: none;
-  max-height: none;
-  margin: auto;
-  padding: 6px;
-  overflow: visible;
-  border: 0;
-  border-radius: var(--fg-ha-r3);
-  background: var(--fg-ha-white);
-  box-shadow: var(--fg-ha-shadow-2);
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.16s ease, transform 0.16s var(--fg-ha-in);
-}
-
-.fg-ha-zoom.is-open {
-  opacity: 1;
-  transform: none;
-  transition-duration: 0.2s;
-}
-
-.fg-ha-zoom::backdrop {
-  background: rgba(6, 33, 42, 0.4);
-}
-
-.fg-ha-zoom__img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--fg-ha-r2);
-}
-
-.fg-ha-zoom__close {
-  position: absolute;
-  top: var(--fg-ha-s3);
-  right: var(--fg-ha-s3);
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  border-radius: var(--fg-ha-pill);
-  background: var(--fg-ha-white);
-  box-shadow: var(--fg-ha-shadow-1);
-  color: var(--fg-ha-ink);
-  cursor: pointer;
-}
-
-.fg-ha-zoom__close:active {
-  transform: scale(0.97);
-}
-
-/* 2. Then what happens: a real fitter, three steps, one button. */
+/* 2. From price to fitted: a real fitter, three steps, one button. */
 .fg-ha-next {
   display: grid;
   grid-template-columns: min(46cqw, 660px) minmax(0, 1fr);
@@ -56720,38 +56746,24 @@ html.fg-blinds-reveal-locked {
     font-size: var(--fg-ha-t3);
   }
 
-  .fg-ha-state--chosen {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--fg-ha-s4);
-    align-items: start;
-    padding: 0 var(--fg-ha-s1) var(--fg-ha-s1);
+  .fg-ha-typesbar {
+    flex-wrap: wrap;
+    gap: 0 var(--fg-ha-s3);
   }
 
-  .fg-ha-chosen__price b {
-    font-size: 36px;
+  .fg-ha-pick--type .fg-ha-pick__img {
+    width: 72px;
+    height: 72px;
   }
 
-  .fg-ha-note--tight {
-    max-width: none;
+  .fg-ha-pick--type .fg-ha-pick__text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
   }
 
-  .fg-ha-shots {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--fg-ha-s2);
-  }
-
-  .fg-ha-choose {
-    max-width: none;
-    font-size: var(--fg-ha-t3);
-  }
-
-  .fg-ha-choose b {
-    display: inline;
-  }
-
-  .fg-ha-go {
-    align-items: stretch;
-    text-align: center;
+  .fg-ha-pick__cta {
+    margin-top: var(--fg-ha-s1);
   }
 
   .fg-ha-trust {
@@ -56762,7 +56774,6 @@ html.fg-blinds-reveal-locked {
     display: none;
   }
 
-  .fg-ha-go .fg-ha-btn,
   .fg-ha-next .fg-ha-btn,
   .fg-ha-close .fg-ha-btn {
     width: 100%;
@@ -56843,15 +56854,6 @@ html.fg-blinds-reveal-locked {
 
   .fg-ha-close {
     padding: var(--fg-ha-s7) 0;
-  }
-
-  .fg-ha-zoom {
-    padding: 4px;
-    border-radius: var(--fg-ha-r2);
-  }
-
-  .fg-ha-zoom__img {
-    border-radius: 10px;
   }
 }
 

@@ -12664,6 +12664,7 @@ const initHomeNext = (root) => {
   const canvas = $('[data-fg-hn-canvas]');
   const knob = $('[data-fg-hn-knob]');
   const seg = $('[data-fg-hn-seg]');
+  const hero = root.querySelector('.fg-hn-hero');
   if (!stage || !lineup || !detail || !objBox || !canvas || !seg) return;
   const ctx = canvas.getContext('2d');
   let current = null;
@@ -12797,6 +12798,9 @@ const initHomeNext = (root) => {
     lineup.classList.add('is-out');
     tile.classList.add('is-picked');
     if (phone.matches) lineup.hidden = true;
+    /* The chosen product takes the whole hero: room for the render, the
+       price and the button (owner, 10/11/2026: "cramped"). */
+    if (hero) hero.classList.add('is-open');
     detail.hidden = false;
     delete knob.dataset.x;
     size();
@@ -12858,6 +12862,7 @@ const initHomeNext = (root) => {
     cancelAnimationFrame(raf);
     const out = () => {
       detail.hidden = true;
+      if (hero) hero.classList.remove('is-open');
       lineup.hidden = false;
       lineup.classList.remove('is-out');
       $$('.fg-hn-tile.is-picked').forEach((tile) => tile.classList.remove('is-picked'));
@@ -12918,28 +12923,6 @@ const initHomeNext = (root) => {
     next.focus();
     swap(next.dataset.fgHnP);
   });
-
-  /* The quote tool's screens (windows): one large screen, swapped through a mask. */
-  const screen = $('[data-fg-hn-screen]');
-  $$('[data-fg-hn-step]').forEach((button) => button.addEventListener('click', () => {
-    if (!screen || button.getAttribute('aria-pressed') === 'true') return;
-    $$('[data-fg-hn-step]').forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-    const image = new Image();
-    image.srcset = button.dataset.srcset || '';
-    image.sizes = '320px';
-    image.src = button.dataset.src || '';
-    image.alt = button.dataset.alt || '';
-    image.width = 900;
-    image.height = 675;
-    image.decoding = 'async';
-    screen.appendChild(image);
-    const done = () => { while (screen.children.length > 1) screen.firstElementChild.remove(); };
-    if (reduce) return done();
-    const run = () => image.animate([{ clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 420, easing: 'cubic-bezier(.65,0,.35,1)' }).finished.then(done, done);
-    if (image.complete) run();
-    else image.addEventListener('load', run, { once: true });
-    return undefined;
-  }));
 
   /* Every price button: a spinner, then a tick and a pulse, then go. */
   $$('[data-fg-hn-go]').forEach((link) => link.addEventListener('click', (event) => {

@@ -12,13 +12,12 @@
  * - Four real products, each with its real "from" price. Every tile is a
  *   plain link to /online-quote/?product=<slug>, so the page works with
  *   JavaScript off. With it on (initHomeA in src/js/home-a.js) the picked
- *   product's photo wipes onto the card and the panel turns into its price,
- *   the steps you take in the quote tool and one button. "All products" goes
- *   back to the four.
+ *   product's photo wipes onto the card and the bar turns into the kinds the
+ *   tool prices (uPVC, sash, aluminium...), each a link straight into the
+ *   tool. "All products" goes back to the four. Bifolds have one kind, so
+ *   that tile is a plain link to the tool.
  * - 3.0's project rail and coverage map come in as components
  *   (template-parts/components/h30-*.php) inside a .fg-h30 wrapper.
- * - The quote tool's own screens only ever show a window, so they appear for
- *   Windows only. Doors get their photo and a plain "Style · Size · Colour".
  * - The product chosen there is carried into every price button on the page,
  *   and into the footer's phone price bar.
  * - Repairs and commercial get quiet exits: neither can be instant-priced
@@ -38,8 +37,7 @@ if (! defined('ABSPATH')) {
 
 /* The real "from" prices: the 10th percentile of real Glasshouse quote lines,
    16 Jul to 10 Nov 2026, inc VAT. Use no figure that is not in this list.
-   `kind` decides whether the quote tool's own screens are shown: they only
-   ever show a window. */
+   `bar` is the phone price bar's label once that product is chosen. */
 $ha_products = [
     'windows' => ['name' => 'Windows', 'from' => '£552', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
     'door' => ['name' => 'Front doors', 'from' => '£1,909', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'alt' => 'A black Distinction composite front door with a long bar handle and glazed panel'],
@@ -47,6 +45,30 @@ $ha_products = [
     'bifold' => ['name' => 'Bifold doors', 'from' => '£4,418', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
 ];
 $ha_sash = ['name' => 'Sash windows', 'from' => '£1,045', 'slug' => 'sliding-sash-windows'];
+
+/* CONVERSION FIRST (owner, 10/11/2026): picking a category turns the bar into
+   the kinds the quote tool prices, and each one opens the tool on that product
+   straight away. No screenshots of the tool in between. One kind per quote-tool
+   collection (inc/quote-collections.php), so no two buttons open the same
+   designer. A from-price shows only where PRICES.md has a real figure; the rest
+   say what they do. A category with one kind (bifolds) is a plain link. */
+$ha_types = [
+    'windows' => ['ask' => 'Which windows?', 'types' => [
+        ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£552', 'img' => 'thumb-windows'],
+        ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£1,045', 'img' => 'sub-sash'],
+        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '', 'img' => 'sub-alu-windows'],
+    ]],
+    'door' => ['ask' => 'Which front door?', 'types' => [
+        ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,909', 'img' => 'thumb-door'],
+        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '', 'img' => 'sub-upvc-door'],
+        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '', 'img' => 'sub-alu-door'],
+    ]],
+    'patio' => ['ask' => 'Which garden doors?', 'types' => [
+        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,797', 'img' => 'thumb-patio'],
+        ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '', 'img' => 'sub-sliding'],
+        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '', 'img' => 'sub-heritage'],
+    ]],
+];
 $ha_price_note = 'Starting prices from real Fenster quotes, Jul–Nov 2026, inc VAT. Your price depends on size and spec.';
 
 /* The typed headline (typewriter.js from Homepage 3.0). Short, price-led, every
@@ -84,13 +106,6 @@ $img = FENSTER_THEME_URI . '/assets/images/home-a/';
 $trust = FENSTER_THEME_URI . '/assets/trust/';
 $quote = static fn (string $slug = ''): string => $slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/'));
 
-/* The quote tool's own screens, windows only. */
-$ha_tool = [
-    'style' => ['label' => 'Style', 'alt' => 'The style step of our quote tool, choosing the window layout'],
-    'size' => ['label' => 'Size', 'alt' => 'The size step of our quote tool, with width and height in millimetres'],
-    'colour' => ['label' => 'Colour', 'alt' => 'The colour step of our quote tool, with the window redrawn in anthracite grey'],
-];
-
 $guides = [
     ['label' => 'Guides and advice', 'url' => home_url('/blog/')],
     ['label' => 'Window and door prices in Milton Keynes', 'url' => home_url('/window-door-prices-milton-keynes/')],
@@ -108,6 +123,7 @@ $ha_config = [
         'bar' => $p['bar'],
         'kind' => $p['kind'],
     ], $ha_products),
+    'asks' => array_map(static fn (array $g): string => $g['ask'], $ha_types),
 ];
 
 /* A price button: label, then a spinner and a tick that take its place.
@@ -152,7 +168,7 @@ $button = static function (string $label, string $href, string $class = '', bool
                     <ul class="fg-ha-picks" aria-label="<?php esc_attr_e('Choose a product to price', 'fenster'); ?>">
                         <?php foreach ($ha_products as $key => $product) : ?>
                             <li>
-                                <a class="fg-ha-pick" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta data-fg-ha-pick="<?php echo esc_attr($key); ?>">
+                                <a class="fg-ha-pick" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta<?php if (isset($ha_types[$key])) : ?> data-fg-ha-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
                                     <span class="fg-ha-pick__img"><img <?php echo fenster_image_attr_string($img . 'thumb-' . $key . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '96px']); ?>></span>
                                     <span class="fg-ha-pick__text">
                                         <span class="fg-ha-pick__name"><?php echo esc_html($product['name']); ?></span>
@@ -166,34 +182,32 @@ $button = static function (string $label, string $href, string $class = '', bool
                 </div>
 
                 <div class="fg-ha-state fg-ha-state--chosen" data-fg-ha-detail hidden>
-                    <div class="fg-ha-chosen">
+                    <div class="fg-ha-typesbar">
                         <button class="fg-ha-back" type="button" data-fg-ha-back>
                             <svg class="fg-ha-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg>
                             <?php esc_html_e('All products', 'fenster'); ?>
                         </button>
-                        <div aria-live="polite">
-                            <h2 class="fg-ha-chosen__name" data-fg-ha-name tabindex="-1"><?php echo esc_html($ha_products['windows']['name']); ?></h2>
-                            <p class="fg-ha-chosen__price"><?php esc_html_e('From', 'fenster'); ?> <b class="fg-ha-num" data-fg-ha-from><?php echo esc_html($ha_products['windows']['from']); ?></b> <?php esc_html_e('inc VAT', 'fenster'); ?></p>
-                        </div>
-                        <p class="fg-ha-note fg-ha-note--tight"><?php echo esc_html($ha_price_note); ?></p>
+                        <h2 class="fg-ha-typesbar__ask" data-fg-ha-name tabindex="-1"><?php echo esc_html($ha_types['windows']['ask']); ?></h2>
                     </div>
-                    <div class="fg-ha-tool">
-                        <ul class="fg-ha-shots" data-fg-ha-shots aria-label="<?php esc_attr_e('What you choose in the quote tool', 'fenster'); ?>">
-                            <?php foreach ($ha_tool as $key => $tool) : ?>
+                    <?php foreach ($ha_types as $key => $group) : ?>
+                        <ul class="fg-ha-picks fg-ha-picks--types" data-fg-ha-types="<?php echo esc_attr($key); ?>" aria-label="<?php echo esc_attr($group['ask']); ?>" hidden>
+                            <?php foreach ($group['types'] as $type) : ?>
                                 <li>
-                                    <button class="fg-ha-shot" type="button" data-fg-ha-zoom="<?php echo esc_attr($img . 'tool-' . $key . '-900w.webp'); ?>" aria-label="<?php echo esc_attr(sprintf(__('Enlarge the %s step', 'fenster'), strtolower($tool['label']))); ?>">
-                                        <img <?php echo fenster_image_attr_string($img . 'tool-' . $key . '-240w.webp', ['alt' => $tool['alt'], 'loading' => 'lazy', 'sizes' => '(max-width: 760px) 30vw, 150px']); ?>>
-                                        <span><?php echo esc_html($tool['label']); ?></span>
-                                    </button>
+                                    <a class="fg-ha-pick fg-ha-pick--type" href="<?php echo esc_url($quote($type['slug'])); ?>" data-fg-cta data-fg-ha-type>
+                                        <span class="fg-ha-pick__img"><img <?php echo fenster_image_attr_string($img . $type['img'] . '-200w.webp', ['alt' => '', 'loading' => 'lazy', 'sizes' => '96px']); ?>></span>
+                                        <span class="fg-ha-pick__text">
+                                            <span class="fg-ha-pick__name"><?php echo esc_html($type['name']); ?></span>
+                                            <?php if ($type['from'] !== '') : ?>
+                                                <span class="fg-ha-pick__from"><?php esc_html_e('From', 'fenster'); ?> <b class="fg-ha-num"><?php echo esc_html($type['from']); ?></b></span>
+                                            <?php endif; ?>
+                                            <span class="fg-ha-pick__cta"><?php esc_html_e('Get my price', 'fenster'); ?></span>
+                                        </span>
+                                    </a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
-                        <p class="fg-ha-choose" data-fg-ha-choose hidden><?php esc_html_e('You choose the', 'fenster'); ?> <b><?php esc_html_e('Style · Size · Colour', 'fenster'); ?></b></p>
-                    </div>
-                    <div class="fg-ha-go">
-                        <?php echo $button(__('Get my instant price', 'fenster'), $quote($ha_products['windows']['slug']), 'fg-ha-btn--lg'); ?>
-                        <a class="fg-ha-link fg-ha-num" href="<?php echo esc_url($quote($ha_sash['slug'])); ?>" data-fg-cta data-fg-ha-sash><?php echo esc_html(sprintf(__('%1$s from %2$s', 'fenster'), $ha_sash['name'], $ha_sash['from'])); ?></a>
-                    </div>
+                    <?php endforeach; ?>
+                    <p class="fg-ha-note"><?php echo esc_html($ha_price_note); ?></p>
                 </div>
             </div>
         </div>
@@ -205,12 +219,6 @@ $button = static function (string $label, string $href, string $class = '', bool
             <li><a href="#fg-ha-showroom" data-fg-cta><?php echo $ha_tick; ?><?php esc_html_e('Visit our Milton Keynes showroom', 'fenster'); ?></a></li>
         </ul>
 
-        <dialog class="fg-ha-zoom" data-fg-ha-zoombox aria-label="<?php esc_attr_e('Quote tool screen', 'fenster'); ?>">
-            <img class="fg-ha-zoom__img" src="<?php echo esc_url($img . 'tool-style-900w.webp'); ?>" alt="" width="900" height="675" loading="lazy" decoding="async">
-            <button class="fg-ha-zoom__close" type="button" data-fg-ha-zoomclose aria-label="<?php esc_attr_e('Close', 'fenster'); ?>">
-                <svg class="fg-ha-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
-            </button>
-        </dialog>
     </section>
 
     <section class="fg-ha-next" aria-labelledby="fg-ha-next-title">
@@ -218,7 +226,7 @@ $button = static function (string $label, string $href, string $class = '', bool
             <img <?php echo fenster_image_attr_string($img . 'installer-700w.webp', ['alt' => 'A Fenster installer hanging a new composite front door in Milton Keynes', 'loading' => 'lazy', 'sizes' => '(max-width: 760px) 100vw, 46vw']); ?>>
         </figure>
         <div class="fg-ha-next__copy">
-            <h2 class="fg-ha-h2" id="fg-ha-next-title"><?php esc_html_e('Then what happens', 'fenster'); ?></h2>
+            <h2 class="fg-ha-h2" id="fg-ha-next-title"><?php esc_html_e('From price to fitted', 'fenster'); ?></h2>
             <ol class="fg-ha-steps">
                 <li><h3><?php esc_html_e('Your price, instantly', 'fenster'); ?></h3><p><?php esc_html_e('Pick the style, size and colour. The price appears on screen.', 'fenster'); ?></p></li>
                 <li><h3><?php esc_html_e('We survey and confirm', 'fenster'); ?></h3><p><?php esc_html_e('We measure and check the specification before anything is made.', 'fenster'); ?></p></li>
