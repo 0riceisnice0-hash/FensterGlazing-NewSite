@@ -35,14 +35,15 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-/* The real "from" prices: the 10th percentile of real Glasshouse quote lines,
-   16 Jul to 10 Nov 2026, inc VAT. Use no figure that is not in this list.
+/* The real "from" prices: the 10th percentile of every priced line in the
+   Glasshouse CRM (fenster-fieldos: WindowCAD projects, parsed sales quotes and
+   contract quotes, 767 unique lines, 14 Oct 2024 to 10 Nov 2026), inc VAT. Use no figure that is not in this list.
    `bar` is the phone price bar's label once that product is chosen. */
 $ha_products = [
-    'windows' => ['name' => 'Windows', 'from' => '£552', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
-    'door' => ['name' => 'Front doors', 'from' => '£1,909', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'alt' => 'A black Distinction composite front door with a long bar handle and glazed panel'],
-    'patio' => ['name' => 'French & patio doors', 'from' => '£1,797', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'alt' => 'Black French doors set between flush casements in a white painted wall, Wolverton'],
-    'bifold' => ['name' => 'Bifold doors', 'from' => '£4,418', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
+    'windows' => ['name' => 'Windows', 'from' => '£502', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
+    'door' => ['name' => 'Front doors', 'from' => '£1,898', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'alt' => 'A black Distinction composite front door with a long bar handle and glazed panel'],
+    'patio' => ['name' => 'French & patio doors', 'from' => '£1,786', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'alt' => 'Black French doors set between flush casements in a white painted wall, Wolverton'],
+    'bifold' => ['name' => 'Bifold doors', 'from' => '£3,255', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
 ];
 $ha_sash = ['name' => 'Sash windows', 'from' => '£1,045', 'slug' => 'sliding-sash-windows'];
 
@@ -54,22 +55,22 @@ $ha_sash = ['name' => 'Sash windows', 'from' => '£1,045', 'slug' => 'sliding-sa
    say what they do. A category with one kind (bifolds) is a plain link. */
 $ha_types = [
     'windows' => ['ask' => 'Which windows?', 'types' => [
-        ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£552', 'img' => 'thumb-windows'],
+        ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£502', 'img' => 'thumb-windows'],
         ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£1,045', 'img' => 'sub-sash'],
-        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£1,982', 'img' => 'sub-alu-windows'],
+        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£575', 'img' => 'sub-alu-windows'],
     ]],
     'door' => ['ask' => 'Which front door?', 'types' => [
-        ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,909', 'img' => 'kind-composite'],
-        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '£1,259', 'img' => 'kind-upvc-door'],
-        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '£2,320', 'img' => 'kind-alu-door'],
+        ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,898', 'img' => 'kind-composite'],
+        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '£1,267', 'img' => 'kind-upvc-door'],
+        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '£2,305', 'img' => 'kind-alu-door'],
     ]],
     'patio' => ['ask' => 'Which garden doors?', 'types' => [
-        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,797', 'img' => 'kind-french'],
-        ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '', 'img' => 'kind-sliding'],
-        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£3,869', 'img' => 'kind-heritage'],
+        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,786', 'img' => 'kind-french'],
+        ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '£4,631', 'img' => 'kind-sliding'],
+        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£2,416', 'img' => 'kind-heritage'],
     ]],
 ];
-$ha_price_note = 'Starting prices from real Fenster quotes, Jul–Nov 2026, inc VAT. Your price depends on size and spec.';
+$ha_price_note = 'Starting prices from real Fenster quotes, Oct 2024–Nov 2026, inc VAT. Your price depends on size and spec.';
 
 /* The typed headline (typewriter.js from Homepage 3.0). Short, price-led, every
    figure from the list above, no full stops. Pricing is instant: never "ten

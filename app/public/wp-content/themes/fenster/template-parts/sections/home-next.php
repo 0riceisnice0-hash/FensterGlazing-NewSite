@@ -29,39 +29,39 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-/* The real "from" prices: the 10th percentile of real Glasshouse quote lines,
-   16 Jul to 10 Nov 2026, inc VAT. Use no figure that is not in this list.
+/* The real "from" prices: the 10th percentile of every priced line in the
+   Glasshouse CRM (fenster-fieldos: WindowCAD projects, parsed sales quotes and
+   contract quotes, 767 unique lines, 14 Oct 2024 to 10 Nov 2026), inc VAT. Use no figure that is not in this list.
    `bar` is the phone price bar's label once that category is chosen. */
 $hn_products = [
-    'windows' => ['name' => 'Windows', 'seg' => 'Windows', 'short' => 'Windows', 'from' => '£552', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'h' => 0.72, 'render' => 732],
-    'door' => ['name' => 'Front doors', 'seg' => 'Front doors', 'short' => 'Doors', 'from' => '£1,909', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'h' => 1, 'render' => 418],
-    'french' => ['name' => 'French & patio doors', 'seg' => 'French & patio', 'short' => 'Patio', 'from' => '£1,797', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'h' => 0.94, 'render' => 551],
-    'bifold' => ['name' => 'Bifold doors', 'seg' => 'Bifold doors', 'short' => 'Bifold', 'from' => '£4,418', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'h' => 0.9, 'render' => 644],
+    'windows' => ['name' => 'Windows', 'seg' => 'Windows', 'short' => 'Windows', 'from' => '£502', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'h' => 0.72, 'render' => 732],
+    'door' => ['name' => 'Front doors', 'seg' => 'Front doors', 'short' => 'Doors', 'from' => '£1,898', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'h' => 1, 'render' => 418],
+    'french' => ['name' => 'French & patio doors', 'seg' => 'French & patio', 'short' => 'Patio', 'from' => '£1,786', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'h' => 0.94, 'render' => 551],
+    'bifold' => ['name' => 'Bifold doors', 'seg' => 'Bifold doors', 'short' => 'Bifold', 'from' => '£3,255', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'h' => 0.9, 'render' => 644],
 ];
 
 /* What each category opens into: the kinds the quote tool prices, each its
-   own collection there. "from" is the 10th percentile of real CRM quote lines
-   inc VAT, or the lowest where there are only one or two (aluminium windows,
-   aluminium doors, heritage French). Aluminium sliding has no quote yet, so
-   no figure: never invent one. */
+   own collection there. "from" is the same 10th percentile, per product
+   family (heritage: French pairs only). Aluminium doors rest on only 4
+   lines. */
 $hn_types = [
     'windows' => ['ask' => 'Which windows?', 'types' => [
-        ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£552', 'img' => 'thumb-windows'],
+        ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£502', 'img' => 'thumb-windows'],
         ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£1,045', 'img' => 'sub-sash'],
-        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£1,982', 'img' => 'sub-alu-windows'],
+        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£575', 'img' => 'sub-alu-windows'],
     ]],
     'door' => ['ask' => 'Which front door?', 'types' => [
-        ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,909', 'img' => 'kind-composite'],
-        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '£1,259', 'img' => 'kind-upvc-door'],
-        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '£2,320', 'img' => 'kind-alu-door'],
+        ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,898', 'img' => 'kind-composite'],
+        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '£1,267', 'img' => 'kind-upvc-door'],
+        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '£2,305', 'img' => 'kind-alu-door'],
     ]],
     'french' => ['ask' => 'Which garden doors?', 'types' => [
-        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,797', 'img' => 'kind-french'],
-        ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '', 'img' => 'kind-sliding'],
-        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£3,869', 'img' => 'kind-heritage'],
+        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,786', 'img' => 'kind-french'],
+        ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '£4,631', 'img' => 'kind-sliding'],
+        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£2,416', 'img' => 'kind-heritage'],
     ]],
 ];
-$hn_price_note = 'Starting prices from real Fenster quotes, Jul–Nov 2026, inc VAT. Your price depends on size and spec.';
+$hn_price_note = 'Starting prices from real Fenster quotes, Oct 2024–Nov 2026, inc VAT. Your price depends on size and spec.';
 
 $args = wp_parse_args($args ?? [], [
     'brand' => [],
