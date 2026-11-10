@@ -54,12 +54,12 @@ $price_url = static fn (string $product): string => $product === '' ? home_url('
    Roof lanterns were in the plan's list, but the designer has no roof lantern
    range, so the sixth answer is sash windows, which it does price. */
 $price_choices = [
-    ['label' => 'Windows', 'copy' => 'uPVC and aluminium casements', 'product' => 'casement-windows'],
-    ['label' => 'Front door', 'copy' => 'Composite, from the Distinction range', 'product' => 'composite-doors'],
-    ['label' => 'Bifold or sliding doors', 'copy' => 'Aluminium, wide garden openings', 'product' => 'aluminium-bifold-doors'],
-    ['label' => 'French or patio doors', 'copy' => 'uPVC French and sliding patio', 'product' => 'patio-doors'],
+    ['label' => 'Windows', 'copy' => 'uPVC and aluminium', 'product' => 'casement-windows'],
+    ['label' => 'Front door', 'copy' => 'Composite, Distinction range', 'product' => 'composite-doors'],
+    ['label' => 'Bifold or sliding', 'copy' => 'Aluminium garden doors', 'product' => 'aluminium-bifold-doors'],
+    ['label' => 'French or patio', 'copy' => 'uPVC garden doors', 'product' => 'patio-doors'],
     ['label' => 'Sash windows', 'copy' => 'uPVC vertical sliders', 'product' => 'sliding-sash-windows'],
-    ['label' => 'Whole house', 'copy' => 'Several windows and doors together', 'product' => ''],
+    ['label' => 'Whole house', 'copy' => 'Several at once', 'product' => ''],
 ];
 
 $trust_messages = [
