@@ -2884,7 +2884,7 @@ add_action('template_redirect', static function (): void {
         . '<noscript><meta http-equiv="refresh" content="0;url=' . $fallback . '"></noscript>'
         . '</head><body></body></html>';
     exit;
-}, 0);
+}, -5); // Before fenster_maybe_render_generated_page (0), which answers / itself.
 
 add_action('wp_head', 'fenster_render_generated_seo', 1);
 function fenster_render_generated_seo(): void
