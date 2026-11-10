@@ -12612,3 +12612,448 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
     }
   } catch (e) { /* no shared result to restore */ }
 });
+
+/* The price-first homepage, "The Showroom" (template-parts/sections/home-next.php,
+   /?home=next). Without this the four product tiles are plain links to the
+   quote tool on that product; with it the product turns on the stage with its
+   price, and the choice is carried into every price button on the page and
+   into the footer's phone price bar. Guarded by the page's root element. */
+const initHomeNext = (root) => {
+  let config;
+  try {
+    config = JSON.parse(root.dataset.fgHn || '{}');
+  } catch (_error) {
+    return;
+  }
+  const P = config.products || {};
+  const N = config.frames || 14;
+  if (!Object.keys(P).length) return;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const phone = window.matchMedia('(max-width: 760px)');
+  const $ = (selector) => root.querySelector(selector);
+  const $$ = (selector) => [...root.querySelectorAll(selector)];
+  const deep = (k) => {
+    if (!k || !P[k]) return config.quote;
+    const url = new URL(config.quote, window.location.href);
+    url.searchParams.set('product', P[k].slug);
+    return url.toString();
+  };
+
+  const stage = $('[data-fg-hn-stage]');
+  const lineup = $('[data-fg-hn-lineup]');
+  const detail = $('[data-fg-hn-detail]');
+  const objBox = $('[data-fg-hn-obj]');
+  const canvas = $('[data-fg-hn-canvas]');
+  const knob = $('[data-fg-hn-knob]');
+  const seg = $('[data-fg-hn-seg]');
+  if (!stage || !lineup || !detail || !objBox || !canvas || !seg) return;
+  const ctx = canvas.getContext('2d');
+  let current = null;
+
+  /* The turn: 14 frames of each product, the small set on phones. */
+  const cache = {};
+  const frames = {};
+  const frameUrl = (k, i) => `${config.turn}${k}-${String(i).padStart(2, '0')}${phone.matches ? '-sm' : ''}.webp`;
+  const load = (k) => {
+    const key = k + (phone.matches ? '-sm' : '');
+    if (!cache[key]) {
+      cache[key] = Promise.all(Array.from({ length: N }, (_, i) => new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => resolve(null);
+        image.src = frameUrl(k, i);
+      })));
+    }
+    return cache[key];
+  };
+  const ensure = async (k) => {
+    frames[k] = await load(k);
+  };
+
+  let W = 0;
+  let H = 0;
+  let dpr = 1;
+  const size = () => {
+    const box = canvas.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = box.width;
+    H = box.height;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+  };
+  /* Bottom-centred, at its true height relative to the others, contained. */
+  const place = (k) => {
+    const last = frames[k] && (frames[k][N - 1] || frames[k].find(Boolean));
+    if (!last) return { x: 0, y: 0, w: W, h: H };
+    const nw = last.naturalWidth;
+    const nh = last.naturalHeight;
+    let hh = H * P[k].h;
+    let ww = nw * hh / nh;
+    if (ww > W) {
+      ww = W;
+      hh = nh * ww / nw;
+    }
+    return { x: (W - ww) / 2, y: H - hh, w: ww, h: hh };
+  };
+  const draw = (k, f) => {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const image = frames[k] && frames[k][f];
+    if (!image) return;
+    const r = place(k);
+    ctx.drawImage(image, r.x, r.y, r.w, r.h);
+  };
+  let raf = 0;
+  const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+  const easeInOut = (t) => (t < 0.5 ? 8 * t ** 4 : 1 - Math.pow(-2 * t + 2, 4) / 2);
+  const turn = (k, from, to, duration, ease) => new Promise((resolve) => {
+    cancelAnimationFrame(raf);
+    const t0 = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / duration);
+      draw(k, Math.round(from + (to - from) * ease(t)));
+      if (t < 1) raf = requestAnimationFrame(step);
+      else resolve();
+    };
+    raf = requestAnimationFrame(step);
+  });
+
+  /* The chosen product goes into every price button and the footer bar. */
+  const priceBar = document.querySelector('.fg-price-bar__price');
+  const carry = (k) => {
+    if (!P[k]) return;
+    $$('[data-fg-hn-price]').forEach((link) => { link.href = deep(k); });
+    if (priceBar) {
+      priceBar.href = deep(k);
+      priceBar.textContent = P[k].bar;
+    }
+  };
+
+  const moveKnob = (k, animate = true) => {
+    const button = seg.querySelector(`[data-fg-hn-p="${k}"]`);
+    if (!button || !knob || detail.hidden) return;
+    const x = button.offsetLeft;
+    const from = knob.dataset.x === undefined ? null : Number(knob.dataset.x);
+    knob.style.width = `${button.offsetWidth}px`;
+    knob.style.transform = `translateX(${x}px)`;
+    knob.dataset.x = String(x);
+    if (from === null || from === x || !animate || reduce) return;
+    /* Ease-in-out across, stretched about 12% while it travels. */
+    knob.animate([
+      { transform: `translateX(${from}px)` },
+      { transform: `translateX(${(from + x) / 2}px) scaleX(1.12)` },
+      { transform: `translateX(${x}px)` },
+    ], { duration: 300, easing: 'cubic-bezier(.65,0,.35,1)' });
+  };
+
+  const sync = (k) => {
+    const name = $('[data-fg-hn-name]');
+    const from = $('[data-fg-hn-from]');
+    if (name) name.textContent = P[k].name;
+    if (from) from.textContent = P[k].from;
+    stage.dataset.kind = P[k].kind;
+    seg.querySelectorAll('[data-fg-hn-p]').forEach((button) => {
+      const on = button.dataset.fgHnP === k;
+      button.setAttribute('aria-checked', String(on));
+      button.tabIndex = on ? 0 : -1;
+    });
+    moveKnob(k);
+    carry(k);
+    try { window.localStorage.setItem('fg_hn_pick', k); } catch (_error) { /* storage off */ }
+  };
+
+  const enter = () => {
+    detail.classList.remove('is-enter');
+    void detail.offsetWidth;
+    detail.classList.add('is-enter');
+  };
+
+  /* Four products to one: the picked product flies to the stage on an arc. */
+  const open = async (k, tile) => {
+    current = k;
+    const image = tile.querySelector('img');
+    const fromBox = image ? image.getBoundingClientRect() : null;
+    await ensure(k);
+    if (current !== k) return;
+    lineup.classList.remove('is-back');
+    lineup.classList.add('is-out');
+    tile.classList.add('is-picked');
+    if (phone.matches) lineup.hidden = true;
+    detail.hidden = false;
+    delete knob.dataset.x;
+    size();
+    sync(k);
+    const focusTarget = seg.querySelector(`[data-fg-hn-p="${k}"]`);
+    if (reduce || !fromBox || !image) {
+      lineup.hidden = true;
+      draw(k, N - 1);
+      if (focusTarget) focusTarget.focus({ preventScroll: true });
+      return;
+    }
+    enter();
+    const r = place(k);
+    const box = canvas.getBoundingClientRect();
+    const to = { left: box.left + r.x, top: box.top + r.y, width: r.w, height: r.h };
+    /* The tile shows the still contained in its box; find the drawn image. */
+    const ratio = image.naturalWidth / image.naturalHeight || r.w / r.h;
+    let fw = fromBox.width;
+    let fh = fw / ratio;
+    if (fh > fromBox.height) {
+      fh = fromBox.height;
+      fw = fh * ratio;
+    }
+    const fx = fromBox.left + (fromBox.width - fw) / 2;
+    const fy = fromBox.bottom - fh;
+    const flyer = document.createElement('div');
+    flyer.className = 'fg-hn-flyer';
+    flyer.style.width = `${to.width}px`;
+    flyer.style.height = `${to.height}px`;
+    const inner = new Image();
+    inner.src = image.currentSrc || image.src;
+    inner.alt = '';
+    flyer.appendChild(inner);
+    document.body.appendChild(flyer);
+    const s = fh / to.height;
+    const duration = 560;
+    /* An arc: x travels ease-in-out on the outer box while y and scale ease
+       out on the inner one. */
+    const ax = flyer.animate([
+      { transform: `translate(${fx}px, ${to.top}px)` },
+      { transform: `translate(${to.left}px, ${to.top}px)` },
+    ], { duration, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'both' });
+    inner.animate([
+      { transform: `translateY(${fy - to.top}px) scale(${s})`, transformOrigin: '0 0' },
+      { transform: 'translateY(0) scale(1)', transformOrigin: '0 0' },
+    ], { duration, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'both' });
+    detail.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, delay: 160, fill: 'backwards' });
+    try { await ax.finished; } catch (_error) { /* cancelled */ }
+    flyer.remove();
+    if (current === k) draw(k, N - 1);
+    lineup.hidden = true;
+    if (focusTarget) focusTarget.focus({ preventScroll: true });
+  };
+
+  /* One back to four: "All products". */
+  const close = () => {
+    const was = current;
+    current = null;
+    cancelAnimationFrame(raf);
+    const out = () => {
+      detail.hidden = true;
+      lineup.hidden = false;
+      lineup.classList.remove('is-out');
+      $$('.fg-hn-tile.is-picked').forEach((tile) => tile.classList.remove('is-picked'));
+      if (!reduce) {
+        lineup.classList.remove('is-back');
+        void lineup.offsetWidth;
+        lineup.classList.add('is-back');
+      }
+      const tile = was && $(`[data-fg-hn-pick="${was}"]`);
+      if (tile) tile.focus({ preventScroll: true });
+    };
+    if (reduce) return out();
+    /* Exits run about 20% shorter than entrances. */
+    detail.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 190, easing: 'ease' }).finished.then(out, out);
+    return undefined;
+  };
+  const back = $('[data-fg-hn-back]');
+  if (back) back.addEventListener('click', close);
+
+  $$('[data-fg-hn-pick]').forEach((tile) => tile.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    const k = tile.dataset.fgHnPick;
+    if (!P[k]) return;
+    event.preventDefault();
+    open(k, tile);
+  }));
+
+  /* Switching product turns the old one away and the new one in. */
+  let queue = Promise.resolve();
+  const swap = (k) => {
+    if (k === current || !P[k]) return;
+    const previous = current;
+    current = k;
+    sync(k);
+    enter();
+    queue = queue.then(async () => {
+      if (current !== k) return;
+      const ready = ensure(k);
+      if (reduce || !previous) {
+        await ready;
+        if (current === k) draw(k, N - 1);
+        return;
+      }
+      await turn(previous, N - 1, 0, 220, easeInOut);
+      await ready;
+      if (current !== k) return;
+      await turn(k, 0, N - 1, 760, easeOut);
+    });
+  };
+  seg.querySelectorAll('[data-fg-hn-p]').forEach((button) => button.addEventListener('click', () => swap(button.dataset.fgHnP)));
+  seg.addEventListener('keydown', (event) => {
+    const list = [...seg.querySelectorAll('[data-fg-hn-p]')];
+    const i = list.indexOf(document.activeElement);
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+    if (i < 0 || !step) return;
+    event.preventDefault();
+    const next = list[(i + step + list.length) % list.length];
+    next.focus();
+    swap(next.dataset.fgHnP);
+  });
+
+  /* The quote tool's screens (windows): one large screen, swapped through a mask. */
+  const screen = $('[data-fg-hn-screen]');
+  $$('[data-fg-hn-step]').forEach((button) => button.addEventListener('click', () => {
+    if (!screen || button.getAttribute('aria-pressed') === 'true') return;
+    $$('[data-fg-hn-step]').forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+    const image = new Image();
+    image.srcset = button.dataset.srcset || '';
+    image.sizes = '320px';
+    image.src = button.dataset.src || '';
+    image.alt = button.dataset.alt || '';
+    image.width = 900;
+    image.height = 675;
+    image.decoding = 'async';
+    screen.appendChild(image);
+    const done = () => { while (screen.children.length > 1) screen.firstElementChild.remove(); };
+    if (reduce) return done();
+    const run = () => image.animate([{ clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 420, easing: 'cubic-bezier(.65,0,.35,1)' }).finished.then(done, done);
+    if (image.complete) run();
+    else image.addEventListener('load', run, { once: true });
+    return undefined;
+  }));
+
+  /* Every price button: a spinner, then a tick and a pulse, then go. */
+  $$('[data-fg-hn-go]').forEach((link) => link.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0 || link.classList.contains('is-loading')) return;
+    event.preventDefault();
+    link.classList.add('is-loading');
+    link.setAttribute('aria-busy', 'true');
+    window.setTimeout(() => {
+      link.classList.remove('is-loading');
+      link.classList.add('is-done');
+    }, reduce ? 0 : 650);
+    window.setTimeout(() => { window.location.href = link.href; }, reduce ? 50 : 1000);
+  }));
+  window.addEventListener('pageshow', () => $$('[data-fg-hn-go]').forEach((link) => {
+    link.classList.remove('is-loading', 'is-done');
+    link.removeAttribute('aria-busy');
+  }));
+
+  /* Before and after: a mask wipe, played once when it comes into view; the
+     switch takes over after that. */
+  const ba = $('[data-fg-hn-ba]');
+  const baKnob = $('[data-fg-hn-ba-knob]');
+  if (ba) {
+    const setBA = (after) => {
+      if (ba.classList.contains('is-after') === after) return;
+      if (baKnob && !reduce) {
+        baKnob.classList.remove('is-moving');
+        void baKnob.offsetWidth;
+        baKnob.classList.add('is-moving');
+      }
+      ba.classList.toggle('is-after', after);
+      ba.querySelectorAll('[data-fg-hn-ba-v]').forEach((button) => button.setAttribute('aria-pressed', String((button.dataset.fgHnBaV === 'after') === after)));
+    };
+    let touched = false;
+    ba.querySelectorAll('[data-fg-hn-ba-v]').forEach((button) => button.addEventListener('click', () => {
+      touched = true;
+      setBA(button.dataset.fgHnBaV === 'after');
+    }));
+    const frame = ba.querySelector('.fg-hn-ba__frame');
+    if (frame && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        window.setTimeout(() => { if (!touched) setBA(true); }, 500);
+      }, { threshold: 0.6 });
+      io.observe(frame);
+    }
+  }
+
+  /* Door colour: a circular mask reveals the new door from the swatch side. */
+  const doorFrame = $('[data-fg-hn-door]');
+  const swatchName = $('[data-fg-hn-sw-name]');
+  const doors = config.doors || [];
+  let doorsWarm = false;
+  $$('[data-fg-hn-sw]').forEach((button) => {
+    const warm = () => {
+      if (doorsWarm) return;
+      doorsWarm = true;
+      doors.forEach((door) => { const image = new Image(); image.sizes = '440px'; image.srcset = door.srcset; image.src = door.src; });
+    };
+    button.addEventListener('pointerenter', warm, { once: true });
+    button.addEventListener('focus', warm, { once: true });
+    button.addEventListener('click', () => {
+      if (!doorFrame || button.getAttribute('aria-checked') === 'true') return;
+      const door = doors[Number(button.dataset.fgHnSw)];
+      if (!door) return;
+      $$('[data-fg-hn-sw]').forEach((other) => other.setAttribute('aria-checked', String(other === button)));
+      if (swatchName) swatchName.textContent = door.name;
+      const image = new Image();
+      image.sizes = '(max-width: 760px) 92vw, 440px';
+      image.srcset = door.srcset;
+      image.src = door.src;
+      image.alt = `A ${door.name.toLowerCase()} Distinction composite front door`;
+      image.width = 800;
+      image.height = 1000;
+      doorFrame.appendChild(image);
+      const done = () => { while (doorFrame.children.length > 1) doorFrame.firstElementChild.remove(); };
+      if (reduce) return done();
+      const run = () => image.animate([{ clipPath: 'circle(0% at 100% 60%)' }, { clipPath: 'circle(150% at 100% 60%)' }], { duration: 520, easing: 'cubic-bezier(.65,0,.35,1)' }).finished.then(done, done);
+      if (image.complete) run();
+      else image.addEventListener('load', run, { once: true });
+      return undefined;
+    });
+  });
+  const swatches = $('.fg-hn-swatches');
+  if (swatches) {
+    swatches.addEventListener('keydown', (event) => {
+      const list = $$('[data-fg-hn-sw]');
+      const i = list.indexOf(document.activeElement);
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (i < 0 || !step) return;
+      event.preventDefault();
+      const next = list[(i + step + list.length) % list.length];
+      next.focus();
+      next.click();
+    });
+  }
+
+  /* Resizes: redraw at the new size, and the knob jumps rather than slides. */
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
+    if (!detail.hidden && current) {
+      size();
+      ensure(current).then(() => { if (current) draw(current, N - 1); });
+      delete knob.dataset.x;
+      moveKnob(current, false);
+    }
+  });
+
+  /* A returning visitor's product is already in every price button. QA hook:
+     #pick=door opens that product on load. */
+  let saved = null;
+  try { saved = window.localStorage.getItem('fg_hn_pick'); } catch (_error) { /* storage off */ }
+  if (saved && P[saved]) carry(saved);
+  const hashPick = window.location.hash.match(/pick=(\w+)/);
+  if (hashPick && P[hashPick[1]]) {
+    const k = hashPick[1];
+    ensure(k).then(() => {
+      current = k;
+      lineup.hidden = true;
+      detail.hidden = false;
+      size();
+      sync(k);
+      draw(k, N - 1);
+    });
+  }
+  /* Warm the turn frames once the page is idle. */
+  const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 1200));
+  idle(() => Object.keys(P).forEach((k) => { ensure(k); }));
+};
+
+document.querySelectorAll('[data-fg-hn]').forEach(initHomeNext);
