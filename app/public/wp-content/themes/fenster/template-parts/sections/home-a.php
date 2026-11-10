@@ -42,7 +42,7 @@ if (! defined('ABSPATH')) {
    ever show a window. */
 $ha_products = [
     'windows' => ['name' => 'Windows', 'from' => '£552', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
-    'door' => ['name' => 'Front doors', 'from' => '£1,909', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'alt' => 'An anthracite grey composite front door with a full height sidelight, fitted in Milton Keynes'],
+    'door' => ['name' => 'Front doors', 'from' => '£1,909', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'alt' => 'A black Distinction composite front door with a long bar handle and glazed panel'],
     'patio' => ['name' => 'French & patio doors', 'from' => '£1,797', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'alt' => 'Black French doors set between flush casements in a white painted wall, Wolverton'],
     'bifold' => ['name' => 'Bifold doors', 'from' => '£4,418', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
 ];
