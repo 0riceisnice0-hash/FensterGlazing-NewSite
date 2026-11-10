@@ -33,6 +33,51 @@ function fenster_enqueue_assets(): void
     );
 }
 
+/**
+ * Stylesheets split out of main.css, one per template part. SEO plan 10/11/2026, 5.4.
+ *
+ * scripts/split-css.py moves every rule that can only match inside one template
+ * part (it requires a class no other file prints) into assets/css/parts/, and
+ * lists them in parts/manifest.json. The link is printed in the body just before
+ * the part renders, so it blocks only the content after it, and pages that never
+ * render the part never download its rules. The parts keep their original
+ * order relative to each other; against main.css they now come later, which
+ * was checked element by element on test before this shipped.
+ */
+function fenster_part_stylesheets(): array
+{
+    static $manifest = null;
+    if ($manifest === null) {
+        $path = FENSTER_THEME_DIR . '/assets/css/parts/manifest.json';
+        $decoded = is_file($path) ? json_decode((string) file_get_contents($path), true) : null;
+        $manifest = is_array($decoded) ? $decoded : [];
+    }
+
+    return $manifest;
+}
+
+add_action('get_template_part', 'fenster_print_part_stylesheet', 10, 1);
+function fenster_print_part_stylesheet(string $slug): void
+{
+    static $printed = [];
+    $manifest = fenster_part_stylesheets();
+    if (! isset($manifest[$slug]) || isset($printed[$slug]) || is_admin()) {
+        return;
+    }
+    $file = '/assets/css/parts/' . basename((string) $manifest[$slug]);
+    $path = FENSTER_THEME_DIR . $file;
+    if (! is_file($path)) {
+        return;
+    }
+    $printed[$slug] = true;
+
+    printf(
+        '<link rel="stylesheet" id="%s" href="%s" data-clarity-unmask="true">' . "\n",
+        esc_attr('fenster-part-' . sanitize_title(basename($slug)) . '-css'),
+        esc_url(FENSTER_THEME_URI . $file . '?ver=' . filemtime($path) . '-' . filesize($path))
+    );
+}
+
 add_filter('style_loader_tag', 'fenster_unmask_stylesheet_for_clarity', 10, 4);
 function fenster_unmask_stylesheet_for_clarity(string $html, string $handle, string $href, string $media): string
 {
@@ -143,9 +188,72 @@ function fenster_image_dimensions(string $url): array
     ];
 }
 
+/**
+ * Width variants of a theme image that already exist on disk, as a srcset.
+ *
+ * SEO plan 10/11/2026, 5.6: 0 of 36 homepage images had a srcset. Two kinds of
+ * variant exist in the theme, and both are found here rather than at each call:
+ * the responsive copies scripts/build-landing-images.py writes to
+ * assets/images/landing/ (named by a hash of the source path), and sibling files
+ * already named `<stem>-<width>w.<ext>`. Empty when there is nothing to offer.
+ */
+function fenster_image_srcset(string $url): string
+{
+    static $cache = [];
+
+    if (isset($cache[$url])) {
+        return $cache[$url];
+    }
+
+    $path = function_exists('fenster_theme_asset_path_from_url') ? fenster_theme_asset_path_from_url($url) : '';
+    if ($path === '' || ! is_file($path)) {
+        return $cache[$url] = '';
+    }
+
+    $relative = str_replace('\\', '/', substr($path, strlen(FENSTER_THEME_DIR)));
+    $candidates = [];
+
+    $stem = substr(hash('sha256', $relative), 0, 12);
+    foreach ([480, 960, 1600] as $width) {
+        $file = '/assets/images/landing/' . $stem . '-' . $width . 'w.webp';
+        if (is_file(FENSTER_THEME_DIR . $file)) {
+            $candidates[$width] = FENSTER_THEME_URI . $file;
+        }
+    }
+
+    if ($candidates === [] && preg_match('#^(.*)-(\d{3,4})w\.(webp|jpe?g|png|avif)$#', $relative, $match)) {
+        foreach (glob(FENSTER_THEME_DIR . $match[1] . '-*w.' . $match[3]) ?: [] as $sibling) {
+            if (preg_match('#-(\d{3,4})w\.' . preg_quote($match[3], '#') . '$#', $sibling, $width_match)) {
+                $candidates[(int) $width_match[1]] = FENSTER_THEME_URI . str_replace('\\', '/', substr($sibling, strlen(FENSTER_THEME_DIR)));
+            }
+        }
+    }
+
+    if (count($candidates) < 2) {
+        return $cache[$url] = '';
+    }
+
+    ksort($candidates);
+    $parts = [];
+    foreach ($candidates as $width => $candidate_url) {
+        $parts[] = $candidate_url . ' ' . $width . 'w';
+    }
+
+    return $cache[$url] = implode(', ', $parts);
+}
+
 function fenster_image_attr_string(string $url, array $attrs = []): string
 {
     $src = function_exists('fenster_generated_url') ? fenster_generated_url($url) : $url;
+    /* A srcset is only added where the caller says how wide the image shows,
+       because without `sizes` the browser assumes the full viewport and a
+       small thumbnail would fetch its largest variant. */
+    if (isset($attrs['sizes']) && ! isset($attrs['srcset'])) {
+        $srcset = fenster_image_srcset($url);
+        if ($srcset !== '') {
+            $attrs['srcset'] = $srcset;
+        }
+    }
     $attrs = array_merge(['src' => $src, 'decoding' => 'async'], $attrs);
     $dimensions = fenster_image_dimensions($url);
 
@@ -504,4 +612,92 @@ function fenster_link_card_image(string $url): string
     $path = strtolower(trim((string) wp_parse_url($url, PHP_URL_PATH), '/'));
 
     return $map[$path] ?? '';
+}
+
+/*
+ * SEO plan 10/11/2026, 4.3. Requests for /fonts/Gibson-*.woff2 and .otf at the
+ * site root were 20,357 full WordPress 404s in the 30 days to September. The
+ * cause, main.css inlined into a <style> resolving its relative font URLs
+ * against the page, was fixed in inc/consent.php on 28/09/2026; this catches
+ * whatever still asks (old cached copies, crawlers holding the old URLs) with a
+ * cacheable redirect to the real file instead of a rendered 404 page.
+ */
+add_action('template_redirect', 'fenster_redirect_stray_font_requests', 0);
+function fenster_redirect_stray_font_requests(): void
+{
+    $path = trim((string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
+
+    if (! preg_match('#^fonts/(Gibson-(?:Light|Regular|SemiBold|Bold)\.(?:woff2|otf))$#', $path, $match)) {
+        return;
+    }
+
+    if (! is_file(FENSTER_THEME_DIR . '/assets/fonts/' . $match[1])) {
+        return;
+    }
+
+    header('Cache-Control: public, max-age=31536000', true);
+    wp_redirect(FENSTER_THEME_URI . '/assets/fonts/' . $match[1], 301, 'Fenster');
+    exit;
+}
+
+/*
+ * SEO plan 10/11/2026, 4.7 and 5.8. Every page loaded jQuery, jQuery Migrate,
+ * two scripts from the old contact-form-v2 plugin and WordPress's block
+ * stylesheets, render-blocking in the head. The theme's forms are its own
+ * (template-parts/components/enquiry-form.php) and nothing in the theme uses
+ * jQuery or block markup. Pages WordPress renders itself (old database pages
+ * such as /wcad-thank-you/, admin, login) keep everything.
+ */
+function fenster_request_is_theme_rendered(): bool
+{
+    return ! is_admin() && (is_array(get_query_var('fenster_generated_page')) || is_front_page());
+}
+
+/* The plugin echoes a <style> block for its button colours from inside its
+   enqueue hook whenever the colours are set. Blank them for theme pages. */
+add_filter('option_icaal_contact_form', static function ($options) {
+    if (is_array($options) && fenster_request_is_theme_rendered()) {
+        $options['button_color'] = '';
+        $options['overwrite_bootstrap_alert'] = false;
+    }
+    return $options;
+});
+
+add_action('wp_enqueue_scripts', 'fenster_drop_unused_plugin_assets', 100);
+function fenster_drop_unused_plugin_assets(): void
+{
+    if (! fenster_request_is_theme_rendered()) {
+        return;
+    }
+
+    foreach (['icaal-contact-form-v2', 'icaal-contact-form-v2-addAlert'] as $handle) {
+        wp_dequeue_script($handle);
+    }
+    foreach (['icaal-contact-form-v2-missing-bootstrap-alert', 'wp-block-library', 'wp-block-library-theme', 'classic-theme-styles', 'global-styles'] as $handle) {
+        wp_dequeue_style($handle);
+    }
+
+    /* jQuery goes only when nothing still queued needs it, so a plugin added
+       later that does depend on it keeps working rather than breaking. */
+    $scripts = wp_scripts();
+    $needs_jquery = static function (string $handle, array $seen = []) use (&$needs_jquery, $scripts): bool {
+        if (isset($seen[$handle]) || ! isset($scripts->registered[$handle])) {
+            return false;
+        }
+        $seen[$handle] = true;
+        foreach ((array) $scripts->registered[$handle]->deps as $dep) {
+            if (in_array($dep, ['jquery', 'jquery-core', 'jquery-migrate'], true) || $needs_jquery($dep, $seen)) {
+                return true;
+            }
+        }
+        return false;
+    };
+    foreach ($scripts->queue as $handle) {
+        if (! in_array($handle, ['jquery', 'jquery-core', 'jquery-migrate'], true) && $needs_jquery($handle)) {
+            return;
+        }
+    }
+    foreach (['jquery', 'jquery-core', 'jquery-migrate'] as $handle) {
+        wp_dequeue_script($handle);
+    }
 }

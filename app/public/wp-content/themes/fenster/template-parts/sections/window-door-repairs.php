@@ -643,8 +643,8 @@ $wall = [
         ? $img . $van_rel
         : '';
     $engineers = [
-        ['name' => 'Andy McCullagh', 'image' => 'imported/7.png'],
-        ['name' => 'Steven Welch', 'image' => 'imported/5-2.png'],
+        ['name' => 'Andy McCullagh', 'image' => 'imported/7-320w.webp'],
+        ['name' => 'Steven Welch', 'image' => 'imported/5-2-320w.webp'],
     ];
     $team_url = esc_url(home_url('/meet-the-team/'));
     ?>
@@ -672,7 +672,7 @@ $wall = [
                                 <img
                                     src="<?php echo esc_url(fenster_generated_url($img . $person['image'])); ?>"
                                     alt="<?php echo esc_attr($person['name']); ?>"
-                                    width="2430" height="2430" loading="lazy" decoding="async">
+                                    width="320" height="320" loading="lazy" decoding="async">
                                 <span>
                                     <strong><?php echo esc_html($person['name']); ?></strong>
                                     <em><?php esc_html_e('Service Engineer', 'fenster'); ?></em>

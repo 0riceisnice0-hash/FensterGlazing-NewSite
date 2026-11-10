@@ -76,6 +76,12 @@ foreach ($products as $item) {
         'name' => (string) ($item['name'] ?? $slug),
         'fit' => (string) ($item['fit'] ?? ''),
         'url' => home_url('/' . $slug . '/'),
+        /* SEO plan 10/11/2026, 2.6: the town pages already open the tool on
+           the product; the two Milton Keynes hubs sent every tile to read a
+           brochure page first. A product the tool cannot price gets no chip. */
+        'price_url' => function_exists('fenster_quote_collections') && isset(fenster_quote_collections()[$slug])
+            ? add_query_arg('product', $slug, home_url('/online-quote/'))
+            : '',
         'image' => $image,
         'alt' => $alt !== '' ? $alt : (string) ($item['name'] ?? ''),
         'system_logo' => trim((string) ($system['logo'] ?? '')),
@@ -100,6 +106,17 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                 <?php /* Theme-owned, so the H1 no longer depends on the scraped page record. */ ?>
                 <h1><?php echo esc_html((string) ($group['h1'] ?? $args['title'])); ?></h1>
                 <p class="fg-product-hub__lead-copy"><?php echo esc_html((string) ($group['intro'] ?? '')); ?></p>
+                <?php if ($group_key === 'doors') : ?>
+                    <?php /* SEO plan 10/11/2026, 3.1: this hub is the page for "doors",
+                             "front doors" and "entrance doors"; the product pages own
+                             their material's search, and the anchors say so. */ ?>
+                    <p class="fg-hero-more fg-hero-more--ink">
+                        <?php esc_html_e('Know the material already? Go straight to', 'fenster'); ?>
+                        <a href="<?php echo esc_url(home_url('/composite-doors/')); ?>"><?php esc_html_e('composite doors in Milton Keynes', 'fenster'); ?></a>
+                        <?php esc_html_e('or', 'fenster'); ?>
+                        <a href="<?php echo esc_url(home_url('/upvc-doors/')); ?>"><?php esc_html_e('uPVC doors in Milton Keynes', 'fenster'); ?></a>.
+                    </p>
+                <?php endif; ?>
                 <p class="fg-product-hub__actions">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
@@ -135,9 +152,15 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                 <?php foreach ($tiles as $index => $tile) : ?>
                     <li>
                         <a class="fg-ph-tile" href="<?php echo esc_url($tile['url']); ?>">
+                            <?php /* SEO plan 10/11/2026, 5.3: six tiles loaded eagerly at
+                                     1,400 to 2,400px into cells about 250px tall, and on
+                                     the head-term windows hub one of them was the LCP.
+                                     `sizes` lets the shared helper offer the 480/960 copies. */ ?>
                             <img <?php echo fenster_image_attr_string($tile['image'], [
                                 'alt' => $tile['alt'],
                                 'loading' => $index < 6 ? 'eager' : 'lazy',
+                                'fetchpriority' => $index < 2 ? 'high' : null,
+                                'sizes' => '(max-width: 780px) 46vw, (max-width: 1180px) 31vw, 240px',
                             ]); ?>>
                             <span class="fg-ph-tile__label">
                                 <strong><?php echo esc_html($tile['name']); ?></strong>
@@ -149,6 +172,9 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                                 </span>
                             <?php endif; ?>
                         </a>
+                        <?php if ($tile['price_url'] !== '') : ?>
+                            <a class="fg-ph-tile__price" href="<?php echo esc_url($tile['price_url']); ?>" data-fg-cta aria-label="<?php echo esc_attr(sprintf(__('Price %s online', 'fenster'), $tile['name'])); ?>"><?php esc_html_e('Price it', 'fenster'); ?></a>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>

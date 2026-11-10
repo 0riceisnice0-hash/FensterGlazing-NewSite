@@ -275,6 +275,7 @@ get_template_part('template-parts/sections/blog-article', null, [
     'next_steps' => $article_next_steps_map[$slug] ?? (is_array($page['next_steps'] ?? null) ? $page['next_steps'] : []),
     'product_links' => $product_links,
     'products' => array_values(array_unique($products)),
+    'quote_product' => function_exists('fenster_blog_legacy_guide_product') ? fenster_blog_legacy_guide_product($slug) : '',
     'description' => (string) ($page['seo']['meta_description'] ?? ''),
     'form_source' => 'Article: ' . $title,
 ]);

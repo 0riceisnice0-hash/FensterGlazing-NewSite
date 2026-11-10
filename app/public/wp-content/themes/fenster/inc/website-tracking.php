@@ -123,6 +123,118 @@ function fenster_ad_attribution_for_journey(string $journey_id): array
     ];
 }
 
+/**
+ * Where a journey came from, for the lead it turns into. SEO plan 10/11/2026, 0.3.
+ *
+ * The browser posts the tracker's first-touch context against the journey id
+ * (analytics consent only, as the journey itself), and the lead handlers read it
+ * back when the enquiry is saved. A WindowCAD lead arrives server to server with
+ * only the journey id, so this is the only way it can carry its landing page.
+ *
+ * The first context stored for a journey is kept: it is the first touch. Only
+ * the quote page moves, to the latest page that showed the quote tool.
+ */
+function fenster_lead_source_key(string $journey_id): string
+{
+    return 'fenster_src_' . substr(hash_hmac('sha256', strtoupper($journey_id), wp_salt('auth')), 0, 40);
+}
+
+function fenster_lead_source_clean_path(string $path): string
+{
+    if (trim($path) === '') {
+        return '';
+    }
+    $path = '/' . ltrim((string) wp_parse_url($path, PHP_URL_PATH), '/');
+
+    return preg_match('#^/[A-Za-z0-9/_.-]{0,160}$#', $path) ? $path : '';
+}
+
+function fenster_lead_source_for_journey(string $journey_id): array
+{
+    if (! preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $journey_id)) {
+        return [];
+    }
+    $record = get_transient(fenster_lead_source_key($journey_id));
+
+    return is_array($record) ? $record : [];
+}
+
+/** The enquiry meta a lead gets from its journey; empty values when unknown. */
+function fenster_lead_source_meta(string $journey_id): array
+{
+    $record = fenster_lead_source_for_journey($journey_id);
+    $field = static fn (string $key): string => (string) ($record[$key] ?? '');
+
+    return [
+        '_fenster_landing_page' => $field('landing_path'),
+        '_fenster_lead_source' => $field('source'),
+        '_fenster_lead_medium' => $field('medium'),
+        '_fenster_lead_campaign' => $field('campaign'),
+        '_fenster_referrer_host' => $field('referrer_host'),
+        '_fenster_quote_page' => $field('quote_page'),
+    ];
+}
+
+/** One readable line for the enquiry notes, or ''. */
+function fenster_lead_source_summary(array $meta): string
+{
+    $source = (string) ($meta['_fenster_lead_source'] ?? '');
+    $medium = (string) ($meta['_fenster_lead_medium'] ?? '');
+    $referrer = (string) ($meta['_fenster_referrer_host'] ?? '');
+    $parts = array_filter([
+        ($meta['_fenster_landing_page'] ?? '') !== '' ? 'landed on ' . $meta['_fenster_landing_page'] : '',
+        $source !== '' ? 'from ' . $source . ($medium !== '' ? ' / ' . $medium : '') : ($referrer !== '' ? 'referred by ' . $referrer : ''),
+        ($meta['_fenster_lead_campaign'] ?? '') !== '' ? 'campaign ' . $meta['_fenster_lead_campaign'] : '',
+        ($meta['_fenster_quote_page'] ?? '') !== '' ? 'quote tool on ' . $meta['_fenster_quote_page'] : '',
+    ]);
+
+    return $parts ? 'Website source: ' . implode(', ', $parts) : '';
+}
+
+add_action('rest_api_init', 'fenster_register_lead_source_route');
+function fenster_register_lead_source_route(): void
+{
+    register_rest_route('fenster/v1', '/lead-source', [
+        'methods' => WP_REST_Server::CREATABLE,
+        'callback' => 'fenster_store_lead_source',
+        'permission_callback' => 'fenster_ad_attribution_request_allowed',
+    ]);
+}
+
+function fenster_store_lead_source(WP_REST_Request $request): WP_REST_Response
+{
+    $data = $request->get_json_params();
+    $journey_id = strtoupper(sanitize_text_field((string) ($data['journey_id'] ?? '')));
+    if (! preg_match('/^FG2-[A-Z0-9-]{8,80}$/', $journey_id)) {
+        return new WP_REST_Response(['status' => 'error'], 422);
+    }
+
+    $label = static function ($value): string {
+        $value = sanitize_text_field((string) $value);
+
+        return preg_match('/^[A-Za-z0-9 _.+:-]{1,80}$/', $value) ? strtolower($value) : '';
+    };
+    $host = strtolower(sanitize_text_field((string) ($data['referrer_host'] ?? '')));
+    $incoming = [
+        'landing_path' => fenster_lead_source_clean_path((string) ($data['landing_path'] ?? '')),
+        'source' => $label($data['source'] ?? ''),
+        'medium' => $label($data['medium'] ?? ''),
+        'campaign' => $label($data['campaign'] ?? ''),
+        'referrer_host' => preg_match('/^[a-z0-9.-]{1,120}$/', $host) ? $host : '',
+        'quote_page' => fenster_lead_source_clean_path((string) ($data['quote_page'] ?? '')),
+    ];
+
+    $key = fenster_lead_source_key($journey_id);
+    $stored = get_transient($key);
+    $record = is_array($stored) ? $stored : $incoming;
+    if ($incoming['quote_page'] !== '') {
+        $record['quote_page'] = $incoming['quote_page'];
+    }
+    set_transient($key, $record, 90 * DAY_IN_SECONDS);
+
+    return new WP_REST_Response(null, 204);
+}
+
 add_action('rest_api_init', 'fenster_register_ad_attribution_route');
 function fenster_register_ad_attribution_route(): void
 {
@@ -562,7 +674,9 @@ function fenster_enqueue_website_tracking_config(): void
      * The flag is published as well as the blanking, so the browser can tell
      * "not tracked" apart from "misconfigured" when somebody debugs this.
      */
-    $trackable = fenster_request_may_be_tracked();
+    /* Page-level only; the crawler test runs in the browser below, because this
+       config is cached with the page (SEO plan 10/11/2026, 0.2). */
+    $trackable = fenster_page_may_be_tracked();
 
     $config = [
         'endpoint' => $trackable ? fenster_website_dashboard_url() : '',
@@ -574,8 +688,11 @@ function fenster_enqueue_website_tracking_config(): void
         // whatever we would do with them now.
         'withdrawEndpoint' => fenster_website_dashboard_withdraw_url(),
         'adAttributionEndpoint' => $trackable ? fenster_ad_attribution_endpoint() : '',
+        'leadSourceEndpoint' => $trackable ? esc_url_raw(rest_url('fenster/v1/lead-source')) : '',
         'trackable' => $trackable,
-        'trafficClass' => fenster_request_traffic_class(),
+        // Set in the browser from window.fensterIsAutomated; a server value here
+        // was the crawler's own classification, cached for every later visitor.
+        'trafficClass' => 'human',
         /*
          * THE AD REFERENCE IS DELIBERATELY NOT EMITTED HERE, and it used to be.
          *
@@ -605,9 +722,14 @@ function fenster_enqueue_website_tracking_config(): void
         ],
     ];
 
+    /* A browser that identifies as automated gets no endpoints, exactly as a
+       crawler request used to on the server: every sender in main.js bails
+       when its endpoint is empty. */
+    $automated = "if (window.fensterIsAutomated) { ['endpoint', 'consentEndpoint', 'statEndpoint', 'chatEndpoint', 'adAttributionEndpoint', 'adClickEndpoint', 'leadSourceEndpoint'].forEach(function (key) { window.fensterWebsiteTracking[key] = ''; }); window.fensterWebsiteTracking.trackable = false; window.fensterWebsiteTracking.trafficClass = 'bot'; }";
+
     wp_add_inline_script(
         'fenster-main',
-        'window.fensterWebsiteTracking = ' . wp_json_encode($config) . ';',
+        'window.fensterWebsiteTracking = ' . wp_json_encode($config) . ';' . $automated,
         'before'
     );
 }

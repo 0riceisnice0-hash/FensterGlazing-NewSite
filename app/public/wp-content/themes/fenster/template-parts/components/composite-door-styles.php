@@ -211,7 +211,10 @@ $fg_cds_bare = ! empty($args['bare']);
                                     <span class="fg-cds-door__art">
                                         <img
                                             src="<?php echo esc_url($fg_art); ?>"
-                                            alt=""
+                                            <?php /* Alt for image search, SEO plan 10/11/2026, 4.6. The link's
+                                                     aria-label already names the door, and it overrides
+                                                     the contents, so this is not read twice. */ ?>
+                                            alt="<?php echo esc_attr(sprintf(__('%1$s composite door, %2$s collection, line drawing', 'fenster'), (string) $style['name'], (string) $collection['name'])); ?>"
                                             loading="lazy"
                                             decoding="async"
                                             width="822"

@@ -909,7 +909,7 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_appointment_time' => $data['appointment_time'],
         '_fenster_appointment_display' => $data['appointment_display'],
         '_fenster_spam_suspected' => $data['spam_suspected'] ? '1' : '0',
-    ];
+    ] + fenster_lead_source_meta((string) $data['journey_ref']); // SEO plan 10/11/2026, 0.3
     foreach ($meta as $key => $value) {
         update_post_meta($enquiry_id, $key, $value);
     }

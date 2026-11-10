@@ -55,3 +55,17 @@ function fenster_restrict_public_user_rest_routes($result, WP_REST_Server $serve
 
     return $result;
 }
+
+/**
+ * HSTS. SEO plan 10/11/2026, 4.10: the site sent none, so a typed or linked
+ * http:// address always took a redirect first. A year, this host only: no
+ * includeSubDomains (a subdomain without a certificate would be locked out) and
+ * no preload (that list is hard to leave).
+ */
+add_action('send_headers', 'fenster_send_hsts_header');
+function fenster_send_hsts_header(): void
+{
+    if (is_ssl() && ! headers_sent()) {
+        header('Strict-Transport-Security: max-age=31536000');
+    }
+}

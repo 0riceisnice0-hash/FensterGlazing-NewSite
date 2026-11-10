@@ -448,7 +448,7 @@ function fenster_windowcad_forward(string $body, int $enquiry_id, string $receiv
             'Authorization' => 'Bearer ' . $target['key'],
             'X-Fenster-Enquiry-Id' => (string) $enquiry_id,
             'X-Fenster-Received-At' => $received_at,
-        ],
+        ] + fenster_lead_source_headers($enquiry_id),
         'body' => $body,
         'data_format' => 'body',
     ]);
@@ -469,6 +469,37 @@ function fenster_windowcad_forward(string $body, int $enquiry_id, string $receiv
     $receipt = json_decode((string) wp_remote_retrieve_body($response), true);
 
     return is_array($receipt) ? $receipt : [];
+}
+
+/**
+ * The lead's website source as headers on the forward, so Glasshouse can file
+ * it without a second request. Read from the saved enquiry, so the hourly retry
+ * sends the same thing. SEO plan 10/11/2026, 0.3.
+ */
+function fenster_lead_source_headers(int $enquiry_id): array
+{
+    if ($enquiry_id <= 0) {
+        return [];
+    }
+    $names = [
+        '_fenster_landing_page' => 'X-Fenster-Landing-Page',
+        '_fenster_lead_source' => 'X-Fenster-Source',
+        '_fenster_lead_medium' => 'X-Fenster-Medium',
+        '_fenster_lead_campaign' => 'X-Fenster-Campaign',
+        '_fenster_referrer_host' => 'X-Fenster-Referrer-Host',
+        '_fenster_quote_page' => 'X-Fenster-Quote-Page',
+        '_fenster_ad_click_type' => 'X-Fenster-Ad-Click-Type',
+        '_fenster_ad_click_id' => 'X-Fenster-Ad-Click-Id',
+    ];
+    $headers = [];
+    foreach ($names as $meta => $header) {
+        $value = (string) get_post_meta($enquiry_id, $meta, true);
+        if ($value !== '' && preg_match('#^[A-Za-z0-9 _./:+-]{1,200}$#', $value)) {
+            $headers[$header] = $value;
+        }
+    }
+
+    return $headers;
 }
 
 /** Keeps the payload, then hands it on; the marker goes once FieldOS has it. FieldOS's receipt, or null. */
@@ -813,6 +844,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $ad_click_type = (string) ($ad_attribution['click_type'] ?? '');
     $ad_click_id = (string) ($ad_attribution['click_id'] ?? '');
     $marketing_consent = ! empty($ad_attribution['marketing_consent']);
+    $lead_source = fenster_lead_source_meta($journey_ref);
 
     if (! $tracking_field_present) {
         // Every website-originated quote URL carries a tracking value, even for
@@ -825,6 +857,9 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $notes = $recovered
         ? "Lead from WindowCAD, recovered from the office's Print to CRM: the customer's own submission never reached the website"
         : 'Lead from WindowCAD';
+    if (fenster_lead_source_summary($lead_source) !== '') {
+        $notes .= "\n" . fenster_lead_source_summary($lead_source);
+    }
     if ($journey_ref !== '') {
         $notes .= "\nWebsite tracking: " . $journey_ref;
     } elseif ($marketing_ref !== '') {
@@ -867,7 +902,10 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             '_fenster_location' => $postcode,
             '_fenster_project_type' => 'WindowCAD',
             '_fenster_source' => 'WindowCAD',
-            '_fenster_page_url' => home_url('/online-quote/'),
+            /* SEO plan 10/11/2026, 0.3: was home_url('/online-quote/') for
+               every quote, wherever the tool was used. Now the page the quote
+               tool was on, from the journey; /online-quote/ only when unknown. */
+            '_fenster_page_url' => home_url($lead_source['_fenster_quote_page'] !== '' ? $lead_source['_fenster_quote_page'] : '/online-quote/'),
             '_fenster_journey_ref' => $journey_ref,
             '_fenster_marketing_ref' => $marketing_ref,
             '_fenster_ad_click_type' => $ad_click_type,
@@ -880,7 +918,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             '_fenster_windowcad_fingerprint' => $fingerprint,
             '_fenster_windowcad_project' => $project_id,
             '_fenster_windowcad_payload' => $kept,
-        ];
+        ] + $lead_source;
         foreach ($meta as $key => $value) {
             update_post_meta((int) $enquiry_id, $key, $value);
         }
@@ -1001,7 +1039,9 @@ function fenster_send_enquiry_to_adminbase(int $enquiry_id, array $meta, string 
         'email' => (string) ($meta['_fenster_email'] ?? ''),
         'phone' => (string) ($meta['_fenster_phone'] ?? ''),
         'postcode' => (string) ($meta['_fenster_location'] ?? ''),
-        'notes' => trim($message . (($meta['_fenster_journey_ref'] ?? '') !== '' ? "\n\nWebsite tracking: " . $meta['_fenster_journey_ref'] : '')),
+        'notes' => trim($message
+            . (fenster_lead_source_summary($meta) !== '' ? "\n\n" . fenster_lead_source_summary($meta) : '')
+            . (($meta['_fenster_journey_ref'] ?? '') !== '' ? "\n\nWebsite tracking: " . $meta['_fenster_journey_ref'] : '')),
         'sales_area' => $is_commercial ? 'COMM' : '',
         'quote_type' => $is_commercial ? 'Commercial' : '',
     ]);

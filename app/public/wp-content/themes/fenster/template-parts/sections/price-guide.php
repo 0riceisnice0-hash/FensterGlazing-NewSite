@@ -37,21 +37,29 @@ $checked = array_values(array_filter(
     $examples,
     static fn (array $example): bool => str_starts_with((string) ($example['price'] ?? ''), '£')
 ));
+$guide_image = $checked === [] ? (fenster_location_images((string) ($page['product_slug'] ?? ''))[0] ?? null) : null;
+/* Examples taken from issued quotes (SEO plan 10/11/2026, 6.2) have no
+   screenshot of their own, so they show a photograph of the product range,
+   captioned as such. The month each was priced is shown, not one shared date. */
+$range_images = function_exists('fenster_location_images') ? fenster_location_images((string) ($page['product_slug'] ?? '')) : [];
+$checked_months = array_values(array_unique(array_map(
+    static fn (array $example): string => (string) ($example['checked'] ?? 'July 2026'),
+    $checked
+)));
+$checked_when = count($checked_months) > 1
+    ? implode(', ', array_slice($checked_months, 0, -1)) . ' and ' . end($checked_months)
+    : ($checked_months[0] ?? 'July 2026');
 
+// Pages without a checked example must not claim that they publish real prices.
+// The tool collects the customer's details before displaying the quote.
 $faqs = [
-    [
-        'question' => 'Are the prices on this page real?',
-        'answer' => 'Yes. Each checked example is a real fitted price from our pricing software for the exact specification shown, including VAT. The same software prices your job in the quote tool.',
-    ],
-    [
-        'question' => 'Do the prices include VAT and fitting?',
-        'answer' => 'Yes. Every checked example is a fitted price including VAT. The only thing that can move it is the survey, once we have measured your opening properly, and we tell you before you order.',
-    ],
-    [
-        'question' => 'Why can the same product cost different amounts?',
-        'answer' => 'Size, colour, glass, vents, handles, thresholds and access all change the fitted price. The quote tool lets you test each choice and watch the number move before anyone visits your home.',
-    ],
+    ['question' => 'How do I get a price for my own specification?', 'answer' => 'Choose the product, sizes, finish and glass in our online quote tool. Add your contact and property details to receive your price. A free consultation uses the same software and price list.'],
+    ['question' => 'What changes the fitted price?', 'answer' => 'The opening sizes, frame material, colour, glass, hardware and installation requirements affect the quote. Tell us about side panels, thresholds and access when discussing the job.'],
+    ['question' => 'When are the final sizes checked?', 'answer' => 'Once you decide to go ahead, a technical survey confirms the dimensions and fitting details before manufacture. Approximate sizes are enough to start a quote.'],
 ];
+if ($checked !== []) {
+    array_unshift($faqs, ['question' => 'What do the example prices include?', 'answer' => sprintf('The examples shown are fitted prices including VAT for the exact specifications listed, priced in %s. Use the quote tool or book a consultation for a current price for your own job.', $checked_when)]);
+}
 // FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
 // Seven separate copies of this block existed across the theme until
 // 2026-08-15, which is seven places for the shape to drift and five that
@@ -72,7 +80,7 @@ $faqs = [
                     <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </div>
             </div>
-            <aside class="fg-price-guide__glance" aria-label="<?php esc_attr_e('Checked fitted prices at a glance', 'fenster'); ?>">
+            <aside class="fg-price-guide__glance<?php echo $guide_image ? ' fg-price-guide__glance--photo' : ''; ?>" aria-label="<?php echo esc_attr($checked !== [] ? 'Checked fitted prices at a glance' : 'How to get your price'); ?>">
                 <?php if ($checked !== []) : ?>
                     <strong><?php esc_html_e('Checked fitted prices', 'fenster'); ?></strong>
                     <ul>
@@ -83,10 +91,11 @@ $faqs = [
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <p><?php esc_html_e('Fitted prices including VAT, checked July 2026. Full details below.', 'fenster'); ?></p>
+                    <p><?php echo esc_html(sprintf('Fitted prices including VAT, priced %s. Full details below.', $checked_when)); ?></p>
                 <?php else : ?>
+                    <?php if ($guide_image) : ?><img <?php echo fenster_location_image_attrs($guide_image, ['loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 1024px) 90vw, 400px']); ?>><?php endif; ?>
                     <strong><?php esc_html_e('Your price in minutes', 'fenster'); ?></strong>
-                    <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours and glass in the quote tool below and it prices as you go, from the same list our office quotes from.', $product)); ?></p>
+                    <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours and glass, then enter your contact details to see the price. Our office uses the same software and price list.', $product)); ?></p>
                 <?php endif; ?>
             </aside>
         </div>
@@ -109,6 +118,12 @@ $faqs = [
                         $media_alt = $photo !== ''
                             ? (string) ($example['photo_alt'] ?? $example['spec'] ?? 'Fenster installation photo')
                             : (string) ($example['image_alt'] ?? $example['spec'] ?? 'Priced configuration');
+                        if ($media === '' && $range_images !== []) {
+                            $range_image = $range_images[$index % count($range_images)];
+                            $media = (string) $range_image['src'];
+                            $media_alt = (string) ($range_image['alt'] ?: $example['spec']);
+                            $example['photo_caption'] = 'The range this example is from';
+                        }
                         ?>
                         <article class="fg-price-guide__example <?php echo esc_attr($index % 2 ? 'fg-price-guide__example--reverse' : ''); ?>">
                             <div class="fg-price-guide__example-copy">
@@ -116,7 +131,12 @@ $faqs = [
                                 <h3><?php echo esc_html((string) ($example['spec'] ?? 'Checked example')); ?></h3>
                                 <p><?php echo esc_html((string) ($example['details'] ?? '')); ?></p>
                                 <span class="fg-price-guide__price"><?php echo esc_html((string) ($example['price'] ?? '')); ?><em><?php esc_html_e('fitted', 'fenster'); ?></em></span>
-                                <small><?php esc_html_e('The survey confirms the final details before anything is made.', 'fenster'); ?></small>
+                                <small>
+                                    <?php if (($example['source'] ?? '') === 'quote') : ?>
+                                        <?php echo esc_html(sprintf('From a quote we gave a customer in %s. ', (string) ($example['checked'] ?? ''))); ?>
+                                    <?php endif; ?>
+                                    <?php esc_html_e('The survey confirms the final details before anything is made.', 'fenster'); ?>
+                                </small>
                                 <?php if ($photo !== '' && $config_image !== '') : ?>
                                     <figure class="fg-price-guide__config">
                                         <img <?php echo fenster_image_attr_string($config_image, ['alt' => (string) ($example['image_alt'] ?? 'The exact configuration we priced'), 'loading' => 'lazy']); ?>>
@@ -124,9 +144,9 @@ $faqs = [
                                     </figure>
                                 <?php endif; ?>
                             </div>
-                            <figure class="fg-price-guide__example-media<?php echo $photo === '' ? ' fg-price-guide__example-media--config' : ''; ?>">
+                            <figure class="fg-price-guide__example-media<?php echo ($photo === '' && $config_image !== '') ? ' fg-price-guide__example-media--config' : ''; ?>">
                                 <img <?php echo fenster_image_attr_string($media, ['alt' => $media_alt, 'loading' => $index === 0 ? 'eager' : 'lazy']); ?>>
-                                <?php if (! empty($example['photo_caption'])) : ?>
+                                <?php if ($media !== '' && ! empty($example['photo_caption'])) : ?>
                                     <figcaption><?php echo esc_html((string) $example['photo_caption']); ?></figcaption>
                                 <?php endif; ?>
                             </figure>
@@ -142,7 +162,7 @@ $faqs = [
             <div class="fg-price-guide__factors-copy">
                 <p class="eyebrow"><?php esc_html_e('What changes the price', 'fenster'); ?></p>
                 <h2><?php esc_html_e('The choices that move the number.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('No two openings are quite the same, which is why one-size price lists are usually fiction. These are the choices that genuinely change the fitted price, and you can test every one of them in the quote tool before anyone visits.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Opening sizes, product choices and fitting conditions affect the cost. Use the online tool to specify the product, then discuss access, the existing frames and any building work with us when confirming the job.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="#fenster-instant-pricing"><?php esc_html_e('Try it on your job', 'fenster'); ?></a>
                 </div>
@@ -179,10 +199,10 @@ $faqs = [
             <div>
                 <p class="eyebrow"><?php esc_html_e('Ready for your number?', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Price your exact job, right here.', 'fenster'); ?></h2>
-                <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours, glass and hardware, and watch the price build as you go. It is the same software behind every checked example on this page.', $product)); ?></p>
+                <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours, glass and hardware, then enter your contact details to see the fitted price. Approximate measurements are enough to get started.', $product)); ?></p>
                 <ul class="fg-home-quote-station__points">
                     <li><?php esc_html_e('A real figure in about ten minutes', 'fenster'); ?></li>
-                    <li><?php esc_html_e('See how each choice moves the price', 'fenster'); ?></li>
+                    <li><?php esc_html_e('A quote for the specification you choose', 'fenster'); ?></li>
                     <li><?php esc_html_e('We check the final details at survey', 'fenster'); ?></li>
                 </ul>
                 <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>

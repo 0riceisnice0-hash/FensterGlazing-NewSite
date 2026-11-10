@@ -175,6 +175,52 @@ function fenster_request_traffic_class(): string
 }
 
 /**
+ * Whether a PAGE may carry browser tracking, decided only from what is the same
+ * for every visitor who could be served that page from cache.
+ *
+ * SEO plan 10/11/2026, 0.2. Pages are proxy-cached for an hour and served to
+ * everybody. fenster_request_may_be_tracked() asks whether THIS request is a
+ * crawler, so a crawler that refilled the cache baked "tracking off" into the
+ * copy every person then received: 14.5% of real page views in September's log
+ * replay, 22% on the homepage, and verified again on two pages on 10/11/2026.
+ *
+ * Logged-in pages are never cached, so the staff exclusion can stay here. The
+ * crawler test moves to the browser (fenster_print_automation_check()), which
+ * sees the real user agent of whoever is actually looking at the page.
+ */
+function fenster_page_may_be_tracked(): bool
+{
+    if (is_user_logged_in()) {
+        return false;
+    }
+
+    return (bool) apply_filters('fenster_request_may_be_tracked', true);
+}
+
+/**
+ * The same crawler rule as fenster_request_is_bot(), run in the browser.
+ *
+ * Printed once, early in <head>, as `window.fensterIsAutomated`, which the
+ * tracking config and the consent layer both read. The list is the server's own
+ * list, so the two cannot drift; it is the same for every visitor, so it is safe
+ * in a cached page. `navigator.webdriver` adds the headless browsers that send an
+ * ordinary user agent.
+ */
+add_action('wp_head', 'fenster_print_automation_check', 0);
+function fenster_print_automation_check(): void
+{
+    if (is_admin()) {
+        return;
+    }
+
+    $agents = wp_json_encode(array_values(fenster_known_bot_agents()));
+    $exceptions = wp_json_encode(array_values(fenster_bot_token_exceptions()));
+    ?>
+    <script data-clarity-unmask="true">window.fensterIsAutomated=(function(){try{var a=String(navigator.userAgent||'').toLowerCase().trim();if(!a||navigator.webdriver){return true;}var k=<?php echo $agents; ?>,x=<?php echo $exceptions; ?>,i;for(i=0;i<k.length;i++){if(a.indexOf(k[i])!==-1){return true;}}for(i=0;i<x.length;i++){a=a.split(x[i]).join('');}return /(?:bot|crawl(?:er)?|spider|scrape[rd]?)(?:[^a-z0-9]|$)/.test(a);}catch(e){return false;}})();</script>
+    <?php
+}
+
+/**
  * Whether this request may be given browser tracking at all.
  *
  * One gate, used by both the tracking config and the consent layer, so the two

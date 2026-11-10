@@ -4090,13 +4090,18 @@ if ($is_commercial_hub) {
 
         <div class="container fg-cd3-hero__inner">
             <div class="fg-cd3-hero__copy">
-                <p class="eyebrow"><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Distinction composite doors', 'fenster'); ?></h1>
+                <?php /* SEO plan 10/11/2026, 3.1: "composite doors milton keynes" fell
+                         from 11 to 14.5 while Google alternated this page with the
+                         doors hub. The place goes in the H1, and each page links the
+                         other with the words its own search uses. */ ?>
+                <p class="eyebrow"><?php esc_html_e('Distinction composite doors', 'fenster'); ?></p>
+                <h1><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></h1>
                 <p class="fg-cd3-hero__lead"><?php esc_html_e('A 44.5mm insulated slab under a tough GRP skin, fitted across Milton Keynes by our own installers. It holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
                 <div class="fg-cd3-hero__actions">
                     <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
                 </div>
+                <p class="fg-hero-more"><?php esc_html_e('Comparing materials?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/doors-milton-keynes/')); ?>"><?php esc_html_e('See all our front and back doors in Milton Keynes', 'fenster'); ?></a></p>
                 <p class="fg-cd3-hero__credential">
                     <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
                     <span><?php esc_html_e('Approved installer. One in four front doors fitted in Britain is a Distinction, and we survey, supply and hang yours ourselves.', 'fenster'); ?></span>
@@ -4148,8 +4153,12 @@ if ($is_commercial_hub) {
             <div class="fg-hero__copy">
                 <div class="fg-hero__heading">
                     <p class="eyebrow"><?php echo esc_html($hero_eyebrow); ?></p>
-                    <h1><?php echo esc_html($title); ?></h1>
+                    <h1><?php echo esc_html($slug === 'upvc-doors' ? 'uPVC Doors in Milton Keynes' : $title); ?></h1>
                     <p class="fg-hero__intro"><?php echo esc_html($hero_intro); ?></p>
+                    <?php if ($slug === 'upvc-doors') : ?>
+                        <?php /* SEO plan 10/11/2026, 3.1: "upvc doors milton keynes" fell from 13 to 21. */ ?>
+                        <p class="fg-hero-more"><?php esc_html_e('Comparing materials?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/doors-milton-keynes/')); ?>"><?php esc_html_e('See all our front and back doors in Milton Keynes', 'fenster'); ?></a></p>
+                    <?php endif; ?>
                 </div>
                 <div class="button-row">
                     <a class="button" href="#fenster-enquiry">
@@ -6250,8 +6259,11 @@ if ($is_commercial_hub) {
                    which of your products can have this, and is it only uPVC --
                    on top of the five they already had. At the default of five
                    the last one would be sliced off and never render. */
-                'french-casement-windows' => 6,
+                'french-casement-windows' => 7,
                 'french-doors' => 6,
+                /* SEO plan 10/11/2026, 3.2 and 3.3: one question each that the
+                   pages answered before their rebuilds and had stopped asking. */
+                'heritage-windows' => 6,
                 'bow-bay-windows' => 6,
             ];
             $product_faq_limit = $is_repairs ? 7 : ($is_composite_doors ? 6 : ($product_faq_limits[$slug] ?? 5));

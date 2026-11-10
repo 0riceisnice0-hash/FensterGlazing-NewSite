@@ -50,6 +50,18 @@ $product_links = array_slice((array) ($args['product_links'] ?? []), 0, 8);
 $products = (array) ($args['products'] ?? []);
 $description = trim((string) ($args['description'] ?? ''));
 $form_source = (string) ($args['form_source'] ?? ('Blog: ' . $title));
+/* SEO plan 10/11/2026, 2.2: the price button opens the tool on the product
+   the article is about, not the all-products designer. */
+$quote_product = (string) ($args['quote_product'] ?? '');
+$quote_url = function_exists('fenster_blog_quote_url')
+    ? fenster_blog_quote_url(array_merge($quote_product !== '' ? [$quote_product] : [], array_map('strval', $products)))
+    : home_url('/online-quote/');
+$next_links = array_map(static function ($link) use ($quote_url) {
+    if (is_array($link) && untrailingslashit((string) ($link['url'] ?? '')) === untrailingslashit(home_url('/online-quote/'))) {
+        $link['url'] = $quote_url;
+    }
+    return $link;
+}, $next_links);
 
 $brand = fenster_data('brand', []);
 $phone = (string) ($brand['phone'] ?? '01908 429200');
@@ -162,11 +174,27 @@ if ($description !== '') {
 }
 if ($hero_image !== null) {
     $schema['image'] = [$image_url((string) $hero_image['src'])];
+} elseif (function_exists('fenster_location_images')) {
+    /* SEO plan 10/11/2026, 4.5: a post whose image pool came back empty went
+       out with no image in its BlogPosting, which Google needs for the
+       article result. Fall back to a photograph of the product it is about. */
+    foreach ($products as $schema_product) {
+        $schema_image = fenster_location_images((string) $schema_product)[0] ?? null;
+        if (is_array($schema_image) && ! empty($schema_image['src'])) {
+            $schema['image'] = [$image_url((string) $schema_image['src'])];
+            break;
+        }
+    }
 }
 if ($date !== '') {
     $schema['datePublished'] = $date;
     $schema['dateModified'] = $date;
     $schema['isPartOf'] = ['@type' => 'Blog', 'name' => 'Fenster Glazing blog', 'url' => home_url('/blog/')];
+}
+$legacy_dates = ($date === '' && $legacy && function_exists('fenster_blog_legacy_guide_dates')) ? (fenster_blog_legacy_guide_dates()[$slug] ?? null) : null;
+if (is_array($legacy_dates)) {
+    $schema['datePublished'] = $legacy_dates[0];
+    $schema['dateModified'] = $legacy_dates[1];
 }
 ?>
 
@@ -190,7 +218,7 @@ if ($date !== '') {
                     <span><?php echo esc_html(sprintf('%d min read', $minutes)); ?></span>
                 </p>
                 <div class="button-row">
-                    <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get a quote', 'fenster'); ?></a>
+                    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get a quote', 'fenster'); ?></a>
                     <a class="button button--steel" href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html('Call ' . $phone); ?></a>
                 </div>
             </div>

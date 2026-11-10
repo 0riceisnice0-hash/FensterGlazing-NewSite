@@ -23,7 +23,7 @@ $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $phone);
 $hero_heading = $is_visualiser ? 'Visualise your windows and doors with Fenster.' : 'Start your window and door quote.';
 $hero_copy = $is_visualiser
-    ? 'Explore product styles, colours and glazing choices, then send us the details so we can check the specification with you.'
+    ? 'Design the window or door in 3D: the style, colours, glass and handles. When you are happy with it, add your details and the same tool shows the price for exactly what you designed.'
     : 'Use the product selector as a starting point, then we can confirm the details, survey requirements and next steps with you.';
 $steps = [
     ['title' => 'Choose a product', 'copy' => 'Pick the window, door or glazing option you want to price.'],
@@ -40,8 +40,15 @@ $steps = [
                 <h1><?php echo esc_html($hero_heading); ?></h1>
                 <p><?php echo esc_html($hero_copy); ?></p>
                 <div class="button-row">
-                    <a class="button" href="#quote-form"><?php esc_html_e('Send quote details', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Talk to the team', 'fenster'); ?></a>
+                    <?php if ($is_visualiser) : ?>
+                        <?php /* SEO plan 10/11/2026, 2.3: the visualiser had 78 organic
+                                 visits for one lead and no step that said "now price it". */ ?>
+                        <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Price your design', 'fenster'); ?></a>
+                        <a class="button button--light" href="#quote-form"><?php esc_html_e('Send us the details', 'fenster'); ?></a>
+                    <?php else : ?>
+                        <a class="button" href="#quote-form"><?php esc_html_e('Send quote details', 'fenster'); ?></a>
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Talk to the team', 'fenster'); ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
             <article class="fg-quote-hero__media fg-quote-hero__embed">

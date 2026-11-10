@@ -267,7 +267,7 @@ $fg_total = count($fg_questions);
                                         <?php if ($fg_hex !== '') : ?>
                                             <span class="fg-cdq__chip" style="background:<?php echo esc_attr($fg_hex); ?>"></span>
                                         <?php elseif ($fg_has) : ?>
-                                            <img src="<?php echo esc_url($fg_pic($fg_key)); ?>" alt="" loading="lazy" decoding="async" width="914" height="2013">
+                                            <img src="<?php echo esc_url($fg_pic($fg_key)); ?>" alt="<?php echo esc_attr(sprintf(__('%s composite door', 'fenster'), (string) $fg_a['label'])); ?>" aria-hidden="true" loading="lazy" decoding="async" width="914" height="2013">
                                         <?php endif; ?>
                                     </span>
                                     <span class="fg-cdq__answer-text">

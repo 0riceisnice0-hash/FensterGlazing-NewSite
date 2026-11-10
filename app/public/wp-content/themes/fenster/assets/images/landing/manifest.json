@@ -1323,5 +1323,175 @@
         "bytes": 282124
       }
     ]
+  },
+  {
+    "source": "/assets/images/imported/C08-Classic-Windows-Heritage-Style-Anthracite-2048x1366-1.jpg",
+    "outputs": [
+      {
+        "file": "9b0bc324d174-480w.webp",
+        "width": 480,
+        "bytes": 29992
+      },
+      {
+        "file": "9b0bc324d174-960w.webp",
+        "width": 960,
+        "bytes": 85844
+      },
+      {
+        "file": "9b0bc324d174-1600w.webp",
+        "width": 1600,
+        "bytes": 170746
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/aluminium-windows/aluminium-windows-card-1000w.webp",
+    "outputs": [
+      {
+        "file": "6d0c51fe0b16-480w.webp",
+        "width": 480,
+        "bytes": 29558
+      },
+      {
+        "file": "6d0c51fe0b16-960w.webp",
+        "width": 960,
+        "bytes": 76698
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/curated/liniar-roofline-soffit.jpg",
+    "outputs": [
+      {
+        "file": "813cb691a402-480w.webp",
+        "width": 480,
+        "bytes": 17058
+      },
+      {
+        "file": "813cb691a402-960w.webp",
+        "width": 960,
+        "bytes": 42088
+      },
+      {
+        "file": "813cb691a402-1600w.webp",
+        "width": 1600,
+        "bytes": 76792
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/curated/sheerline-roof-lantern.jpg",
+    "outputs": [
+      {
+        "file": "43d22bf99b6d-480w.webp",
+        "width": 480,
+        "bytes": 21656
+      },
+      {
+        "file": "43d22bf99b6d-960w.webp",
+        "width": 960,
+        "bytes": 59660
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/pet-flaps/pet-flap-cat-through-flap.webp",
+    "outputs": [
+      {
+        "file": "dce1adf58b2d-480w.webp",
+        "width": 480,
+        "bytes": 27124
+      },
+      {
+        "file": "dce1adf58b2d-960w.webp",
+        "width": 960,
+        "bytes": 78296
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/replacement-glazing/rg-hero-misted-view-1920w.jpg",
+    "outputs": [
+      {
+        "file": "26ec67671e3c-480w.webp",
+        "width": 480,
+        "bytes": 8426
+      },
+      {
+        "file": "26ec67671e3c-960w.webp",
+        "width": 960,
+        "bytes": 30950
+      },
+      {
+        "file": "26ec67671e3c-1600w.webp",
+        "width": 1600,
+        "bytes": 80542
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/roof-lanterns/flat-rooflights/fixed-flat-rooflights-installed-pair.jpg",
+    "outputs": [
+      {
+        "file": "8d1ca52f6d82-480w.webp",
+        "width": 480,
+        "bytes": 25310
+      },
+      {
+        "file": "8d1ca52f6d82-960w.webp",
+        "width": 960,
+        "bytes": 80108
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/secondary-glazing/sg-hero-winslow-1920w.jpg",
+    "outputs": [
+      {
+        "file": "08179fdf7d30-480w.webp",
+        "width": 480,
+        "bytes": 11668
+      },
+      {
+        "file": "08179fdf7d30-960w.webp",
+        "width": 960,
+        "bytes": 42868
+      },
+      {
+        "file": "08179fdf7d30-1600w.webp",
+        "width": 1600,
+        "bytes": 105502
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/slide-fold/sf-lb-open-1200w.webp",
+    "outputs": [
+      {
+        "file": "13609f2a7fec-480w.webp",
+        "width": 480,
+        "bytes": 65900
+      },
+      {
+        "file": "13609f2a7fec-960w.webp",
+        "width": 960,
+        "bytes": 212918
+      }
+    ]
+  },
+  {
+    "source": "/assets/images/products/tilt-turn/tilt-turn-room-card-1200w.webp",
+    "outputs": [
+      {
+        "file": "34c31a78ab55-480w.webp",
+        "width": 480,
+        "bytes": 12022
+      },
+      {
+        "file": "34c31a78ab55-960w.webp",
+        "width": 960,
+        "bytes": 32446
+      }
+    ]
   }
 ]

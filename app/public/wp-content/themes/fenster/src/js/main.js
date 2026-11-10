@@ -2692,6 +2692,51 @@ const syncAdAttribution = () => {
 
 syncAdAttribution();
 
+/* SEO plan 10/11/2026, 0.3: the lead carries where the visitor came from.
+
+   A WindowCAD quote reaches the server from WindowCAD, not from this page, with
+   nothing but the journey reference, so every quote lead was filed against
+   /online-quote/ and "how did you hear about us" was left to be typed by hand.
+   This sends the first-touch context the tracker already keeps (landing page,
+   source, medium, campaign, referring site) to the server against the journey,
+   plus the page the quote tool is on. The enquiry is stamped from it when the
+   lead lands. Analytics consent only, the same rule as the journey itself, and
+   once per journey and page per browser session. */
+const syncLeadSource = () => {
+  if (!trackingConsentAccepted() || !websiteTracking.leadSourceEndpoint || !window.fetch) return;
+  const journeyId = journeyReference();
+  if (!validTrackingReference(journeyId, 'FG2')) return;
+  const quotePage = document.querySelector('[data-quote-frame-wrap]') ? window.location.pathname : '';
+  const sentKey = `${journeyId}:${quotePage}`;
+  try {
+    if (window.sessionStorage.getItem('fenster_lead_source_sent') === sentKey) return;
+  } catch (_error) {}
+
+  const context = campaignContext();
+  window.fetch(websiteTracking.leadSourceEndpoint, {
+    method: 'POST',
+    credentials: 'same-origin',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      journey_id: journeyId,
+      landing_path: context.landing_path || '',
+      source: context.source || '',
+      medium: context.medium || '',
+      campaign: context.campaign || '',
+      referrer_host: context.referrer_host || '',
+      quote_page: quotePage,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) return;
+      try { window.sessionStorage.setItem('fenster_lead_source_sent', sentKey); } catch (_error) {}
+    })
+    .catch(() => {});
+};
+
+syncLeadSource();
+
 /* Report the ad click from the browser, because the landing page is cached.
 
    SiteGround's proxy serves these pages by path and ignores the query string,
@@ -2749,12 +2794,14 @@ window.addEventListener('fenster:tracking-consent-accepted', () => {
   refreshWindowCadLinks();
   flushWebsiteEventQueue();
   syncAdAttribution();
+  syncLeadSource();
 });
 window.addEventListener('fenster:cookie-preferences-updated', () => {
   populateTrackingFields();
   populateAdClickFields();
   refreshWindowCadLinks();
   syncAdAttribution();
+  syncLeadSource();
 });
 
 let consentedPageRecorded = false;
@@ -2826,7 +2873,7 @@ document.addEventListener('click', (event) => {
    Add to this list in the same commit that adds a new button style. */
 document.addEventListener('click', (event) => {
   const action = event.target.closest(
-    'a.button, button.button, .fg-h30-btn, .site-nav__mega-cta, [data-fg-audience-choice]'
+    'a.button, button.button, .fg-h30-btn, .site-nav__mega-cta, [data-fg-audience-choice], [data-fg-cta]'
   );
   if (!action || action.closest('[data-fg-cookie-consent]') || action.matches('[type="submit"]')) return;
   const label = (action.textContent || action.getAttribute('aria-label') || 'Website action').trim().replace(/\s+/g, ' ').slice(0, 120);
@@ -2835,6 +2882,11 @@ document.addEventListener('click', (event) => {
     try {
       const url = new URL(action.href, window.location.href);
       target = url.origin === window.location.origin ? url.pathname : url.origin;
+      /* The quote deep link is one path with a product on it, and which
+         product was picked is the whole point of the price-first homepage.
+         Only this one known parameter is kept: never a free-form query. */
+      const product = url.origin === window.location.origin ? url.searchParams.get('product') : null;
+      if (product && /^[a-z0-9-]{1,60}$/.test(product)) target += `?product=${product}`;
     } catch (_error) {}
   }
   trackWebsiteEvent('cta_click', { cta: label, link_target: target });

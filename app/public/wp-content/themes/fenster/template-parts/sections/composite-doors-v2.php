@@ -283,7 +283,7 @@ $fg_has_colour = ! empty($colour_wall);
                                 <?php if (! empty($entry['swatch'])) : ?>
                                     <img
                                         src="<?php echo esc_url(fenster_generated_url($palette_base . $entry['swatch'] . '-160w.webp')); ?>"
-                                        alt="" aria-hidden="true" loading="lazy" width="160" height="160">
+                                        alt="<?php echo esc_attr(sprintf(__('%s composite door colour sample', 'fenster'), (string) $entry['name'])); ?>" aria-hidden="true" loading="lazy" width="160" height="160">
                                 <?php else : ?>
                                     <i style="--option-colour: <?php echo esc_attr((string) $entry['hex']); ?>" aria-hidden="true"></i>
                                 <?php endif; ?>

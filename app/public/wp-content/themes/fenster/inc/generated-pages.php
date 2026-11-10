@@ -266,7 +266,9 @@ function fenster_gsc_seo_overrides(): array
            Crittall style. The head term stays first because the route already
            ranks for it. */
         'heritage-windows' => [
-            'title_tag' => 'Heritage Windows Milton Keynes | Steel-Look Aluminium',
+            /* SEO plan 10/11/2026, 3.3: "heritage aluminium windows" fell from
+               15.7 to 28 after the 11 August retitle dropped the phrase. */
+            'title_tag' => 'Aluminium Heritage Windows | Steel-Look, Milton Keynes',
             'meta_description' => 'Steel-look heritage windows in Milton Keynes. Sheerline Classic aluminium with slim 60.5mm frames, Georgian or 1930s bar layouts and a warm thermal break.',
         ],
         'patio-doors' => [
@@ -357,7 +359,10 @@ function fenster_gsc_seo_overrides(): array
                contradicting it. A French casement is often specified for exactly
                that reason, so it can come back the moment the owner says so --
                but it is a compliance claim and it needs saying deliberately. */
-            'title_tag' => 'French Casement Windows Milton Keynes | uPVC and Aluminium',
+            /* SEO plan 10/11/2026, 3.2: "french casement windows" fell from 9.5
+               to 23.6 after the 30 August rebuild. It is a national search, so
+               the title answers the question instead of naming the town. */
+            'title_tag' => 'French Casement Windows | uPVC and Aluminium, No Centre Post',
             'meta_description' => 'French casement windows have no fixed central mullion, so both sashes swing clear and the full width opens as one. Specify it on uPVC or aluminium.',
         ],
         'flat-rooflights' => [
@@ -499,8 +504,10 @@ function fenster_gsc_seo_overrides(): array
         'nick-test-baboon' => [
             'meta_description' => 'Commercial glazing support from Fenster for refurbishment and new-build projects.',
         ],
+        // SEO plan 10/11/2026, 1.3: the page is a how-to and ranks for "how to
+        // soundproof windows", so the description answers that search.
         'soundproof-windows' => [
-            'meta_description' => 'Soundproof windows from Fenster Glazing: compare glass, frames and installation choices for a quieter home.',
+            'meta_description' => 'How to soundproof windows: seal the gaps, add heavy curtains or secondary glazing, or fit acoustic laminated glass. What each fix does to the noise.',
         ],
         'tag/doors' => [
             'meta_description' => 'Browse Fenster Glazing articles on commercial windows, doors, energy performance and property maintenance.',
@@ -537,6 +544,7 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Replacement windows for The Green Man in Eversholt, improving comfort, appearance and energy performance throughout the pub.',
         ],
         'what-are-integral-blinds' => [
+            'title_tag' => 'What Are Integral Blinds and How Do They Work?',
             'meta_description' => 'Learn how integral blinds work inside double glazing, including their benefits, controls and suitability for windows and doors.',
         ],
         // The scrape record for this route is titled "Book a Consultation",
@@ -544,9 +552,30 @@ function fenster_gsc_seo_overrides(): array
         // the quote page told Google it was the consultation page, and there is
         // a real /book-a-consultation/ route for it to be confused with. The
         // title override fixes the breadcrumb as well as the snippet.
+        // SEO plan 10/11/2026, 1.2: lead with the words people type ("online
+        // window quote", "window quote online", "door quote", "instant window
+        // quote"), which sat on page two under the old title.
         'online-quote' => [
-            'title_tag' => 'Online Quote | Price Your Windows and Doors | Fenster Glazing',
-            'meta_description' => 'Price your own windows and doors online in about ten minutes. Choose sizes, colours, glass and handles, then see the figure we would charge to fit them.',
+            'title_tag' => 'Online Window & Door Quote | Instant Price in Minutes',
+            'meta_description' => 'Get an online quote for windows and doors in about ten minutes. Choose sizes, colours, glass and handles, then see the price we would charge to fit them.',
+        ],
+        // SEO plan 10/11/2026, 1.1 and 1.3: old-site titles that were still
+        // live, including "Fester Glazing" on the most-shown page on the site.
+        'what-are-double-glazed-glass-windows' => [
+            'title_tag' => 'What Is Double Glazing and How Does It Work? | Fenster',
+            'meta_description' => 'Double glazed windows have two panes of glass with a sealed, gas-filled gap between them, which keeps heat in and noise out. How it works and what to choose.',
+        ],
+        'how-to-clean-your-upvc-windows-at-home' => [
+            'title_tag' => 'How to Clean uPVC Windows and Frames',
+            'meta_description' => 'Clean uPVC windows with a soft cloth and warm soapy water, then rinse and dry. Avoid scouring pads and cream cleaners, which scratch and dull the frames.',
+        ],
+        '3d-visualiser' => [
+            'title_tag' => 'Window & Door Visualiser | Design Yours in 3D',
+            'meta_description' => 'Design your windows and doors in 3D: pick the style, colour, glass and handles and turn it round on screen, then see the price for what you have designed.',
+        ],
+        'meet-the-team' => [
+            'title_tag' => 'Meet the Team | Fenster Glazing, Milton Keynes',
+            'meta_description' => 'Meet the people behind Fenster Glazing in Milton Keynes: the surveyors, fitters and office team who price, make and install your windows and doors.',
         ],
     ];
 }
@@ -745,10 +774,13 @@ function fenster_price_guide_pages(): array
             'product_slug' => 'sliding-sash-windows',
             'quote_url' => $base_quote_url . '&productCollection=9',
             'intro' => 'What moves the price of sliding sash windows, from the model and colour to horns, bars and furniture, and a tool that gives you a real figure for your exact windows in minutes.',
+            /* SEO plan 10/11/2026, 6.2: real frames from quotes we issued,
+               read from the Glasshouse CRM (residential_contract_quotes), each
+               at the line price plus VAT. Spec and size only, never whose. */
             'examples' => [
-                ['spec' => '900 x 1200 standard uPVC sash window', 'details' => 'White finish, A-rated glass, standard furniture and cill', 'price' => 'To confirm from WindowCAD'],
-                ['spec' => '1000 x 1400 heritage-style sash window', 'details' => 'Run-through horns, astragal bars, colour finish and matching furniture', 'price' => 'To confirm from WindowCAD'],
-                ['spec' => 'Three-window front elevation sash set', 'details' => 'Approx. 900 x 1200 each, priced together with survey checks for reveals and making good', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => '900 x 1300 uPVC sliding sash window', 'details' => 'Charisma vertical slider, white woodgrain inside and out, astragal glazing bars, Eco Toughened glass and gold heritage sash furniture', 'price' => '£1,096 inc VAT', 'checked' => 'October 2026', 'source' => 'quote'],
+                ['spec' => '1050 x 1450 uPVC sliding sash window', 'details' => 'Charisma vertical slider, smooth white inside and out, Georgian glazing bars, Eco Toughened glass and chrome heritage sash furniture', 'price' => '£1,207 inc VAT', 'checked' => 'October 2026', 'source' => 'quote'],
+                ['spec' => '1150 x 1700 tall uPVC sliding sash window', 'details' => 'Ultimate vertical slider, white woodgrain inside and out, astragal glazing bars, Eco Toughened glass and bronze heritage sash furniture', 'price' => '£2,050 inc VAT', 'checked' => 'July 2026', 'source' => 'quote'],
             ],
             'moves' => ['Sash model and furniture range', 'Window size', 'Colour and woodgrain finish', 'Glazing bars and horn detail', 'Obscure or acoustic glass', 'Condition of existing openings'],
             'links' => ['window-door-prices-milton-keynes', 'sliding-sash-windows', 'windows-milton-keynes'],
@@ -776,7 +808,7 @@ function fenster_price_guide_pages(): array
             'quote_url' => $base_quote_url . '&productCollection=5',
             'intro' => 'What moves the price of aluminium windows, from the frame system and RAL colour to glass and hardware, and a tool that gives you a real figure for your exact windows in minutes.',
             'examples' => [
-                ['spec' => '1200 x 1200 single aluminium window', 'details' => 'Standard colour, clear glazing, handle and cill', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => '1520 x 810 aluminium fixed window', 'details' => 'Sheerline aluminium, anthracite grey inside and out, a single fixed pane of Eco Toughened glass', 'price' => '£991 inc VAT', 'checked' => 'September 2026', 'source' => 'quote'],
                 ['spec' => '1500 x 1200 aluminium flush window', 'details' => 'Flush styling, chosen colour, A-rated glass and ventilation detail', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => '2400 x 1500 large aluminium window set', 'details' => 'Multiple frames, larger panes, wind load and survey checks', 'price' => 'To confirm from WindowCAD'],
             ],
@@ -791,9 +823,9 @@ function fenster_price_guide_pages(): array
             'quote_url' => $base_quote_url . '&productCollection=2',
             'intro' => 'What moves the price of patio and French doors, from the opening size and colour to glass and thresholds, and a tool that gives you a real figure for your exact doors in minutes.',
             'examples' => [
-                ['spec' => '1800 x 2100 uPVC sliding patio door', 'details' => 'White frame, standard handle, A-rated glass, cill and trickle vent where required', 'price' => 'To confirm from WindowCAD'],
-                ['spec' => '1500 x 2100 uPVC French doors', 'details' => 'Open-in or open-out pair, standard threshold, handle and glass choice', 'price' => 'To confirm from WindowCAD'],
-                ['spec' => '2400 x 2100 larger garden door opening', 'details' => 'Wider frame, side panels or threshold details checked at survey', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => '1800 x 2070 uPVC sliding patio door', 'details' => 'Liniar two-pane slider, smooth white inside and out, Eco Toughened glass, 150mm sill and white patio handle', 'price' => '£1,907 inc VAT', 'checked' => 'October 2026', 'source' => 'quote'],
+                ['spec' => '1450 x 2100 uPVC French doors', 'details' => 'Liniar EnergyPlus pair opening out, smooth white inside and out, aluminium threshold, 150mm sill, Eco Toughened glass and white lever handles', 'price' => '£1,797 inc VAT', 'checked' => 'September 2026', 'source' => 'quote'],
+                ['spec' => '3575 x 2120 four-pane sliding patio door', 'details' => 'Liniar slider with two opening panes, anthracite grey woodgrain outside and smooth white inside, Eco Toughened glass, 150mm sill and black handles', 'price' => '£3,129 inc VAT', 'checked' => 'September 2026', 'source' => 'quote'],
             ],
             'moves' => ['Door type and opening direction', 'Overall width and height', 'Threshold and cill', 'Glass specification', 'Handles and locking', 'Ventilation and survey findings'],
             'links' => ['window-door-prices-milton-keynes', 'patio-doors', 'french-doors'],
@@ -919,12 +951,19 @@ function fenster_commercial_county_page(string $slug): ?array
         $county,
     );
 
+    // SEO plan 10/11/2026, 1.4: 43 county titles ran past 60 characters and
+    // Google cut them. Keep the long form where it fits, shorten where not.
+    $title_tag = 'Commercial Glazing ' . $county . ' | Windows, Doors & Curtain Walling';
+    if (mb_strlen($title_tag) > 60) {
+        $title_tag = 'Commercial Glazing ' . $county . ' | Windows & Doors';
+    }
+
     return [
         'slug' => $slug,
         'title' => 'Commercial Glazing ' . $county,
         'url' => home_url('/' . $slug . '/'),
         'seo' => [
-            'title_tag' => 'Commercial Glazing ' . $county . ' | Windows, Doors & Curtain Walling',
+            'title_tag' => $title_tag,
             'meta_description' => $meta_description,
             'canonical' => 'https://fensterglazing.com/' . $slug . '/',
             'robots' => 'max-image-preview:large',
@@ -2077,6 +2116,43 @@ add_filter('do_redirect_guess_404_permalink', '__return_false');
  * Routes that should stay reachable but tell search engines not to index them:
  * live ad landing pages and thin archive shells.
  */
+/*
+ * SEO plan 10/11/2026, 4.1: /wcad-thank-you/ is the quote tool's completion
+ * page. It is an old WordPress page that Rank Math renders as "index, follow"
+ * with two H1s, and the theme's own noindex list never sees it because it is
+ * not a generated route. Noindex it at every layer that could emit robots: the
+ * header (which a cached copy keeps), Rank Math's meta and core's wp_robots.
+ */
+function fenster_request_is_wcad_thank_you(): bool
+{
+    $path = trim((string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
+
+    return $path === 'wcad-thank-you';
+}
+
+add_action('template_redirect', static function (): void {
+    if (fenster_request_is_wcad_thank_you() && ! headers_sent()) {
+        header('X-Robots-Tag: noindex, follow', true);
+    }
+}, 0);
+
+add_filter('rank_math/frontend/robots', static function ($robots) {
+    if (fenster_request_is_wcad_thank_you() && is_array($robots)) {
+        $robots['index'] = 'noindex';
+        $robots['follow'] = 'follow';
+    }
+    return $robots;
+});
+
+add_filter('wp_robots', static function (array $robots): array {
+    if (fenster_request_is_wcad_thank_you()) {
+        unset($robots['index'], $robots['max-image-preview']);
+        $robots['noindex'] = true;
+        $robots['follow'] = true;
+    }
+    return $robots;
+});
+
 function fenster_slug_is_noindex(string $slug): bool
 {
     $noindex_slugs = [
@@ -2092,6 +2168,7 @@ function fenster_slug_is_noindex(string $slug): bool
         'refer-a-friend' => true,
         'roof-lanterns-landing-page' => true,
         'videos' => true,
+        'wcad-thank-you' => true,
     ];
 
     if (isset($noindex_slugs[$slug])) {
@@ -2478,6 +2555,26 @@ function fenster_maybe_render_generated_sitemap(): void
 }
 
 /**
+ * The day each route last changed, from data/sitemap-lastmod.json, which
+ * scripts/build-sitemap-lastmod.py writes from git (SEO plan 10/11/2026, 4.2).
+ * A route with no recorded date is left without one rather than guessed.
+ */
+function fenster_sitemap_lastmod(string $key, bool $template = false): string
+{
+    static $dates = null;
+
+    if ($dates === null) {
+        $path = FENSTER_THEME_DIR . '/data/sitemap-lastmod.json';
+        $decoded = is_readable($path) ? json_decode((string) file_get_contents($path), true) : null;
+        $dates = is_array($decoded) ? $decoded : [];
+    }
+
+    $value = $template ? ($dates['_templates'][$key] ?? '') : ($dates[$key] ?? '');
+
+    return is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) ? $value : '';
+}
+
+/**
  * Every URL the sitemap publishes, in sitemap order, as
  * `['loc' => absolute URL, 'changefreq' => string]`, plus `'lastmod' =>
  * 'Y-m-d'` where the site records an honest date and `'sitemap' =>
@@ -2541,9 +2638,11 @@ function fenster_generated_sitemap_entries(): array
         }
 
         $seen[$loc] = true;
+        $page_lastmod = fenster_sitemap_lastmod($slug);
         $list[] = ['loc' => $loc, 'changefreq' => $page['slug'] === 'home' ? 'weekly' : 'monthly']
             // The blog's front page changes when a post publishes.
-            + ($slug === 'blog' && $blog_dates !== [] ? ['lastmod' => max($blog_dates)] : []);
+            + ($slug === 'blog' && $blog_dates !== [] ? ['lastmod' => max(array_merge($blog_dates, array_filter([$page_lastmod])))] : [])
+            + ($page_lastmod !== '' ? ['lastmod' => $page_lastmod] : []);
     }
 
     foreach ($location_matrix_pages as $page) {
@@ -2563,7 +2662,8 @@ function fenster_generated_sitemap_entries(): array
         }
 
         $seen[$loc] = true;
-        $list[] = ['loc' => $loc, 'changefreq' => 'monthly'];
+        $county_lastmod = fenster_sitemap_lastmod('commercial-county', true);
+        $list[] = ['loc' => $loc, 'changefreq' => 'monthly'] + ($county_lastmod !== '' ? ['lastmod' => $county_lastmod] : []);
     }
 
     if (fenster_price_guides_enabled()) {
@@ -2574,7 +2674,8 @@ function fenster_generated_sitemap_entries(): array
             }
 
             $seen[$loc] = true;
-            $list[] = ['loc' => $loc, 'changefreq' => 'monthly'];
+            $guide_lastmod = max(fenster_sitemap_lastmod((string) ($page['slug'] ?? '')), fenster_sitemap_lastmod('price-guide', true));
+            $list[] = ['loc' => $loc, 'changefreq' => 'monthly'] + ($guide_lastmod !== '' ? ['lastmod' => $guide_lastmod] : []);
         }
     }
 
@@ -2597,7 +2698,8 @@ function fenster_generated_sitemap_entries(): array
         $virtual_loc = fenster_generated_url((string) ($virtual_page['seo']['canonical'] ?? ''));
         if ($virtual_loc && ! isset($seen[$virtual_loc])) {
             $seen[$virtual_loc] = true;
-            $list[] = ['loc' => $virtual_loc, 'changefreq' => 'monthly'] + (($blog_dates[$virtual_slug] ?? '') !== '' ? ['lastmod' => $blog_dates[$virtual_slug]] : []);
+            $virtual_lastmod = max((string) ($blog_dates[$virtual_slug] ?? ''), fenster_sitemap_lastmod(basename($virtual_slug)));
+            $list[] = ['loc' => $virtual_loc, 'changefreq' => 'monthly'] + ($virtual_lastmod !== '' ? ['lastmod' => $virtual_lastmod] : []);
         }
     }
 
@@ -2686,6 +2788,32 @@ function fenster_prepare_generated_seo_head(): void
     remove_action('wp_head', 'rel_canonical');
 }
 
+/**
+ * The price-first homepage (Route A, SEO plan 10/11/2026 Part B), previewed at
+ * /?home=next. The query string gets its own entry in the host's page cache, so
+ * it can be opened on the real site with nothing changed for visitors. It is
+ * noindex there, and the homepage canonical is already /.
+ *
+ * TO SWITCH IT ON for everyone, make fenster_home_next_enabled() return true;
+ * to switch it off, back to false. The preview address stays noindex either
+ * way, and the real homepage is never noindexed by this. Priority 20 runs
+ * after the Homepage 3.0 gate, so the preview also works on test, where 3.0
+ * holds the homepage.
+ */
+function fenster_home_next_enabled(): bool
+{
+    return false;
+}
+
+function fenster_home_next_requested(): bool
+{
+    return isset($_GET['home']) && $_GET['home'] === 'next';
+}
+
+add_filter('fenster_home_template', static function ($template) {
+    return fenster_home_next_enabled() || fenster_home_next_requested() ? 'template-parts/sections/home-next' : $template;
+}, 20);
+
 add_action('wp_head', 'fenster_render_generated_seo', 1);
 function fenster_render_generated_seo(): void
 {
@@ -2731,7 +2859,7 @@ function fenster_render_generated_seo(): void
         printf("\n<meta name=\"description\" content=\"%s\">\n", esc_attr($seo['meta_description']));
     }
 
-    if (fenster_slug_is_noindex((string) ($page['slug'] ?? ''))) {
+    if (fenster_slug_is_noindex((string) ($page['slug'] ?? '')) || (($page['slug'] ?? '') === 'home' && fenster_home_next_requested())) {
         echo "<meta name=\"robots\" content=\"noindex,follow\">\n";
     } elseif (! empty($seo['robots']) && $seo['robots'] !== 'max-image-preview:large') {
         printf("<meta name=\"robots\" content=\"%s\">\n", esc_attr($seo['robots']));
@@ -2947,12 +3075,11 @@ function fenster_render_site_schema(): void
         '@type' => 'HomeAndConstructionBusiness',
         '@id' => home_url('/#business'),
         'name' => (string) ($brand['name'] ?? 'Fenster Glazing'),
-        // The registered name, which is NOT the trading name and is not used
-        // anywhere customer-facing. It is here because a knowledge graph joins
-        // an entity to Companies House and to a VAT record on the legal name,
-        // and "Fenster Glazing" alone matches several unrelated firms. Taken
-        // from the site's own terms page, which already states it.
-        'legalName' => 'Fenster Glazing & Locks Ltd',
+        // The registered name was here as legalName, so a knowledge graph
+        // could join the entity to Companies House. Taken out:
+        /* legalName "Fenster Glazing & Locks Ltd" removed 10/11/2026 (SEO plan
+           4.9, decision D5): it is where AI Overviews were getting "Fenster
+           Glazing & Locks" as the trading name. */
         'description' => 'Windows, doors, bifolds and glazing systems supplied and installed across Milton Keynes, Buckinghamshire, Bedfordshire and Northamptonshire.',
         'url' => home_url('/'),
         'telephone' => '+44' . ltrim(preg_replace('/\D+/', '', (string) ($brand['phone'] ?? '01908 429200')), '0'),

@@ -183,7 +183,10 @@ function fenster_render_cookie_consent(): void
          * as well, so crawler sessions no longer appear in replay or in Google
          * and Meta reporting.
          */
-        var trackingAllowed = <?php echo fenster_request_may_be_tracked() ? 'true' : 'false'; ?>;
+        /* SEO plan 10/11/2026, 0.2: the crawler half of this decision now runs
+           in the browser. Deciding it on the server baked a crawler's "false"
+           into the cached page every person was then served. */
+        var trackingAllowed = <?php echo fenster_page_may_be_tracked() ? 'true' : 'false'; ?> && ! window.fensterIsAutomated;
 
         function recordConsentMetric(choice) {
             var endpoint = window.fensterWebsiteTracking && window.fensterWebsiteTracking.consentEndpoint;
@@ -639,8 +642,49 @@ function fenster_render_cookie_consent(): void
 
             loadGtm(preferences);
             loadGoogleAds(preferences);
-            loadClarity(preferences);
-            loadMeta(preferences);
+
+            /* SEO plan 10/11/2026, 5.2: Clarity and the Meta pixel were the two
+               largest third-party scripts on a phone and ran during the first
+               paint. They now wait for the visitor's first touch, key or scroll.
+               A visit with no interaction at all records nothing in either,
+               which is the trade the plan accepted. The latest preferences
+               win, so a consent change before that first interaction is kept. */
+            deferredPreferences = preferences;
+            if (interactionSeen) {
+                loadClarity(preferences);
+                loadMeta(preferences);
+                return;
+            }
+            waitForInteraction();
+        }
+
+        var interactionSeen = false;
+        var interactionListening = false;
+        var deferredPreferences = null;
+        var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll', 'wheel'];
+
+        function onFirstInteraction() {
+            if (interactionSeen) {
+                return;
+            }
+            interactionSeen = true;
+            interactionEvents.forEach(function (name) {
+                window.removeEventListener(name, onFirstInteraction, { passive: true });
+            });
+            if (deferredPreferences && trackingAllowed) {
+                loadClarity(deferredPreferences);
+                loadMeta(deferredPreferences);
+            }
+        }
+
+        function waitForInteraction() {
+            if (interactionListening) {
+                return;
+            }
+            interactionListening = true;
+            interactionEvents.forEach(function (name) {
+                window.addEventListener(name, onFirstInteraction, { passive: true });
+            });
         }
 
         function showSettingsButton() {

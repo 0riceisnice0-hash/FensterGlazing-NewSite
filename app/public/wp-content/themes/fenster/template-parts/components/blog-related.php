@@ -21,8 +21,11 @@ if (! function_exists('fenster_blog_posts_for_page')) {
 }
 
 $posts = fenster_blog_posts_for_page(fenster_blog_current_slug());
+/* SEO plan 10/11/2026, 2.1: the imported guides this page's readers ask
+   about, as plain links under the new posts. */
+$guides = function_exists('fenster_blog_legacy_guides_for_page') ? fenster_blog_legacy_guides_for_page(fenster_blog_current_slug()) : [];
 
-if ($posts === []) {
+if ($posts === [] && $guides === []) {
     return;
 }
 
@@ -45,14 +48,28 @@ $layout = $layouts[count($posts)] ?? ['class' => 'fg-journal-cards--three', 'siz
             </div>
             <a class="button button--steel" href="<?php echo esc_url(home_url('/blog/')); ?>"><?php esc_html_e('Read the blog', 'fenster'); ?></a>
         </div>
-        <div class="fg-journal-cards <?php echo esc_attr($layout['class']); ?>">
-            <?php foreach ($posts as $post) : ?>
-                <?php get_template_part('template-parts/components/blog-card', null, [
-                    'post' => $post,
-                    'image' => fenster_blog_post_card_image($post, $used_images),
-                    'sizes' => $layout['sizes'],
-                ]); ?>
-            <?php endforeach; ?>
-        </div>
+        <?php if ($posts !== []) : ?>
+            <div class="fg-journal-cards <?php echo esc_attr($layout['class']); ?>">
+                <?php foreach ($posts as $post) : ?>
+                    <?php get_template_part('template-parts/components/blog-card', null, [
+                        'post' => $post,
+                        'image' => fenster_blog_post_card_image($post, $used_images),
+                        'sizes' => $layout['sizes'],
+                    ]); ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($guides !== []) : ?>
+            <ul class="fg-journal-list fg-journal-list--guides">
+                <?php foreach ($guides as $guide) : ?>
+                    <li>
+                        <a href="<?php echo esc_url(home_url('/' . $guide['slug'] . '/')); ?>">
+                            <strong><?php echo esc_html($guide['title']); ?></strong>
+                            <span><?php esc_html_e('Guide', 'fenster'); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     </div>
 </section>

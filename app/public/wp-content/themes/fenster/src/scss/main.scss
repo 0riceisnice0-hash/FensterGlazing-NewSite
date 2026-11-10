@@ -30073,6 +30073,23 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
+.fg-price-guide__glance--photo {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.fg-price-guide__glance--photo > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 1.2rem;
+}
+
 .fg-price-guide__glance ul {
   display: grid;
   margin: 0;
@@ -34944,7 +34961,40 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-ph-tiles > li {
+  position: relative;
   min-width: 0;
+}
+
+/* "Price it" opens the quote tool on this product. A sibling of the tile, not
+   inside it, because a link cannot sit inside a link. */
+.fg-ph-tile__price {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(2, 43, 53, 0.22);
+}
+
+.fg-ph-tile__price::after {
+  content: "\2192";
+  margin-left: 0.35rem;
+}
+
+.fg-ph-tile__price:hover,
+.fg-ph-tile__price:focus-visible {
+  background: var(--color-accent-dark);
+  color: #ffffff;
 }
 
 .fg-ph-tile {
@@ -44211,6 +44261,83 @@ html.fg-blinds-reveal-locked {
 .fg-oq-steps__action {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
   text-align: center;
+}
+
+/* One quiet onward link under a hero (SEO plan 10/11/2026, 3.1). */
+.fg-hero-more {
+  margin: 0.85rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.fg-hero-more a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.fg-hero-more--ink {
+  color: var(--color-muted);
+}
+
+.fg-hero-more--ink a {
+  color: var(--color-ink);
+}
+
+/* What you can price: the window, door and glass versions of the quote search */
+
+.fg-oq-kinds {
+  padding: clamp(1.75rem, 3.4vw, 2.75rem) 0 0;
+}
+
+.fg-oq-kinds__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--fg-oq-gap, 1.25rem);
+}
+
+.fg-oq-kind {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.2rem, 2.2vw, 1.75rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.fg-oq-kind h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
+  line-height: 1.2;
+}
+
+.fg-oq-kind p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+.fg-oq-kind__link {
+  margin-top: auto;
+  font-weight: 700;
+}
+
+.fg-oq-kind__link::after {
+  content: " 92";
+}
+
+.fg-oq-kinds__visualiser {
+  margin: 1.25rem 0 0;
+  color: var(--color-muted);
+}
+
+@media (max-width: 860px) {
+  .fg-oq-kinds__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Before you start, and what happens after */
@@ -53851,4 +53978,487 @@ html.fg-blinds-reveal-locked {
   .fg-cs-strip__grid { gap: clamp(0.8rem, 1.6vw, 1.2rem); }
 
   .fg-cdq__progress { margin-bottom: 0.6rem; }
+}
+
+/* ==========================================================================
+   SEO plan 10/11/2026, Part B: the price-first homepage (home-next.php),
+   the phone price bar, the contact page's price row and the header buttons.
+   ========================================================================== */
+
+/* Header: "Instant Quote" is the only filled button. The consultation keeps
+   its place as an outline, so the eye lands on the price first. */
+.site-nav__consultation > a {
+  border: 1.5px solid var(--color-steel);
+  background: transparent;
+  color: var(--color-steel);
+}
+
+.site-nav__consultation > a:hover,
+.site-nav__consultation > a:focus {
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+/* Light hero. Owner rule 02/09/2026: nothing dark over half a viewport. Sized
+   so the hero and the proof strip under it fit 1440 x 780 below the header. */
+.fg-hn-hero {
+  padding: clamp(1.6rem, 3.2vw, 2.6rem) 0 clamp(1.2rem, 2.4vw, 1.8rem);
+  color: var(--color-ink);
+}
+
+.fg-hn-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(1.4rem, 3.4vw, 3.2rem);
+  align-items: stretch;
+}
+
+.fg-hn-hero__copy .eyebrow {
+  margin: 0 0 0.45rem;
+}
+
+.fg-hn-hero__copy h1 {
+  max-width: 640px;
+  margin: 0 0 0.55rem;
+  color: var(--color-steel);
+  font-size: clamp(2.1rem, 3.1vw, 2.85rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.fg-hn-hero__intro {
+  max-width: 600px;
+  margin: 0 0 0.9rem;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.fg-hn-hero__ask {
+  margin: 0 0 0.6rem;
+  color: var(--color-ink);
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+  line-height: 1.2;
+}
+
+.fg-hn-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-hn-choice {
+  display: grid;
+  gap: 0.15rem;
+  min-height: 64px;
+  height: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px solid var(--color-line);
+  border-radius: 9px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+.fg-hn-choice strong {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.fg-hn-choice strong::after {
+  content: " \2192";
+  color: var(--color-accent);
+}
+
+.fg-hn-choice span {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.fg-hn-choice:hover,
+.fg-hn-choice:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 6px 18px rgba(0, 45, 58, 0.1);
+  transform: translateY(-1px);
+}
+
+.fg-hn-hero__note {
+  margin: 0.7rem 0 0.35rem;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.fg-hn-hero__quiet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.fg-hn-hero__quiet a {
+  color: var(--color-light-blue);
+  font-weight: 600;
+}
+
+.fg-hn-hero__photo {
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--color-soft);
+}
+
+.fg-hn-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-hn-proof {
+  padding-block: 0.4rem 1.6rem;
+}
+
+.fg-hn-head {
+  max-width: 760px;
+  margin-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.fg-hn-head h2 {
+  margin: 0;
+  color: var(--color-steel);
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  line-height: 1.08;
+}
+
+.fg-hn-steps,
+.fg-hn-products {
+  padding: clamp(2.4rem, 4.4vw, 3.6rem) 0;
+}
+
+.fg-hn-steps__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-hn-steps__list li {
+  position: relative;
+}
+
+.fg-hn-steps__list img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-surface);
+}
+
+.fg-hn-steps__num {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.fg-hn-steps__list h3 {
+  margin: 0.75rem 0 0.25rem;
+  color: var(--color-ink);
+  font-size: 1.1rem;
+}
+
+.fg-hn-steps__list p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+}
+
+.fg-hn-steps__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.4rem;
+  margin: clamp(1.1rem, 2.2vw, 1.6rem) 0 0;
+}
+
+.fg-hn-steps__cta > a:not(.button) {
+  color: var(--color-light-blue);
+  font-weight: 600;
+}
+
+.fg-hn-products__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1.2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-hn-product {
+  display: flex;
+  flex-direction: column;
+  padding: 0.7rem 0.7rem 0.9rem;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.fg-hn-product img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.fg-hn-product__for {
+  margin-top: 0.7rem;
+  color: var(--color-light-blue);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fg-hn-product h3 {
+  margin: 0.2rem 0 0.35rem;
+  color: var(--color-ink);
+  font-size: 1.12rem;
+}
+
+.fg-hn-product p {
+  flex: 1;
+  margin: 0 0 0.8rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.fg-hn-product__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+
+.fg-hn-product__actions .button {
+  min-height: 40px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.fg-hn-product__range {
+  color: var(--color-light-blue);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.fg-hn-guides {
+  padding: 0 0 clamp(2rem, 4vw, 3rem);
+}
+
+.fg-hn-guides ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-hn-guides a {
+  color: var(--color-light-blue);
+  font-weight: 600;
+}
+
+@media (max-width: 1100px) {
+  .fg-hn-products__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .fg-hn-hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* On a phone the answers are the first screen; the photograph would push
+     them below it. */
+  .fg-hn-hero__photo {
+    display: none;
+  }
+
+  .fg-hn-choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-hn-steps__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-hn-steps__list li {
+    display: grid;
+    grid-template-columns: 38% minmax(0, 1fr);
+    gap: 0 0.9rem;
+    align-items: start;
+  }
+
+  .fg-hn-steps__list img {
+    grid-row: span 2;
+  }
+
+  .fg-hn-steps__list h3 {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .fg-hn-products__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 430px) {
+  .fg-hn-choice {
+    min-height: 58px;
+    padding: 0.6rem 0.7rem;
+  }
+
+  .fg-hn-choice span {
+    display: none;
+  }
+
+  .fg-hn-products__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Contact: the price row under the H1 (spans the head grid). */
+.fg-contact-prices__label,
+.fg-contact-prices {
+  grid-column: 1 / -1;
+}
+
+.fg-contact-hero__head p.fg-contact-prices__label {
+  margin: 0.4rem 0 0;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.fg-contact-prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-contact-prices a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.fg-contact-prices a:hover,
+.fg-contact-prices a:focus-visible {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+/* The phone price bar (footer.php, fenster_show_price_bar()). Phones only. */
+.fg-price-bar {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .fg-price-bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-line);
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -6px 20px rgba(0, 45, 58, 0.08);
+  }
+
+  .fg-price-bar a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 1rem;
+    border-radius: 8px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .fg-price-bar__price {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+
+  .fg-price-bar__call {
+    border: 1.5px solid var(--color-steel);
+    color: var(--color-steel);
+  }
+
+  /* Room for the bar under the footer, and Legend's launcher lifted above it. */
+  body.has-fg-price-bar {
+    padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px));
+  }
+
+  body.has-fg-price-bar .legend-assistant__launcher-wrap {
+    margin-bottom: calc(1rem + 66px + var(--legend-cookie-offset, 0px));
+  }
+}
+
+@media (max-width: 860px) {
+  /* The mobile menu matches the desktop header: only the quote row is filled. */
+  .site-mobile-nav > .site-mobile-nav__row--consultation {
+    border-color: var(--color-steel);
+    background: var(--color-surface);
+    color: var(--color-steel);
+  }
+
+  .site-mobile-nav > .site-mobile-nav__row--consultation::after {
+    background: rgba(0, 45, 58, 0.08);
+    color: var(--color-steel);
+  }
 }

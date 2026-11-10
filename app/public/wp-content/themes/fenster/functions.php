@@ -39,6 +39,8 @@ $fenster_required_files = [
     'inc/adminbase.php',
     'inc/google-ads-conversions.php',
     'inc/generated-pages.php',
+    // IndexNow key file and the `wp fenster indexnow` submitter (SEO plan 10/11/2026, 0.4).
+    'inc/indexnow.php',
     // The 404 and 410 pages: closest-match suggestions and their stylesheet.
     'inc/not-found.php',
     'inc/scan-links.php',

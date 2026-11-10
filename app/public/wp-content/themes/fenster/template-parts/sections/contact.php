@@ -97,12 +97,31 @@ $form_notes = [
             <div class="fg-contact-hero__head">
                 <p class="eyebrow"><?php esc_html_e('Contact Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('How do you want to start?', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Pick the fastest option for your windows, doors, glazing, repairs or showroom visit. The practical details are all below once you choose where you want to go.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The quickest way to a figure is our online quote tool: pick what you are pricing and the price appears on screen. Repairs, commercial work and showroom visits are all below.', 'fenster'); ?></p>
+                <?php
+                /* SEO plan 10/11/2026, Part B: 6% of homepage visitors came here
+                   next, and the page converted about 3% of them. Somebody who
+                   wants a price is one tap from it, on the right product. */
+                $contact_prices = [
+                    ['label' => 'Windows', 'product' => 'casement-windows'],
+                    ['label' => 'Front door', 'product' => 'composite-doors'],
+                    ['label' => 'Bifold or sliding doors', 'product' => 'aluminium-bifold-doors'],
+                    ['label' => 'French or patio doors', 'product' => 'patio-doors'],
+                    ['label' => 'Sash windows', 'product' => 'sliding-sash-windows'],
+                    ['label' => 'Whole house', 'product' => ''],
+                ];
+                ?>
+                <p class="fg-contact-prices__label"><?php esc_html_e('Price it now:', 'fenster'); ?></p>
+                <ul class="fg-contact-prices">
+                    <?php foreach ($contact_prices as $price) : ?>
+                        <li><a href="<?php echo esc_url($price['product'] === '' ? home_url('/online-quote/') : add_query_arg('product', $price['product'], home_url('/online-quote/'))); ?>" data-fg-cta><?php echo esc_html($price['label']); ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
 
             <div class="fg-contact-hub" aria-label="<?php esc_attr_e('Choose how to contact Fenster', 'fenster'); ?>">
                 <?php foreach ($hub_routes as $index => $route) : ?>
-                    <a class="fg-contact-hub-card <?php echo esc_attr($index === 0 ? 'fg-contact-hub-card--quote' : 'fg-contact-hub-card--showroom'); ?>" href="<?php echo esc_url($route['url']); ?>">
+                    <a class="fg-contact-hub-card <?php echo esc_attr($index === 0 ? 'fg-contact-hub-card--quote' : 'fg-contact-hub-card--showroom'); ?>" href="<?php echo esc_url($route['url']); ?>" data-fg-cta>
                         <?php if (! empty($route['image'])) : ?>
                             <img class="fg-contact-hub-card__media" <?php echo fenster_image_attr_string((string) $route['image'], [
                                 'alt' => '',

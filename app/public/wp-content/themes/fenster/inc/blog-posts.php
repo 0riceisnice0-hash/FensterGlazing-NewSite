@@ -2965,6 +2965,199 @@ function fenster_blog_legacy_article_slugs(): array
 }
 
 /**
+ * The imported guides grouped by topic, for the /blog/ hub.
+ *
+ * SEO plan 10/11/2026, 2.1. The 28/09/2026 ruling was "only the new ones",
+ * which left these 35 guides with no link from anywhere on the site while they
+ * earned 641 of 2,333 search clicks in the quarter (27%). Listing them below
+ * the new posts, and from the product pages they are about, protects that.
+ *
+ * @return array<string, string[]>
+ */
+function fenster_blog_legacy_guide_topics(): array
+{
+    return [
+        'Windows and glass' => [
+            'what-are-double-glazed-glass-windows', 'a-guide-to-understanding-u-values',
+            'are-my-windows-energy-efficient', 'consider-energy-efficient-windows-for-your-home',
+            'benefits-of-upvc-windows-for-your-home', 'different-types-of-window-frame-materials',
+            'how-to-choose-the-right-style-windows-for-your-home', 'how-to-know-when-to-replace-windows',
+            'what-are-the-different-methods-of-installation-for-a-sash-window', 'what-are-integral-blinds',
+            'all-you-need-to-know-about-louvre-vents', 'the-history-of-upvc-windows', 'windows-as-home-investments',
+        ],
+        'Doors' => [
+            'what-is-the-difference-between-upvc-vs-composite-doors', 'choosing-the-right-front-door-for-your-home',
+            'choosing-the-right-colour-for-your-front-door', 'consider-composite-doors-for-your-home',
+            'what-front-doors-provide-the-best-security-for-your-home', 'apecs-ingenious-locks-and-hardware',
+            'difference-between-french-doors-and-sliding-patio-doors',
+            'stable-doors-traditional-charm-meets-modern-efficiency-and-security', 'what-is-a-door-lintel',
+        ],
+        'Condensation and noise' => [
+            'condensation-on-new-windows', 'deal-with-condensation', 'how-to-prevent-window-condensation-in-winter',
+            'soundproof-windows', 'soundproofing-solutions-how-to-choose-windows-for-a-quieter-home',
+            'guide-noise-insulation-for-windows', 'which-is-better-triple-or-acoustic-glazing',
+        ],
+        'Care, planning and buying' => [
+            'window-maintenance', 'door-maintenance', 'how-to-clean-your-upvc-windows-at-home',
+            'how-to-check-whether-your-planned-home-improvements-are-legal',
+            'replacing-windows-doors-in-wolverton-mk', 'why-choose-fenster-over-anglian',
+        ],
+    ];
+}
+
+/**
+ * Up to three imported guides for a product page, chosen by hand: each one
+ * answers a question somebody on that page is likely to have. Pages not in the
+ * table get none.
+ *
+ * @return array<int, array{slug: string, title: string}>
+ */
+function fenster_blog_legacy_guides_for_page(string $slug): array
+{
+    $map = [
+        'windows-milton-keynes' => ['what-are-double-glazed-glass-windows', 'how-to-know-when-to-replace-windows', 'a-guide-to-understanding-u-values'],
+        'casement-windows' => ['benefits-of-upvc-windows-for-your-home', 'how-to-choose-the-right-style-windows-for-your-home', 'how-to-clean-your-upvc-windows-at-home'],
+        'tilt-turn-windows' => ['how-to-choose-the-right-style-windows-for-your-home', 'benefits-of-upvc-windows-for-your-home'],
+        'aluminium-windows' => ['different-types-of-window-frame-materials', 'a-guide-to-understanding-u-values'],
+        'sliding-sash-windows' => ['what-are-the-different-methods-of-installation-for-a-sash-window', 'how-to-choose-the-right-style-windows-for-your-home'],
+        'double-glazing-replacement' => ['condensation-on-new-windows', 'deal-with-condensation', 'how-to-prevent-window-condensation-in-winter'],
+        'secondary-glazing' => ['soundproof-windows', 'soundproofing-solutions-how-to-choose-windows-for-a-quieter-home', 'which-is-better-triple-or-acoustic-glazing'],
+        'integral-blinds' => ['what-are-integral-blinds'],
+        'doors-milton-keynes' => ['choosing-the-right-front-door-for-your-home', 'what-front-doors-provide-the-best-security-for-your-home', 'what-is-a-door-lintel'],
+        'composite-doors' => ['what-is-the-difference-between-upvc-vs-composite-doors', 'choosing-the-right-colour-for-your-front-door', 'what-front-doors-provide-the-best-security-for-your-home'],
+        'upvc-doors' => ['what-is-the-difference-between-upvc-vs-composite-doors', 'what-is-a-door-lintel', 'door-maintenance'],
+        'french-doors' => ['difference-between-french-doors-and-sliding-patio-doors'],
+        'patio-doors' => ['difference-between-french-doors-and-sliding-patio-doors'],
+        'window-and-door-repairs' => ['window-maintenance', 'door-maintenance'],
+    ];
+
+    $slug = trim($slug, '/');
+    if (! isset($map[$slug])) {
+        return [];
+    }
+
+    $guides = [];
+    foreach ($map[$slug] as $guide_slug) {
+        $title = fenster_blog_legacy_guide_title($guide_slug);
+        if ($title !== '') {
+            $guides[] = ['slug' => $guide_slug, 'title' => $title];
+        }
+    }
+
+    return $guides;
+}
+
+/**
+ * The product an imported guide is about, for its price link. SEO plan
+ * 10/11/2026, 2.2: guides brought 236 organic visits in October and no leads,
+ * and every price link on them went to the all-products designer. A guide
+ * not listed here, or about something the tool cannot price, keeps that.
+ */
+function fenster_blog_legacy_guide_product(string $slug): string
+{
+    $windows = [
+        'what-are-double-glazed-glass-windows', 'a-guide-to-understanding-u-values', 'are-my-windows-energy-efficient',
+        'consider-energy-efficient-windows-for-your-home', 'benefits-of-upvc-windows-for-your-home',
+        'how-to-choose-the-right-style-windows-for-your-home', 'how-to-know-when-to-replace-windows',
+        'the-history-of-upvc-windows', 'windows-as-home-investments', 'how-to-clean-your-upvc-windows-at-home',
+        'replacing-windows-doors-in-wolverton-mk', 'why-choose-fenster-over-anglian',
+    ];
+    $map = array_fill_keys($windows, 'casement-windows') + [
+        'different-types-of-window-frame-materials' => 'aluminium-windows',
+        'what-are-the-different-methods-of-installation-for-a-sash-window' => 'sliding-sash-windows',
+        'condensation-on-new-windows' => 'double-glazing-replacement',
+        'deal-with-condensation' => 'double-glazing-replacement',
+        'how-to-prevent-window-condensation-in-winter' => 'double-glazing-replacement',
+        'soundproof-windows' => 'secondary-glazing',
+        'soundproofing-solutions-how-to-choose-windows-for-a-quieter-home' => 'secondary-glazing',
+        'guide-noise-insulation-for-windows' => 'secondary-glazing',
+        'which-is-better-triple-or-acoustic-glazing' => 'secondary-glazing',
+        'what-is-the-difference-between-upvc-vs-composite-doors' => 'composite-doors',
+        'choosing-the-right-front-door-for-your-home' => 'composite-doors',
+        'choosing-the-right-colour-for-your-front-door' => 'composite-doors',
+        'consider-composite-doors-for-your-home' => 'composite-doors',
+        'what-front-doors-provide-the-best-security-for-your-home' => 'composite-doors',
+        'apecs-ingenious-locks-and-hardware' => 'composite-doors',
+        'difference-between-french-doors-and-sliding-patio-doors' => 'patio-doors',
+    ];
+
+    return $map[trim($slug, '/')] ?? '';
+}
+
+/**
+ * The quote link for an article: the tool opened on the article's product
+ * where there is one it can price, otherwise the all-products designer.
+ *
+ * @param string[] $products Product routes, most relevant first.
+ */
+function fenster_blog_quote_url(array $products): string
+{
+    foreach ($products as $product) {
+        $product = (string) $product;
+        if ($product !== '' && function_exists('fenster_quote_collections') && isset(fenster_quote_collections()[$product])) {
+            return add_query_arg('product', $product, home_url('/online-quote/'));
+        }
+    }
+
+    return home_url('/online-quote/');
+}
+
+/**
+ * Publish and last-modified days of the imported guides, read once from the
+ * old WordPress posts (test database, 10/11/2026) for their Article markup.
+ * SEO plan 4.4: the guides' structured data carried no dates at all. Seven
+ * guides have no post in the database and are left undated rather than given
+ * an invented day. Schema only: the page itself does not show the date.
+ *
+ * @return array<string, array{0: string, 1: string}>
+ */
+function fenster_blog_legacy_guide_dates(): array
+{
+    return [
+        'a-guide-to-understanding-u-values' => ['2024-03-04', '2025-01-07'],
+        'all-you-need-to-know-about-louvre-vents' => ['2024-05-16', '2024-10-25'],
+        'are-my-windows-energy-efficient' => ['2021-01-04', '2024-10-25'],
+        'benefits-of-upvc-windows-for-your-home' => ['2020-12-30', '2024-06-07'],
+        'choosing-the-right-colour-for-your-front-door' => ['2021-05-28', '2024-08-14'],
+        'choosing-the-right-front-door-for-your-home' => ['2021-03-31', '2025-01-06'],
+        'condensation-on-new-windows' => ['2023-11-13', '2024-06-07'],
+        'consider-composite-doors-for-your-home' => ['2021-02-12', '2025-01-06'],
+        'consider-energy-efficient-windows-for-your-home' => ['2021-09-23', '2024-05-28'],
+        'deal-with-condensation' => ['2022-12-21', '2024-05-28'],
+        'difference-between-french-doors-and-sliding-patio-doors' => ['2021-02-23', '2025-01-06'],
+        'different-types-of-window-frame-materials' => ['2021-01-05', '2024-06-07'],
+        'door-maintenance' => ['2023-06-22', '2024-10-25'],
+        'how-to-check-whether-your-planned-home-improvements-are-legal' => ['2021-02-05', '2024-07-16'],
+        'how-to-choose-the-right-style-windows-for-your-home' => ['2021-07-29', '2025-01-06'],
+        'how-to-clean-your-upvc-windows-at-home' => ['2021-01-04', '2024-06-07'],
+        'how-to-know-when-to-replace-windows' => ['2021-01-15', '2024-06-07'],
+        'how-to-prevent-window-condensation-in-winter' => ['2024-12-19', '2025-02-07'],
+        'soundproofing-solutions-how-to-choose-windows-for-a-quieter-home' => ['2021-03-20', '2025-01-06'],
+        'the-history-of-upvc-windows' => ['2021-01-09', '2025-01-06'],
+        'what-are-the-different-methods-of-installation-for-a-sash-window' => ['2024-06-19', '2025-01-06'],
+        'what-front-doors-provide-the-best-security-for-your-home' => ['2021-03-24', '2025-01-06'],
+        'what-is-a-door-lintel' => ['2024-02-01', '2024-06-07'],
+        'what-is-the-difference-between-upvc-vs-composite-doors' => ['2024-09-26', '2025-01-07'],
+        'which-is-better-triple-or-acoustic-glazing' => ['2023-11-22', '2025-01-06'],
+        'why-choose-fenster-over-anglian' => ['2025-02-25', '2025-02-25'],
+        'window-maintenance' => ['2023-06-20', '2024-10-24'],
+        'windows-as-home-investments' => ['2024-04-10', '2024-09-10'],
+    ];
+}
+
+/** The guide's on-page title, from the imported page record. */
+function fenster_blog_legacy_guide_title(string $slug): string
+{
+    if (! function_exists('fenster_generated_pages_index')) {
+        return '';
+    }
+
+    $page = fenster_generated_pages_index()[$slug] ?? null;
+
+    return is_array($page) ? trim(wp_strip_all_tags((string) ($page['title'] ?? ''))) : '';
+}
+
+/**
  * 'hub', 'post', 'article' or '' for any other route.
  */
 function fenster_blog_route_kind(string $slug): string
@@ -2997,7 +3190,7 @@ function fenster_blog_enqueue_styles(): void
 {
     $slug = fenster_blog_current_slug();
 
-    if (fenster_blog_route_kind($slug) === '' && fenster_blog_posts_for_page($slug) === []) {
+    if (fenster_blog_route_kind($slug) === '' && fenster_blog_posts_for_page($slug) === [] && fenster_blog_legacy_guides_for_page($slug) === []) {
         return;
     }
 

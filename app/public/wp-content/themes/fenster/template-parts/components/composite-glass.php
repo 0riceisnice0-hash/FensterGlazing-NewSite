@@ -260,7 +260,7 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
                                 data-preview-copy="<?php echo esc_attr((string) ($fg_style['copy'] ?? '')); ?>">
                                 <img
                                     src="<?php echo esc_url(FENSTER_THEME_URI . $fg_style['stem'] . '240w.webp'); ?>"
-                                    alt="" aria-hidden="true"
+                                    alt="<?php echo esc_attr($fg_alt); ?>" aria-hidden="true"
                                     loading="lazy" decoding="async" width="240" height="300">
                                 <span class="fg-glass-pick__name">
                                     <?php echo esc_html((string) $fg_style['name']); ?>

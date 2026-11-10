@@ -35,6 +35,12 @@ function fenster_h30_is_home(): bool
         return false;
     }
 
+    // The price-first homepage preview (/?home=next) replaces 3.0 on its own
+    // address, so none of 3.0's assets or head tags belong there.
+    if (function_exists('fenster_home_next_requested') && (fenster_home_next_requested() || fenster_home_next_enabled())) {
+        return false;
+    }
+
     $path = trim((string) wp_parse_url(add_query_arg([]), PHP_URL_PATH), '/');
 
     return $path === '';

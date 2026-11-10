@@ -42,6 +42,12 @@ $footer_company = [
     ['label' => 'Case Studies', 'url' => home_url('/case-studies/')],
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
     ['label' => 'Repair Case Studies', 'url' => home_url('/repair-case-studies/')],
+    /* SEO plan 10/11/2026, 2.4: the guides, the price guides hub and the
+       visualiser had no sitewide link at all. The guides alone earn a quarter
+       of the site's search clicks. */
+    ['label' => 'Guides and Advice', 'url' => home_url('/blog/')],
+    ['label' => 'Window and Door Prices', 'url' => home_url('/window-door-prices-milton-keynes/')],
+    ['label' => '3D Visualiser', 'url' => home_url('/3d-visualiser/')],
     ['label' => 'Contact', 'url' => home_url('/contact/')],
     ['label' => 'Instant Quote', 'url' => home_url('/online-quote/')],
     ['label' => 'Book a Free Consultation', 'url' => home_url('/book-a-consultation/')],

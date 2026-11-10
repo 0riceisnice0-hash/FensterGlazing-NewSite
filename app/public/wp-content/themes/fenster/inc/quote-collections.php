@@ -123,3 +123,84 @@ function fenster_quote_collection_url(string $slug): string
 
     return fenster_quote_designer_url() . '&productCollection=' . rawurlencode($collection);
 }
+
+/**
+ * The fixed "Get an instant price" bar on phones. SEO plan 10/11/2026, Part B.
+ *
+ * Residential pages only. It never shows where an instant price is the wrong
+ * offer: repairs (owner rule 16/09/2026: repairs are never instant-priced),
+ * commercial pages (every page the Commercial menu lists, plus any route with
+ * "commercial" in its address), the quote page itself, the booking page and
+ * the customer portal. Decided from the address alone, so it is the same for
+ * every visitor and safe in the page cache.
+ */
+function fenster_commercial_menu_paths(): array
+{
+    static $paths = null;
+    if ($paths !== null) {
+        return $paths;
+    }
+    $paths = [];
+    $collect = static function ($node) use (&$collect, &$paths): void {
+        if (! is_array($node)) {
+            return;
+        }
+        if (! empty($node['url']) && is_string($node['url'])) {
+            $path = trim((string) wp_parse_url($node['url'], PHP_URL_PATH), '/');
+            if ($path !== '') {
+                $paths[$path] = true;
+            }
+        }
+        foreach (['columns', 'items', 'children', 'links'] as $key) {
+            foreach ((array) ($node[$key] ?? []) as $child) {
+                $collect($child);
+            }
+        }
+    };
+    foreach ((array) fenster_data('primary_nav_fallback', []) as $top) {
+        if (stripos((string) ($top['label'] ?? ''), 'commercial') !== false) {
+            $collect($top);
+        }
+    }
+
+    return $paths;
+}
+
+function fenster_show_price_bar(): bool
+{
+    if (is_admin() || is_404() || ! function_exists('fenster_current_generated_slug')) {
+        return false;
+    }
+    $slug = fenster_current_generated_slug();
+    $never = ['online-quote', 'book-a-consultation', 'customer-portal', 'wcad-thank-you', 'privacy-policy', 'cookie-policy', 'terms-conditions'];
+    if (in_array($slug, $never, true) || in_array($slug, fenster_quote_unpriceable_routes(), true)) {
+        return false;
+    }
+    if (str_contains($slug, 'repair') || str_contains($slug, 'commercial') || isset(fenster_commercial_menu_paths()[$slug])) {
+        return false;
+    }
+    if (function_exists('fenster_commercial_product_page') && fenster_commercial_product_page($slug) !== null) {
+        return false;
+    }
+
+    return true;
+}
+
+/** The bar's price link: the route's own product when the designer has it. */
+function fenster_price_bar_url(): string
+{
+    $slug = fenster_current_generated_slug();
+    if (isset(fenster_quote_collections()[$slug]) && ! in_array($slug, fenster_quote_unpriceable_routes(), true)) {
+        return add_query_arg('product', $slug, home_url('/online-quote/'));
+    }
+
+    return home_url('/online-quote/');
+}
+
+add_filter('body_class', static function (array $classes): array {
+    if (fenster_show_price_bar()) {
+        $classes[] = 'has-fg-price-bar';
+    }
+
+    return $classes;
+});

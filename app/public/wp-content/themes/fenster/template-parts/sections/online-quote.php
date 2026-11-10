@@ -137,6 +137,42 @@ $faqs = [
         'question' => 'How is this different from a consultation?',
         'answer'   => 'This is you pricing the job yourself in about ten minutes. A consultation is an hour at your property with a window and door expert, who builds the same job on the same software and prices it in front of you. Both are free, and the figure matches.',
     ],
+    [
+        'question' => 'Can I get an online quote for a front door?',
+        'answer'   => 'Yes. Composite and uPVC front and back doors, patio doors, aluminium bifolds and sliding doors all price in the same tool. Choose the door style, the colour outside and in, the glass and the handle, and the door prices with its frame.',
+    ],
+    [
+        'question' => 'Does the online quote include fitting?',
+        'answer'   => 'Yes. The figure is for the window or door made, delivered and fitted by our own installers, with the old frame taken away. Anything the survey finds that changes the job, such as a rotten sill or a lintel that needs replacing, is raised with you before work starts.',
+    ],
+    [
+        'question' => 'Do you quote outside Milton Keynes?',
+        'answer'   => 'Yes, across Buckinghamshire, Bedfordshire, Northamptonshire and north Hertfordshire, including Bedford, Northampton, Leighton Buzzard, Aylesbury, Buckingham and Hitchin. If you are not sure we reach your address, ring us before you start.',
+    ],
+];
+
+/* SEO plan 10/11/2026, 1.2: the door and double glazing versions of the quote
+   search land here too ("door quote", "double glazing online quote"), so the
+   page answers them in its own words. Each link opens the tool on that range. */
+$quote_kinds = [
+    [
+        'title' => 'Online window quote',
+        'copy'  => 'uPVC casement and tilt-and-turn windows, aluminium, steel-look heritage and sliding sash windows. One window or the whole house on one quote.',
+        'route' => 'casement-windows',
+        'label' => 'Price windows',
+    ],
+    [
+        'title' => 'Online door quote',
+        'copy'  => 'Composite and uPVC front and back doors with the frame, glass and furniture, priced as fitted. Choose the slab colour and the glass design and see the door redrawn.',
+        'route' => 'composite-doors',
+        'label' => 'Price a front door',
+    ],
+    [
+        'title' => 'Double glazing quote online',
+        'copy'  => 'Replacing misted or broken double glazed units without changing the frames is priced here too, as are bifold, sliding and patio doors.',
+        'route' => 'double-glazing-replacement',
+        'label' => 'Price replacement glass',
+    ],
 ];
 
 // FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
@@ -152,7 +188,7 @@ $faqs = [
         <div class="container fg-oq-hero__grid">
             <div class="fg-oq-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Instant quote', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Price your windows and doors online.', 'fenster'); ?></h1>
+                <h1><?php esc_html_e('Get an online quote for your windows and doors.', 'fenster'); ?></h1>
                 <p class="fg-oq-hero__lead"><?php esc_html_e('Build the job the way you would order it. Your sizes in millimetres, the way it opens, the colour outside and in, the glass and the handles. It prices from the same list our office quotes from, so the number you see is the number we would charge.', 'fenster'); ?></p>
                 <div class="button-row">
                     <?php /* Desktop opens the embed in place and records a deliberate open;
@@ -243,6 +279,33 @@ $faqs = [
             <div class="fg-oq-steps__action">
                 <a class="button" href="#fenster-quote-tool"><?php esc_html_e('Start your quote', 'fenster'); ?></a>
             </div>
+        </div>
+    </section>
+
+    <section class="fg-oq-kinds" aria-labelledby="fg-oq-kinds-title">
+        <div class="container">
+            <div class="fg-oq-section-head">
+                <p class="eyebrow"><?php esc_html_e('What you can price', 'fenster'); ?></p>
+                <h2 id="fg-oq-kinds-title"><?php esc_html_e('Windows, doors and glass, all in one quote.', 'fenster'); ?></h2>
+            </div>
+            <div class="fg-oq-kinds__grid">
+                <?php foreach ($quote_kinds as $kind) : ?>
+                    <div class="fg-oq-kind">
+                        <h3><?php echo esc_html($kind['title']); ?></h3>
+                        <p><?php echo esc_html($kind['copy']); ?></p>
+                        <a class="fg-oq-kind__link" href="<?php echo esc_url(add_query_arg('product', $kind['route'], home_url('/online-quote/'))); ?>" data-fg-cta><?php echo esc_html($kind['label']); ?></a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <p class="fg-oq-kinds__visualiser">
+                <?php
+                printf(
+                    /* translators: %s: link to the 3D visualiser */
+                    esc_html__('Want to see it on screen before you price it? Try the %s, then come back here for the figure.', 'fenster'),
+                    '<a href="' . esc_url(home_url('/3d-visualiser/')) . '">' . esc_html__('3D window and door visualiser', 'fenster') . '</a>'
+                );
+                ?>
+            </p>
         </div>
     </section>
 

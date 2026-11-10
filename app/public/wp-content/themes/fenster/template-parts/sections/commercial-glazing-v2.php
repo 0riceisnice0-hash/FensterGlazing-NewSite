@@ -405,6 +405,24 @@ foreach ($commercial_studies as $short => $study) {
         </div>
     </section>
 
+    <?php
+    /* SEO plan 10/11/2026, 2.5: every county page, not the first 24 of the old
+       page's link list. 32 of the 51 county pages had no link from anywhere,
+       and between them they have produced two enquiries. Text pills only. */
+    if (function_exists('fenster_commercial_county_profiles')) {
+        $county_links = [];
+        foreach (fenster_commercial_county_profiles() as $county_slug => $profile) {
+            $county_links[] = [
+                'url' => home_url('/commercial-glazing-' . $county_slug . '/'),
+                'text' => (string) ($profile['county'] ?? ucwords(str_replace('-', ' ', $county_slug))),
+            ];
+        }
+        usort($county_links, static fn (array $a, array $b): int => strcmp($a['text'], $b['text']));
+        if ($county_links !== []) {
+            $related_links = $county_links;
+        }
+    }
+    ?>
     <?php if (! empty($related_links)) : ?>
         <section class="fg-links-band">
             <div class="container">
@@ -414,7 +432,8 @@ foreach ($commercial_studies as $short => $study) {
                 </div>
                 <?php
                 get_template_part('template-parts/components/link-cards', null, [
-                    'links' => array_slice(array_values($related_links), 0, 24),
+                    'links' => array_values($related_links),
+                    'show_images' => false,
                 ]);
                 ?>
             </div>

@@ -116,6 +116,40 @@ $schema = [
         </section>
     <?php endif; ?>
 
+    <?php /* SEO plan 10/11/2026, 2.1: the imported guides, by topic, below the
+             new posts. They had no link from anywhere on the site. */ ?>
+    <?php foreach (fenster_blog_legacy_guide_topics() as $topic => $topic_slugs) : ?>
+        <?php
+        $topic_guides = array_filter(array_map(
+            static fn (string $guide_slug): array => ['slug' => $guide_slug, 'title' => fenster_blog_legacy_guide_title($guide_slug)],
+            $topic_slugs
+        ), static fn (array $guide): bool => $guide['title'] !== '');
+        if ($topic_guides === []) {
+            continue;
+        }
+        $topic_id = 'fg-journal-guides-' . sanitize_title($topic);
+        ?>
+        <section class="fg-journal-hub-older fg-journal-hub-guides" aria-labelledby="<?php echo esc_attr($topic_id); ?>">
+            <div class="container">
+                <div class="fg-journal-section-head">
+                    <div>
+                        <p class="eyebrow"><?php esc_html_e('Guides', 'fenster'); ?></p>
+                        <h2 id="<?php echo esc_attr($topic_id); ?>"><?php echo esc_html($topic); ?></h2>
+                    </div>
+                </div>
+                <ul class="fg-journal-list">
+                    <?php foreach ($topic_guides as $guide) : ?>
+                        <li>
+                            <a href="<?php echo esc_url(home_url('/' . $guide['slug'] . '/')); ?>">
+                                <strong><?php echo esc_html($guide['title']); ?></strong>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </section>
+    <?php endforeach; ?>
+
     <section class="fg-journal-ask">
         <div class="container fg-journal-ask__panel">
             <div>
