@@ -196,11 +196,3 @@ function fenster_price_bar_url(): string
 
     return home_url('/online-quote/');
 }
-
-add_filter('body_class', static function (array $classes): array {
-    if (fenster_show_price_bar()) {
-        $classes[] = 'has-fg-price-bar';
-    }
-
-    return $classes;
-});

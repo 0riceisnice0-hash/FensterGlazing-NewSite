@@ -44285,6 +44285,15 @@ html.fg-blinds-reveal-locked {
   color: var(--color-ink);
 }
 
+/* Over a darkened hero photograph (composite and uPVC door heroes). */
+.fg-hero-more.fg-hero-more--light {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.fg-hero-more.fg-hero-more--light a {
+  color: #ffffff;
+}
+
 /* What you can price: the window, door and glass versions of the quote search */
 
 .fg-oq-kinds {
@@ -54443,11 +54452,11 @@ html.fg-blinds-reveal-locked {
   }
 
   /* Room for the bar under the footer, and Legend's launcher lifted above it. */
-  body.has-fg-price-bar {
+  body:has(> .fg-price-bar) {
     padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px));
   }
 
-  body.has-fg-price-bar .legend-assistant__launcher-wrap {
+  body:has(> .fg-price-bar) .legend-assistant__launcher-wrap {
     margin-bottom: calc(1rem + 66px + var(--legend-cookie-offset, 0px));
   }
 }

@@ -4101,7 +4101,7 @@ if ($is_commercial_hub) {
                     <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
                 </div>
-                <p class="fg-hero-more"><?php esc_html_e('Comparing materials?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/doors-milton-keynes/')); ?>"><?php esc_html_e('See all our front and back doors in Milton Keynes', 'fenster'); ?></a></p>
+                <p class="fg-hero-more fg-hero-more--light"><?php esc_html_e('Comparing materials?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/doors-milton-keynes/')); ?>"><?php esc_html_e('See all our front and back doors in Milton Keynes', 'fenster'); ?></a></p>
                 <p class="fg-cd3-hero__credential">
                     <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
                     <span><?php esc_html_e('Approved installer. One in four front doors fitted in Britain is a Distinction, and we survey, supply and hang yours ourselves.', 'fenster'); ?></span>
@@ -4157,7 +4157,7 @@ if ($is_commercial_hub) {
                     <p class="fg-hero__intro"><?php echo esc_html($hero_intro); ?></p>
                     <?php if ($slug === 'upvc-doors') : ?>
                         <?php /* SEO plan 10/11/2026, 3.1: "upvc doors milton keynes" fell from 13 to 21. */ ?>
-                        <p class="fg-hero-more"><?php esc_html_e('Comparing materials?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/doors-milton-keynes/')); ?>"><?php esc_html_e('See all our front and back doors in Milton Keynes', 'fenster'); ?></a></p>
+                        <p class="fg-hero-more fg-hero-more--light"><?php esc_html_e('Comparing materials?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/doors-milton-keynes/')); ?>"><?php esc_html_e('See all our front and back doors in Milton Keynes', 'fenster'); ?></a></p>
                     <?php endif; ?>
                 </div>
                 <div class="button-row">
