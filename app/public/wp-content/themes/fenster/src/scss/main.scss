@@ -54548,8 +54548,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-hn-types__list {
-  flex: 1;
   display: grid;
+  align-items: start;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--fg-hn-s4);
   min-height: 0;
@@ -54594,10 +54594,11 @@ html.fg-blinds-reveal-locked {
   transform: scale(0.97);
 }
 
+/* 4:5, the shape the kinds' photos are cut to: the whole door shows. */
 .fg-hn-type__img {
   position: relative;
-  flex: 1;
-  min-height: 0;
+  flex: none;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 12px;
 }
@@ -55181,8 +55182,9 @@ html.fg-blinds-reveal-locked {
 
   .fg-hn-type__img {
     flex: none;
-    width: 112px;
-    height: 120px;
+    width: 104px;
+    height: 130px;
+    aspect-ratio: auto;
     border-radius: var(--fg-hn-r1);
   }
 
@@ -56060,9 +56062,10 @@ html.fg-blinds-reveal-locked {
   background: var(--fg-ha-soft);
 }
 
+/* 4:5, the shape the kinds' photos are cut to, so no door loses its top. */
 .fg-ha-pick--type .fg-ha-pick__img {
-  width: 96px;
-  height: 96px;
+  width: 88px;
+  height: 110px;
   border-radius: 6px;
 }
 
@@ -56624,8 +56627,8 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-ha-pick--type .fg-ha-pick__img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 80px;
   }
 
   .fg-ha-pick--type .fg-ha-pick__text {
