@@ -12643,11 +12643,9 @@ const initHomeNext = (root) => {
     return;
   }
   const P = config.products || {};
-  const N = config.frames || 14;
   if (!Object.keys(P).length) return;
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const phone = window.matchMedia('(max-width: 760px)');
   const $ = (selector) => root.querySelector(selector);
   const $$ = (selector) => [...root.querySelectorAll(selector)];
   const deep = (k) => {
@@ -12657,87 +12655,7 @@ const initHomeNext = (root) => {
     return url.toString();
   };
 
-  const stage = $('[data-fg-hn-stage]');
-  const lineup = $('[data-fg-hn-lineup]');
-  const detail = $('[data-fg-hn-detail]');
-  const objBox = $('[data-fg-hn-obj]');
-  const canvas = $('[data-fg-hn-canvas]');
-  const knob = $('[data-fg-hn-knob]');
-  const seg = $('[data-fg-hn-seg]');
-  const hero = root.querySelector('.fg-hn-hero');
-  if (!stage || !lineup || !detail || !objBox || !canvas || !seg) return;
-  const ctx = canvas.getContext('2d');
-  let current = null;
-
-  /* The turn: 14 frames of each product, the small set on phones. */
-  const cache = {};
-  const frames = {};
-  const frameUrl = (k, i) => `${config.turn}${k}-${String(i).padStart(2, '0')}${phone.matches ? '-sm' : ''}.webp`;
-  const load = (k) => {
-    const key = k + (phone.matches ? '-sm' : '');
-    if (!cache[key]) {
-      cache[key] = Promise.all(Array.from({ length: N }, (_, i) => new Promise((resolve) => {
-        const image = new Image();
-        image.onload = () => resolve(image);
-        image.onerror = () => resolve(null);
-        image.src = frameUrl(k, i);
-      })));
-    }
-    return cache[key];
-  };
-  const ensure = async (k) => {
-    frames[k] = await load(k);
-  };
-
-  let W = 0;
-  let H = 0;
-  let dpr = 1;
-  const size = () => {
-    const box = canvas.getBoundingClientRect();
-    dpr = Math.min(2, window.devicePixelRatio || 1);
-    W = box.width;
-    H = box.height;
-    canvas.width = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-  };
-  /* Bottom-centred, at its true height relative to the others, contained. */
-  const place = (k) => {
-    const last = frames[k] && (frames[k][N - 1] || frames[k].find(Boolean));
-    if (!last) return { x: 0, y: 0, w: W, h: H };
-    const nw = last.naturalWidth;
-    const nh = last.naturalHeight;
-    let hh = H * P[k].h;
-    let ww = nw * hh / nh;
-    if (ww > W) {
-      ww = W;
-      hh = nh * ww / nw;
-    }
-    return { x: (W - ww) / 2, y: H - hh, w: ww, h: hh };
-  };
-  const draw = (k, f) => {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
-    const image = frames[k] && frames[k][f];
-    if (!image) return;
-    const r = place(k);
-    ctx.drawImage(image, r.x, r.y, r.w, r.h);
-  };
-  let raf = 0;
-  const easeOut = (t) => 1 - Math.pow(1 - t, 4);
-  const easeInOut = (t) => (t < 0.5 ? 8 * t ** 4 : 1 - Math.pow(-2 * t + 2, 4) / 2);
-  const turn = (k, from, to, duration, ease) => new Promise((resolve) => {
-    cancelAnimationFrame(raf);
-    const t0 = performance.now();
-    const step = (now) => {
-      const t = Math.min(1, (now - t0) / duration);
-      draw(k, Math.round(from + (to - from) * ease(t)));
-      if (t < 1) raf = requestAnimationFrame(step);
-      else resolve();
-    };
-    raf = requestAnimationFrame(step);
-  });
-
-  /* The chosen product goes into every price button and the footer bar. */
+  /* The chosen category goes into every price button and the footer bar. */
   const priceBar = document.querySelector('.fg-price-bar__price');
   const carry = (k) => {
     if (!P[k]) return;
@@ -12748,181 +12666,61 @@ const initHomeNext = (root) => {
     }
   };
 
-  const moveKnob = (k, animate = true) => {
-    const button = seg.querySelector(`[data-fg-hn-p="${k}"]`);
-    if (!button || !knob || detail.hidden) return;
-    const x = button.offsetLeft;
-    const from = knob.dataset.x === undefined ? null : Number(knob.dataset.x);
-    knob.style.width = `${button.offsetWidth}px`;
-    knob.style.transform = `translateX(${x}px)`;
-    knob.dataset.x = String(x);
-    if (from === null || from === x || !animate || reduce) return;
-    /* Ease-in-out across, stretched about 12% while it travels. */
-    knob.animate([
-      { transform: `translateX(${from}px)` },
-      { transform: `translateX(${(from + x) / 2}px) scaleX(1.12)` },
-      { transform: `translateX(${x}px)` },
-    ], { duration: 300, easing: 'cubic-bezier(.65,0,.35,1)' });
+  /* Four categories to the kinds in one: the same container turns over and
+     the kinds rise in, each a link straight into the quote tool. */
+  const lineup = $('[data-fg-hn-lineup]');
+  const kinds = $('[data-fg-hn-detail]');
+  const ask = $('[data-fg-hn-ask]');
+  const asks = config.asks || {};
+  let current = null;
+  const show = (k) => {
+    ask.textContent = asks[k];
+    $$('[data-fg-hn-types]').forEach((list) => { list.hidden = list.dataset.fgHnTypes !== k; });
+    lineup.hidden = true;
+    lineup.classList.remove('is-out');
+    kinds.hidden = false;
   };
-
-  const sync = (k) => {
-    const name = $('[data-fg-hn-name]');
-    const from = $('[data-fg-hn-from]');
-    if (name) name.textContent = P[k].name;
-    if (from) from.textContent = P[k].from;
-    stage.dataset.kind = P[k].kind;
-    seg.querySelectorAll('[data-fg-hn-p]').forEach((button) => {
-      const on = button.dataset.fgHnP === k;
-      button.setAttribute('aria-checked', String(on));
-      button.tabIndex = on ? 0 : -1;
-    });
-    moveKnob(k);
+  const open = (k) => {
+    current = k;
     carry(k);
     try { window.localStorage.setItem('fg_hn_pick', k); } catch (_error) { /* storage off */ }
-  };
-
-  const enter = () => {
-    detail.classList.remove('is-enter');
-    void detail.offsetWidth;
-    detail.classList.add('is-enter');
-  };
-
-  /* Four products to one: the picked product flies to the stage on an arc. */
-  const open = async (k, tile) => {
-    current = k;
-    const image = tile.querySelector('img');
-    const fromBox = image ? image.getBoundingClientRect() : null;
-    await ensure(k);
-    if (current !== k) return;
-    lineup.classList.remove('is-back');
-    lineup.classList.add('is-out');
-    tile.classList.add('is-picked');
-    if (phone.matches) lineup.hidden = true;
-    /* The chosen product takes the whole hero: room for the render, the
-       price and the button (owner, 10/11/2026: "cramped"). */
-    if (hero) hero.classList.add('is-open');
-    detail.hidden = false;
-    delete knob.dataset.x;
-    size();
-    sync(k);
-    const focusTarget = seg.querySelector(`[data-fg-hn-p="${k}"]`);
-    if (reduce || !fromBox || !image) {
-      lineup.hidden = true;
-      draw(k, N - 1);
-      if (focusTarget) focusTarget.focus({ preventScroll: true });
+    if (reduce) {
+      show(k);
+      ask.focus({ preventScroll: true });
       return;
     }
-    enter();
-    const r = place(k);
-    const box = canvas.getBoundingClientRect();
-    const to = { left: box.left + r.x, top: box.top + r.y, width: r.w, height: r.h };
-    /* The tile shows the still contained in its box; find the drawn image. */
-    const ratio = image.naturalWidth / image.naturalHeight || r.w / r.h;
-    let fw = fromBox.width;
-    let fh = fw / ratio;
-    if (fh > fromBox.height) {
-      fh = fromBox.height;
-      fw = fh * ratio;
-    }
-    const fx = fromBox.left + (fromBox.width - fw) / 2;
-    const fy = fromBox.bottom - fh;
-    const flyer = document.createElement('div');
-    flyer.className = 'fg-hn-flyer';
-    flyer.style.width = `${to.width}px`;
-    flyer.style.height = `${to.height}px`;
-    const inner = new Image();
-    inner.src = image.currentSrc || image.src;
-    inner.alt = '';
-    flyer.appendChild(inner);
-    document.body.appendChild(flyer);
-    const s = fh / to.height;
-    const duration = 560;
-    /* An arc: x travels ease-in-out on the outer box while y and scale ease
-       out on the inner one. */
-    const ax = flyer.animate([
-      { transform: `translate(${fx}px, ${to.top}px)` },
-      { transform: `translate(${to.left}px, ${to.top}px)` },
-    ], { duration, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'both' });
-    inner.animate([
-      { transform: `translateY(${fy - to.top}px) scale(${s})`, transformOrigin: '0 0' },
-      { transform: 'translateY(0) scale(1)', transformOrigin: '0 0' },
-    ], { duration, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'both' });
-    detail.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, delay: 160, fill: 'backwards' });
-    try { await ax.finished; } catch (_error) { /* cancelled */ }
-    flyer.remove();
-    if (current === k) draw(k, N - 1);
-    lineup.hidden = true;
-    if (focusTarget) focusTarget.focus({ preventScroll: true });
+    lineup.classList.remove('is-back');
+    lineup.classList.add('is-out');
+    window.setTimeout(() => {
+      if (current !== k) return;
+      show(k);
+      ask.focus({ preventScroll: true });
+    }, 160);
   };
-
-  /* One back to four: "All products". */
   const close = () => {
     const was = current;
     current = null;
-    cancelAnimationFrame(raf);
-    const out = () => {
-      detail.hidden = true;
-      if (hero) hero.classList.remove('is-open');
-      lineup.hidden = false;
-      lineup.classList.remove('is-out');
-      $$('.fg-hn-tile.is-picked').forEach((tile) => tile.classList.remove('is-picked'));
-      if (!reduce) {
-        lineup.classList.remove('is-back');
-        void lineup.offsetWidth;
-        lineup.classList.add('is-back');
-      }
-      const tile = was && $(`[data-fg-hn-pick="${was}"]`);
-      if (tile) tile.focus({ preventScroll: true });
-    };
-    if (reduce) return out();
-    /* Exits run about 20% shorter than entrances. */
-    detail.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 190, easing: 'ease' }).finished.then(out, out);
-    return undefined;
+    kinds.hidden = true;
+    lineup.hidden = false;
+    if (!reduce) {
+      lineup.classList.remove('is-back');
+      void lineup.offsetWidth;
+      lineup.classList.add('is-back');
+    }
+    const tile = was && $(`[data-fg-hn-pick="${was}"]`);
+    if (tile) tile.focus({ preventScroll: true });
   };
-  const back = $('[data-fg-hn-back]');
-  if (back) back.addEventListener('click', close);
-
-  $$('[data-fg-hn-pick]').forEach((tile) => tile.addEventListener('click', (event) => {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
-    const k = tile.dataset.fgHnPick;
-    if (!P[k]) return;
-    event.preventDefault();
-    open(k, tile);
-  }));
-
-  /* Switching product turns the old one away and the new one in. */
-  let queue = Promise.resolve();
-  const swap = (k) => {
-    if (k === current || !P[k]) return;
-    const previous = current;
-    current = k;
-    sync(k);
-    enter();
-    queue = queue.then(async () => {
-      if (current !== k) return;
-      const ready = ensure(k);
-      if (reduce || !previous) {
-        await ready;
-        if (current === k) draw(k, N - 1);
-        return;
-      }
-      await turn(previous, N - 1, 0, 220, easeInOut);
-      await ready;
-      if (current !== k) return;
-      await turn(k, 0, N - 1, 760, easeOut);
-    });
-  };
-  seg.querySelectorAll('[data-fg-hn-p]').forEach((button) => button.addEventListener('click', () => swap(button.dataset.fgHnP)));
-  seg.addEventListener('keydown', (event) => {
-    const list = [...seg.querySelectorAll('[data-fg-hn-p]')];
-    const i = list.indexOf(document.activeElement);
-    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-    if (i < 0 || !step) return;
-    event.preventDefault();
-    const next = list[(i + step + list.length) % list.length];
-    next.focus();
-    swap(next.dataset.fgHnP);
-  });
+  if (lineup && kinds && ask) {
+    $$('[data-fg-hn-pick]').forEach((tile) => tile.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+      const k = tile.dataset.fgHnPick;
+      if (!asks[k]) return;
+      event.preventDefault();
+      open(k);
+    }));
+    const back = $('[data-fg-hn-back]');
+    if (back) back.addEventListener('click', close);
+  }
 
   /* Every price button: a spinner, then a tick and a pulse, then go. */
   $$('[data-fg-hn-go]').forEach((link) => link.addEventListener('click', (event) => {
@@ -13021,39 +12819,17 @@ const initHomeNext = (root) => {
     });
   }
 
-  /* Resizes: redraw at the new size, and the knob jumps rather than slides. */
-  let lastWidth = window.innerWidth;
-  window.addEventListener('resize', () => {
-    if (window.innerWidth === lastWidth) return;
-    lastWidth = window.innerWidth;
-    if (!detail.hidden && current) {
-      size();
-      ensure(current).then(() => { if (current) draw(current, N - 1); });
-      delete knob.dataset.x;
-      moveKnob(current, false);
-    }
-  });
-
-  /* A returning visitor's product is already in every price button. QA hook:
-     #pick=door opens that product on load. */
+  /* A returning visitor's category is already in every price button. QA
+     hook: #pick=door opens that category on load. */
   let saved = null;
   try { saved = window.localStorage.getItem('fg_hn_pick'); } catch (_error) { /* storage off */ }
   if (saved && P[saved]) carry(saved);
   const hashPick = window.location.hash.match(/pick=(\w+)/);
-  if (hashPick && P[hashPick[1]]) {
-    const k = hashPick[1];
-    ensure(k).then(() => {
-      current = k;
-      lineup.hidden = true;
-      detail.hidden = false;
-      size();
-      sync(k);
-      draw(k, N - 1);
-    });
+  if (hashPick && asks[hashPick[1]] && lineup && kinds && ask) {
+    current = hashPick[1];
+    carry(current);
+    show(current);
   }
-  /* Warm the turn frames once the page is idle. */
-  const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 1200));
-  idle(() => Object.keys(P).forEach((k) => { ensure(k); }));
 };
 
 document.querySelectorAll('[data-fg-hn]').forEach(initHomeNext);

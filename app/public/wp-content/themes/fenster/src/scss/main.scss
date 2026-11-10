@@ -54366,16 +54366,6 @@ html.fg-blinds-reveal-locked {
   transform: scale(0.97);
 }
 
-@media (min-width: 761px) {
-  .fg-hn-hero.is-open .fg-hn-hero__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-hn-hero.is-open .fg-hn-hero__copy {
-    display: none;
-  }
-}
-
 .fg-hn-hero__stagecol {
   display: flex;
   flex-direction: column;
@@ -54409,7 +54399,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-hn-lineup[hidden],
-.fg-hn-detail[hidden] {
+.fg-hn-types[hidden],
+.fg-hn-types__list[hidden] {
   display: none;
 }
 
@@ -54457,14 +54448,12 @@ html.fg-blinds-reveal-locked {
   transition: transform 0.6s var(--fg-hn-in);
 }
 
-/* Name and price on the left; the tile's own button sits to their right. */
 .fg-hn-tile__row {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-height: 48px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--fg-hn-s4);
   margin-top: var(--fg-hn-s4);
-  padding-right: 168px;
 }
 
 .fg-hn-tile__name {
@@ -54477,61 +54466,6 @@ html.fg-blinds-reveal-locked {
   color: var(--fg-hn-muted);
   font-size: var(--fg-hn-t2);
   white-space: nowrap;
-}
-
-/* Straight into the quote tool on that product: no stage, no wait. */
-.fg-hn-tile__cta {
-  position: absolute;
-  right: var(--fg-hn-s5);
-  bottom: var(--fg-hn-s4);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--fg-hn-s1);
-  min-height: 48px;
-  padding: 0 var(--fg-hn-s4) 0 var(--fg-hn-s5);
-  border-radius: var(--fg-hn-pill);
-  background: var(--fg-hn-accent);
-  box-shadow: var(--fg-hn-shadow-btn);
-  color: var(--fg-hn-white);
-  font-size: var(--fg-hn-t2);
-  font-weight: 600;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: transform 0.12s var(--fg-hn-in), opacity 0.16s ease;
-}
-
-.fg-hn-tile__cta:hover,
-.fg-hn-tile__cta:focus-visible {
-  color: var(--fg-hn-white);
-}
-
-.fg-hn-tile__cta:active {
-  transform: scale(0.97);
-}
-
-.fg-hn-tile__cta .fg-hn-ic {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s var(--fg-hn-in);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .fg-hn-tile__cta:hover .fg-hn-ic {
-    transform: translateX(2px);
-  }
-}
-
-.fg-hn-lineup.is-out .fg-hn-tile__cta {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.fg-hn-tile__from b {
-  color: var(--fg-hn-ink);
-  font-size: var(--fg-hn-t4);
-  font-weight: 600;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -54561,22 +54495,21 @@ html.fg-blinds-reveal-locked {
 .fg-hn-lineup li:nth-child(3) { --fg-hn-i: 2; }
 .fg-hn-lineup li:nth-child(4) { --fg-hn-i: 3; }
 
-/* State two: one product, its price, the tool's steps, one button. */
-.fg-hn-detail {
+/* State two: the chosen category's kinds, in the same container. Back and
+   the question, then three cards; the whole card is the link into the quote
+   tool, its button the obvious place to press. */
+.fg-hn-types {
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: var(--fg-hn-s5) var(--fg-hn-s8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fg-hn-s4);
 }
 
-.fg-hn-detail__bar {
-  grid-column: 1 / -1;
+.fg-hn-types__bar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--fg-hn-s2) var(--fg-hn-s4);
+  gap: var(--fg-hn-s4);
 }
 
 .fg-hn-back {
@@ -54600,144 +54533,129 @@ html.fg-blinds-reveal-locked {
   color: var(--fg-hn-ink);
 }
 
-.fg-hn-seg {
-  position: relative;
-  display: inline-flex;
-  padding: var(--fg-hn-s1);
-  border-radius: var(--fg-hn-pill);
-  background: var(--fg-hn-soft);
-}
-
-.fg-hn-seg button {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 var(--fg-hn-s4);
-  border: 0;
-  border-radius: var(--fg-hn-pill);
-  background: none;
-  color: var(--fg-hn-ink);
-  font: inherit;
-  font-size: var(--fg-hn-t2);
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.fg-hn-seg button[aria-checked="true"] {
-  color: var(--fg-hn-white);
-}
-
-.fg-hn-seg__short {
-  display: none;
-}
-
-.fg-hn-seg__knob {
-  position: absolute;
-  z-index: 0;
-  top: var(--fg-hn-s1);
-  left: 0;
-  height: 40px;
-  border-radius: var(--fg-hn-pill);
-  background: var(--fg-hn-ink);
-}
-
-.fg-hn-obj {
-  position: relative;
-  min-height: 0;
-  border-radius: var(--fg-hn-r3);
-  background: var(--fg-hn-soft);
-}
-
-.fg-hn-obj canvas {
-  position: absolute;
-  inset: var(--fg-hn-s5);
-  width: calc(100% - 48px);
-  height: calc(100% - 48px);
-}
-
-.fg-hn-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
-  padding: var(--fg-hn-s5) 0;
-}
-
-.fg-hn-info p {
+.fg-hn-types__ask {
   margin: 0;
-}
-
-.fg-hn-info__name {
   font-size: var(--fg-hn-t5);
   font-weight: 600;
+  line-height: 1.2;
+  outline: none;
 }
 
-.fg-hn-info .fg-hn-info__price {
-  margin-top: var(--fg-hn-s2);
-  font-size: clamp(48px, 4.6vw, 72px);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.fg-hn-info__price small {
-  margin-right: var(--fg-hn-s2);
-  color: var(--fg-hn-muted);
-  font-size: var(--fg-hn-t4);
-  letter-spacing: 0;
-}
-
-.fg-hn-info .fg-hn-info__vat {
-  margin-top: var(--fg-hn-s2);
-  color: var(--fg-hn-muted);
-  font-size: var(--fg-hn-t2);
-}
-
-.fg-hn-info__how {
+.fg-hn-types__list {
+  flex: 1;
   display: grid;
-  gap: var(--fg-hn-s3);
-  margin: var(--fg-hn-s6) 0 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--fg-hn-s4);
+  min-height: 0;
+  margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--fg-hn-t3);
 }
 
-.fg-hn-info__how li {
+.fg-hn-types__list li {
+  min-width: 0;
+  min-height: 0;
+  animation: fg-hn-rowin 0.4s var(--fg-hn-in) both;
+}
+
+.fg-hn-types__list li:nth-child(2) {
+  animation-delay: 30ms;
+}
+
+.fg-hn-types__list li:nth-child(3) {
+  animation-delay: 60ms;
+}
+
+/* Outer radius 24 with 12px of padding: the photo inside is 12. */
+.fg-hn-type {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--fg-hn-s3);
+  border-radius: var(--fg-hn-r3);
+  background: var(--fg-hn-soft);
+  color: var(--fg-hn-ink);
+  text-decoration: none;
+  transition: transform 0.2s var(--fg-hn-in);
+}
+
+.fg-hn-type:hover,
+.fg-hn-type:focus-visible {
+  color: var(--fg-hn-ink);
+}
+
+.fg-hn-type:active {
+  transform: scale(0.97);
+}
+
+.fg-hn-type__img {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.fg-hn-type__img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--fg-hn-in);
+}
+
+.fg-hn-type__text {
+  display: flex;
+  flex-direction: column;
+  padding: var(--fg-hn-s4) var(--fg-hn-s2) var(--fg-hn-s1);
+}
+
+.fg-hn-type__name {
+  font-size: var(--fg-hn-t4);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.fg-hn-type__from {
+  margin-top: 2px;
+  color: var(--fg-hn-muted);
+  font-size: var(--fg-hn-t2);
+}
+
+.fg-hn-type__from b {
+  color: var(--fg-hn-ink);
+  font-weight: 600;
+}
+
+.fg-hn-type__cta {
   display: flex;
   align-items: center;
-  gap: var(--fg-hn-s3);
-}
-
-.fg-hn-ic--tick {
-  flex: none;
-  width: 20px;
-  height: 20px;
-  stroke: var(--fg-hn-accent);
-  stroke-width: 2;
-}
-
-.fg-hn-info__act {
-  margin-top: var(--fg-hn-s6);
-}
-
-.fg-hn-info__sash {
-  min-height: 24px;
+  justify-content: center;
+  gap: var(--fg-hn-s1);
+  min-height: 52px;
   margin-top: var(--fg-hn-s4);
-  font-size: var(--fg-hn-t2);
-  text-align: center;
+  border-radius: var(--fg-hn-pill);
+  background: var(--fg-hn-accent);
+  box-shadow: var(--fg-hn-shadow-btn);
+  color: var(--fg-hn-white);
+  font-size: var(--fg-hn-t3);
+  font-weight: 600;
+  line-height: 1;
 }
 
-.fg-hn-stage[data-kind="door"] .fg-hn-info__sash {
-  visibility: hidden;
+.fg-hn-type__cta .fg-hn-ic {
+  transition: transform 0.2s var(--fg-hn-in);
 }
 
-.fg-hn-detail.is-enter .fg-hn-in {
-  animation: fg-hn-rowin 0.4s var(--fg-hn-in) both;
-  animation-delay: calc(var(--i, 0) * 30ms + 120ms);
+@media (hover: hover) and (pointer: fine) {
+  .fg-hn-type:hover .fg-hn-type__img img {
+    transform: scale(1.04);
+  }
+
+  .fg-hn-type:hover .fg-hn-type__cta .fg-hn-ic {
+    transform: translateX(2px);
+  }
 }
 
 @keyframes fg-hn-rowin {
@@ -54750,23 +54668,6 @@ html.fg-blinds-reveal-locked {
     opacity: 1;
     transform: none;
   }
-}
-
-/* The picked product's flight from its tile to the stage, on an arc. */
-.fg-hn-flyer {
-  position: fixed;
-  z-index: 40;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.fg-hn-flyer img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  will-change: transform;
 }
 
 /* 2. After the price. */
@@ -55212,34 +55113,24 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-hn-lineup,
-  .fg-hn-detail {
+  .fg-hn-types {
     position: relative;
     inset: auto;
   }
 
   .fg-hn-lineup {
-    grid-template-rows: 236px 236px;
+    grid-template-rows: 184px 184px;
     gap: var(--fg-hn-s2);
   }
 
   .fg-hn-tile {
-    padding: var(--fg-hn-s4) var(--fg-hn-s3) 60px;
+    padding: var(--fg-hn-s4) var(--fg-hn-s3) var(--fg-hn-s3);
     border-radius: var(--fg-hn-r2);
   }
 
   .fg-hn-tile__row {
     display: block;
-    min-height: 0;
     margin-top: var(--fg-hn-s2);
-    padding-right: 0;
-  }
-
-  .fg-hn-tile__cta {
-    right: var(--fg-hn-s2);
-    bottom: var(--fg-hn-s2);
-    left: var(--fg-hn-s2);
-    min-height: 44px;
-    padding: 0 var(--fg-hn-s2);
   }
 
   .fg-hn-tile__name {
@@ -55252,83 +55143,58 @@ html.fg-blinds-reveal-locked {
     font-size: var(--fg-hn-t1);
   }
 
-  .fg-hn-detail {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 260px auto;
-    gap: var(--fg-hn-s3);
+  /* The kinds stack: photo left, name, price and button right. */
+  .fg-hn-types {
+    gap: var(--fg-hn-s2);
   }
 
-  .fg-hn-detail__bar {
-    gap: var(--fg-hn-s1);
+  .fg-hn-types__bar {
+    flex-wrap: wrap;
+    gap: 0 var(--fg-hn-s2);
   }
 
   .fg-hn-back {
     min-height: 36px;
   }
 
-  .fg-hn-seg {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    width: 100%;
+  .fg-hn-types__ask {
+    font-size: var(--fg-hn-t4);
   }
 
-  .fg-hn-seg button {
-    padding: 0;
-    font-size: var(--fg-hn-t1);
+  .fg-hn-types__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--fg-hn-s2);
   }
 
-  .fg-hn-seg__long {
-    display: none;
-  }
-
-  .fg-hn-seg__short {
-    display: inline;
-  }
-
-  .fg-hn-obj {
+  .fg-hn-type {
+    flex-direction: row;
+    gap: var(--fg-hn-s3);
+    padding: var(--fg-hn-s2);
     border-radius: var(--fg-hn-r2);
   }
 
-  .fg-hn-obj canvas {
-    inset: var(--fg-hn-s3);
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
+  .fg-hn-type__img {
+    flex: none;
+    width: 112px;
+    height: 120px;
+    border-radius: var(--fg-hn-r1);
   }
 
-  .fg-hn-info__name {
+  .fg-hn-type__text {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 var(--fg-hn-s1) 0 0;
+  }
+
+  .fg-hn-type__name {
     font-size: var(--fg-hn-t3);
   }
 
-  .fg-hn-info {
-    padding: var(--fg-hn-s2) 0 0;
-  }
-
-  .fg-hn-info .fg-hn-info__price {
-    margin-top: var(--fg-hn-s1);
-    font-size: 44px;
-  }
-
-  .fg-hn-info__how {
-    gap: var(--fg-hn-s2);
-    margin-top: var(--fg-hn-s4);
-    font-size: var(--fg-hn-t2);
-  }
-
-  .fg-hn-info__price small {
-    font-size: var(--fg-hn-t3);
-  }
-
-  .fg-hn-info__act {
-    margin-top: var(--fg-hn-s5);
-  }
-
-  .fg-hn-info__act .fg-hn-btn--lg {
-    min-height: 56px;
-    font-size: var(--fg-hn-t3);
-  }
-
-  .fg-hn-info__sash {
+  .fg-hn-type__cta {
+    min-height: 44px;
     margin-top: var(--fg-hn-s2);
+    font-size: var(--fg-hn-t2);
   }
 
   .fg-hn-after,
@@ -55554,7 +55420,7 @@ html.fg-blinds-reveal-locked {
    button is the one action on screen, so Legend's cat and its "Need a hand?"
    bubble step aside instead of sitting on top of it. */
 @media (max-width: 760px) {
-  body:has([data-fg-hn-detail]:not([hidden])) .legend-assistant__launcher-wrap {
+  body:has(.fg-hn-types:not([hidden])) .legend-assistant__launcher-wrap {
     visibility: hidden;
   }
 }

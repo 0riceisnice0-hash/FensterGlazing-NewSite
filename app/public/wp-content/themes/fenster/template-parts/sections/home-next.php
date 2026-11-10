@@ -7,13 +7,13 @@
  * on for everyone is one edit there.
  *
  * One job: start a price. The hero is a working model of the quote journey.
- * - Four real products stand on the stage, each with its real "from" price
- *   and its own "Get my price" button straight into the quote tool
- *   (conversion first, owner 10/11/2026). The tile itself is also a plain
- *   link to /online-quote/?product=<slug>, so the page works with JavaScript
- *   off. With it on (initHomeNext in src/js/main.js) the product turns in
- *   place across the whole hero, with its price and one big button. "All
- *   products" goes back to the four.
+ * - Four categories stand on the stage, each with its real "from" price.
+ *   Every tile is a plain link to /online-quote/?product=<slug>, so the page
+ *   works with JavaScript off. With it on (initHomeNext in src/js/main.js)
+ *   picking one turns the same container into the kinds the quote tool
+ *   prices, each with its own "Get my price" straight into the tool
+ *   (conversion first, owner 10/11/2026). Bifolds have one kind, so that
+ *   tile goes straight to the tool. "All products" goes back to the four.
  * - The product chosen there is carried into every price button on the page,
  *   and into the footer's phone price bar.
  * - Repairs and commercial get quiet exits: neither can be instant-priced
@@ -31,15 +31,33 @@ if (! defined('ABSPATH')) {
 
 /* The real "from" prices: the 10th percentile of real Glasshouse quote lines,
    16 Jul to 10 Nov 2026, inc VAT. Use no figure that is not in this list.
-   `h` is the render's height as a share of the stage, so a door stands taller
-   than a window. `kind` decides whether the sash link shows. */
+   `bar` is the phone price bar's label once that category is chosen. */
 $hn_products = [
     'windows' => ['name' => 'Windows', 'seg' => 'Windows', 'short' => 'Windows', 'from' => '£552', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'h' => 0.72, 'render' => 732],
     'door' => ['name' => 'Front doors', 'seg' => 'Front doors', 'short' => 'Doors', 'from' => '£1,909', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'h' => 1, 'render' => 418],
     'french' => ['name' => 'French & patio doors', 'seg' => 'French & patio', 'short' => 'Patio', 'from' => '£1,797', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'h' => 0.94, 'render' => 551],
     'bifold' => ['name' => 'Bifold doors', 'seg' => 'Bifold doors', 'short' => 'Bifold', 'from' => '£4,418', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'h' => 0.9, 'render' => 644],
 ];
-$hn_sash = ['name' => 'Sash windows', 'from' => '£1,045', 'slug' => 'sliding-sash-windows'];
+
+/* What each category opens into: the kinds the quote tool prices, each its
+   own collection there. "from" only where the CRM gives one. */
+$hn_types = [
+    'windows' => ['ask' => 'Which windows?', 'types' => [
+        ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£552', 'img' => 'thumb-windows'],
+        ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£1,045', 'img' => 'sub-sash'],
+        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '', 'img' => 'sub-alu-windows'],
+    ]],
+    'door' => ['ask' => 'Which front door?', 'types' => [
+        ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,909', 'img' => 'thumb-door'],
+        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '', 'img' => 'sub-upvc-door'],
+        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '', 'img' => 'sub-alu-door'],
+    ]],
+    'french' => ['ask' => 'Which garden doors?', 'types' => [
+        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,797', 'img' => 'thumb-patio'],
+        ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '', 'img' => 'sub-sliding'],
+        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '', 'img' => 'sub-heritage'],
+    ]],
+];
 $hn_price_note = 'Starting prices from real Fenster quotes, Jul–Nov 2026, inc VAT. Your price depends on size and spec.';
 
 $args = wp_parse_args($args ?? [], [
@@ -57,7 +75,8 @@ $hn_rating = number_format((float) ($hn_reviews['rating'] ?? fenster_data('brand
 $hn_review_count = (int) ($hn_reviews['count'] ?? 0);
 
 $img = FENSTER_THEME_URI . '/assets/images/home-next/';
-$hn_tick = '<svg class="fg-hn-ic fg-hn-ic--tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg>';
+$img_a = FENSTER_THEME_URI . '/assets/images/home-a/';
+$hn_arrow = '<svg class="fg-hn-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
 $trust = FENSTER_THEME_URI . '/assets/trust/';
 $doors_dir = FENSTER_THEME_URI . '/assets/images/products/composite-distinction/colours/';
 $quote = static fn (string $slug = ''): string => $slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/'));
@@ -78,19 +97,14 @@ $guides = [
     ['label' => 'Try the 3D visualiser', 'url' => home_url('/3d-visualiser/')],
 ];
 
-/* What the script needs: the turn frames and each product's copy. */
+/* What the script needs: each category's slug, bar label and question. */
 $hn_config = [
-    'turn' => $img . 'turn/',
-    'frames' => 14,
     'quote' => home_url('/online-quote/'),
     'products' => array_map(static fn (array $p): array => [
-        'name' => $p['name'],
-        'from' => $p['from'],
         'slug' => $p['slug'],
         'bar' => $p['bar'],
-        'kind' => $p['kind'],
-        'h' => $p['h'],
     ], $hn_products),
+    'asks' => array_map(static fn (array $g): string => $g['ask'], $hn_types),
     'doors' => array_map(static fn (array $d): array => [
         'name' => $d['name'],
         'src' => $doors_dir . $d['slug'] . '-800w.webp',
@@ -139,7 +153,7 @@ $button = static function (string $label, string $href, string $class = '', bool
                 <ul class="fg-hn-lineup" data-fg-hn-lineup aria-label="<?php esc_attr_e('Products', 'fenster'); ?>">
                     <?php foreach ($hn_products as $key => $product) : ?>
                         <li>
-                            <a class="fg-hn-tile" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta data-fg-hn-pick="<?php echo esc_attr($key); ?>">
+                            <a class="fg-hn-tile" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta<?php if (isset($hn_types[$key])) : ?> data-fg-hn-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
                                 <span class="fg-hn-tile__img">
                                     <img <?php echo fenster_image_attr_string($img . 'render-' . $key . '-' . $product['render'] . 'w.webp', ['alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 760px) 45vw, 26vw']); ?>>
                                 </span>
@@ -148,42 +162,35 @@ $button = static function (string $label, string $href, string $class = '', bool
                                     <span class="fg-hn-tile__from"><?php esc_html_e('From', 'fenster'); ?> <b class="fg-hn-num"><?php echo esc_html($product['from']); ?></b></span>
                                 </span>
                             </a>
-                            <a class="fg-hn-tile__cta" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta aria-label="<?php echo esc_attr(sprintf(__('Get my price for %s', 'fenster'), strtolower($product['name']))); ?>"><?php esc_html_e('Get my price', 'fenster'); ?><svg class="fg-hn-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 10.5 8 6 12.5"/></svg></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
 
-                <div class="fg-hn-detail" data-fg-hn-detail hidden>
-                    <div class="fg-hn-detail__bar">
+                <div class="fg-hn-types" data-fg-hn-detail hidden>
+                    <div class="fg-hn-types__bar">
                         <button class="fg-hn-back" type="button" data-fg-hn-back>
                             <svg class="fg-hn-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg><?php esc_html_e('All products', 'fenster'); ?>
                         </button>
-                        <div class="fg-hn-seg" role="radiogroup" aria-label="<?php esc_attr_e('Product', 'fenster'); ?>" data-fg-hn-seg>
-                            <span class="fg-hn-seg__knob" data-fg-hn-knob aria-hidden="true"></span>
-                            <?php foreach ($hn_products as $key => $product) : ?>
-                                <button type="button" role="radio" aria-checked="false" data-fg-hn-p="<?php echo esc_attr($key); ?>" aria-label="<?php echo esc_attr($product['name']); ?>"><span class="fg-hn-seg__long"><?php echo esc_html($product['seg']); ?></span><span class="fg-hn-seg__short" aria-hidden="true"><?php echo esc_html($product['short']); ?></span></button>
+                        <h2 class="fg-hn-types__ask" tabindex="-1" data-fg-hn-ask></h2>
+                    </div>
+                    <?php foreach ($hn_types as $key => $group) : ?>
+                        <ul class="fg-hn-types__list" data-fg-hn-types="<?php echo esc_attr($key); ?>" hidden>
+                            <?php foreach ($group['types'] as $type) : ?>
+                                <li>
+                                    <a class="fg-hn-type" href="<?php echo esc_url($quote($type['slug'])); ?>" data-fg-cta>
+                                        <span class="fg-hn-type__img">
+                                            <img <?php echo fenster_image_attr_string($img_a . $type['img'] . '-400w.webp', ['alt' => '', 'loading' => 'lazy', 'srcset' => $img_a . $type['img'] . '-200w.webp 200w, ' . $img_a . $type['img'] . '-400w.webp 400w', 'sizes' => '(max-width: 760px) 120px, 22vw']); ?>>
+                                        </span>
+                                        <span class="fg-hn-type__text">
+                                            <span class="fg-hn-type__name"><?php echo esc_html($type['name']); ?></span>
+                                            <span class="fg-hn-type__from"><?php if ($type['from'] !== '') : ?><?php esc_html_e('From', 'fenster'); ?> <b class="fg-hn-num"><?php echo esc_html($type['from']); ?></b><?php else : ?><?php esc_html_e('Instant price', 'fenster'); ?><?php endif; ?></span>
+                                            <span class="fg-hn-type__cta"><?php esc_html_e('Get my price', 'fenster'); ?><?php echo $hn_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+                                        </span>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <div class="fg-hn-obj" data-fg-hn-obj><canvas data-fg-hn-canvas aria-hidden="true"></canvas></div>
-
-                    <div class="fg-hn-info" aria-live="polite">
-                        <p class="fg-hn-info__name fg-hn-in" style="--i:0" data-fg-hn-name><?php echo esc_html($hn_products['windows']['name']); ?></p>
-                        <p class="fg-hn-info__price fg-hn-num fg-hn-in" style="--i:1"><small><?php esc_html_e('From', 'fenster'); ?></small> <span data-fg-hn-from><?php echo esc_html($hn_products['windows']['from']); ?></span></p>
-
-                        <p class="fg-hn-info__vat fg-hn-in" style="--i:2"><?php esc_html_e('inc VAT', 'fenster'); ?></p>
-                        <ul class="fg-hn-info__how fg-hn-in" style="--i:3">
-                            <li><?php echo $hn_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e('Pick the style, size and colour', 'fenster'); ?></li>
-                            <li><?php echo $hn_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e('Your price appears instantly', 'fenster'); ?></li>
-                            <li><?php echo $hn_tick; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e('Fitted by our own installers', 'fenster'); ?></li>
                         </ul>
-
-                        <div class="fg-hn-info__act fg-hn-in" style="--i:4">
-                            <?php echo $button(__('Get my instant price', 'fenster'), $quote($hn_products['windows']['slug']), 'fg-hn-btn--lg fg-hn-btn--block'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                            <p class="fg-hn-info__sash" data-fg-hn-sash><a class="fg-hn-link" href="<?php echo esc_url($quote($hn_sash['slug'])); ?>" data-fg-cta><?php echo esc_html(sprintf(__('%1$s from %2$s', 'fenster'), $hn_sash['name'], $hn_sash['from'])); ?></a></p>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <p class="fg-hn-note"><?php echo esc_html($hn_price_note); ?></p>
