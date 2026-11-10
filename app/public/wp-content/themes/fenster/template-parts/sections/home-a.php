@@ -122,6 +122,10 @@ $quote = static function (string $slug = ''): string {
 
     return $designer !== '' ? $designer : ($slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/')));
 };
+/* A category tile that opens its list of kinds is a chooser, not a quote: with
+   JavaScript on it never navigates. Its fallback stays on our own quote page so
+   a click on it is never counted as a WindowCAD quote opened. */
+$chooser = static fn (string $slug): string => add_query_arg('product', $slug, home_url('/online-quote/'));
 
 $guides = [
     ['label' => 'Guides and advice', 'url' => home_url('/blog/')],
@@ -186,7 +190,7 @@ $button = static function (string $label, string $href, string $class = '', bool
                     <ul class="fg-ha-picks" aria-label="<?php esc_attr_e('Choose a product to price', 'fenster'); ?>">
                         <?php foreach ($ha_products as $key => $product) : ?>
                             <li>
-                                <a class="fg-ha-pick" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta<?php if (isset($ha_types[$key])) : ?> data-fg-ha-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
+                                <a class="fg-ha-pick" href="<?php echo esc_url(isset($ha_types[$key]) ? $chooser($product['slug']) : $quote($product['slug'])); ?>" data-fg-cta<?php if (isset($ha_types[$key])) : ?> data-fg-ha-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
                                     <span class="fg-ha-pick__img"><img <?php echo fenster_image_attr_string($img . 'thumb-' . $key . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '96px']); ?>></span>
                                     <span class="fg-ha-pick__text">
                                         <span class="fg-ha-pick__name"><?php echo esc_html($product['name']); ?></span>

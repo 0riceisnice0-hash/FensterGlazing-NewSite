@@ -98,6 +98,10 @@ $quote = static function (string $slug = ''): string {
 
     return $designer !== '' ? $designer : ($slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/')));
 };
+/* A category tile that opens its list of kinds is a chooser, not a quote: with
+   JavaScript on it never navigates. Its fallback stays on our own quote page so
+   a click on it is never counted as a WindowCAD quote opened. */
+$chooser = static fn (string $slug): string => add_query_arg('product', $slug, home_url('/online-quote/'));
 
 /* Distinction composite door colours: the products' own photographs. */
 $hn_doors = [
@@ -172,7 +176,7 @@ $button = static function (string $label, string $href, string $class = '', bool
                 <ul class="fg-hn-lineup" data-fg-hn-lineup aria-label="<?php esc_attr_e('Products', 'fenster'); ?>">
                     <?php foreach ($hn_products as $key => $product) : ?>
                         <li>
-                            <a class="fg-hn-tile" href="<?php echo esc_url($quote($product['slug'])); ?>" data-fg-cta<?php if (isset($hn_types[$key])) : ?> data-fg-hn-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
+                            <a class="fg-hn-tile" href="<?php echo esc_url(isset($hn_types[$key]) ? $chooser($product['slug']) : $quote($product['slug'])); ?>" data-fg-cta<?php if (isset($hn_types[$key])) : ?> data-fg-hn-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
                                 <span class="fg-hn-tile__img">
                                     <img <?php echo fenster_image_attr_string($img . 'render-' . $key . '-' . $product['render'] . 'w.webp', ['alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 760px) 45vw, 26vw']); ?>>
                                 </span>
