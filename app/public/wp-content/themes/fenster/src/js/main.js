@@ -2612,15 +2612,21 @@ const refreshWindowCadLinks = () => {
   });
 };
 
-windowCadLinks.forEach((link) => {
-  link.addEventListener('click', () => {
-    link.href = windowCadUrlWithReference(link.dataset.fgQuoteBaseUrl || link.href);
-    trackWebsiteEvent('quote_opened', {
-      cta: (link.textContent || 'WindowCAD link').trim().slice(0, 120),
-      product_collection: new URL(link.href).searchParams.get('productCollection') || '',
-    });
+/* Stamped as it is clicked, whatever the link is pointing at by then: the
+   homepage A/B variants point their price buttons at a WindowCAD collection
+   only once a product is picked, after the page has loaded, and a link added
+   or changed that late was going out without its reference. The stamp sets
+   the reference afresh, so stamping a stamped link changes nothing. Capture
+   phase, so a handler that reads `href` to navigate later reads it stamped. */
+document.addEventListener('click', (event) => {
+  const link = event.target instanceof Element ? event.target.closest('a[href*="windowsoftware.co.uk/windowcad7/"]') : null;
+  if (!link) return;
+  link.href = windowCadUrlWithReference(link.href);
+  trackWebsiteEvent('quote_opened', {
+    cta: (link.textContent || 'WindowCAD link').trim().slice(0, 120),
+    product_collection: new URL(link.href).searchParams.get('productCollection') || '',
   });
-});
+}, true);
 
 refreshWindowCadLinks();
 
@@ -12650,6 +12656,7 @@ const initHomeNext = (root) => {
   const $$ = (selector) => [...root.querySelectorAll(selector)];
   const deep = (k) => {
     if (!k || !P[k]) return config.quote;
+    if (P[k].url) return P[k].url;
     const url = new URL(config.quote, window.location.href);
     url.searchParams.set('product', P[k].slug);
     return url.toString();

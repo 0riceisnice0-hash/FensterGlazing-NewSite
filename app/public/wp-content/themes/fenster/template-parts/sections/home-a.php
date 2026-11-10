@@ -10,7 +10,7 @@
  * centred headline that types itself out (typewriter.js, via data-h30-type),
  * a light product panel where 3.0's dark finder sat, a slim trust row.
  * - Four real products, each with its real "from" price. Every tile is a
- *   plain link to /online-quote/?product=<slug>, so the page works with
+ *   plain link to that product's WindowCAD designer, so the page works with
  *   JavaScript off. With it on (initHomeA in src/js/home-a.js) the picked
  *   product's photo wipes onto the card and the bar turns into the kinds the
  *   tool prices (uPVC, sash, aluminium...), each a link straight into the
@@ -111,7 +111,17 @@ $ha_tick = '<svg class="fg-ha-ic fg-ha-ic--sm" viewBox="0 0 24 24" aria-hidden="
 
 $img = FENSTER_THEME_URI . '/assets/images/home-a/';
 $trust = FENSTER_THEME_URI . '/assets/trust/';
-$quote = static fn (string $slug = ''): string => $slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/'));
+/* A product goes straight into its own WindowCAD designer (owner, 10/11/2026:
+   "link to the windowcad product ... that is product specific"), from the one
+   map in inc/quote-collections.php. main.js stamps the visitor's tracking
+   reference onto every WindowCAD link as it is clicked, so the quote still
+   reaches the office with its journey. No product, or one the map does not
+   know: /online-quote/, the all-products designer. */
+$quote = static function (string $slug = ''): string {
+    $designer = $slug !== '' && function_exists('fenster_quote_collection_url') ? fenster_quote_collection_url($slug) : '';
+
+    return $designer !== '' ? $designer : ($slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/')));
+};
 
 $guides = [
     ['label' => 'Guides and advice', 'url' => home_url('/blog/')],
@@ -127,6 +137,7 @@ $ha_config = [
         'name' => $p['name'],
         'from' => $p['from'],
         'slug' => $p['slug'],
+        'url' => $quote($p['slug']),
         'bar' => $p['bar'],
         'kind' => $p['kind'],
     ], $ha_products),

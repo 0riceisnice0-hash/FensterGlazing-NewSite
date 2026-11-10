@@ -8,7 +8,7 @@
  *
  * One job: start a price. The hero is a working model of the quote journey.
  * - Four categories stand on the stage, each with its real "from" price.
- *   Every tile is a plain link to /online-quote/?product=<slug>, so the page
+ *   Every tile is a plain link to that product's WindowCAD designer, so the page
  *   works with JavaScript off. With it on (initHomeNext in src/js/main.js)
  *   picking one turns the same container into the kinds the quote tool
  *   prices, each with its own "Get my price" straight into the tool
@@ -87,7 +87,17 @@ $img_a = FENSTER_THEME_URI . '/assets/images/home-a/';
 $hn_arrow = '<svg class="fg-hn-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3.5 10.5 8 6 12.5"/></svg>';
 $trust = FENSTER_THEME_URI . '/assets/trust/';
 $doors_dir = FENSTER_THEME_URI . '/assets/images/products/composite-distinction/colours/';
-$quote = static fn (string $slug = ''): string => $slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/'));
+/* A product goes straight into its own WindowCAD designer (owner, 10/11/2026:
+   "link to the windowcad product ... that is product specific"), from the one
+   map in inc/quote-collections.php. main.js stamps the visitor's tracking
+   reference onto every WindowCAD link as it is clicked, so the quote still
+   reaches the office with its journey. No product, or one the map does not
+   know: /online-quote/, the all-products designer. */
+$quote = static function (string $slug = ''): string {
+    $designer = $slug !== '' && function_exists('fenster_quote_collection_url') ? fenster_quote_collection_url($slug) : '';
+
+    return $designer !== '' ? $designer : ($slug === '' ? home_url('/online-quote/') : add_query_arg('product', $slug, home_url('/online-quote/')));
+};
 
 /* Distinction composite door colours: the products' own photographs. */
 $hn_doors = [
@@ -110,6 +120,7 @@ $hn_config = [
     'quote' => home_url('/online-quote/'),
     'products' => array_map(static fn (array $p): array => [
         'slug' => $p['slug'],
+        'url' => $quote($p['slug']),
         'bar' => $p['bar'],
     ], $hn_products),
     'asks' => array_map(static fn (array $g): string => $g['ask'], $hn_types),

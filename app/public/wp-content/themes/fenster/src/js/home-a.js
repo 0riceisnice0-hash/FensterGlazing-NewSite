@@ -28,6 +28,7 @@ export function initHomeA() {
 
   /* Carry the chosen product into every price button and the phone price bar. */
   const deep = (k) => {
+    if (P[k] && P[k].url) return P[k].url;
     const url = new URL(config.quote || '/online-quote/', window.location.href);
     if (P[k]) url.searchParams.set('product', P[k].slug);
     return url.toString();
