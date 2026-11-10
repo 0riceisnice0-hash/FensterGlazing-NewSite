@@ -1,6 +1,6 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-09-09
+Last updated: 2026-11-10
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
@@ -12,6 +12,19 @@ This is the short operational guide for any Codex agent or developer making chan
 - **Never render a per-visitor value into the page config.** The same caching makes it a leak, not just a dead value: a reference printed into cacheable HTML is baked into the cached copy and served to every later visitor of that page. `adAttributionRef` was removed from `fenster_enqueue_website_tracking_config()` for exactly this.
 
 ## Current Truth
+
+- **THE HOMEPAGE A/B TEST IS LIVE, 2026-11-10, AS A 217-FILE TRANSPLANT BUILT ON LIVE'S OWN SOURCE.** Owner: *"A/B test it on live, push to live."* `/?home=a` is "Open House" (`home-a.php`, `src/js/home-a.js`), `/?home=b` is "The Showroom" (`home-next.php`, `initHomeNext`). Both are noindex, canonical `/`. Prices are the cheapest real CRM prices of `b1f5c05a`.
+  - **HOW `/` ANSWERS WHILE THE TEST RUNS.** A crawler (`fenster_request_is_bot()`) gets the classic homepage, indexable and unchanged. Rendered through WP-CLI as Googlebot it was byte-identical to the pre-release homepage apart from asset versions and the form timestamp. A person gets a 731-byte page that picks a variant 50/50, keeps it in localStorage `fenster_home_variant` and replaces itself with `/?home=x`, keeping gclid/utm. That page has no noindex. Because one address now has two answers, **`/` is sent `private, no-store` for everyone** (`fenster_home_ab_bare_home()`, checked inside `fenster_send_public_cache_headers()`), so the proxy can never give a person the crawler's page or the reverse. The variants stay publicly cached (`MISS` then `HIT`). To end the test: take `fensterglazing.com` out of `fenster_home_ab_running()` and `/` goes back to cached and classic.
+  - **NOTHING ELSE FROM `main` SHIPPED.** Live matched no commit. Its own `src` rebuilt to its own CSS and JS byte for byte (`2908c45fd0a9`, `8c87e5df21e9`). Only the A/B pieces were patched onto it, and the rest of `main`'s Part B (header buttons, price bar, contact price row, lead source sync, quiz changes, finder actions) was left out. The A/B pieces were: the `trackedPagePath()` page/landing path, the `[data-fg-cta]` and `?product=` CTA tracking, `initHomeNext`, `initHomeA`, the `.fg-hn-*`/`.fg-ha-*` styles and the Legend rule. The new CSS is live's old CSS plus an append (882,789 to 920,390 bytes). In PHP, `inc/generated-pages.php` took the A/B block and the noindex line, and `inc/home-30.php` took its two variant hunks. New files: four templates and 206 images in `assets/images/home-a/` and `home-next/`. `main` `inc/generated-pages.php` now carries the same bot-safe split.
+  - **Release:** proved first in a hard-linked `themes/fenster-release` on live via WP-CLI renders (removed after). Six parents asserted by `md5sum -c` under `set -euo pipefail`. Backup `~/ab-release/backup-20261110-171730.tar`. Dry run exactly 6 `>fcsT` and 211 `>f+++++++++`. `--files-from`, `--checksum --no-times`, no `--delete`. Socket purge `msg:OK`. Kit in `~/ab-release/`.
+  - **Verified on live, logged out:**
+    - `/` as a person returned the assigner, as Googlebot the classic page with no robots meta. Both were `private, no-store` and `MISS` on repeat, and `/?gclid=` also got the assigner.
+    - The variants returned `200` with noindex.
+    - All 217 `page-sitemap.xml` URLs returned `200`.
+    - In headless Chrome at 1440 x 780 and 390 x 844, with every POST and third-party request blocked, `/` landed on a variant and neither variant threw a JS error.
+    - Door, then Composite, reached `/online-quote/?product=composite-doors` with the quote frame on both variants.
+    - Every event carried `page_path` `/?home=a` or `/?home=b`.
+  - **Split the results** by dashboard `page_path`/`landing_path` IN (`/?home=a`, `/?home=b`). Live has no lead-source endpoint, so leads are split through the journey's landing path.
 
 - **THE PAGE GRADIENT IS PAINTED ONCE, AS A FIXED `body::before` LAYER, LIVE 2026-11-04, AS TWO TWO-FILE TRANSPLANTS OF `f4eec17f` AND `4c16beef`.** Owner: *"scan the website for any sort of duplicated gradient background ... mainly on mobile apps in which it doubles up the gradient ... fix that, and push it live"*.
   - **THE FAULT.** iOS WebKit (Safari and every iPhone in-app browser: Instagram, Facebook, Gmail) ignores `background-attachment: fixed`, so `body`'s `--fg-page-gradient` stretched down the whole document. Where a wrapper painted a second copy, the two stretched copies stacked into a murky grey-green. A 237-page live sweep at 390px (every `page-sitemap.xml` URL plus one of each location-page shape) found the copy on `.fg-fensa-page` (FENSA, GGF, CPA, Constructionline, SSIP), `.fg-heritage-door-page`, `.fg-roof-lantern-page`, `.fg-flat-rooflight-page` and `.fg-consultation-page`, and a section-level imitation of the canvas on `.fg-careers-hero`, `.fg-team-hero` and `.fg-pet-flap-guide`.

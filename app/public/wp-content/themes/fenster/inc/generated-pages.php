@@ -2231,6 +2231,20 @@ function fenster_send_public_cache_headers(int $browser_max_age = 600, int $shar
         return;
     }
 
+    /*
+     * While the homepage A/B test runs, / answers crawlers with the classic
+     * homepage and people with the variant page, so no shared cache may keep
+     * either (fenster_home_ab_bare_home(), below).
+     */
+    if (function_exists('fenster_home_ab_bare_home') && fenster_home_ab_bare_home()) {
+        header_remove('Cache-Control');
+        header_remove('Pragma');
+        header_remove('Expires');
+        header('Cache-Control: private, no-store, max-age=0');
+
+        return;
+    }
+
     header_remove('Cache-Control');
     header_remove('Pragma');
     header_remove('Expires');
@@ -2808,8 +2822,14 @@ function fenster_prepare_generated_seo_head(): void
  * visitor, so it is safe to cache. main.js writes the variant into the tracked
  * page and landing paths, so events, journeys and leads can be split by it.
  *
- * It runs on the test site only. NEVER add the live host here without the
- * owner's say-so: it would put a redirect in front of the real homepage.
+ * Live since 10/11/2026 on the owner's word ("A/B test it on live, push to
+ * live"). On live the bare homepage answers people and crawlers differently:
+ * a crawler (fenster_request_is_bot()) gets the classic homepage, indexable,
+ * exactly as before the test, so search engines never see the split; a person
+ * gets the variant page. One address, two answers, so / is sent private,
+ * no-store while the test runs (fenster_home_ab_bare_home()) and the host's
+ * page cache can never hand one the other's page. The variants keep their own
+ * cached addresses.
  * fenster_home_next_enabled() is the old switch that served b to everyone;
  * it stays false while the test decides between the two.
  */
@@ -2822,7 +2842,7 @@ function fenster_home_ab_running(): bool
 {
     $host = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
 
-    return $host === 'test.fensterglazing.com';
+    return $host === 'test.fensterglazing.com' || $host === 'fensterglazing.com';
 }
 
 /** The variant this request asked for by address: 'a', 'b' or ''. */
@@ -2851,30 +2871,47 @@ add_filter('fenster_home_template', static function ($template) {
     return $variant === 'b' || fenster_home_next_enabled() ? 'template-parts/sections/home-next' : $template;
 }, 20);
 
-/* The bare homepage, while the test runs: hand out a variant and move on. */
-add_action('template_redirect', static function (): void {
+/**
+ * Is this the bare homepage while the test runs? Only a plain visit, or one
+ * carrying ad and campaign parameters: anything else on / (a search, a feed,
+ * a preview) is WordPress's, not ours.
+ */
+function fenster_home_ab_bare_home(): bool
+{
     if (! fenster_home_ab_running() || fenster_home_variant_requested() !== '' || is_admin()) {
-        return;
+        return false;
     }
     $path = trim((string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
     if ($path !== '') {
-        return;
+        return false;
     }
-    // Only a plain visit, or one carrying ad and campaign parameters. Anything
-    // else on / (a search, a feed, a preview) is WordPress's, not ours.
     foreach (array_keys($_GET) as $key) {
         if (! preg_match('/^(utm_[a-z]+|gclid|gbraid|wbraid|gad_source|gad_campaignid|fbclid|msclkid|ads)$/', (string) $key)) {
-            return;
+            return false;
         }
+    }
+
+    return true;
+}
+
+/* The bare homepage, while the test runs: a crawler gets the classic homepage
+   (fenster_send_public_cache_headers() keeps it out of the shared cache); a
+   person is handed a variant and moved on. */
+add_action('template_redirect', static function (): void {
+    if (! fenster_home_ab_bare_home()) {
+        return;
+    }
+    if (function_exists('fenster_request_is_bot') && fenster_request_is_bot()) {
+        return;
     }
 
     status_header(200);
     header('Content-Type: text/html; charset=utf-8');
-    header('X-Robots-Tag: noindex, follow');
+    header_remove('Cache-Control');
+    header('Cache-Control: private, no-store, max-age=0');
     $fallback = esc_url(home_url('/?home=b'));
     echo '<!doctype html><html lang="en-GB"><head><meta charset="utf-8">'
         . '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        . '<meta name="robots" content="noindex, follow">'
         . '<link rel="canonical" href="https://fensterglazing.com/">'
         . '<title>Fenster Glazing</title>'
         . '<script>(function(){var v;try{v=localStorage.getItem("fenster_home_variant")}catch(e){}'
