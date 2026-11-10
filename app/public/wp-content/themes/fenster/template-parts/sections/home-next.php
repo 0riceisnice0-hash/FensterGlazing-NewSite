@@ -40,22 +40,25 @@ $hn_products = [
 ];
 
 /* What each category opens into: the kinds the quote tool prices, each its
-   own collection there. "from" only where the CRM gives one. */
+   own collection there. "from" is the 10th percentile of real CRM quote lines
+   inc VAT, or the lowest where there are only one or two (aluminium windows,
+   aluminium doors, heritage French). Aluminium sliding has no quote yet, so
+   no figure: never invent one. */
 $hn_types = [
     'windows' => ['ask' => 'Which windows?', 'types' => [
         ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£552', 'img' => 'thumb-windows'],
         ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£1,045', 'img' => 'sub-sash'],
-        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '', 'img' => 'sub-alu-windows'],
+        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£1,982', 'img' => 'sub-alu-windows'],
     ]],
     'door' => ['ask' => 'Which front door?', 'types' => [
         ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,909', 'img' => 'thumb-door'],
-        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '', 'img' => 'sub-upvc-door'],
-        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '', 'img' => 'sub-alu-door'],
+        ['name' => 'uPVC doors', 'slug' => 'upvc-doors', 'from' => '£1,259', 'img' => 'sub-upvc-door'],
+        ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '£2,320', 'img' => 'sub-alu-door'],
     ]],
     'french' => ['ask' => 'Which garden doors?', 'types' => [
         ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,797', 'img' => 'thumb-patio'],
         ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '', 'img' => 'sub-sliding'],
-        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '', 'img' => 'sub-heritage'],
+        ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£3,869', 'img' => 'sub-heritage'],
     ]],
 ];
 $hn_price_note = 'Starting prices from real Fenster quotes, Jul–Nov 2026, inc VAT. Your price depends on size and spec.';
