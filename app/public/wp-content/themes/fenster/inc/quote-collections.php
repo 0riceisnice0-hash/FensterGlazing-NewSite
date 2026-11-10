@@ -59,6 +59,7 @@ function fenster_quote_collections(): array
         'composite-doors' => '4',
         'upvc-doors' => '1',
         'patio-doors' => '2',
+        'french-doors' => '10',
         'aluminium-bifold-doors' => '11',
         'aluminium-sliding-doors' => '7',
         'heritage-aluminium-doors' => '12',

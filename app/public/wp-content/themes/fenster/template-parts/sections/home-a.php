@@ -71,7 +71,7 @@ $ha_types = [
         ['name' => 'Aluminium doors', 'slug' => 'aluminium-doors', 'from' => '£2,299', 'img' => 'kind-alu-door'],
     ]],
     'patio' => ['ask' => 'Which garden doors?', 'types' => [
-        ['name' => 'uPVC French & patio', 'slug' => 'patio-doors', 'from' => '£1,726', 'img' => 'kind-french'],
+        ['name' => 'uPVC French doors', 'slug' => 'french-doors', 'from' => '£1,726', 'img' => 'kind-french'],
         ['name' => 'Aluminium sliding', 'slug' => 'aluminium-sliding-doors', 'from' => '£2,793', 'img' => 'kind-sliding'],
         ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£2,766', 'img' => 'kind-heritage'],
     ]],
