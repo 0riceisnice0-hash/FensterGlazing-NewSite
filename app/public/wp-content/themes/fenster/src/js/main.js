@@ -1,3 +1,4 @@
+import { initHomeA } from './home-a.js';
 import Lenis from 'lenis';
 
 document.documentElement.classList.add('js');
@@ -74,7 +75,7 @@ if (legendAssistant) {
       message_id: newLegendMessageId(),
       journey_id: journeyId,
       visitor_id: hasTrackingConsent ? visitorReference() : '',
-      page_path: window.location.pathname,
+      page_path: trackedPagePath(),
       role,
       body: String(body).slice(0, 900),
     };
@@ -2346,11 +2347,27 @@ const paidClickChannel = (parameters) => {
   return present ? { source: 'google', medium: 'cpc' } : null;
 };
 
+/* Homepage A/B test (test site, 10/11/2026): /?home=a is "Open House" and
+   /?home=b "The Showroom" (/?home=next is the old name for b). To the browser
+   both are "/", so the variant is written into the tracked path: that is the
+   only way the dashboard's events and journeys can tell the two apart. Only
+   these known values are ever kept, never a free-form query. */
+const homeVariant = (() => {
+  if (window.location.pathname !== '/') return '';
+  const requested = new URLSearchParams(window.location.search).get('home');
+  if (requested === 'a') return 'a';
+  return requested === 'b' || requested === 'next' ? 'b' : '';
+})();
+const trackedPagePath = () => (homeVariant ? `/?home=${homeVariant}` : window.location.pathname);
+if (homeVariant) {
+  try { window.localStorage.setItem('fenster_home_variant', homeVariant); } catch (_error) {}
+}
+
 const currentCampaignContext = () => {
   const parameters = new URLSearchParams(window.location.search);
   const paidClick = paidClickChannel(parameters);
   return {
-    landing_path: window.location.pathname,
+    landing_path: trackedPagePath(),
     source: parameters.get('utm_source') || (paidClick ? paidClick.source : ''),
     medium: parameters.get('utm_medium') || (paidClick ? paidClick.medium : ''),
     campaign: parameters.get('utm_campaign') || '',
@@ -2364,14 +2381,14 @@ const currentCampaignContext = () => {
 
 const campaignContext = () => {
   const current = currentCampaignContext();
-  if (!trackingConsentAccepted()) return { page_path: window.location.pathname, ...current };
+  if (!trackingConsentAccepted()) return { page_path: trackedPagePath(), ...current };
 
   try {
     const journeyId = journeyReference();
     const raw = window.localStorage.getItem(firstTouchStorageKey);
     const stored = raw ? JSON.parse(raw) : null;
     if (stored && stored.journey_id === journeyId && Number(stored.expires_at) > Date.now() && stored.context) {
-      return { page_path: window.location.pathname, ...stored.context };
+      return { page_path: trackedPagePath(), ...stored.context };
     }
     const context = { ...current };
     window.localStorage.setItem(firstTouchStorageKey, JSON.stringify({
@@ -2379,9 +2396,9 @@ const campaignContext = () => {
       context,
       expires_at: Date.now() + trackingStorageLifetime,
     }));
-    return { page_path: window.location.pathname, ...context };
+    return { page_path: trackedPagePath(), ...context };
   } catch (_error) {
-    return { page_path: window.location.pathname, ...current };
+    return { page_path: trackedPagePath(), ...current };
   }
 };
 
@@ -13057,3 +13074,4 @@ const initHomeNext = (root) => {
 };
 
 document.querySelectorAll('[data-fg-hn]').forEach(initHomeNext);
+initHomeA();

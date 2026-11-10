@@ -358,74 +358,7 @@ $h30_case_url = static function (string $slug): string {
          PROJECTS AS LISTINGS. Real installs, presented the way a property
          result is: photograph, place, what was done, the finish, the date.
          ───────────────────────────────────────────────────────────────── -->
-    <?php if ($h30_projects !== []) : ?>
-        <section class="fg-h30-projects" id="fg-h30-projects" data-h30-projects aria-labelledby="fg-h30-projects-title">
-            <div class="fg-h30-shell">
-                <div class="fg-h30-head fg-h30-head--row">
-                    <div>
-                        <p class="fg-h30-kicker">A little local inspiration</p>
-                        <h2 id="fg-h30-projects-title">Real homes. A fresh look.</h2>
-                        <p>Real homes, real streets. Have a look at what your neighbours chose.</p>
-                    </div>
-                    <a class="fg-h30-head__more" href="<?php echo esc_url(home_url('/case-studies/')); ?>">
-                        See all projects
-                        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
-                </div>
-
-                <div class="fg-h30-projects__toolbar" data-h30-project-toolbar hidden>
-                    <div class="fg-h30-projects__filters" aria-label="Filter recent projects">
-                        <button type="button" data-h30-project-filter="all" aria-pressed="true">All projects</button>
-                        <button type="button" data-h30-project-filter="windows" aria-pressed="false">Windows</button>
-                        <button type="button" data-h30-project-filter="doors" aria-pressed="false">Doors</button>
-                        <button type="button" data-h30-project-filter="together" aria-pressed="false">Windows &amp; doors</button>
-                    </div>
-                    <div class="fg-h30-projects__nav">
-                        <p data-h30-project-count role="status" aria-live="polite"></p>
-                        <button type="button" class="fg-h30-projects__arrow" data-h30-rail-prev aria-label="Previous projects">
-                            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                        <button type="button" class="fg-h30-projects__arrow" data-h30-rail-next aria-label="Next projects">
-                            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                    </div>
-                </div>
-                <ul class="fg-h30-projects__grid fg-h30-projects__rail" id="fg-h30-project-results" data-h30-rail data-h30-reveal aria-roledescription="carousel" aria-label="Recent projects">
-                    <?php foreach ($h30_projects as $h30_project) : ?>
-                        <li class="fg-h30-listing" data-h30-project-types="<?php echo esc_attr(implode(' ', $h30_project['types'])); ?>">
-                            <a class="fg-h30-listing__link" href="<?php echo esc_url($h30_project['url']); ?>">
-                                <span class="fg-h30-listing__media">
-                                    <img
-                                        src="<?php echo esc_url((string) ($h30_project['image']['src'] ?? $h30_project['image']['url'] ?? '')); ?>"
-                                        alt="<?php echo esc_attr((string) ($h30_project['image']['alt'] ?? $h30_project['location'])); ?>"
-                                        width="800"
-                                        height="600"
-                                        loading="lazy"
-                                        decoding="async"
-                                    >
-                                    <?php if ($h30_project['colour'] !== '') : ?>
-                                        <span class="fg-h30-listing__tag"><?php echo esc_html($h30_project['colour']); ?></span>
-                                    <?php endif; ?>
-
-
-                                </span>
-                                <span class="fg-h30-listing__body">
-                                    <span class="fg-h30-listing__place"><?php echo esc_html($h30_project['location']); ?></span>
-                                    <?php if ($h30_project['products'] !== []) : ?>
-                                        <span class="fg-h30-listing__what"><?php echo esc_html(implode(' · ', $h30_project['products'])); ?></span>
-                                    <?php endif; ?>
-                                    <span class="fg-h30-listing__summary"><?php echo esc_html($h30_project['summary']); ?></span>
-                                    <?php if ($h30_project['date'] !== '') : ?>
-                                        <span class="fg-h30-listing__meta">Completed <?php echo esc_html($h30_project['date']); ?><span aria-hidden="true">&rarr;</span></span>
-                                    <?php endif; ?>
-                                </span>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </section>
-    <?php endif; ?>
+    <?php get_template_part('template-parts/components/h30-projects', null, ['projects' => $h30_projects]); ?>
 
     <!-- ─────────────────────────────────────────────────────────────────
          PROOF. Evidence rather than a "why choose us" wall.
@@ -512,42 +445,7 @@ $h30_case_url = static function (string $slug): string {
          AREAS. Real routes out of the location matrix, presented the way
          a portal presents its saved searches.
          ───────────────────────────────────────────────────────────────── -->
-        <section class="fg-h30-areas" aria-labelledby="fg-h30-areas-title">
-            <!-- The map fills the section, which fills the screen. Loads when scrolled
-                 into view; see src/home30/map.js. Renders on Google Maps when
-                 FENSTER_GOOGLE_MAPS_KEY is set, Leaflet + OpenStreetMap when it is not. -->
-            <div class="fg-h30-map" data-h30-map role="region" aria-label="Map of the area Fenster covers, with pins on completed projects">
-                <p class="fg-h30-map__placeholder">Loading the map&hellip;</p>
-            </div>
-            <script type="application/json" id="fg-h30-map-data"><?php echo wp_json_encode($h30_map, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP); ?></script>
-
-            <div class="fg-h30-areas__panel" data-h30-map-panel>
-                <p class="fg-h30-kicker">Where we work</p>
-                <h2 id="fg-h30-areas-title">Recent installs, pinned across the area we cover.</h2>
-                <p class="fg-h30-areas__note">
-                    Milton Keynes and everything around it: up to Northampton and Wellingborough, across to
-                    Bedford and Sandy, down through Stevenage and St Albans to Berkhamsted and Aylesbury, and
-                    out west to Brackley.
-                </p>
-                <!-- The count is the owner's own figure. The claim about the pins is
-                     one the data actually supports: every residential case study is
-                     pinned, so nothing newer is being held back, and thirteen of the
-                     sixteen were finished in 2025 or later. -->
-                <p class="fg-h30-areas__note">
-                    Thousands of double glazing installations later, the green pins are the most recent
-                    ones we have written up. Click one to see the house.
-                </p>
-                <ul class="fg-h30-map__legend" aria-label="Map key">
-                    <li><span class="fg-h30-map__swatch fg-h30-map__swatch--line"></span> Our working area</li>
-                    <li><span class="fg-h30-map__swatch fg-h30-map__swatch--pin"></span> A finished project</li>
-                    <li><span class="fg-h30-map__swatch fg-h30-map__swatch--showroom"></span> The showroom</li>
-                </ul>
-                <a class="fg-h30-head__more" href="<?php echo esc_url(home_url('/areas-we-cover/')); ?>">
-                    Every area we cover
-                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-            </div>
-        </section>
+        <?php get_template_part('template-parts/components/h30-areas', null, ['map' => $h30_map]); ?>
 
     <!-- ───────────────────────────────────────────────────────────────── -->
     <section class="fg-h30-close" id="fenster-enquiry" aria-labelledby="fg-h30-close-title">

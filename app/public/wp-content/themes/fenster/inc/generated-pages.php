@@ -2789,30 +2789,102 @@ function fenster_prepare_generated_seo_head(): void
 }
 
 /**
- * The price-first homepage (Route A, SEO plan 10/11/2026 Part B), previewed at
- * /?home=next. The query string gets its own entry in the host's page cache, so
- * it can be opened on the real site with nothing changed for visitors. It is
- * noindex there, and the homepage canonical is already /.
+ * The price-first homepage (Route A, SEO plan 10/11/2026 Part B), as an A/B
+ * test between the two designs the owner asked to have built (10/11/2026):
  *
- * TO SWITCH IT ON for everyone, make fenster_home_next_enabled() return true;
- * to switch it off, back to false. The preview address stays noindex either
- * way, and the real homepage is never noindexed by this. Priority 20 runs
- * after the Homepage 3.0 gate, so the preview also works on test, where 3.0
- * holds the homepage.
+ *   /?home=a     "Open House"    template-parts/sections/home-a.php
+ *   /?home=b     "The Showroom"  template-parts/sections/home-next.php
+ *   /?home=next  the old preview address, served as b
+ *
+ * Each variant has its own address, so each gets its own entry in the host's
+ * page cache and a cached page can never show a visitor the wrong design. Both
+ * are noindex, canonical /.
+ *
+ * Splitting visitors: fenster_home_ab_running() decides whether the bare
+ * homepage runs the test. When it does, / prints a tiny page that gives the
+ * browser a variant, 50/50, kept in localStorage so a visitor always sees the
+ * same one, and replaces itself with /?home=a or /?home=b, keeping any ad
+ * parameters (gclid, utm_*) on the address. That page is the same for every
+ * visitor, so it is safe to cache. main.js writes the variant into the tracked
+ * page and landing paths, so events, journeys and leads can be split by it.
+ *
+ * It runs on the test site only. NEVER add the live host here without the
+ * owner's say-so: it would put a redirect in front of the real homepage.
+ * fenster_home_next_enabled() is the old switch that served b to everyone;
+ * it stays false while the test decides between the two.
  */
 function fenster_home_next_enabled(): bool
 {
     return false;
 }
 
+function fenster_home_ab_running(): bool
+{
+    $host = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
+
+    return $host === 'test.fensterglazing.com';
+}
+
+/** The variant this request asked for by address: 'a', 'b' or ''. */
+function fenster_home_variant_requested(): string
+{
+    $home = isset($_GET['home']) ? (string) $_GET['home'] : '';
+    if ($home === 'a') {
+        return 'a';
+    }
+
+    return $home === 'b' || $home === 'next' ? 'b' : '';
+}
+
+/** Kept for the callers that only ask "is this a preview address?". */
 function fenster_home_next_requested(): bool
 {
-    return isset($_GET['home']) && $_GET['home'] === 'next';
+    return fenster_home_variant_requested() !== '';
 }
 
 add_filter('fenster_home_template', static function ($template) {
-    return fenster_home_next_enabled() || fenster_home_next_requested() ? 'template-parts/sections/home-next' : $template;
+    $variant = fenster_home_variant_requested();
+    if ($variant === 'a') {
+        return 'template-parts/sections/home-a';
+    }
+
+    return $variant === 'b' || fenster_home_next_enabled() ? 'template-parts/sections/home-next' : $template;
 }, 20);
+
+/* The bare homepage, while the test runs: hand out a variant and move on. */
+add_action('template_redirect', static function (): void {
+    if (! fenster_home_ab_running() || fenster_home_variant_requested() !== '' || is_admin()) {
+        return;
+    }
+    $path = trim((string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
+    if ($path !== '') {
+        return;
+    }
+    // Only a plain visit, or one carrying ad and campaign parameters. Anything
+    // else on / (a search, a feed, a preview) is WordPress's, not ours.
+    foreach (array_keys($_GET) as $key) {
+        if (! preg_match('/^(utm_[a-z]+|gclid|gbraid|wbraid|gad_source|gad_campaignid|fbclid|msclkid|ads)$/', (string) $key)) {
+            return;
+        }
+    }
+
+    status_header(200);
+    header('Content-Type: text/html; charset=utf-8');
+    header('X-Robots-Tag: noindex, follow');
+    $fallback = esc_url(home_url('/?home=b'));
+    echo '<!doctype html><html lang="en-GB"><head><meta charset="utf-8">'
+        . '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        . '<meta name="robots" content="noindex, follow">'
+        . '<link rel="canonical" href="https://fensterglazing.com/">'
+        . '<title>Fenster Glazing</title>'
+        . '<script>(function(){var v;try{v=localStorage.getItem("fenster_home_variant")}catch(e){}'
+        . 'if(v!=="a"&&v!=="b"){v=Math.random()<0.5?"a":"b";try{localStorage.setItem("fenster_home_variant",v)}catch(e){}}'
+        . 'var keep=location.search.replace(/^\?/,"").split("&").filter(function(p){return p&&!/^home=/.test(p)}).join("&");'
+        . 'location.replace("/?home="+v+(keep?"&"+keep:"")+location.hash);})();</script>'
+        . '<noscript><meta http-equiv="refresh" content="0;url=' . $fallback . '"></noscript>'
+        . '</head><body></body></html>';
+    exit;
+}, 0);
 
 add_action('wp_head', 'fenster_render_generated_seo', 1);
 function fenster_render_generated_seo(): void

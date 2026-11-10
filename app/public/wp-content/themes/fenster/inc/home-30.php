@@ -182,7 +182,13 @@ function fenster_h30_quote_embed_url(): string
 add_action('wp_enqueue_scripts', 'fenster_h30_assets', 20);
 function fenster_h30_assets(): void
 {
-    if (! fenster_h30_enabled() || ! fenster_h30_is_home()) {
+    /* The homepage A/B variants (/?home=a, /?home=b) borrow 3.0's project rail,
+       map and reveal animation (template-parts/components/h30-*.php), so they
+       load its styles and script too, on any host: the variant addresses exist
+       wherever the theme does. Everything in home30.css is scoped to `.fg-h30`
+       and every part of home30.js starts only when its markup is present. */
+    $variant = function_exists('fenster_home_variant_requested') && fenster_home_variant_requested() !== '';
+    if (! $variant && (! fenster_h30_enabled() || ! fenster_h30_is_home())) {
         return;
     }
 

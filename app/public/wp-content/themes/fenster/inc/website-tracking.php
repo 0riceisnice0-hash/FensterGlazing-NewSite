@@ -144,6 +144,11 @@ function fenster_lead_source_clean_path(string $path): string
     if (trim($path) === '') {
         return '';
     }
+    // The homepage A/B test's two addresses are the one query kept: they are
+    // how a lead is tied to the variant it landed on (see homeVariant in main.js).
+    if (preg_match('#^/\?home=[ab]$#', $path)) {
+        return $path;
+    }
     $path = '/' . ltrim((string) wp_parse_url($path, PHP_URL_PATH), '/');
 
     return preg_match('#^/[A-Za-z0-9/_.-]{0,160}$#', $path) ? $path : '';

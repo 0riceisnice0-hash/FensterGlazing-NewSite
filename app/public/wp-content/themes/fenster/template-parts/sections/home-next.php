@@ -252,6 +252,15 @@ $button = static function (string $label, string $href, string $class = '', bool
         </div>
     </section>
 
+    <?php /* Homepage 3.0's project rail, the part of it the owner loved (10/11/2026). */ ?>
+    <div class="fg-h30 fg-hn-h30">
+        <?php get_template_part('template-parts/components/h30-projects', null, [
+            'title' => __('Real homes near you', 'fenster'),
+            'lede' => '',
+            'kicker' => '',
+        ]); ?>
+    </div>
+
     <section class="fg-hn-room" id="fg-hn-showroom" aria-labelledby="fg-hn-room-title">
         <div class="fg-hn-wrap fg-hn-room__grid">
             <div class="fg-hn-room__copy">
@@ -280,6 +289,18 @@ $button = static function (string $label, string $href, string $class = '', bool
             </figure>
         </div>
     </section>
+
+    <?php /* And its map: every finished job pinned across the area we cover. */ ?>
+    <div class="fg-h30 fg-hn-h30">
+        <?php get_template_part('template-parts/components/h30-areas', null, [
+            'title' => __('Where we fit', 'fenster'),
+            'kicker' => '',
+            'notes' => [
+                __('Milton Keynes, Bedford, Northampton, Aylesbury and the towns between', 'fenster'),
+                __('Green pins are recent jobs. Click one to see the house', 'fenster'),
+            ],
+        ]); ?>
+    </div>
 
     <section class="fg-hn-close" aria-labelledby="fg-hn-close-title" data-fg-hn-close>
         <div class="fg-hn-wrap">
