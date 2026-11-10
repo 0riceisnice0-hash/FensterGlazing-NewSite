@@ -33,8 +33,9 @@ if (! defined('ABSPATH')) {
    (owner, 10/11/2026: "make them the absolute cheapest"). Searched across
    the Glasshouse CRM (fenster-fieldos: WindowCAD projects, parsed sales
    quotes and contract quotes, 767 unique lines, 14 Oct 2024 to 10 Nov 2026).
-   uPVC windows £506 (a sold 508x737 casement), bifolds £2,200 and heritage
-   French £2,766 are the owner's own figures. Skipped as website-tool pricing
+   uPVC windows £506 (a sold 508x737 casement) and heritage French £2,766
+   are the owner's figures. Bifolds £2,324: contract 1609, a 2-pane aluminium
+   bifold sold May 2023 and paid in full (lead 2333). Skipped as website-tool pricing
    faults: a 1200 French pair at £438, a 2420 slider at £1,118, an 1800
    French pair at £1,191 and a 2043 heritage pair at £1,597. Use no figure that is not in this list.
    `bar` is the phone price bar's label once that category is chosen. */
@@ -42,7 +43,7 @@ $hn_products = [
     'windows' => ['name' => 'Windows', 'seg' => 'Windows', 'short' => 'Windows', 'from' => '£506', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'h' => 0.72, 'render' => 732],
     'door' => ['name' => 'Front doors', 'seg' => 'Front doors', 'short' => 'Doors', 'from' => '£1,480', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'h' => 1, 'render' => 418],
     'french' => ['name' => 'French & patio doors', 'seg' => 'French & patio', 'short' => 'Patio', 'from' => '£1,726', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'h' => 0.94, 'render' => 551],
-    'bifold' => ['name' => 'Bifold doors', 'seg' => 'Bifold doors', 'short' => 'Bifold', 'from' => '£2,200', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'h' => 0.9, 'render' => 644],
+    'bifold' => ['name' => 'Bifold doors', 'seg' => 'Bifold doors', 'short' => 'Bifold', 'from' => '£2,324', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'h' => 0.9, 'render' => 644],
 ];
 
 /* What each category opens into: the kinds the quote tool prices, each its

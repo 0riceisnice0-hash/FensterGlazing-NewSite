@@ -39,8 +39,9 @@ if (! defined('ABSPATH')) {
    (owner, 10/11/2026: "make them the absolute cheapest"). Searched across
    the Glasshouse CRM (fenster-fieldos: WindowCAD projects, parsed sales
    quotes and contract quotes, 767 unique lines, 14 Oct 2024 to 10 Nov 2026).
-   uPVC windows £506 (a sold 508x737 casement), bifolds £2,200 and heritage
-   French £2,766 are the owner's own figures. Skipped as website-tool pricing
+   uPVC windows £506 (a sold 508x737 casement) and heritage French £2,766
+   are the owner's figures. Bifolds £2,324: contract 1609, a 2-pane aluminium
+   bifold sold May 2023 and paid in full (lead 2333). Skipped as website-tool pricing
    faults: a 1200 French pair at £438, a 2420 slider at £1,118, an 1800
    French pair at £1,191 and a 2043 heritage pair at £1,597. Use no figure that is not in this list.
    `bar` is the phone price bar's label once that product is chosen. */
@@ -48,7 +49,7 @@ $ha_products = [
     'windows' => ['name' => 'Windows', 'from' => '£506', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
     'door' => ['name' => 'Front doors', 'from' => '£1,480', 'slug' => 'composite-doors', 'bar' => 'Price my front door', 'kind' => 'door', 'alt' => 'A black Distinction composite front door with a long bar handle and glazed panel'],
     'patio' => ['name' => 'French & patio doors', 'from' => '£1,726', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'alt' => 'Black French doors set between flush casements in a white painted wall, Wolverton'],
-    'bifold' => ['name' => 'Bifold doors', 'from' => '£2,200', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
+    'bifold' => ['name' => 'Bifold doors', 'from' => '£2,324', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
 ];
 $ha_sash = ['name' => 'Sash windows', 'from' => '£794', 'slug' => 'sliding-sash-windows'];
 
