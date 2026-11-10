@@ -55410,3 +55410,12 @@ html.fg-blinds-reveal-locked {
     color: var(--color-steel);
   }
 }
+
+/* Homepage preview, phones: while a product is open on the stage, its price
+   button is the one action on screen, so Legend's cat and its "Need a hand?"
+   bubble step aside instead of sitting on top of it. */
+@media (max-width: 760px) {
+  body:has([data-fg-hn-detail]:not([hidden])) .legend-assistant__launcher-wrap {
+    visibility: hidden;
+  }
+}
