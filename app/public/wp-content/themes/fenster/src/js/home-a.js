@@ -1,3 +1,5 @@
+import { openQuote, initQuoteOverlay } from './quote-overlay.js';
+
 /* Homepage A/B test, variant A ("Open House"): template-parts/sections/home-a.php,
    styles in the .fg-ha block at the end of src/scss/main.scss.
 
@@ -119,8 +121,18 @@ export function initHomeA() {
       link.classList.remove('is-loading');
       link.classList.add('is-done');
     }, still() ? 0 : 650);
-    window.setTimeout(() => { window.location.href = href; }, still() ? 50 : 1000);
+    window.setTimeout(() => {
+      /* The designer opens over the page, under the header; anything else is
+         a plain visit. The button is a button again for when they come back. */
+      if (openQuote(href, '')) {
+        link.classList.remove('is-loading', 'is-done');
+        link.removeAttribute('aria-busy');
+        return;
+      }
+      window.location.href = href;
+    }, still() ? 50 : 1000);
   }));
+  initQuoteOverlay(root, '[data-fg-ha-go]');
   /* Coming back with the browser's back button: the buttons are buttons again. */
   window.addEventListener('pageshow', () => $$('[data-fg-ha-go]').forEach((link) => {
     link.classList.remove('is-loading', 'is-done');

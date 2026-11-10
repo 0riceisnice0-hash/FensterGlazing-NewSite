@@ -56756,3 +56756,112 @@ html.fg-blinds-reveal-locked {
     animation: fg-ha-spin 1s linear infinite !important;
   }
 }
+
+/* The WindowCAD designer over the page (src/js/quote-overlay.js), opened from
+   the homepage A/B variants. It fills the screen under the site header; the
+   header is lifted above it so the menu, its drawer on phones and the phone
+   number stay usable, and Back closes it. Owner, 10/11/2026: "give them a way
+   out". Light, no borders. */
+html.fg-qo-open,
+html.fg-qo-open body {
+  overflow: hidden;
+}
+
+html.fg-qo-open .site-header {
+  z-index: 2001;
+}
+
+.fg-qo {
+  position: fixed;
+  top: var(--fg-qo-top, 73px);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.fg-qo[hidden] {
+  display: none;
+}
+
+.fg-qo__bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 6px 16px;
+  background: #f3f8f7;
+}
+
+.fg-qo__back {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 16px 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(6, 33, 42, 0.08), 0 2px 8px rgba(6, 33, 42, 0.06);
+  color: #06212a;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.fg-qo__back:active {
+  transform: scale(0.97);
+}
+
+.fg-qo__back:focus-visible {
+  outline: 2px solid #20824c;
+  outline-offset: 2px;
+}
+
+.fg-qo__back svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fg-qo__title {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #06212a;
+  font-size: 15px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fg-qo__frame {
+  flex: 1;
+  min-height: 0;
+}
+
+.fg-qo__frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  .fg-qo__bar {
+    min-height: 48px;
+    padding: 4px 12px;
+  }
+}

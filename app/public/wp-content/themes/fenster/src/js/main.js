@@ -1,4 +1,5 @@
 import { initHomeA } from './home-a.js';
+import { openQuote, initQuoteOverlay } from './quote-overlay.js';
 import Lenis from 'lenis';
 
 document.documentElement.classList.add('js');
@@ -12739,8 +12740,18 @@ const initHomeNext = (root) => {
       link.classList.remove('is-loading');
       link.classList.add('is-done');
     }, reduce ? 0 : 650);
-    window.setTimeout(() => { window.location.href = link.href; }, reduce ? 50 : 1000);
+    window.setTimeout(() => {
+      /* The designer opens over the page, under the header; anything else is
+         a plain visit. The button is a button again for when they come back. */
+      if (openQuote(link.href, '')) {
+        link.classList.remove('is-loading', 'is-done');
+        link.removeAttribute('aria-busy');
+        return;
+      }
+      window.location.href = link.href;
+    }, reduce ? 50 : 1000);
   }));
+  initQuoteOverlay(root, '[data-fg-hn-go]');
   window.addEventListener('pageshow', () => $$('[data-fg-hn-go]').forEach((link) => {
     link.classList.remove('is-loading', 'is-done');
     link.removeAttribute('aria-busy');
