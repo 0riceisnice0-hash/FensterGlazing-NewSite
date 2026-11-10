@@ -41,6 +41,14 @@ MIN_BYTES = 6000
 
 # Rendered on every page, or the shell around every page: never a split target.
 NEVER_SPLIT = {
+    # The classic homepage is live's homepage, and test cannot render it (3.0
+    # holds the homepage there), so its rules could not be checked: kept whole.
+    'template-parts/sections/home-experience.php',
+    # Rendered on nearly every page (742, 682 and 565 of 742 sitemap URLs on
+    # 10/11/2026): a separate sheet would only add a request.
+    'template-parts/components/legend-assistant.php',
+    'template-parts/components/enquiry-form.php',
+    'template-parts/components/review-showcase.php',
     'template-parts/sections/generated-page.php',
     'template-parts/sections/generated-simple.php',
     'template-parts/sections/content-page.php',
@@ -278,6 +286,15 @@ def main():
             else:
                 moved_final.setdefault(target, []).append(prelude + '{' + body + '}')
         moved = moved_final
+
+    if '--owners' in sys.argv:
+        target = sys.argv[sys.argv.index('--owners') + 1]
+        by_part = {}
+        for name, part in owner.items():
+            if part in moved:
+                by_part.setdefault(part, []).append(name)
+        with open(target, 'w', encoding='utf-8') as handle:
+            json.dump({part: sorted(names) for part, names in by_part.items()}, handle, indent=1)
 
     report = '--report' in sys.argv
     total = len(css)
