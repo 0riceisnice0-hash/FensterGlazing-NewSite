@@ -184,26 +184,30 @@ export function initHomeA() {
       }, { rootMargin: '600px 0px' });
       near.observe(frame);
       /* "On screen" is measured below the sticky header (80px off the top),
-         and 60% of the frame is enough: a normal scroll overshoots a little,
-         and a stricter rule left it never playing. The timer starts when the
-         frame settles in and is only cancelled if it leaves. */
+         and half the frame is enough: a normal scroll overshoots a little,
+         and a stricter rule left it never playing. The pause is 1.2s after
+         the page stops moving with the frame in view: every scroll restarts
+         it, so someone scrolling past never sets it off. */
+      let inView = false;
       let timer = 0;
+      const play = () => {
+        prepare().then(() => {
+          if (touched || !inView) return;
+          io.disconnect();
+          window.removeEventListener('scroll', arm);
+          window.requestAnimationFrame(() => setBA(true));
+        });
+      };
+      const arm = () => {
+        window.clearTimeout(timer);
+        timer = inView ? window.setTimeout(play, still() ? 0 : 1200) : 0;
+      };
       const io = new IntersectionObserver((entries) => {
         const entry = entries[entries.length - 1];
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.6) {
-          window.clearTimeout(timer);
-          timer = 0;
-          return;
-        }
-        if (timer) return;
-        timer = window.setTimeout(() => {
-          prepare().then(() => {
-            if (touched) return;
-            io.disconnect();
-            window.requestAnimationFrame(() => setBA(true));
-          });
-        }, still() ? 0 : 1200);
-      }, { rootMargin: '-80px 0px 0px 0px', threshold: [0, 0.6, 0.8, 1] });
+        inView = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+        arm();
+      }, { rootMargin: '-80px 0px 0px 0px', threshold: [0, 0.5, 0.75, 1] });
+      window.addEventListener('scroll', arm, { passive: true });
       io.observe(frame);
     }
   }
