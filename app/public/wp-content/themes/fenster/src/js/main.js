@@ -12778,12 +12778,42 @@ const initHomeNext = (root) => {
       setBA(button.dataset.fgHnBaV === 'after');
     }));
     const frame = ba.querySelector('.fg-hn-ba__frame');
+    /* Owner, 11/11/2026: "it just flashes to after ... you should scroll
+       onto it, it should pause for a bit, and then it should do the
+       animation". Two faults made the wipe look like a flash: it could start
+       while the frame was still sliding into view, and the after photo is lazy,
+       so the wipe could run over a picture that had not arrived and then pop
+       in whole. Now the after photo is fetched and decoded as the frame
+       approaches, the whole frame has to be on screen and stay there for
+       1.2s, and only then does it wipe. Scrolling away first cancels it. */
     if (frame && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver(([entry]) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect();
-        window.setTimeout(() => { if (!touched) setBA(true); }, 500);
-      }, { threshold: 0.6 });
+      const afterImg = ba.querySelector('.fg-hn-ba__after');
+      let ready = null;
+      const prepare = () => {
+        if (ready) return ready;
+        if (afterImg) afterImg.loading = 'eager';
+        ready = afterImg && afterImg.decode ? afterImg.decode().catch(() => {}) : Promise.resolve();
+        return ready;
+      };
+      const near = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        near.disconnect();
+        prepare();
+      }, { rootMargin: '600px 0px' });
+      near.observe(frame);
+      let timer = 0;
+      const io = new IntersectionObserver((entries) => {
+        const entry = entries[entries.length - 1];
+        window.clearTimeout(timer);
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.9) return;
+        timer = window.setTimeout(() => {
+          prepare().then(() => {
+            if (touched) return;
+            io.disconnect();
+            window.requestAnimationFrame(() => setBA(true));
+          });
+        }, reduce ? 0 : 1200);
+      }, { threshold: [0, 0.9, 1] });
       io.observe(frame);
     }
   }
