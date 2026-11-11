@@ -43,6 +43,10 @@ if (! defined('ABSPATH')) {
    (owner, 11/11/2026: "we've never sold an alley window at that price"): that
    was one line inside a large office job on 9 Nov, priced far below the same
    job's other windows. Lines inside multi-window office jobs are not prices.
+   Sash windows £989: a 600x1000 Charisma sash, contract 5 Oct 2026 at
+   £824.29 + VAT, the cheapest sash actually sold. NOT £794: that was two
+   350mm-wide heritage units in one office quote at an identical price, a
+   minimum charge, not a price (owner chose £989, 11/11/2026).
    `bar` is the phone price bar's label once that category is chosen. */
 $hn_products = [
     'windows' => ['name' => 'Windows', 'seg' => 'Windows', 'short' => 'Windows', 'from' => '£506', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'h' => 0.72, 'render' => 732],
@@ -57,7 +61,7 @@ $hn_products = [
 $hn_types = [
     'windows' => ['ask' => 'Which windows?', 'types' => [
         ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£506', 'img' => 'thumb-windows'],
-        ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£794', 'img' => 'sub-sash'],
+        ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£989', 'img' => 'sub-sash'],
         ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£1,117', 'img' => 'sub-alu-windows'],
     ]],
     'door' => ['ask' => 'Which front door?', 'types' => [

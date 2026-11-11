@@ -49,6 +49,10 @@ if (! defined('ABSPATH')) {
    (owner, 11/11/2026: "we've never sold an alley window at that price"): that
    was one line inside a large office job on 9 Nov, priced far below the same
    job's other windows. Lines inside multi-window office jobs are not prices.
+   Sash windows £989: a 600x1000 Charisma sash, contract 5 Oct 2026 at
+   £824.29 + VAT, the cheapest sash actually sold. NOT £794: that was two
+   350mm-wide heritage units in one office quote at an identical price, a
+   minimum charge, not a price (owner chose £989, 11/11/2026).
    `bar` is the phone price bar's label once that product is chosen. */
 $ha_products = [
     'windows' => ['name' => 'Windows', 'from' => '£506', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
@@ -56,7 +60,7 @@ $ha_products = [
     'patio' => ['name' => 'French & patio doors', 'from' => '£1,726', 'slug' => 'patio-doors', 'bar' => 'Price my patio doors', 'kind' => 'door', 'alt' => 'Black French doors set between flush casements in a white painted wall, Wolverton'],
     'bifold' => ['name' => 'Bifold doors', 'from' => '£2,324', 'slug' => 'aluminium-bifold-doors', 'bar' => 'Price my bifolds', 'kind' => 'door', 'alt' => 'Black aluminium slide and fold doors folded open in our Bradwell Abbey showroom'],
 ];
-$ha_sash = ['name' => 'Sash windows', 'from' => '£794', 'slug' => 'sliding-sash-windows'];
+$ha_sash = ['name' => 'Sash windows', 'from' => '£989', 'slug' => 'sliding-sash-windows'];
 
 /* CONVERSION FIRST (owner, 10/11/2026): picking a category turns the bar into
    the kinds the quote tool prices, and each one opens the tool on that product
@@ -67,7 +71,7 @@ $ha_sash = ['name' => 'Sash windows', 'from' => '£794', 'slug' => 'sliding-sash
 $ha_types = [
     'windows' => ['ask' => 'Which windows?', 'types' => [
         ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£506', 'img' => 'thumb-windows'],
-        ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£794', 'img' => 'sub-sash'],
+        ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£989', 'img' => 'sub-sash'],
         ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£1,117', 'img' => 'sub-alu-windows'],
     ]],
     'door' => ['ask' => 'Which front door?', 'types' => [
