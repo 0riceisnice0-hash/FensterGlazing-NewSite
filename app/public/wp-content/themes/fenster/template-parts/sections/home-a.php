@@ -44,6 +44,11 @@ if (! defined('ABSPATH')) {
    bifold sold May 2023 and paid in full (lead 2333). Skipped as website-tool pricing
    faults: a 1200 French pair at £438, a 2420 slider at £1,118, an 1800
    French pair at £1,191 and a 2043 heritage pair at £1,597. Use no figure that is not in this list.
+   Aluminium windows £1,117: a 540x518 Sheerline casement, website quote 17 Oct
+   2026 (£930.58 + VAT), sold-quoted £952.36 + VAT two days later. NOT £450
+   (owner, 11/11/2026: "we've never sold an alley window at that price"): that
+   was one line inside a large office job on 9 Nov, priced far below the same
+   job's other windows. Lines inside multi-window office jobs are not prices.
    `bar` is the phone price bar's label once that product is chosen. */
 $ha_products = [
     'windows' => ['name' => 'Windows', 'from' => '£506', 'slug' => 'casement-windows', 'bar' => 'Price my windows', 'kind' => 'window', 'alt' => 'Grey casement windows in a stone cottage wall'],
@@ -63,7 +68,7 @@ $ha_types = [
     'windows' => ['ask' => 'Which windows?', 'types' => [
         ['name' => 'uPVC windows', 'slug' => 'casement-windows', 'from' => '£506', 'img' => 'thumb-windows'],
         ['name' => 'Sash windows', 'slug' => 'sliding-sash-windows', 'from' => '£794', 'img' => 'sub-sash'],
-        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£450', 'img' => 'sub-alu-windows'],
+        ['name' => 'Aluminium windows', 'slug' => 'aluminium-windows', 'from' => '£1,117', 'img' => 'sub-alu-windows'],
     ]],
     'door' => ['ask' => 'Which front door?', 'types' => [
         ['name' => 'Composite doors', 'slug' => 'composite-doors', 'from' => '£1,480', 'img' => 'kind-composite'],
