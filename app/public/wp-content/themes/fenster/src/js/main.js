@@ -12784,7 +12784,7 @@ const initHomeNext = (root) => {
        while the frame was still sliding into view, and the after photo is lazy,
        so the wipe could run over a picture that had not arrived and then pop
        in whole. Now the after photo is fetched and decoded as the frame
-       approaches, the whole frame has to be on screen and stay there for
+       approaches, most of the frame has to be on screen and stay there for
        1.2s, and only then does it wipe. Scrolling away first cancels it. */
     if (frame && 'IntersectionObserver' in window) {
       const afterImg = ba.querySelector('.fg-hn-ba__after');
@@ -12801,11 +12801,19 @@ const initHomeNext = (root) => {
         prepare();
       }, { rootMargin: '600px 0px' });
       near.observe(frame);
+      /* "On screen" is measured below the sticky header (80px off the top),
+         and 60% of the frame is enough: a normal scroll overshoots a little,
+         and a stricter rule left it never playing. The timer starts when the
+         frame settles in and is only cancelled if it leaves. */
       let timer = 0;
       const io = new IntersectionObserver((entries) => {
         const entry = entries[entries.length - 1];
-        window.clearTimeout(timer);
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.9) return;
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.6) {
+          window.clearTimeout(timer);
+          timer = 0;
+          return;
+        }
+        if (timer) return;
         timer = window.setTimeout(() => {
           prepare().then(() => {
             if (touched) return;
@@ -12813,7 +12821,7 @@ const initHomeNext = (root) => {
             window.requestAnimationFrame(() => setBA(true));
           });
         }, reduce ? 0 : 1200);
-      }, { threshold: [0, 0.9, 1] });
+      }, { rootMargin: '-80px 0px 0px 0px', threshold: [0, 0.6, 0.8, 1] });
       io.observe(frame);
     }
   }
