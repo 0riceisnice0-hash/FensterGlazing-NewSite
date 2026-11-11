@@ -13,6 +13,17 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **HOMEPAGE A AND B OPEN THE WINDOWCAD DESIGNER OVER THE PAGE, UNDER THE HEADER, LIVE 2026-11-11, AS A SIX-FILE TRANSPLANT OF `6a65441e`; FRENCH DOORS ON COLLECTION 10, LIVE 2026-11-10, AS A THREE-FILE TRANSPLANT OF `93621da1`.** Owner: *"give them a way out ... make the iframe cover everything, but leave in the menu and bars header etc. on mobile too"*.
+  - **Overlay.** `src/js/quote-overlay.js` opens a picked product's designer in a fixed panel from the header's bottom edge to the bottom of the screen. While it is open, `.site-header` is lifted to z-index 2001, so the menu, the mobile drawer and the phone number stay on top and clickable. A slim bar holds Back and "Price your …". Back, Escape and the browser or phone back button all close it (one pushed history entry). Lenis is stopped and the page scroll locked while it is open. Tracking is unchanged: the click-time stamp adds `tracking=FG2-…`, and `quote_opened` fires once per open.
+  - **French doors.** `fenster_quote_collections()` gains `french-doors => 10`, matching the product page's own embed. The A/B card "uPVC French & patio" (collection 2, sliding patio) became "uPVC French doors" (collection 10) on the owner's choice.
+  - **Release:** both built on live's own source. The CSS was again a pure append. Parents were asserted by `md5sum -c`. The dry runs were exactly 3 `>fcsT`, then 5 `>fcsT` plus 1 `>f+++++++++`. Backups: `~/ab-release/backup3-20261110-201929.tar`, `backup4-20261111-093216.tar`. Socket purge `msg:OK` both times.
+  - **Verified on live:** in headless Chrome at 1440 x 780 and 390 x 844 on both variants, with POSTs to our dashboard blocked and WindowCAD allowed to load:
+    - The panel top equalled the header bottom (73px desktop, 77px phone) and ran to the viewport bottom. The address stayed `/?home=a|b`, and the iframe was `productCollection=4&tracking=FG2-…`.
+    - The mobile menu opened over the panel.
+    - Back and `history.back()` each closed it.
+    - The spinner price buttons opened it too. There were no JS errors.
+    - French doors cards linked collection 10 on both variants.
+
 - **HOMEPAGE A AND B PRODUCT LINKS GO STRAIGHT INTO THAT PRODUCT'S WINDOWCAD DESIGNER, LIVE 2026-11-10, AS A FIVE-FILE TRANSPLANT OF `8d33830a` AND `ef1ad23d`.** Owner: *"we shouldnt just link them to online quote, make it link to the windowcad product ... push that to live"*.
   - Every product link and carried price button uses `fenster_quote_collection_url()`, the one map in `inc/quote-collections.php` (live's map was identical to `main`'s). Generic "Get my instant price" buttons have no product and stay on `/online-quote/`. A category tile that opens a list of kinds keeps `/online-quote/?product=` as its no-JS fallback, so opening the list is never counted as a quote.
   - `main.js` now stamps the tracking reference on any WindowCAD link **at click time** (one capture-phase listener in place of per-link listeners bound at load), because A and B point buttons at WindowCAD after load. `quote_opened` fires once per real product click, with `product_collection`.
