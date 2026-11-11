@@ -76,6 +76,20 @@ $ha_types = [
         ['name' => 'Heritage French doors', 'slug' => 'heritage-aluminium-doors', 'from' => '£2,766', 'img' => 'kind-heritage'],
     ]],
 ];
+
+/* A category's "from" is the cheapest of the kinds inside it, worked out here
+   so it can never promise less, or more, than the list it opens (owner,
+   11/11/2026: "Front doors from £1,480 ... you click on it and it says uPVC
+   doors £1,166"). */
+$__from_value = static fn (string $price): int => (int) preg_replace('/[^0-9]/', '', $price);
+foreach ($ha_types as $__key => $__group) {
+    if (! isset($ha_products[$__key]) || empty($__group['types'])) {
+        continue;
+    }
+    $__cheapest = array_reduce($__group['types'], static fn (?array $low, array $type): array => $low === null || $__from_value($type['from']) < $__from_value($low['from']) ? $type : $low);
+    $ha_products[$__key]['from'] = $__cheapest['from'];
+}
+unset($__from_value, $__key, $__group, $__cheapest);
 $ha_price_note = 'Lowest prices from real Fenster quotes, Oct 2024–Nov 2026, inc VAT. Your price depends on size and spec.';
 
 /* The typed headline (typewriter.js from Homepage 3.0). Short, price-led, every
