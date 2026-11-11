@@ -13,6 +13,15 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **HOMEPAGE A AND B: CATEGORY FROM-PRICES ARE THE CHEAPEST KIND INSIDE, AND THE BEFORE/AFTER WAITS THEN WIPES, LIVE 2026-11-11, AS A FIVE-FILE TRANSPLANT OF `c716d3fe`, `90757ad9`, `8e7c13e2`, `ead66922`.** Owner: *"Front doors from 1,400. You click on it and it says UPVC doors 1,166"*, and *"it just flashes to after ... it should pause for a bit, and then it should do the animation"*.
+  - **Prices.** Each category's `from` is computed from its own type list, so it can never disagree with what it opens. Windows changed £506 to £450, Front doors £1,480 to £1,166, and French & patio and Bifold are unchanged.
+  - **Before/after.** The after photo is fetched and decoded as the frame approaches, so the wipe never runs over a missing image. The wipe plays 1.2s after the page stops moving with at least half the frame visible below the header (`rootMargin -80px`). Every scroll restarts the pause. B previously fired at 60% in view after 500ms; A previously needed 90%, which a normal overshoot never met.
+  - **Release:** JS built on live's own source (main's unshipped Part B still excluded). Parents asserted by `md5sum -c`. Dry run exactly 5 `>fcsT`. Backup `~/ab-release/backup5-20261111-095235.tar`. Socket purge `msg:OK`.
+  - **Verified on live** with wheel-scroll tests at 1440 x 780 and 390 x 844 on both variants:
+    - The tiles read £450, £1,166, £1,726 and £2,324.
+    - The frame stayed "before" through the settle and pause, then wiped smoothly (clip 100% to 0% over about 0.9s), starting about 1.2s after scrolling stopped.
+    - The designer overlay still opened under the header and closed on Back.
+
 - **HOMEPAGE A AND B OPEN THE WINDOWCAD DESIGNER OVER THE PAGE, UNDER THE HEADER, LIVE 2026-11-11, AS A SIX-FILE TRANSPLANT OF `6a65441e`; FRENCH DOORS ON COLLECTION 10, LIVE 2026-11-10, AS A THREE-FILE TRANSPLANT OF `93621da1`.** Owner: *"give them a way out ... make the iframe cover everything, but leave in the menu and bars header etc. on mobile too"*.
   - **Overlay.** `src/js/quote-overlay.js` opens a picked product's designer in a fixed panel from the header's bottom edge to the bottom of the screen. While it is open, `.site-header` is lifted to z-index 2001, so the menu, the mobile drawer and the phone number stay on top and clickable. A slim bar holds Back and "Price your …". Back, Escape and the browser or phone back button all close it (one pushed history entry). Lenis is stopped and the page scroll locked while it is open. Tracking is unchanged: the click-time stamp adds `tracking=FG2-…`, and `quote_opened` fires once per open.
   - **French doors.** `fenster_quote_collections()` gains `french-doors => 10`, matching the product page's own embed. The A/B card "uPVC French & patio" (collection 2, sliding patio) became "uPVC French doors" (collection 10) on the owner's choice.
