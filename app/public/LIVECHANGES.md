@@ -13,13 +13,19 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **HOMEPAGE A AND B: SASH WINDOWS FROM £989, NOT £794, LIVE 2026-11-11, AS A TWO-TEMPLATE TRANSPLANT OF `76bc5763`.** The owner chose £989.
+  - **£989:** the cheapest sash actually sold, a 600x1000 Charisma contracted on 5 Oct 2026 at £824.29 + VAT.
+  - **Source of £794:** two 350mm-wide heritage units in one office quote at an identical price. That is a minimum charge, not a price.
+  - **Release:** parents asserted by `md5sum -c` against release 6. Exactly 2 `>fcsT`. Backup `~/ab-release/backup7-*.tar`. Socket purge `msg:OK`.
+  - **Verified on live:** `/?home=a` and `/?home=b`, cached and cache-busted, each show `£989`, no `£794`, and still `1,117`.
+
 - **HOMEPAGE A AND B: ALUMINIUM WINDOWS FROM £1,117, NOT £450, LIVE 2026-11-11, AS A TWO-TEMPLATE TRANSPLANT OF `c6a2be8f`.** Owner: *"Since when were alley windows 450? We've never sold an alley window at that price"*.
   - **Source of £450:** a 600x1600 Sheerline casement at £374.70 net. It was one discounted line inside a 9 Nov multi-window office job whose other 600x1000 lines were £829-£855. Lines inside office jobs are not prices.
   - **£1,117:** the cheapest real aluminium window, a 540x518 Sheerline casement. Website quote 17 Oct 2026 at £930.58 + VAT; sales quote two days later at £952.36 + VAT.
   - **Knock-on effect:** the Windows category is computed from its cheapest kind, so it went back from £450 to £506.
   - **Release:** parents asserted by `md5sum -c`. Dry run exactly 2 `>fcsT`. Backup `~/ab-release/backup6-*.tar`. Socket purge `msg:OK`.
   - **Verified on live:** `/?home=a` and `/?home=b`, cached and cache-busted, each show `1,117` and no `£450`.
-  - **Still open:** Sash £794 rests on two 350mm-wide heritage units in one office quote. The cheapest sold sash is £989 (600x1000 Charisma, contract 5 Oct). This is waiting on the owner.
+  - **Resolved:** the sash price, set to £989 (entry above).
 
 - **HOMEPAGE A AND B: CATEGORY FROM-PRICES ARE THE CHEAPEST KIND INSIDE, AND THE BEFORE/AFTER WAITS THEN WIPES, LIVE 2026-11-11, AS A FIVE-FILE TRANSPLANT OF `c716d3fe`, `90757ad9`, `8e7c13e2`, `ead66922`.** Owner: *"Front doors from 1,400. You click on it and it says UPVC doors 1,166"*, and *"it just flashes to after ... it should pause for a bit, and then it should do the animation"*.
   - **Prices.** Each category's `from` is computed from its own type list, so it can never disagree with what it opens. Windows changed £506 to £450, Front doors £1,480 to £1,166, and French & patio and Bifold are unchanged.
