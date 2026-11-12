@@ -2838,6 +2838,19 @@ function fenster_home_next_enabled(): bool
     return false;
 }
 
+/**
+ * Is variant B open? Closed 12/11/2026 (owner: "if B doesn't work, then get B
+ * off the site ... completely change B"): "The Showroom" (home-next) had 1 of
+ * 27 people click a product in two days. While B is closed every person is
+ * sent to A, and /?home=b shows A too, so an old bookmark or ad never lands on
+ * the Showroom. A new B reopens this. Events from /?home=b dated before
+ * 12/11/2026 belong to the Showroom.
+ */
+function fenster_home_b_open(): bool
+{
+    return false;
+}
+
 function fenster_home_ab_running(): bool
 {
     $host = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
@@ -2864,7 +2877,7 @@ function fenster_home_next_requested(): bool
 
 add_filter('fenster_home_template', static function ($template) {
     $variant = fenster_home_variant_requested();
-    if ($variant === 'a') {
+    if ($variant === 'a' || ($variant === 'b' && ! fenster_home_b_open())) {
         return 'template-parts/sections/home-a';
     }
 
@@ -2909,13 +2922,16 @@ add_action('template_redirect', static function (): void {
     header('Content-Type: text/html; charset=utf-8');
     header_remove('Cache-Control');
     header('Cache-Control: private, no-store, max-age=0');
-    $fallback = esc_url(home_url('/?home=b'));
+    $b_open = fenster_home_b_open();
+    $fallback = esc_url(home_url($b_open ? '/?home=b' : '/?home=a'));
     echo '<!doctype html><html lang="en-GB"><head><meta charset="utf-8">'
         . '<meta name="viewport" content="width=device-width, initial-scale=1">'
         . '<link rel="canonical" href="https://fensterglazing.com/">'
         . '<title>Fenster Glazing</title>'
-        . '<script>(function(){var v;try{v=localStorage.getItem("fenster_home_variant")}catch(e){}'
-        . 'if(v!=="a"&&v!=="b"){v=Math.random()<0.5?"a":"b";try{localStorage.setItem("fenster_home_variant",v)}catch(e){}}'
+        . ($b_open
+            ? '<script>(function(){var v;try{v=localStorage.getItem("fenster_home_variant")}catch(e){}'
+                . 'if(v!=="a"&&v!=="b"){v=Math.random()<0.5?"a":"b";try{localStorage.setItem("fenster_home_variant",v)}catch(e){}}'
+            : '<script>(function(){var v="a";')
         . 'var keep=location.search.replace(/^\?/,"").split("&").filter(function(p){return p&&!/^home=/.test(p)}).join("&");'
         . 'location.replace("/?home="+v+(keep?"&"+keep:"")+location.hash);})();</script>'
         . '<noscript><meta http-equiv="refresh" content="0;url=' . $fallback . '"></noscript>'
