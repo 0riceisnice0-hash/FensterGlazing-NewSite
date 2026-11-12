@@ -56933,6 +56933,11 @@ html.fg-qo-open .site-header {
     padding: 0 var(--fg-ha-s3);
   }
 
+  /* Room for the button without shrinking the product. */
+  .fg-hn-lineup {
+    grid-template-rows: 224px 224px;
+  }
+
   .fg-hn-tile__cta {
     align-self: stretch;
     justify-content: center;
