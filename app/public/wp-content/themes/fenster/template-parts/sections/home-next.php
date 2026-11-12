@@ -207,6 +207,7 @@ $button = static function (string $label, string $href, string $class = '', bool
                                     <span class="fg-hn-tile__name"><?php echo esc_html($product['name']); ?></span>
                                     <span class="fg-hn-tile__from"><?php esc_html_e('From', 'fenster'); ?> <b class="fg-hn-num"><?php echo esc_html($product['from']); ?></b></span>
                                 </span>
+                                <span class="fg-hn-tile__cta"><?php esc_html_e('Get my price', 'fenster'); ?></span>
                             </a>
                         </li>
                     <?php endforeach; ?>

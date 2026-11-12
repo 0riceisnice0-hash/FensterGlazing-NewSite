@@ -56865,3 +56865,80 @@ html.fg-qo-open .site-header {
     padding: 4px 12px;
   }
 }
+
+/* Owner, 12/11/2026: "there's no hint that the doors are clickable". In the
+   first two days of the A/B test, 1 of 27 people on B and 5 of 37 on A
+   clicked a product. Every product card now carries a solid brand-green
+   "Get my price" button, the same pill the kinds already had. */
+.fg-ha-pick--cat {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  column-gap: var(--fg-ha-s4);
+  row-gap: 0;
+  align-items: start;
+}
+
+.fg-ha-pick--cat .fg-ha-pick__img {
+  grid-row: 1 / 3;
+}
+
+.fg-ha-pick--cat .fg-ha-pick__text {
+  align-self: end;
+}
+
+.fg-ha-pick--cat:active .fg-ha-pick__cta,
+.fg-hn-tile:active .fg-hn-tile__cta {
+  transform: scale(0.97);
+}
+
+.fg-hn-tile__cta {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 40px;
+  margin-top: var(--fg-hn-s3);
+  padding: 0 var(--fg-hn-s5);
+  border-radius: var(--fg-hn-pill);
+  background: var(--fg-hn-accent);
+  box-shadow: var(--fg-hn-shadow-btn);
+  color: #ffffff;
+  font-size: var(--fg-hn-t2);
+  font-weight: 600;
+  transition: transform 0.2s var(--fg-hn-in);
+}
+
+@media (max-width: 760px) {
+  .fg-ha-pick--cat {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    grid-template-rows: auto;
+    align-items: center;
+  }
+
+  .fg-ha-pick--cat .fg-ha-pick__img {
+    grid-row: auto;
+  }
+
+  .fg-ha-pick--cat .fg-ha-pick__text {
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: center;
+    gap: 2px;
+  }
+
+  .fg-ha-pick--cat .fg-ha-pick__cta {
+    align-self: center;
+    margin: 0;
+    padding: 0 var(--fg-ha-s3);
+  }
+
+  .fg-hn-tile__cta {
+    align-self: stretch;
+    justify-content: center;
+    min-height: 34px;
+    margin-top: var(--fg-hn-s2);
+    padding: 0;
+    font-size: var(--fg-hn-t1);
+  }
+}

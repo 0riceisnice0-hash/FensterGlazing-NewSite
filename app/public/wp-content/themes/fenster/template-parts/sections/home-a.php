@@ -213,12 +213,13 @@ $button = static function (string $label, string $href, string $class = '', bool
                     <ul class="fg-ha-picks" aria-label="<?php esc_attr_e('Choose a product to price', 'fenster'); ?>">
                         <?php foreach ($ha_products as $key => $product) : ?>
                             <li>
-                                <a class="fg-ha-pick" href="<?php echo esc_url(isset($ha_types[$key]) ? $chooser($product['slug']) : $quote($product['slug'])); ?>" data-fg-cta<?php if (isset($ha_types[$key])) : ?> data-fg-ha-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
+                                <a class="fg-ha-pick fg-ha-pick--cat" href="<?php echo esc_url(isset($ha_types[$key]) ? $chooser($product['slug']) : $quote($product['slug'])); ?>" data-fg-cta<?php if (isset($ha_types[$key])) : ?> data-fg-ha-pick="<?php echo esc_attr($key); ?>"<?php endif; ?>>
                                     <span class="fg-ha-pick__img"><img <?php echo fenster_image_attr_string($img . 'thumb-' . $key . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '96px']); ?>></span>
                                     <span class="fg-ha-pick__text">
                                         <span class="fg-ha-pick__name"><?php echo esc_html($product['name']); ?></span>
                                         <span class="fg-ha-pick__from"><?php esc_html_e('From', 'fenster'); ?> <b class="fg-ha-num"><?php echo esc_html($product['from']); ?></b></span>
                                     </span>
+                                    <span class="fg-ha-pick__cta"><?php esc_html_e('Get my price', 'fenster'); ?></span>
                                 </a>
                             </li>
                         <?php endforeach; ?>
