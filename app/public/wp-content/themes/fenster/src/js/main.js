@@ -12911,6 +12911,16 @@ const initHomeB = () => {
     if (iframe.getAttribute('src')) frameWrap.classList.add('is-ready');
   });
 
+  /* The pointer goes for good the first time the visitor clicks into the
+     designer. A click inside the frame never reaches this page; it shows as
+     this window losing focus to the iframe. Touch is caught the same way. */
+  const touched = () => {
+    window.setTimeout(() => {
+      if (document.activeElement === iframe) frameWrap.classList.add('is-touched');
+    }, 0);
+  };
+  window.addEventListener('blur', touched);
+
   picks.forEach((pick) => pick.addEventListener('click', () => {
     const url = pick.dataset.url || '';
     if (!url || pick.getAttribute('aria-pressed') === 'true') return;

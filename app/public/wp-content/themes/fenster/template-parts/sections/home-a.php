@@ -222,6 +222,11 @@ $button = static function (string $label, string $href, string $class = '', bool
             <div class="fg-hb__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($hb_url); ?>" data-quote-autoload="view">
                 <p class="fg-hb__wait" aria-hidden="true"><span class="fg-hb__spin"></span><?php esc_html_e('Opening the designer', 'fenster'); ?></p>
                 <iframe data-quote-iframe-src="<?php echo esc_url($hb_url); ?>" title="<?php esc_attr_e('Fenster window and door designer', 'fenster'); ?>" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <?php /* Owner, 13/11/2026: "put the little point icon over the
+                         windowcad to make it clear you click on it". It taps
+                         a product on a loop and goes for good once someone
+                         clicks into the designer. Never catches a click. */ ?>
+                <span class="fg-hb__hint" aria-hidden="true"><span class="fg-hb__tap"></span><svg viewBox="0 0 24 24" focusable="false"><path d="M18.84 15.87l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/></svg></span>
             </div>
         </div>
         <ul class="fg-ha-trust" aria-label="<?php esc_attr_e('Why homeowners choose Fenster', 'fenster'); ?>">
