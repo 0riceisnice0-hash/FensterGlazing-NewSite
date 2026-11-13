@@ -2843,12 +2843,18 @@ function fenster_home_next_enabled(): bool
  * off the site ... completely change B"): "The Showroom" (home-next) had 1 of
  * 27 people click a product in two days. While B is closed every person is
  * sent to A, and /?home=b shows A too, so an old bookmark or ad never lands on
- * the Showroom. A new B reopens this. Events from /?home=b dated before
- * 12/11/2026 belong to the Showroom.
+ * the Showroom. Events from /?home=b dated before 12/11/2026 belong to the
+ * Showroom.
+ *
+ * Reopened 13/11/2026 as "the tool is the homepage" (owner: "build b"): the
+ * same template as A, but the first screen is the live designer with a row of
+ * products above it, already open and pricing, no click first. The old
+ * homepage carried the designer on the page and 7% of its visitors finished a
+ * quote. Events from /?home=b from 13/11/2026 belong to this design.
  */
 function fenster_home_b_open(): bool
 {
-    return false;
+    return true;
 }
 
 function fenster_home_ab_running(): bool
@@ -2877,7 +2883,7 @@ function fenster_home_next_requested(): bool
 
 add_filter('fenster_home_template', static function ($template) {
     $variant = fenster_home_variant_requested();
-    if ($variant === 'a' || ($variant === 'b' && ! fenster_home_b_open())) {
+    if ($variant === 'a' || $variant === 'b') {
         return 'template-parts/sections/home-a';
     }
 

@@ -12892,5 +12892,63 @@ const initHomeNext = (root) => {
   }
 };
 
+/* Homepage variant B, "the tool is the homepage" (owner, 13/11/2026). The
+   designer is loaded, stamped and counted by the shared embed code above
+   (loadQuoteFrame: quote_iframe_loaded); this only switches what it prices.
+   A chip is a product choice, not a quote opened, so it is counted as a
+   cta_click and never as quote_opened, which on A means "went into the tool".
+   Switching reloads the frame, so it forgets a half-built quote: the visitor
+   asked for a different product, and that is what they get. */
+const initHomeB = () => {
+  const root = document.querySelector('[data-fg-hb]');
+  if (!root) return;
+  const frameWrap = root.querySelector('[data-quote-frame-wrap]');
+  const iframe = frameWrap?.querySelector('iframe[data-quote-iframe-src]');
+  const picks = [...root.querySelectorAll('[data-fg-hb-pick]')];
+  if (!frameWrap || !iframe) return;
+
+  iframe.addEventListener('load', () => {
+    if (iframe.getAttribute('src')) frameWrap.classList.add('is-ready');
+  });
+
+  picks.forEach((pick) => pick.addEventListener('click', () => {
+    const url = pick.dataset.url || '';
+    if (!url || pick.getAttribute('aria-pressed') === 'true') return;
+    picks.forEach((other) => other.setAttribute('aria-pressed', String(other === pick)));
+    iframe.setAttribute('data-quote-iframe-src', url);
+    frameWrap.setAttribute('data-quote-url', url);
+    engagedQuoteFrames.delete(frameWrap);
+    trackWebsiteEvent('cta_click', {
+      cta: `Designer product: ${(pick.querySelector('.fg-hb__name')?.textContent || '').trim()}`.slice(0, 120),
+      product_collection: new URL(url).searchParams.get('productCollection') || '',
+    });
+    if (!iframe.getAttribute('src')) {
+      loadQuoteFrame(frameWrap);
+      return;
+    }
+    frameWrap.classList.remove('is-ready');
+    iframe.setAttribute('src', windowCadUrlWithReference(url));
+  }));
+
+  /* Every other price button on B, and the phone price bar, goes back up to
+     the designer rather than opening a second copy of it. */
+  const jump = (event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (window.fensterLenis?.scrollTo) {
+      window.fensterLenis.scrollTo(root, { offset: -Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-header-total-height') || '73') });
+    } else {
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+  document.querySelectorAll('[data-fg-hb-jump]').forEach((link) => link.addEventListener('click', jump));
+  const priceBar = document.querySelector('.fg-price-bar__price');
+  if (priceBar) {
+    priceBar.href = '#fg-hb-tool';
+    priceBar.addEventListener('click', jump);
+  }
+};
+
 document.querySelectorAll('[data-fg-hn]').forEach(initHomeNext);
 initHomeA();
+initHomeB();

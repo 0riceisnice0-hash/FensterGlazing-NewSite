@@ -119,6 +119,30 @@ $ha_home = [
     'project' => 'flush-casement-windows-and-composite-door-little-horwood',
 ];
 
+/* VARIANT B, "the tool is the homepage" (owner, 13/11/2026: "build b"). The
+   first screen is the live designer, already open on the first product, with
+   the products above it as a row of chips. A chip changes what the designer is
+   pricing; nothing navigates. Everything below the first screen is A's page,
+   so the test measures the first screen and nothing else. Each chip is one
+   quote-tool collection with its real from-price from the kinds above. */
+$ha_b = function_exists('fenster_home_variant_requested') && fenster_home_variant_requested() === 'b';
+$hb_kinds = [];
+foreach ([['windows', 'casement-windows'], ['door', 'composite-doors'], ['door', 'upvc-doors'], ['patio', 'french-doors'], ['bifold', 'aluminium-bifold-doors'], ['windows', 'sliding-sash-windows'], ['windows', 'aluminium-windows']] as [$__group, $__slug]) {
+    $__kind = null;
+    foreach ($ha_types[$__group]['types'] ?? [] as $__type) {
+        if ($__type['slug'] === $__slug) {
+            $__kind = $__type;
+        }
+    }
+    if ($__kind === null && $__group === 'bifold') {
+        $__kind = ['name' => 'Bifold doors', 'slug' => $__slug, 'from' => $ha_products['bifold']['from'], 'img' => 'thumb-bifold'];
+    }
+    if ($__kind !== null && function_exists('fenster_quote_collection_url') && fenster_quote_collection_url($__slug) !== '') {
+        $hb_kinds[] = $__kind + ['url' => fenster_quote_collection_url($__slug)];
+    }
+}
+unset($__group, $__slug, $__kind, $__type);
+
 $args = wp_parse_args($args ?? [], [
     'brand' => [],
 ]);
@@ -173,7 +197,11 @@ $ha_config = [
 
 /* A price button: label, then a spinner and a tick that take its place.
    $carries: the chosen product is written into its link (data-fg-ha-price). */
-$button = static function (string $label, string $href, string $class = '', bool $carries = true): string {
+$button = static function (string $label, string $href, string $class = '', bool $carries = true) use ($ha_b): string {
+    if ($ha_b) {
+        return sprintf('<a class="fg-ha-btn%1$s" href="#fg-hb-tool" data-fg-cta data-fg-hb-jump><span class="fg-ha-btn__label">%2$s</span></a>', $class !== '' ? ' ' . esc_attr($class) : '', esc_html($label));
+    }
+
     return sprintf(
         '<a class="fg-ha-btn%1$s" href="%2$s" data-fg-cta data-fg-ha-go%3$s><span class="fg-ha-btn__label">%4$s</span><span class="fg-ha-btn__busy" aria-hidden="true"><span class="fg-ha-btn__spin"></span><svg class="fg-ha-btn__tick" viewBox="0 0 16 16" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span></a>',
         $class !== '' ? ' ' . esc_attr($class) : '',
@@ -185,6 +213,37 @@ $button = static function (string $label, string $href, string $class = '', bool
 ?>
 <article class="generated-page generated-page--home-lab fg-ha" data-fg-ha="<?php echo esc_attr((string) wp_json_encode($ha_config)); ?>">
 
+    <?php if ($ha_b && $hb_kinds !== []) : ?>
+    <section class="fg-hb" id="fg-hb-tool" data-fg-hb aria-labelledby="fg-hb-title">
+        <div class="fg-ha-wrap fg-hb__in">
+            <h1 class="fg-hb__title" id="fg-hb-title"><?php esc_html_e('Instant window and door prices', 'fenster'); ?></h1>
+            <ul class="fg-hb__picks" aria-label="<?php esc_attr_e('Choose what to price', 'fenster'); ?>">
+                <?php foreach ($hb_kinds as $__i => $__kind) : ?>
+                    <li>
+                        <button class="fg-hb__pick" type="button" data-fg-hb-pick data-url="<?php echo esc_url($__kind['url']); ?>" aria-pressed="<?php echo $__i === 0 ? 'true' : 'false'; ?>">
+                            <span class="fg-hb__thumb"><img <?php echo fenster_image_attr_string($img . $__kind['img'] . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '40px']); ?>></span>
+                            <span class="fg-hb__label">
+                                <span class="fg-hb__name"><?php echo esc_html($__kind['name']); ?></span>
+                                <span class="fg-hb__from"><?php esc_html_e('from', 'fenster'); ?> <b class="fg-ha-num"><?php echo esc_html($__kind['from']); ?></b></span>
+                            </span>
+                        </button>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="fg-hb__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($hb_kinds[0]['url']); ?>" data-quote-autoload="view">
+                <p class="fg-hb__wait" aria-hidden="true"><span class="fg-hb__spin"></span><?php esc_html_e('Opening the price tool', 'fenster'); ?></p>
+                <iframe data-quote-iframe-src="<?php echo esc_url($hb_kinds[0]['url']); ?>" title="<?php esc_attr_e('Fenster instant price tool', 'fenster'); ?>" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p class="fg-ha-note fg-hb__note"><?php echo esc_html($ha_price_note); ?></p>
+        </div>
+        <ul class="fg-ha-trust" aria-label="<?php esc_attr_e('Why homeowners choose Fenster', 'fenster'); ?>">
+            <li><a href="<?php echo esc_url($google_reviews_url !== '' ? $google_reviews_url : home_url('/about/')); ?>" target="_blank" rel="noopener" data-fg-cta><span class="fg-ha-stars" aria-hidden="true">★★★★★</span> <b class="fg-ha-num"><?php echo esc_html($ha_rating); ?>/5</b> <?php esc_html_e('on Google', 'fenster'); ?></a></li>
+            <li><a href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" data-fg-cta><?php echo $ha_tick; ?><?php esc_html_e('FENSA registered', 'fenster'); ?></a></li>
+            <li><a href="<?php echo esc_url(home_url('/about/')); ?>" data-fg-cta><?php echo $ha_tick; ?><?php esc_html_e('Our own installation team', 'fenster'); ?></a></li>
+            <li><a href="#fg-ha-showroom" data-fg-cta><?php echo $ha_tick; ?><?php esc_html_e('Visit our Milton Keynes showroom', 'fenster'); ?></a></li>
+        </ul>
+    </section>
+    <?php else : ?>
     <section class="fg-ha-hero" data-fg-ha-hero aria-labelledby="fg-ha-title">
         <div class="fg-ha-card">
             <figure class="fg-ha-stage" data-fg-ha-stage>
@@ -266,6 +325,7 @@ $button = static function (string $label, string $href, string $class = '', bool
         </ul>
 
     </section>
+    <?php endif; ?>
 
     <section class="fg-ha-next" aria-labelledby="fg-ha-next-title">
         <figure class="fg-ha-next__photo">
