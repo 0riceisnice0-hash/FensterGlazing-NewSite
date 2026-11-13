@@ -13,6 +13,12 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **HOMEPAGE B: A TAPPING POINTER OVER THE DESIGNER, LIVE 2026-11-13 11:09, RELEASE 10 (THREE-FILE TRANSPLANT ON LIVE'S OWN SOURCE).** Owner: *"put the little point icon over the windowcad on b. to make it clear you click on it"*.
+  - **What:** `.fg-hb__hint`, a hand with a green tap ring, loops every 3.2s over the middle of the designer and never catches a click. It goes for good when the window loses focus to the iframe (the only sign a click inside the designer gives the page). Still for people with reduced motion.
+  - **Headless screenshots do not show it** (the iframe composites over it in captures); it was verified in the real browser pane instead.
+  - **Release:** `md5sum -c parent10.md5` against release 9. Exactly 3 `>fcsT`. Backup `~/ab-release/backup10-20261113-110952.tar`. Socket purge `msg:OK`.
+  - **Verified on live:** `/?home=b` cached and cache-busted has the hint markup, live main.css has `fg-hb-point` and main.js has `is-touched`; `/?home=a` has no hint.
+
 - **HOMEPAGE B REBUILT AND A GETS GREEN "GET MY PRICE" BUTTONS, LIVE 2026-11-13, AS A FOUR-FILE TRANSPLANT ON LIVE'S OWN SOURCE (RELEASE 9).** Owner: *"A should just have the green buttons... completely change B"*, then *"build b"*, then the layout notes that followed.
   - **A:** every product card carries a brand-green "Get my price" button. Nothing else on A changed.
   - **New B:** a plain hero on the left (house photo, "Double glazing in Milton Keynes", one line of copy, Free consultation + phone) and the live WindowCAD designer on the right, 40/60, open on its own catalogue (no `productCollection`). No prices on B's first screen. Below the first screen B is A's page, so the test compares first screens only.
