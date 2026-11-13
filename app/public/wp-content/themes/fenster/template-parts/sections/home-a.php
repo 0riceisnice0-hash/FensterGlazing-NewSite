@@ -212,9 +212,9 @@ $button = static function (string $label, string $href, string $class = '', bool
                 </figure>
                 <div class="fg-hb__copy">
                     <h1 class="fg-hb__title" id="fg-hb-title"><span class="fg-hb__line"><span><?php esc_html_e('Double glazing', 'fenster'); ?></span></span> <span class="fg-hb__line"><span><?php esc_html_e('in', 'fenster'); ?> <span class="fg-hb__place"><?php esc_html_e('Milton Keynes', 'fenster'); ?></span></span></span></h1>
-                    <p class="fg-hb__lede"><?php esc_html_e('Windows and doors made to measure and fitted by our own team across Milton Keynes and the surrounding area. Design yours here and see the price as you go.', 'fenster'); ?></p>
+                    <p class="fg-hb__lede"><?php esc_html_e('Made-to-measure windows and doors, fitted by our own team. Design yours and see the price as you go.', 'fenster'); ?></p>
                     <div class="fg-hb__actions">
-                        <a class="fg-ha-btn" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>" data-fg-cta><span class="fg-ha-btn__label"><?php esc_html_e('Book a free consultation', 'fenster'); ?></span></a>
+                        <a class="fg-ha-btn" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>" data-fg-cta><span class="fg-ha-btn__label"><?php esc_html_e('Free consultation', 'fenster'); ?></span></a>
                         <a class="fg-ha-btn fg-ha-btn--quiet" href="tel:<?php echo esc_attr($phone_href); ?>" data-fg-cta><span class="fg-ha-btn__label"><?php echo esc_html($phone); ?></span></a>
                     </div>
                 </div>

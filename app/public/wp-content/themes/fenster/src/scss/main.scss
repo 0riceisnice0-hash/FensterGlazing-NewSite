@@ -57125,38 +57125,30 @@ html.fg-qo-open .site-header {
 }
 
 /* Restyled 13/11/2026 (owner: "stylise way better, text needs something
-   done to it"). The photo fills the whole left column and the words sit on a
-   white sheet set into its foot, 6px in, so the radii are concentric (r3
-   outside, r2 inside). The title comes in line by line through a mask, then
-   the copy and buttons, 30ms apart. */
+   done to it"). The photo fills the column and the words sit on a white
+   card floated over its foot, so the house and its door stay in view. The
+   title comes in line by line through a mask, then the copy and buttons. */
 .fg-hb__side {
-  position: relative;
-  justify-content: flex-end;
   gap: 0;
-  padding: 6px;
-  overflow: hidden;
-  border-radius: var(--fg-ha-r3);
-  background: var(--fg-ha-soft);
 }
 
 .fg-hb__stage {
-  position: absolute;
-  inset: 0;
-  min-height: 0;
-  border-radius: 0;
+  margin-bottom: -88px;
 }
 
 .fg-hb__stage img {
+  object-position: 40% 70%;
   animation: fg-hb-settle 1.4s var(--fg-ha-in) both;
 }
 
 .fg-hb__copy {
   position: relative;
   gap: var(--fg-ha-s4);
+  margin-inline: var(--fg-ha-s3);
   padding: var(--fg-ha-s6) var(--fg-ha-s6) var(--fg-ha-s5);
-  border-radius: var(--fg-ha-r2);
+  border-radius: var(--fg-ha-r3);
   background: var(--fg-ha-white);
-  box-shadow: 0 -12px 40px rgba(6, 33, 42, 0.12);
+  box-shadow: 0 12px 40px rgba(6, 33, 42, 0.14);
 }
 
 .fg-hb__title {
@@ -57191,8 +57183,14 @@ html.fg-qo-open .site-header {
 }
 
 .fg-hb__actions {
+  flex-wrap: nowrap;
   margin-top: var(--fg-ha-s1);
   animation: fg-hb-rise var(--fg-ha-in-t) var(--fg-ha-in) 150ms both;
+}
+
+.fg-hb__actions .fg-ha-btn {
+  flex: 1 1 auto;
+  white-space: nowrap;
 }
 
 .fg-hb__actions .fg-ha-btn--quiet {
@@ -57229,18 +57227,15 @@ html.fg-qo-open .site-header {
 }
 
 @media (max-width: 760px) {
-  .fg-hb__side {
-    padding: 200px 6px 6px;
-    border-radius: var(--fg-ha-r3);
-  }
-
   .fg-hb__stage {
-    height: auto;
+    height: 240px;
+    margin-bottom: -56px;
   }
 
   .fg-hb__copy {
     gap: var(--fg-ha-s3);
-    padding: var(--fg-ha-s5) var(--fg-ha-s5) var(--fg-ha-s5);
+    margin-inline: var(--fg-ha-s2);
+    padding: var(--fg-ha-s5);
   }
 
   .fg-hb__title {
@@ -57249,5 +57244,9 @@ html.fg-qo-open .site-header {
 
   .fg-hb__lede {
     font-size: var(--fg-ha-t2);
+  }
+
+  .fg-hb__actions .fg-ha-btn {
+    padding-inline: var(--fg-ha-s4);
   }
 }
