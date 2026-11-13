@@ -57123,3 +57123,131 @@ html.fg-qo-open .site-header {
     border-radius: var(--fg-ha-r2);
   }
 }
+
+/* Restyled 13/11/2026 (owner: "stylise way better, text needs something
+   done to it"). The photo fills the whole left column and the words sit on a
+   white sheet set into its foot, 6px in, so the radii are concentric (r3
+   outside, r2 inside). The title comes in line by line through a mask, then
+   the copy and buttons, 30ms apart. */
+.fg-hb__side {
+  position: relative;
+  justify-content: flex-end;
+  gap: 0;
+  padding: 6px;
+  overflow: hidden;
+  border-radius: var(--fg-ha-r3);
+  background: var(--fg-ha-soft);
+}
+
+.fg-hb__stage {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  border-radius: 0;
+}
+
+.fg-hb__stage img {
+  animation: fg-hb-settle 1.4s var(--fg-ha-in) both;
+}
+
+.fg-hb__copy {
+  position: relative;
+  gap: var(--fg-ha-s4);
+  padding: var(--fg-ha-s6) var(--fg-ha-s6) var(--fg-ha-s5);
+  border-radius: var(--fg-ha-r2);
+  background: var(--fg-ha-white);
+  box-shadow: 0 -12px 40px rgba(6, 33, 42, 0.12);
+}
+
+.fg-hb__title {
+  font-size: var(--fg-ha-t6);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.fg-hb__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.fg-hb__line > span {
+  display: inline-block;
+  animation: fg-hb-unmask 480ms var(--fg-ha-in) both;
+}
+
+.fg-hb__line:nth-child(2) > span {
+  animation-delay: 60ms;
+}
+
+.fg-hb__place {
+  color: var(--fg-ha-accent);
+}
+
+.fg-hb__lede {
+  max-width: 30em;
+  font-size: var(--fg-ha-t3);
+  animation: fg-hb-rise var(--fg-ha-in-t) var(--fg-ha-in) 120ms both;
+}
+
+.fg-hb__actions {
+  margin-top: var(--fg-ha-s1);
+  animation: fg-hb-rise var(--fg-ha-in-t) var(--fg-ha-in) 150ms both;
+}
+
+.fg-hb__actions .fg-ha-btn--quiet {
+  background: var(--fg-ha-soft);
+  box-shadow: none;
+}
+
+@keyframes fg-hb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes fg-hb-unmask {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes fg-hb-settle {
+  from {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-hb__stage img,
+  .fg-hb__line > span,
+  .fg-hb__lede,
+  .fg-hb__actions {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .fg-hb__side {
+    padding: 200px 6px 6px;
+    border-radius: var(--fg-ha-r3);
+  }
+
+  .fg-hb__stage {
+    height: auto;
+  }
+
+  .fg-hb__copy {
+    gap: var(--fg-ha-s3);
+    padding: var(--fg-ha-s5) var(--fg-ha-s5) var(--fg-ha-s5);
+  }
+
+  .fg-hb__title {
+    font-size: var(--fg-ha-t5);
+  }
+
+  .fg-hb__lede {
+    font-size: var(--fg-ha-t2);
+  }
+}
