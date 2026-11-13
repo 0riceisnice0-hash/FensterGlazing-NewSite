@@ -13,6 +13,13 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **HOMEPAGE B REBUILT AND A GETS GREEN "GET MY PRICE" BUTTONS, LIVE 2026-11-13, AS A FOUR-FILE TRANSPLANT ON LIVE'S OWN SOURCE (RELEASE 9).** Owner: *"A should just have the green buttons... completely change B"*, then *"build b"*, then the layout notes that followed.
+  - **A:** every product card carries a brand-green "Get my price" button. Nothing else on A changed.
+  - **New B:** a plain hero on the left (house photo, "Double glazing in Milton Keynes", one line of copy, Free consultation + phone) and the live WindowCAD designer on the right, 40/60, open on its own catalogue (no `productCollection`). No prices on B's first screen. Below the first screen B is A's page, so the test compares first screens only.
+  - **Events:** `/?home=b` before 12/11/2026 = the Showroom; B was closed (everyone sent to A) 12-13/11; from 13/11/2026 09:52 it is this design. Compare A and B on `quote_completed`, not `quote_iframe_loaded` (B loads the designer for everyone).
+  - **Release:** parents asserted by `md5sum -c` against `parent9.md5`. Exactly 4 `>fcsT` (generated-pages.php, home-a.php, main.css, main.js). Backup `~/ab-release/backup9-20261113-095218.tar`. Socket purge `msg:OK`.
+  - **Verified on live:** `/?home=a` has 13 `fg-ha-pick__cta` and no `data-fg-hb`; `/?home=b` has `data-fg-hb`, the "Double glazing" title and no `productCollection` on the designer; bare `/` is `private, no-store` and serves the 50/50 `Math.random()` assigner again.
+
 - **HOMEPAGE A AND B: SASH WINDOWS FROM £989, NOT £794, LIVE 2026-11-11, AS A TWO-TEMPLATE TRANSPLANT OF `76bc5763`.** The owner chose £989.
   - **£989:** the cheapest sash actually sold, a 600x1000 Charisma contracted on 5 Oct 2026 at £824.29 + VAT.
   - **Source of £794:** two 350mm-wide heritage units in one office quote at an identical price. That is a minimum charge, not a price.
