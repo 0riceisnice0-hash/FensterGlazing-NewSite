@@ -217,6 +217,7 @@ $button = static function (string $label, string $href, string $class = '', bool
     <section class="fg-hb" id="fg-hb-tool" data-fg-hb aria-labelledby="fg-hb-title">
         <div class="fg-ha-wrap fg-hb__in">
             <h1 class="fg-hb__title" id="fg-hb-title"><?php esc_html_e('Instant window and door prices', 'fenster'); ?></h1>
+            <div class="fg-hb__body">
             <ul class="fg-hb__picks" aria-label="<?php esc_attr_e('Choose what to price', 'fenster'); ?>">
                 <?php foreach ($hb_kinds as $__i => $__kind) : ?>
                     <li>
@@ -233,6 +234,7 @@ $button = static function (string $label, string $href, string $class = '', bool
             <div class="fg-hb__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($hb_kinds[0]['url']); ?>" data-quote-autoload="view">
                 <p class="fg-hb__wait" aria-hidden="true"><span class="fg-hb__spin"></span><?php esc_html_e('Opening the price tool', 'fenster'); ?></p>
                 <iframe data-quote-iframe-src="<?php echo esc_url($hb_kinds[0]['url']); ?>" title="<?php esc_attr_e('Fenster instant price tool', 'fenster'); ?>" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
             </div>
             <p class="fg-ha-note fg-hb__note"><?php echo esc_html($ha_price_note); ?></p>
         </div>

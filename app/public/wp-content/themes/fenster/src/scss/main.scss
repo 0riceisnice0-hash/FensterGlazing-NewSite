@@ -56974,8 +56974,19 @@ html.fg-qo-open .site-header {
   letter-spacing: -0.01em;
 }
 
+/* Desktop: the products are a column down the left of the designer, so all
+   seven are always in view; on a phone they become a row that swipes. */
+.fg-hb__body {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: var(--fg-ha-s3);
+  flex: 1;
+  min-height: 0;
+}
+
 .fg-hb__picks {
   display: flex;
+  flex-direction: column;
   gap: var(--fg-ha-s2);
   margin: 0;
   padding: 0;
@@ -56995,6 +57006,7 @@ html.fg-qo-open .site-header {
 
 .fg-hb__pick {
   display: flex;
+  width: 100%;
   align-items: center;
   gap: var(--fg-ha-s2);
   min-height: 56px;
@@ -57137,8 +57149,15 @@ html.fg-qo-open .site-header {
     font-size: var(--fg-ha-t4);
   }
 
+  .fg-hb__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fg-ha-s2);
+  }
+
   /* Chips run off the right edge so it is plain there are more. */
   .fg-hb__picks {
+    flex-direction: row;
     margin-inline: calc(var(--fg-ha-gut) * -1);
     padding-inline: var(--fg-ha-gut);
     scroll-padding-inline: var(--fg-ha-gut);
@@ -57150,6 +57169,7 @@ html.fg-qo-open .site-header {
   }
 
   .fg-hb__pick {
+    width: auto;
     min-height: 48px;
   }
 
