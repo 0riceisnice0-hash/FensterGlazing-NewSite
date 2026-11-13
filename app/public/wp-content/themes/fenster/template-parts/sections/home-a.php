@@ -120,28 +120,14 @@ $ha_home = [
 ];
 
 /* VARIANT B, "the tool is the homepage" (owner, 13/11/2026: "build b"). The
-   first screen is the live designer, already open on the first product, with
-   the products above it as a row of chips. A chip changes what the designer is
-   pricing; nothing navigates. Everything below the first screen is A's page,
-   so the test measures the first screen and nothing else. Each chip is one
-   quote-tool collection with its real from-price from the kinds above. */
+   first screen is a plain hero on the left (photo, heading, a line of copy)
+   and the live designer big on the right, 40/60, already open on its own
+   catalogue. Everything below the first screen is A's page, so the test
+   measures the first screen and nothing else. */
 $ha_b = function_exists('fenster_home_variant_requested') && fenster_home_variant_requested() === 'b';
-$hb_kinds = [];
-foreach ([['windows', 'casement-windows'], ['door', 'composite-doors'], ['door', 'upvc-doors'], ['patio', 'french-doors'], ['bifold', 'aluminium-bifold-doors'], ['windows', 'sliding-sash-windows'], ['windows', 'aluminium-windows']] as [$__group, $__slug]) {
-    $__kind = null;
-    foreach ($ha_types[$__group]['types'] ?? [] as $__type) {
-        if ($__type['slug'] === $__slug) {
-            $__kind = $__type;
-        }
-    }
-    if ($__kind === null && $__group === 'bifold') {
-        $__kind = ['name' => 'Bifold doors', 'slug' => $__slug, 'from' => $ha_products['bifold']['from'], 'img' => 'thumb-bifold'];
-    }
-    if ($__kind !== null && function_exists('fenster_quote_collection_url') && fenster_quote_collection_url($__slug) !== '') {
-        $hb_kinds[] = $__kind + ['url' => fenster_quote_collection_url($__slug)];
-    }
-}
-unset($__group, $__slug, $__kind, $__type);
+/* Owner, 13/11/2026: no prices and no product list on B; the designer opens on
+   its own catalogue with every product in it, not one category. */
+$hb_url = function_exists('fenster_quote_designer_url') ? fenster_quote_designer_url() : '';
 
 $args = wp_parse_args($args ?? [], [
     'brand' => [],
@@ -213,38 +199,29 @@ $button = static function (string $label, string $href, string $class = '', bool
 ?>
 <article class="generated-page generated-page--home-lab fg-ha" data-fg-ha="<?php echo esc_attr((string) wp_json_encode($ha_config)); ?>">
 
-    <?php if ($ha_b && $hb_kinds !== []) : ?>
+    <?php if ($ha_b && $hb_url !== '') : ?>
     <section class="fg-hb" id="fg-hb-tool" data-fg-hb aria-labelledby="fg-hb-title">
         <div class="fg-ha-wrap fg-hb__in fg-hb__body">
             <?php /* Owner, 13/11/2026: "the normal hero stuff on the left and a
-                     big WindowCAD on the right, 40 60". A's photo and typed
-                     headline, the products under it, the designer beside. */ ?>
+                     big WindowCAD on the right, 40 60", then "no prices ... on
+                     the left, just Double Glazing in Milton Keynes, typical
+                     website". The designer on the right is the call to action. */ ?>
             <div class="fg-hb__side">
                 <figure class="fg-hb__stage">
                     <img <?php echo fenster_image_attr_string($img . 'card-home-1300w.webp', ['alt' => $ha_home['alt'], 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 760px) 100vw, 40vw']); ?>>
-                    <h1 class="fg-ha-title fg-hb__title" id="fg-hb-title">
-                        <span class="fg-ha-sr"><?php esc_html_e('Instant window and door prices in Milton Keynes', 'fenster'); ?></span>
-                        <span class="fg-ha-typed" aria-hidden="true" data-h30-type data-h30-phrases="<?php echo esc_attr((string) wp_json_encode($ha_headlines)); ?>"><span data-h30-type-text><?php echo esc_html($ha_headlines[0]); ?></span><span class="fg-ha-caret"></span></span>
-                    </h1>
                 </figure>
-                <ul class="fg-hb__picks" aria-label="<?php esc_attr_e('Choose what to price', 'fenster'); ?>">
-                    <?php foreach ($hb_kinds as $__i => $__kind) : ?>
-                        <li>
-                            <button class="fg-hb__pick" type="button" data-fg-hb-pick data-url="<?php echo esc_url($__kind['url']); ?>" aria-pressed="<?php echo $__i === 0 ? 'true' : 'false'; ?>">
-                                <span class="fg-hb__thumb"><img <?php echo fenster_image_attr_string($img . $__kind['img'] . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '40px']); ?>></span>
-                                <span class="fg-hb__label">
-                                    <span class="fg-hb__name"><?php echo esc_html($__kind['name']); ?></span>
-                                    <span class="fg-hb__from"><?php esc_html_e('from', 'fenster'); ?> <b class="fg-ha-num"><?php echo esc_html($__kind['from']); ?></b></span>
-                                </span>
-                            </button>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <p class="fg-ha-note fg-hb__note"><?php echo esc_html($ha_price_note); ?></p>
+                <div class="fg-hb__copy">
+                    <h1 class="fg-hb__title" id="fg-hb-title"><?php esc_html_e('Double glazing in Milton Keynes', 'fenster'); ?></h1>
+                    <p class="fg-hb__lede"><?php esc_html_e('Windows and doors made to measure and fitted by our own team across Milton Keynes and the surrounding area. Design yours here and see the price as you go.', 'fenster'); ?></p>
+                    <div class="fg-hb__actions">
+                        <a class="fg-ha-btn" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>" data-fg-cta><span class="fg-ha-btn__label"><?php esc_html_e('Book a free consultation', 'fenster'); ?></span></a>
+                        <a class="fg-ha-btn fg-ha-btn--quiet" href="tel:<?php echo esc_attr($phone_href); ?>" data-fg-cta><span class="fg-ha-btn__label"><?php echo esc_html($phone); ?></span></a>
+                    </div>
+                </div>
             </div>
-            <div class="fg-hb__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($hb_kinds[0]['url']); ?>" data-quote-autoload="view">
-                <p class="fg-hb__wait" aria-hidden="true"><span class="fg-hb__spin"></span><?php esc_html_e('Opening the price tool', 'fenster'); ?></p>
-                <iframe data-quote-iframe-src="<?php echo esc_url($hb_kinds[0]['url']); ?>" title="<?php esc_attr_e('Fenster instant price tool', 'fenster'); ?>" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="fg-hb__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($hb_url); ?>" data-quote-autoload="view">
+                <p class="fg-hb__wait" aria-hidden="true"><span class="fg-hb__spin"></span><?php esc_html_e('Opening the designer', 'fenster'); ?></p>
+                <iframe data-quote-iframe-src="<?php echo esc_url($hb_url); ?>" title="<?php esc_attr_e('Fenster window and door designer', 'fenster'); ?>" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
         <ul class="fg-ha-trust" aria-label="<?php esc_attr_e('Why homeowners choose Fenster', 'fenster'); ?>">

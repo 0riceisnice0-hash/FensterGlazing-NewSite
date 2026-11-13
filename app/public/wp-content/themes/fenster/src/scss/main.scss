@@ -56948,9 +56948,10 @@ html.fg-qo-open .site-header {
   }
 }
 
-/* Homepage variant B (owner, 13/11/2026): A's hero on the left, the live
-   designer big on the right, 40/60. One screen under the header. The chosen
-   product is the one solid green thing on the screen. */
+/* Homepage variant B (owner, 13/11/2026): a plain hero on the left (photo,
+   heading, a line of copy, two buttons) and the live designer big on the
+   right, 40/60, open on its own catalogue. No prices on the left. One screen
+   under the header. */
 .fg-hb {
   padding: var(--fg-ha-s4) 0 var(--fg-ha-s3);
   background: var(--fg-ha-white);
@@ -56967,11 +56968,11 @@ html.fg-qo-open .site-header {
 .fg-hb__side {
   display: flex;
   flex-direction: column;
-  gap: var(--fg-ha-s3);
+  gap: var(--fg-ha-s4);
   min-height: 0;
 }
 
-/* The photo takes whatever height the products leave it. */
+/* The photo takes whatever height the words leave it. */
 .fg-hb__stage {
   position: relative;
   flex: 1 1 auto;
@@ -56990,106 +56991,34 @@ html.fg-qo-open .site-header {
   object-fit: cover;
 }
 
-.fg-hb__title {
-  position: absolute;
-  right: var(--fg-ha-s4);
-  bottom: var(--fg-ha-s4);
-  left: var(--fg-ha-s4);
-  z-index: 1;
-  max-width: none;
-  font-size: var(--fg-ha-t6);
-}
-
-.fg-hb__picks {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--fg-ha-s2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  scrollbar-width: none;
-}
-
-.fg-hb__picks::-webkit-scrollbar {
-  display: none;
-}
-
-.fg-hb__picks li {
-  min-width: 0;
-  margin: 0;
-}
-
-.fg-hb__pick {
+.fg-hb__copy {
   display: flex;
-  width: 100%;
-  align-items: center;
-  gap: var(--fg-ha-s2);
-  min-height: 52px;
-  padding: var(--fg-ha-s1) var(--fg-ha-s3) var(--fg-ha-s1) var(--fg-ha-s1);
-  border: 0;
-  border-radius: var(--fg-ha-pill);
-  background: var(--fg-ha-soft);
-  color: var(--fg-ha-ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--fg-ha-in);
-}
-
-.fg-hb__pick:active {
-  transform: scale(0.97);
-}
-
-.fg-hb__pick[aria-pressed='true'] {
-  background: var(--fg-ha-accent);
-  box-shadow: var(--fg-ha-shadow-btn);
-  color: #ffffff;
-  cursor: default;
-}
-
-.fg-hb__thumb {
-  flex: none;
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
-  border-radius: 50%;
-  background: var(--fg-ha-white);
-}
-
-.fg-hb__thumb img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fg-hb__label {
-  display: flex;
-  min-width: 0;
   flex-direction: column;
-  line-height: 1.2;
+  gap: var(--fg-ha-s3);
 }
 
-.fg-hb__name {
-  overflow: hidden;
-  font-size: var(--fg-ha-t2);
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.fg-hb__from {
-  font-size: var(--fg-ha-t1);
-  opacity: 0.8;
-  white-space: nowrap;
-}
-
-.fg-hb__from b {
-  font-weight: 600;
-}
-
-.fg-hb__note {
+.fg-hb__title {
   margin: 0;
+  color: var(--fg-ha-ink);
+  font-size: var(--fg-ha-t6);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.fg-hb__lede {
+  max-width: 34em;
+  margin: 0;
+  color: var(--fg-ha-muted);
+  font-size: var(--fg-ha-t3);
+  line-height: 1.45;
+}
+
+.fg-hb__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fg-ha-s2);
 }
 
 .fg-hb__frame {
@@ -57160,51 +57089,36 @@ html.fg-qo-open .site-header {
   .fg-hb__in {
     display: flex;
     flex-direction: column;
-    gap: var(--fg-ha-s2);
+    gap: var(--fg-ha-s4);
     height: auto;
     min-height: 0;
   }
 
   .fg-hb__side {
-    gap: var(--fg-ha-s2);
+    gap: var(--fg-ha-s3);
   }
 
   .fg-hb__stage {
     flex: none;
-    height: 168px;
+    height: 180px;
     min-height: 0;
     border-radius: var(--fg-ha-r2);
   }
 
+  .fg-hb__copy {
+    gap: var(--fg-ha-s2);
+  }
+
   .fg-hb__title {
-    right: var(--fg-ha-s3);
-    bottom: var(--fg-ha-s3);
-    left: var(--fg-ha-s3);
     font-size: var(--fg-ha-t5);
   }
 
-  /* Chips run off the right edge so it is plain there are more. */
-  .fg-hb__picks {
-    display: flex;
-    overflow-x: auto;
-    margin-inline: calc(var(--fg-ha-gut) * -1);
-    padding-inline: var(--fg-ha-gut);
-    scroll-padding-inline: var(--fg-ha-gut);
-    scroll-snap-type: x mandatory;
-  }
-
-  .fg-hb__picks li {
-    flex: none;
-    scroll-snap-align: start;
-  }
-
-  .fg-hb__pick {
-    width: auto;
-    min-height: 48px;
+  .fg-hb__lede {
+    font-size: var(--fg-ha-t2);
   }
 
   .fg-hb__frame {
-    height: calc(100svh - var(--site-header-total-height, 73px) - 140px);
+    height: calc(100svh - var(--site-header-total-height, 73px) - 96px);
     min-height: 520px;
     border-radius: var(--fg-ha-r2);
   }
