@@ -215,28 +215,37 @@ $button = static function (string $label, string $href, string $class = '', bool
 
     <?php if ($ha_b && $hb_kinds !== []) : ?>
     <section class="fg-hb" id="fg-hb-tool" data-fg-hb aria-labelledby="fg-hb-title">
-        <div class="fg-ha-wrap fg-hb__in">
-            <h1 class="fg-hb__title" id="fg-hb-title"><?php esc_html_e('Instant window and door prices', 'fenster'); ?></h1>
-            <div class="fg-hb__body">
-            <ul class="fg-hb__picks" aria-label="<?php esc_attr_e('Choose what to price', 'fenster'); ?>">
-                <?php foreach ($hb_kinds as $__i => $__kind) : ?>
-                    <li>
-                        <button class="fg-hb__pick" type="button" data-fg-hb-pick data-url="<?php echo esc_url($__kind['url']); ?>" aria-pressed="<?php echo $__i === 0 ? 'true' : 'false'; ?>">
-                            <span class="fg-hb__thumb"><img <?php echo fenster_image_attr_string($img . $__kind['img'] . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '40px']); ?>></span>
-                            <span class="fg-hb__label">
-                                <span class="fg-hb__name"><?php echo esc_html($__kind['name']); ?></span>
-                                <span class="fg-hb__from"><?php esc_html_e('from', 'fenster'); ?> <b class="fg-ha-num"><?php echo esc_html($__kind['from']); ?></b></span>
-                            </span>
-                        </button>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+        <div class="fg-ha-wrap fg-hb__in fg-hb__body">
+            <?php /* Owner, 13/11/2026: "the normal hero stuff on the left and a
+                     big WindowCAD on the right, 40 60". A's photo and typed
+                     headline, the products under it, the designer beside. */ ?>
+            <div class="fg-hb__side">
+                <figure class="fg-hb__stage">
+                    <img <?php echo fenster_image_attr_string($img . 'card-home-1300w.webp', ['alt' => $ha_home['alt'], 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 760px) 100vw, 40vw']); ?>>
+                    <h1 class="fg-ha-title fg-hb__title" id="fg-hb-title">
+                        <span class="fg-ha-sr"><?php esc_html_e('Instant window and door prices in Milton Keynes', 'fenster'); ?></span>
+                        <span class="fg-ha-typed" aria-hidden="true" data-h30-type data-h30-phrases="<?php echo esc_attr((string) wp_json_encode($ha_headlines)); ?>"><span data-h30-type-text><?php echo esc_html($ha_headlines[0]); ?></span><span class="fg-ha-caret"></span></span>
+                    </h1>
+                </figure>
+                <ul class="fg-hb__picks" aria-label="<?php esc_attr_e('Choose what to price', 'fenster'); ?>">
+                    <?php foreach ($hb_kinds as $__i => $__kind) : ?>
+                        <li>
+                            <button class="fg-hb__pick" type="button" data-fg-hb-pick data-url="<?php echo esc_url($__kind['url']); ?>" aria-pressed="<?php echo $__i === 0 ? 'true' : 'false'; ?>">
+                                <span class="fg-hb__thumb"><img <?php echo fenster_image_attr_string($img . $__kind['img'] . '-200w.webp', ['alt' => '', 'loading' => 'eager', 'sizes' => '40px']); ?>></span>
+                                <span class="fg-hb__label">
+                                    <span class="fg-hb__name"><?php echo esc_html($__kind['name']); ?></span>
+                                    <span class="fg-hb__from"><?php esc_html_e('from', 'fenster'); ?> <b class="fg-ha-num"><?php echo esc_html($__kind['from']); ?></b></span>
+                                </span>
+                            </button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <p class="fg-ha-note fg-hb__note"><?php echo esc_html($ha_price_note); ?></p>
+            </div>
             <div class="fg-hb__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($hb_kinds[0]['url']); ?>" data-quote-autoload="view">
                 <p class="fg-hb__wait" aria-hidden="true"><span class="fg-hb__spin"></span><?php esc_html_e('Opening the price tool', 'fenster'); ?></p>
                 <iframe data-quote-iframe-src="<?php echo esc_url($hb_kinds[0]['url']); ?>" title="<?php esc_attr_e('Fenster instant price tool', 'fenster'); ?>" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            </div>
-            <p class="fg-ha-note fg-hb__note"><?php echo esc_html($ha_price_note); ?></p>
         </div>
         <ul class="fg-ha-trust" aria-label="<?php esc_attr_e('Why homeowners choose Fenster', 'fenster'); ?>">
             <li><a href="<?php echo esc_url($google_reviews_url !== '' ? $google_reviews_url : home_url('/about/')); ?>" target="_blank" rel="noopener" data-fg-cta><span class="fg-ha-stars" aria-hidden="true">★★★★★</span> <b class="fg-ha-num"><?php echo esc_html($ha_rating); ?>/5</b> <?php esc_html_e('on Google', 'fenster'); ?></a></li>

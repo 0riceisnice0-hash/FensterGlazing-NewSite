@@ -56948,50 +56948,65 @@ html.fg-qo-open .site-header {
   }
 }
 
-/* Homepage variant B, "the tool is the homepage" (owner, 13/11/2026). One
-   screen under the header: a short title, the products as chips, and the live
-   designer filling the rest. Light throughout; the chosen chip is the one
-   solid green thing on the screen. */
+/* Homepage variant B (owner, 13/11/2026): A's hero on the left, the live
+   designer big on the right, 40/60. One screen under the header. The chosen
+   product is the one solid green thing on the screen. */
 .fg-hb {
   padding: var(--fg-ha-s4) 0 var(--fg-ha-s3);
   background: var(--fg-ha-white);
 }
 
 .fg-hb__in {
-  display: flex;
-  flex-direction: column;
-  gap: var(--fg-ha-s3);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--fg-ha-s4);
   height: calc(var(--fg-ha-screen) - var(--fg-ha-s4) - 52px);
   min-height: 600px;
 }
 
-.fg-hb__title {
-  margin: 0;
-  color: var(--fg-ha-ink);
-  font-size: var(--fg-ha-t5);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-}
-
-/* Desktop: the products are a column down the left of the designer, so all
-   seven are always in view; on a phone they become a row that swipes. */
-.fg-hb__body {
-  display: grid;
-  grid-template-columns: 236px minmax(0, 1fr);
+.fg-hb__side {
+  display: flex;
+  flex-direction: column;
   gap: var(--fg-ha-s3);
-  flex: 1;
   min-height: 0;
 }
 
+/* The photo takes whatever height the products leave it. */
+.fg-hb__stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 180px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--fg-ha-r3);
+  background: var(--fg-ha-soft);
+}
+
+.fg-hb__stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-hb__title {
+  position: absolute;
+  right: var(--fg-ha-s4);
+  bottom: var(--fg-ha-s4);
+  left: var(--fg-ha-s4);
+  z-index: 1;
+  max-width: none;
+  font-size: var(--fg-ha-t6);
+}
+
 .fg-hb__picks {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--fg-ha-s2);
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow-x: auto;
   scrollbar-width: none;
 }
 
@@ -57000,7 +57015,7 @@ html.fg-qo-open .site-header {
 }
 
 .fg-hb__picks li {
-  flex: none;
+  min-width: 0;
   margin: 0;
 }
 
@@ -57009,8 +57024,8 @@ html.fg-qo-open .site-header {
   width: 100%;
   align-items: center;
   gap: var(--fg-ha-s2);
-  min-height: 56px;
-  padding: var(--fg-ha-s1) var(--fg-ha-s4) var(--fg-ha-s1) var(--fg-ha-s1);
+  min-height: 52px;
+  padding: var(--fg-ha-s1) var(--fg-ha-s3) var(--fg-ha-s1) var(--fg-ha-s1);
   border: 0;
   border-radius: var(--fg-ha-pill);
   background: var(--fg-ha-soft);
@@ -57034,8 +57049,8 @@ html.fg-qo-open .site-header {
 
 .fg-hb__thumb {
   flex: none;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   overflow: hidden;
   border-radius: 50%;
   background: var(--fg-ha-white);
@@ -57050,28 +57065,35 @@ html.fg-qo-open .site-header {
 
 .fg-hb__label {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   line-height: 1.2;
-  white-space: nowrap;
 }
 
 .fg-hb__name {
+  overflow: hidden;
   font-size: var(--fg-ha-t2);
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .fg-hb__from {
   font-size: var(--fg-ha-t1);
   opacity: 0.8;
+  white-space: nowrap;
 }
 
 .fg-hb__from b {
   font-weight: 600;
 }
 
+.fg-hb__note {
+  margin: 0;
+}
+
 .fg-hb__frame {
   position: relative;
-  flex: 1;
   min-height: 0;
   overflow: hidden;
   border-radius: var(--fg-ha-r3);
@@ -57120,10 +57142,6 @@ html.fg-qo-open .site-header {
   }
 }
 
-.fg-hb__note {
-  margin: 0;
-}
-
 .fg-hb .fg-ha-trust {
   margin-top: var(--fg-ha-s3);
 }
@@ -57140,24 +57158,35 @@ html.fg-qo-open .site-header {
   }
 
   .fg-hb__in {
+    display: flex;
+    flex-direction: column;
     gap: var(--fg-ha-s2);
     height: auto;
     min-height: 0;
   }
 
-  .fg-hb__title {
-    font-size: var(--fg-ha-t4);
+  .fg-hb__side {
+    gap: var(--fg-ha-s2);
   }
 
-  .fg-hb__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--fg-ha-s2);
+  .fg-hb__stage {
+    flex: none;
+    height: 168px;
+    min-height: 0;
+    border-radius: var(--fg-ha-r2);
+  }
+
+  .fg-hb__title {
+    right: var(--fg-ha-s3);
+    bottom: var(--fg-ha-s3);
+    left: var(--fg-ha-s3);
+    font-size: var(--fg-ha-t5);
   }
 
   /* Chips run off the right edge so it is plain there are more. */
   .fg-hb__picks {
-    flex-direction: row;
+    display: flex;
+    overflow-x: auto;
     margin-inline: calc(var(--fg-ha-gut) * -1);
     padding-inline: var(--fg-ha-gut);
     scroll-padding-inline: var(--fg-ha-gut);
@@ -57165,6 +57194,7 @@ html.fg-qo-open .site-header {
   }
 
   .fg-hb__picks li {
+    flex: none;
     scroll-snap-align: start;
   }
 
@@ -57173,14 +57203,8 @@ html.fg-qo-open .site-header {
     min-height: 48px;
   }
 
-  .fg-hb__thumb {
-    width: 40px;
-    height: 40px;
-  }
-
   .fg-hb__frame {
-    flex: none;
-    height: calc(100svh - var(--site-header-total-height, 73px) - 210px);
+    height: calc(100svh - var(--site-header-total-height, 73px) - 140px);
     min-height: 520px;
     border-radius: var(--fg-ha-r2);
   }
