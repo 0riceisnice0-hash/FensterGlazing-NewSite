@@ -57132,7 +57132,7 @@ html.fg-qo-open .site-header {
   gap: 0;
 }
 
-.fg-hb__stage {
+.fg-hb .fg-hb__stage {
   margin-bottom: -88px;
 }
 
@@ -57227,7 +57227,7 @@ html.fg-qo-open .site-header {
 }
 
 @media (max-width: 760px) {
-  .fg-hb__stage {
+  .fg-hb .fg-hb__stage {
     height: 240px;
     margin-bottom: -56px;
   }
@@ -57246,7 +57246,8 @@ html.fg-qo-open .site-header {
     font-size: var(--fg-ha-t2);
   }
 
-  .fg-hb__actions .fg-ha-btn {
-    padding-inline: var(--fg-ha-s4);
+  /* The header and the bar at the foot of the screen both carry Call. */
+  .fg-hb__actions .fg-ha-btn--quiet {
+    display: none;
   }
 }
