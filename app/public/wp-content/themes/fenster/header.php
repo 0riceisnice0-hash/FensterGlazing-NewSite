@@ -22,5 +22,12 @@ if (! defined('ABSPATH')) {
 <?php endif; ?>
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#main-content"><?php esc_html_e('Skip to content', 'fenster'); ?></a>
+<?php
+/* The seasonal winter banner. Prints nothing out of season, on the routes it
+   skips, or on a host where the guide is not enabled. See inc/warm-guide.php. */
+if (function_exists('fenster_render_warm_banner')) {
+    fenster_render_warm_banner();
+}
+?>
 <?php get_template_part('template-parts/layout/site-header'); ?>
 <main id="main-content" class="site-main">

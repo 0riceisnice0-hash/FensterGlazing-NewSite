@@ -1,0 +1,482 @@
+/* ==========================================================================
+   THE WINTER GUIDE, /stop-window-draughts/, 2026-11-16.
+
+   Built to assets/warm/warm.css by `npm run build:warm` and enqueued by
+   inc/warm-guide.php on that one route, after main.css, whose tokens it uses.
+   Its own bundle, like the blog and Homepage 3.0, so it ships without touching
+   main.scss. Everything is under the fg-warm namespace.
+
+   STYLE.md holds: light grounds only (the thermal drawings are pictures inside
+   a frame, never a band), the green-then-steel button pair, type under
+   --fg-font-size-max, panels at 8px radius, no numbered steps, and every
+   section inside one 1440x780 viewport except the fixes table, the FAQ and
+   the sources, which are the long reference content that rule allows for.
+
+   The banner's few rules are NOT here. They are printed inline by
+   inc/warm-guide.php, because the banner shows on every page and this
+   stylesheet loads on one.
+   ========================================================================== */
+
+@use 'sections';
+@use 'compare';
+@use 'tools';
+
+.fg-warm {
+  --fgw-ink: var(--color-ink, #06212a);
+  --fgw-steel: var(--color-steel, #002d3a);
+  --fgw-muted: #50646c;
+  --fgw-blue: var(--color-light-blue, #4c7b86);
+  --fgw-green: var(--color-accent, #2eac66);
+  --fgw-green-dark: var(--color-accent-dark, #20824c);
+  --fgw-line: rgba(6, 33, 42, 0.12);
+  --fgw-line-strong: rgba(6, 33, 42, 0.22);
+  --fgw-paper: #ffffff;
+  --fgw-soft: #f3f8f7;
+  --fgw-warm: #e8553a;
+  --fgw-warm-soft: #fdeee6;
+  --fgw-amber: #f59a3c;
+  --fgw-cold: #2a5fa8;
+  --fgw-cold-soft: #e7f0f8;
+  --fgw-radius: 8px;
+  --fgw-shadow: 0 18px 48px rgba(0, 45, 58, 0.12);
+  --fgw-shadow-lift: 0 26px 70px rgba(0, 45, 58, 0.18);
+  --fgw-screen: calc(100svh - var(--site-header-total-height, 73px));
+
+  color: var(--fgw-ink);
+
+  section {
+    scroll-margin-top: calc(var(--site-header-main-height, 72px) + 8px);
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max, 3.6rem));
+    line-height: 1.04;
+    letter-spacing: 0;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 2.3vw, 2.2rem);
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+
+  h3 {
+    font-size: 1.18rem;
+    line-height: 1.2;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.55rem;
+    color: var(--fgw-green-dark);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fgw-green-dark);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+}
+
+/* Element-level specificity only: enough to beat main.css's own heading and
+   paragraph margins (this sheet loads after it), and low enough that any class
+   in this bundle sets its own margin whichever partial it lives in. */
+:where(.fg-warm) h1,
+:where(.fg-warm) h2,
+:where(.fg-warm) h3,
+:where(.fg-warm) p {
+  margin: 0;
+}
+
+:where(.fg-warm) a:not(.button) {
+  color: var(--fgw-green-dark);
+  font-weight: 600;
+  text-underline-offset: 0.18em;
+}
+
+/* Shared pieces ----------------------------------------------------------- */
+
+.fg-warm-section {
+  padding: clamp(2rem, 3.4vw, 2.75rem) 0;
+}
+
+.fg-warm-head {
+  max-width: 46rem;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+
+  p:not(.eyebrow) {
+    margin-top: 0.6rem;
+    color: var(--fgw-muted);
+    font-size: 1.06rem;
+    line-height: 1.5;
+  }
+}
+
+.fg-warm-panel {
+  border: 1px solid var(--fgw-line);
+  border-radius: var(--fgw-radius);
+  background: var(--fgw-paper);
+  box-shadow: var(--fgw-shadow);
+}
+
+.fg-warm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--fgw-line);
+  border-radius: 5px;
+  background: var(--fgw-paper);
+  color: var(--fgw-steel);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  &::before {
+    content: "";
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--fgw-green);
+  }
+
+  &--ask::before {
+    background: var(--fgw-amber);
+  }
+
+  &--plain::before {
+    display: none;
+  }
+}
+
+.fg-warm-source {
+  color: var(--fgw-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+
+  a {
+    color: inherit;
+    font-weight: 400;
+  }
+}
+
+.fg-warm-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Hero --------------------------------------------------------------------- */
+
+.fg-warm-hero {
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+}
+
+.fg-warm-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.fg-warm-hero__lead {
+  max-width: 35rem;
+  margin-top: 1rem;
+  font-size: 1.14rem;
+  line-height: 1.55;
+}
+
+.fg-warm-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.4rem;
+}
+
+.fg-warm-hero__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 36rem;
+  margin: 1.6rem 0 0;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--fgw-line);
+  list-style: none;
+
+  strong {
+    display: block;
+    color: var(--fgw-steel);
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  span {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--fgw-muted);
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+}
+
+.fg-warm-hero__byline {
+  max-width: 36rem;
+  margin-top: 1rem;
+}
+
+.fg-warm-hero__nav {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem 1.25rem;
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--fgw-line);
+  font-size: 0.92rem;
+
+  > span {
+    flex: none;
+    color: var(--fgw-muted);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    color: var(--fgw-steel);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--fgw-green-dark);
+      text-decoration: underline;
+    }
+  }
+}
+
+/* The thermal scope: one drawing, wiped between the room and the thermal view. */
+
+.fg-warm-scope {
+  margin: 0;
+  justify-self: center;
+  width: 100%;
+  max-width: 440px;
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    margin-top: 0.7rem;
+    color: var(--fgw-steel);
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    span {
+      color: var(--fgw-muted);
+      font-weight: 400;
+    }
+  }
+}
+
+.fg-warm-scope__stage {
+  --fgw-wipe: 0.5;
+
+  position: relative;
+  /* header 73 + section padding 72 + caption 40 + the page links 48 + slack */
+  height: clamp(340px, calc(100svh - 262px), 540px);
+  aspect-ratio: 480 / 620;
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--fgw-radius);
+  background: #e2ebe9;
+  box-shadow: var(--fgw-shadow-lift);
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.fg-warm-scope__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fg-warm-scope__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--fgw-wipe) * 100%);
+  width: 2px;
+  margin-left: -1px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 45, 58, 0.25);
+  pointer-events: none;
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23002d3a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 7l-5 5 5 5M15 7l5 5-5 5'/%3E%3C/svg%3E")
+      center / 22px no-repeat;
+    box-shadow: 0 6px 18px rgba(0, 45, 58, 0.3);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.fg-warm-scope__tag {
+  position: absolute;
+  top: 0.7rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(0, 45, 58, 0.82);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &--thermal {
+    left: 0.7rem;
+    opacity: clamp(0, calc((var(--fgw-wipe) - 0.2) * 8), 1);
+  }
+
+  &--room {
+    right: 0.7rem;
+    opacity: clamp(0, calc((0.8 - var(--fgw-wipe)) * 8), 1);
+  }
+}
+
+.fg-warm-scope__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+
+  &:focus-visible ~ .fg-warm-scope__handle span,
+  .fg-warm-scope__stage:has(&:focus-visible) .fg-warm-scope__handle span {
+    outline: 3px solid var(--fgw-green);
+    outline-offset: 3px;
+  }
+}
+
+/* Snow outside, and the draughts coming in. */
+
+.fg-warm-snow circle {
+  animation: fgw-snow 7s linear infinite;
+  animation-delay: calc(var(--fg-warm-flake) * -0.41s);
+}
+
+@keyframes fgw-snow {
+  from {
+    transform: translate(0, -70px);
+  }
+
+  to {
+    transform: translate(-14px, 190px);
+  }
+}
+
+.fg-warm-draughts path {
+  stroke: #ffffff;
+  stroke-width: 2.4;
+  stroke-dasharray: 26 74;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 2px rgba(42, 95, 168, 0.75));
+  animation: fgw-wisp 3.6s linear infinite;
+  animation-delay: calc(var(--fg-warm-wisp) * -0.47s);
+}
+
+@keyframes fgw-wisp {
+  from {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.85;
+  }
+
+  80% {
+    opacity: 0.85;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-warm-snow circle,
+  .fg-warm-draughts path {
+    animation: none;
+  }
+
+  .fg-warm-draughts path {
+    stroke-dasharray: none;
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-warm-hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-warm-hero__actions .button {
+    flex: 1 1 100%;
+  }
+
+  .fg-warm-hero__facts {
+    gap: 0.75rem;
+
+    strong {
+      font-size: 1.4rem;
+    }
+  }
+
+  .fg-warm-scope__stage {
+    height: auto;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .fg-warm-hero__nav {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    ul {
+      gap: 0.2rem 1.1rem;
+    }
+
+    a {
+      display: inline-block;
+      padding: 0.45rem 0;
+    }
+  }
+}

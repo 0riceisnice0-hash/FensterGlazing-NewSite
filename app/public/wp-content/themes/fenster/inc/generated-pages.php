@@ -1795,6 +1795,27 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    /* THE WINTER GUIDE. A virtual route like the two either side of it: the
+       override is what creates the page, and the content comes from
+       inc/warm-guide-data.php. Host gated: where `fenster_warm_guide_enabled()`
+       is false this falls through and the address is an ordinary 404. */
+    if (function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled() && $slug === fenster_warm_guide_slug()) {
+        return $page_cache[$slug] = [
+            'slug' => $slug,
+            'title' => 'How to fix cold, draughty windows',
+            'url' => fenster_warm_guide_url(),
+            'seo' => [
+                'title_tag' => 'How to Fix Cold, Draughty Windows | Fenster Glazing',
+                'meta_description' => 'Stop draughts and heat loss through sash and single-glazed windows. Five fixes for tonight, what is allowed in rented and listed homes, and when to call us.',
+                'canonical' => 'https://fensterglazing.com/' . $slug . '/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     if ($slug === 'care-and-maintenance') {
         return $page_cache[$slug] = [
             'slug' => 'care-and-maintenance',
@@ -2493,6 +2514,10 @@ function fenster_maybe_render_llms_txt(): void
     $lines[] = '- [FENSA approved installers](' . home_url('/fensa-approved-installers/') . ')';
     $lines[] = '- [Areas we cover](' . home_url('/areas-we-cover/') . ')';
     $lines[] = '- [Care and maintenance guides](' . home_url('/care-and-maintenance/') . '): how to look after each product, common fixes to try, and when to call us.';
+    /* The winter guide, only on a host where it is enabled. */
+    if (function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled()) {
+        $lines[] = '- [How to fix cold, draughty windows](' . fenster_warm_guide_url() . '): free fixes for tonight, where sash and single-glazed windows leak, what each fix costs and what has been measured, and what is allowed in rented, listed and conservation-area homes.';
+    }
     $lines[] = '- [Contact](' . home_url('/contact/') . ')';
     $lines[] = '';
     $lines[] = '## Pricing and tools';
@@ -2703,7 +2728,9 @@ function fenster_generated_sitemap_entries(): array
     }
 
     $live_blog_post_slugs = array_keys($blog_dates);
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'repair-case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance', 'why-distinction'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
+    /* The winter guide is in the sitemap only on a host where it is enabled. */
+    $warm_guide_slugs = function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled() ? [fenster_warm_guide_slug()] : [];
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'repair-case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance', 'why-distinction'], $warm_guide_slugs, $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

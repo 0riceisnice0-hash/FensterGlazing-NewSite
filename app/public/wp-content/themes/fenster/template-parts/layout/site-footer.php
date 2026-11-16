@@ -52,6 +52,12 @@ $footer_company = [
     ['label' => 'Instant Quote', 'url' => home_url('/online-quote/')],
     ['label' => 'Book a Free Consultation', 'url' => home_url('/book-a-consultation/')],
 ];
+/* The winter guide. The banner that links to it is seasonal, so this is its
+   year-round sitewide link. Only on a host where the guide is enabled, so the
+   footer can never point at an address that is not there. */
+if (function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled()) {
+    array_splice($footer_company, 5, 0, [['label' => 'Fixing Draughty Windows', 'url' => fenster_warm_guide_url()]]);
+}
 ?>
 <footer class="site-footer">
     <div class="container site-footer__grid">

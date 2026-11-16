@@ -60,6 +60,13 @@ $fenster_required_files = [
     'inc/location-page-data.php',
     // Each town's homes, checks, permissions, postcodes and neighbours (2026-09-28).
     'inc/location-town-data.php',
+    /* THE WINTER GUIDE, `/stop-window-draughts/`, and the seasonal banner that
+       links to it. Self-contained: this file, `inc/warm-guide-data.php`,
+       `inc/warm-guide-graphics.php`, `template-parts/warm/`, `src/warm/` and
+       `assets/warm/`. Host gated inside the file and live is deliberately not
+       on the list, so a theme deploy cannot publish it. Loaded after the town
+       data, whose postcodes its coverage check reads. */
+    'inc/warm-guide.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {

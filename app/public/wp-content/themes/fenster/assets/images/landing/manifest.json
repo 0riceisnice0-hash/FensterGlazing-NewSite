@@ -1493,5 +1493,25 @@
         "bytes": 32446
       }
     ]
+  },
+  {
+    "source": "/assets/images/case-studies/cs-winslow-secondary-glazing-card.jpg",
+    "outputs": [
+      {
+        "file": "b42403108ada-480w.webp",
+        "width": 480,
+        "bytes": 33332
+      },
+      {
+        "file": "b42403108ada-960w.webp",
+        "width": 960,
+        "bytes": 121332
+      },
+      {
+        "file": "b42403108ada-1600w.webp",
+        "width": 1600,
+        "bytes": 304698
+      }
+    ]
   }
 ]

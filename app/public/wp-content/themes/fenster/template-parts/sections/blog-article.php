@@ -290,6 +290,16 @@ if (is_array($legacy_dates)) {
                     <?php elseif ($next_links === []) : ?>
                         <p><?php esc_html_e('Each page covers the options we fit, photographs of our own work and how to get a price.', 'fenster'); ?></p>
                     <?php endif; ?>
+                    <?php
+                    /* The winter posts point up to the winter guide, which is the hub
+                       for all of them. One line under the copy, so none of a post's
+                       three routes is pushed off the end. Printed only where the
+                       guide is enabled, so a post can never link to an address that
+                       is not there. See inc/warm-guide.php. */
+                    if (function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled() && in_array($slug, fenster_warm_guide_related_posts(), true)) :
+                        ?>
+                        <p class="fg-journal-next__guide"><?php esc_html_e('Part of our winter guide:', 'fenster'); ?> <a href="<?php echo esc_url(fenster_warm_guide_url()); ?>"><?php esc_html_e('How to fix cold, draughty windows', 'fenster'); ?></a></p>
+                    <?php endif; ?>
                 </div>
                 <div class="fg-journal-next__routes">
                     <?php foreach ($next_links as $link) : ?>

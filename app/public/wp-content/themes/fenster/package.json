@@ -19,7 +19,10 @@
     "watch:home30:js": "esbuild src/home30/home30.js --bundle --format=iife --target=es2019 --sourcemap --outfile=assets/home30/home30.js --watch",
     "test:home30": "node --test \"src/home30/**/*.test.mjs\"",
     "build:blog": "sass src/blog/blog.scss assets/blog/blog.css --style=compressed --no-source-map",
-    "watch:blog": "sass src/blog/blog.scss assets/blog/blog.css --style=expanded --watch"
+    "watch:blog": "sass src/blog/blog.scss assets/blog/blog.css --style=expanded --watch",
+    "build:warm": "npm run build:warm:css && npm run build:warm:js",
+    "build:warm:css": "sass src/warm/warm.scss assets/warm/warm.css --style=compressed --no-source-map",
+    "build:warm:js": "esbuild src/warm/warm.js --bundle --format=iife --target=es2019 --minify --outfile=assets/warm/warm.js"
   },
   "devDependencies": {
     "esbuild": "^0.25.5",
