@@ -43,8 +43,9 @@ $hero = (array) ($warm['hero'] ?? []);
                     <g class="fg-warm-scope__thermal" clip-path="url(#fgw-hero-wipe)"><?php echo fenster_warm_window_scene('thermal', 'fgw-ht'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></g>
                 </svg>
                 <span class="fg-warm-scope__handle" aria-hidden="true"><span></span></span>
-                <span class="fg-warm-scope__tag fg-warm-scope__tag--thermal" aria-hidden="true"><?php esc_html_e('Thermal view', 'fenster'); ?></span>
-                <span class="fg-warm-scope__tag fg-warm-scope__tag--room" aria-hidden="true"><?php esc_html_e('As you see it', 'fenster'); ?></span>
+                <?php /* Each label sits on a layer clipped to its own side of the wipe, so the wipe itself covers and uncovers it. */ ?>
+                <span class="fg-warm-scope__side fg-warm-scope__side--thermal" aria-hidden="true"><span class="fg-warm-scope__tag"><?php esc_html_e('Thermal view', 'fenster'); ?></span></span>
+                <span class="fg-warm-scope__side fg-warm-scope__side--room" aria-hidden="true"><span class="fg-warm-scope__tag"><?php esc_html_e('As you see it', 'fenster'); ?></span></span>
                 <input class="fg-warm-scope__range" type="range" min="0" max="100" value="50" step="1" aria-label="<?php esc_attr_e('Move to reveal the thermal view', 'fenster'); ?>">
             </div>
             <figcaption><?php echo esc_html($hero['scope_caption']); ?> <span><?php echo esc_html($hero['scope_note']); ?></span></figcaption>

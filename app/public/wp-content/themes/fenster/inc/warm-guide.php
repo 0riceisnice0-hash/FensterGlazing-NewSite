@@ -159,14 +159,14 @@ function fenster_warm_banner_head(): void
     ?>
     <script data-clarity-unmask="true">(function(){try{var t=Number(window.localStorage.getItem('fenster_warm_banner_closed')||0);if(t&&Date.now()-t<2592e6){document.documentElement.classList.add('fg-warm-banner-off');}}catch(e){}})();</script>
     <style id="fenster-warm-banner-css" data-clarity-unmask="true">
-        .fg-warm-banner{position:relative;z-index:40;display:flex;align-items:center;justify-content:center;min-height:42px;padding:0 3.25rem 0 1rem;background:#002d3a;color:#fff;font-size:.95rem;line-height:1.3}
-        .fg-warm-banner__link{display:inline-flex;align-items:center;gap:.6rem;min-height:42px;padding:.45rem 0;color:#fff;text-decoration:none;font-weight:600}
+        .fg-warm-banner{position:relative;z-index:40;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 3.25rem 0 1rem;background:#002d3a;color:#fff;font-size:.95rem;line-height:1.3}
+        .fg-warm-banner__link{display:inline-flex;align-items:center;gap:.6rem;min-height:44px;padding:.45rem 0;color:#fff;text-decoration:none;font-weight:600}
         .fg-warm-banner__flake{flex:none;width:18px;height:18px;color:#8fd9ae}
         .fg-warm-banner__more{display:inline-flex;align-items:center;gap:.3rem;color:#8fd9ae;white-space:nowrap}
         .fg-warm-banner__more svg{width:14px;height:14px;transition:transform .2s ease}
         .fg-warm-banner__link:hover .fg-warm-banner__more svg,.fg-warm-banner__link:focus-visible .fg-warm-banner__more svg{transform:translateX(3px)}
         .fg-warm-banner__link:focus-visible,.fg-warm-banner__close:focus-visible{outline:2px solid #8fd9ae;outline-offset:2px;border-radius:3px}
-        .fg-warm-banner__close{position:absolute;top:50%;right:.35rem;display:grid;place-items:center;width:44px;height:42px;margin:0;padding:0;border:0;background:none;color:rgba(255,255,255,.78);cursor:pointer;transform:translateY(-50%)}
+        .fg-warm-banner__close{position:absolute;top:50%;right:.35rem;display:grid;place-items:center;width:44px;height:44px;margin:0;padding:0;border:0;background:none;color:rgba(255,255,255,.78);cursor:pointer;transform:translateY(-50%)}
         .fg-warm-banner__close:hover{color:#fff}
         .fg-warm-banner__close svg{width:14px;height:14px}
         .fg-warm-banner-off .fg-warm-banner{display:none}

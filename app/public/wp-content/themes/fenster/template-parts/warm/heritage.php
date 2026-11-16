@@ -39,7 +39,7 @@ $status_chip = ['yes' => '', 'ask' => ' fg-warm-chip--ask', 'consent' => ' fg-wa
 
             <div class="fg-warm-heritage__table fg-warm-panel">
                 <table>
-                    <caption class="fg-warm-sr"><?php echo esc_html($heritage['title']); ?></caption>
+                    <caption class="fg-warm-sr"><?php echo esc_html($heritage['eyebrow']); ?></caption>
                     <thead>
                         <tr>
                             <td></td>

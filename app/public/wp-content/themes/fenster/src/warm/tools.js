@@ -46,15 +46,19 @@ export function buildLetter(config, input, date) {
     landlord: tidy(input.landlord) || fb.landlord || '',
     address: tidy(input.address) || fb.address || '',
     rooms,
-    problems: joinList(input.problems.map((key) => config.problems[key]).filter(Boolean)),
-    asks: joinList(input.asks.map((key) => config.asks[key]).filter(Boolean)),
+    /* Each problem and each request is a whole sentence in the data, so any
+       combination reads correctly: they are set side by side, not strung
+       together with commas and "and". */
+    problems: input.problems.map((key) => config.problems[key]).filter(Boolean).join(' '),
+    asks: input.asks.map((key) => config.asks[key]).filter(Boolean).join(' '),
   };
   const para = (...lines) => ({ lines: lines.filter(Boolean), sep: ' ' });
   const blocks = [
     { lines: [date], sep: ' ', date: true },
     para(fill(t.greeting, values)),
     para(fill(t.opening, values), rooms && fill(t.which, values)),
-    para(values.problems && fill(t.problem, values), fill(t.effect, values)),
+    /* The follow-on line only makes sense after a problem has been named. */
+    para(values.problems && fill(t.problem, values), values.problems && fill(t.effect, values)),
     para(values.asks && fill(t.ask, values)),
     para(fill(t.access, values)),
     { lines: [t.sign, tidy(input.tenant) || fb.tenant || ''].filter(Boolean), sep: '\n', sign: true },

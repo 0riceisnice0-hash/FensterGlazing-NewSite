@@ -27,7 +27,9 @@
   --fgw-muted: #50646c;
   --fgw-blue: var(--color-light-blue, #4c7b86);
   --fgw-green: var(--color-accent, #2eac66);
-  --fgw-green-dark: var(--color-accent-dark, #20824c);
+  /* Darker than the site's #20824c, which is 4.4:1 on the pale page canvas.
+     This is 6:1 there, so the small green text passes AA. */
+  --fgw-green-dark: #1a6e40;
   --fgw-line: rgba(6, 33, 42, 0.12);
   --fgw-line-strong: rgba(6, 33, 42, 0.22);
   --fgw-paper: #ffffff;
@@ -85,6 +87,19 @@
 :where(.fg-warm) h3,
 :where(.fg-warm) p {
   margin: 0;
+}
+
+/* No one-word last lines: headings balance, paragraphs avoid orphans. */
+:where(.fg-warm) h1,
+:where(.fg-warm) h2,
+:where(.fg-warm) h3 {
+  text-wrap: balance;
+}
+
+:where(.fg-warm) p,
+:where(.fg-warm) li,
+:where(.fg-warm) dd {
+  text-wrap: pretty;
 }
 
 :where(.fg-warm) a:not(.button) {
@@ -343,9 +358,29 @@
   }
 }
 
+.fg-warm-scope__side {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  &--thermal {
+    clip-path: inset(0 calc((1 - var(--fgw-wipe)) * 100%) 0 0);
+  }
+
+  &--room {
+    clip-path: inset(0 0 0 calc(var(--fgw-wipe) * 100%));
+
+    .fg-warm-scope__tag {
+      right: 0.7rem;
+      left: auto;
+    }
+  }
+}
+
 .fg-warm-scope__tag {
   position: absolute;
   top: 0.7rem;
+  left: 0.7rem;
   padding: 0.28rem 0.55rem;
   border-radius: 4px;
   background: rgba(0, 45, 58, 0.82);
@@ -354,18 +389,7 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-
-  &--thermal {
-    left: 0.7rem;
-    opacity: clamp(0, calc((var(--fgw-wipe) - 0.2) * 8), 1);
-  }
-
-  &--room {
-    right: 0.7rem;
-    opacity: clamp(0, calc((0.8 - var(--fgw-wipe)) * 8), 1);
-  }
+  white-space: nowrap;
 }
 
 .fg-warm-scope__range {

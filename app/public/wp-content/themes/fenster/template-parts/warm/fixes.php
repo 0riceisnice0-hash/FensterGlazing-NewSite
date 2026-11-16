@@ -51,7 +51,7 @@ foreach ((array) $fixes['filters'] as $filter) {
 
         <div class="fg-warm-fixes__table fg-warm-panel">
             <table>
-                <caption class="fg-warm-sr"><?php echo esc_html($fixes['title']); ?></caption>
+                <caption class="fg-warm-sr"><?php echo esc_html($fixes['eyebrow']); ?></caption>
                 <thead>
                     <tr>
                         <?php foreach ((array) $fixes['columns'] as $column) : ?>

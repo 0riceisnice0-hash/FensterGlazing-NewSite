@@ -7,15 +7,23 @@
  *
  * - The heat figures are Historic Scotland Technical Paper 1 (Baker, Glasgow
  *   Caledonian University, 2008), read from the paper itself: a single-glazed
- *   timber sash at 4.5 W/m2K, and the measured reductions for curtains, blinds,
- *   shutters and secondary glazing. Curtains were measured at 14% there and
- *   higher elsewhere, so the page gives the 14% and says it is the low end.
+ *   timber sash at 4.5 W/m2K as a whole window, and the measured reductions
+ *   for curtains, blinds, shutters and secondary glazing. Curtains were
+ *   measured at 14% there and higher elsewhere, so the page gives the 14% and
+ *   says it is the low end. THE PAGE QUOTES THE REDUCTIONS, NOT THE PAPER'S
+ *   U-VALUES: those are centre-of-glass estimates on a different basis from
+ *   the 4.5, and setting them side by side made the page contradict itself.
+ *   The one U-value comparison kept is whole window against whole window:
+ *   4.5 measured, against the 1.4 Part L sets for a replacement.
  * - Draught-proofing cut AIR LEAKAGE by 86% in that test and did not change
  *   the U-value. The page never says draught-proofing "improves the U-value".
  * - There is NO credible measurement for shrink film or bubble wrap. The page
  *   says so rather than quoting the percentages that circulate.
- * - The noise figures for secondary glazing are a manufacturer's data sheet
- *   and are attributed as one.
+ * - The only noise figure is secondary glazing's, from a manufacturer's data
+ *   sheet, attributed as one. No figure is given for single glass or for
+ *   acoustic glass: the glass makers' own pages did not state one that could
+ *   be linked to, so the page describes them and does not put a number on
+ *   them.
  * - Rental law is England only and dated. EPC C by 2030 is a stated plan, not
  *   law. No grant is claimed to pay for glazing or draught-proofing, because
  *   none currently lists them.
@@ -114,7 +122,7 @@ function fenster_warm_guide_data(): array
                 ],
                 [
                     'key' => 'fastener',
-                    'label' => 'Lock the catch',
+                    'label' => 'Turn the catch fully home',
                     'cost' => 'Free',
                     'title' => 'Turn the catch all the way home.',
                     'body' => 'The catch where the two sashes meet is a clamp as much as a lock. Turned fully, it pulls the two rails together and closes the widest gap on the window. On a hinged window the handle does the same job: push it all the way down so the lock draws the window onto its seals.',
@@ -123,7 +131,7 @@ function fenster_warm_guide_data(): array
                 ],
                 [
                     'key' => 'wedge',
-                    'label' => 'Wedge the rattle',
+                    'label' => 'Wedge a rattling sash',
                     'cost' => 'Free',
                     'title' => 'Wedge any sash that rattles.',
                     'body' => 'A sash that rattles has air moving round it. Push a folded piece of card or a cork between the sash and the bead beside it until the sash stops moving. It quietens the window and slows the draught at the same time.',
@@ -132,7 +140,7 @@ function fenster_warm_guide_data(): array
                 ],
                 [
                     'key' => 'towel',
-                    'label' => 'Roll a towel along the sill',
+                    'label' => 'Lay a towel along the bottom rail',
                     'cost' => 'Free',
                     'title' => 'Lay a rolled towel along the bottom rail.',
                     'body' => 'Cold air comes in under the bottom rail and spills onto the window board. A rolled towel or a fabric draught excluder laid along that joint stops it. Lift it in the morning so the sill can dry.',
@@ -259,7 +267,7 @@ function fenster_warm_guide_data(): array
                 ['fix' => 'Lined curtains, closed at dusk', 'on' => 'glass', 'cost' => 'Free if you have them', 'measured' => '14% less heat through the window, at least', 'source' => 'tp1', 'tags' => ['renter', 'heritage', 'tonight']],
                 ['fix' => 'Catch turned fully home', 'on' => 'gaps', 'cost' => 'Free', 'measured' => 'Not measured', 'source' => '', 'tags' => ['renter', 'heritage', 'tonight']],
                 ['fix' => 'Card, cork or sash wedges', 'on' => 'gaps', 'cost' => 'Free, or a few pounds', 'measured' => 'Not measured', 'source' => '', 'tags' => ['renter', 'heritage', 'tonight', 'noise']],
-                ['fix' => 'Rolled towel on the sill', 'on' => 'gaps', 'cost' => 'Free', 'measured' => 'Not measured', 'source' => '', 'tags' => ['renter', 'heritage', 'tonight']],
+                ['fix' => 'Rolled towel along the bottom rail', 'on' => 'gaps', 'cost' => 'Free', 'measured' => 'Not measured', 'source' => '', 'tags' => ['renter', 'heritage', 'tonight']],
                 ['fix' => 'Shutters, closed at night', 'on' => 'glass', 'cost' => 'Free if they are there', 'measured' => '51% less heat through the window', 'source' => 'tp1', 'tags' => ['renter', 'heritage', 'tonight']],
                 ['fix' => 'Removable caulk rope', 'on' => 'gaps', 'cost' => 'About £17 a pack', 'measured' => 'Not measured', 'source' => '', 'tags' => ['renter', 'heritage', 'noise']],
                 ['fix' => 'Insulating honeycomb blind', 'on' => 'glass', 'cost' => 'Varies by window', 'measured' => '36% less heat through the window', 'source' => 'tp1', 'tags' => ['renter', 'heritage']],
@@ -275,7 +283,7 @@ function fenster_warm_guide_data(): array
             'empty' => 'Nothing matches that.',
             'film_note' => 'About film and bubble wrap. Both work the way secondary glazing does, by trapping still air against the glass, and plenty of people find them worth doing. We could not find a reliable test of either, so we have not put a number on them. The nearest is a low-emissivity film, which improved single glass by 17% in a Historic Scotland test.',
             'film_source' => 'tp23',
-            'price_note' => 'Shop prices are ranges seen at UK retailers in November 2026. Tradesman prices are typical guide figures, and yours will depend on the window.',
+            'price_note' => 'Shop prices are ranges seen at UK retailers in November 2026. Prices for professional work are typical guide figures, and yours will depend on the window.',
         ],
 
         'compare' => [
@@ -291,22 +299,22 @@ function fenster_warm_guide_data(): array
                     'key' => 'asis',
                     'label' => 'As it is',
                     'heat_u' => 4.5,
-                    'heat_value' => '4.5',
-                    'heat_note' => 'A single-glazed timber sash, measured.',
+                    'heat_value' => 'All of it',
+                    'heat_note' => 'A single-glazed timber sash measured 4.5 W/m²K as a whole window.',
                     'leak' => 1.0,
                     'leak_note' => 'Air moves freely round both sashes.',
                     'noise_db' => 29,
-                    'noise_value' => 'About 29 dB',
-                    'noise_note' => 'One 4 mm pane, before any gaps are counted.',
+                    'noise_value' => 'The starting point',
+                    'noise_note' => 'One thin pane, and gaps that sound comes straight through.',
                     'summary' => 'Heat goes straight through the glass and out round the edges of both sashes.',
                     'sources' => ['tp1'],
                 ],
                 [
                     'key' => 'sealed',
                     'label' => 'Draught-proofed',
-                    'heat_u' => 4.4,
-                    'heat_value' => '4.4',
-                    'heat_note' => 'The glass is the same glass, so this barely moves.',
+                    'heat_u' => 4.3,
+                    'heat_value' => 'About the same',
+                    'heat_note' => 'The glass is the same glass. The change measured was inside the test\'s margin of error.',
                     'leak' => 0.14,
                     'leak_note' => '86% less air leakage in Historic Scotland\'s test.',
                     'noise_db' => 31,
@@ -318,9 +326,9 @@ function fenster_warm_guide_data(): array
                 [
                     'key' => 'curtains',
                     'label' => 'Curtains closed',
-                    'heat_u' => 3.2,
-                    'heat_value' => '3.2',
-                    'heat_note' => '14% less heat through the window, measured with heavy curtains.',
+                    'heat_u' => 3.87,
+                    'heat_value' => '14% less',
+                    'heat_note' => 'Measured with heavy curtains. Other tests have found more.',
                     'leak' => 1.0,
                     'leak_note' => 'The gaps are still open behind the curtain.',
                     'noise_db' => 29,
@@ -332,14 +340,14 @@ function fenster_warm_guide_data(): array
                 [
                     'key' => 'secondary',
                     'label' => 'Secondary glazing',
-                    'heat_u' => 1.7,
-                    'heat_value' => '1.7',
-                    'heat_note' => '63% less heat through the window. With curtains closed as well, 66%.',
+                    'heat_u' => 1.665,
+                    'heat_value' => '63% less',
+                    'heat_note' => 'With curtains closed as well, 66%.',
                     'leak' => 0.1,
                     'leak_note' => 'A sealed second window sits inside the first.',
                     'noise_db' => 44,
                     'noise_value' => '43 to 45 dB',
-                    'noise_note' => 'With a 100 mm gap between the panes, on the manufacturer\'s figures.',
+                    'noise_note' => 'With a 100 mm gap behind 6 mm glass, on one manufacturer\'s figures.',
                     'summary' => 'A second window on the room side of the one you keep. The wide gap between the two is what makes it the quietest option here.',
                     'sources' => ['tp1', 'selecta'],
                 ],
@@ -347,23 +355,23 @@ function fenster_warm_guide_data(): array
                     'key' => 'replace',
                     'label' => 'New double glazing',
                     'heat_u' => 1.4,
-                    'heat_value' => '1.4 or lower',
-                    'heat_note' => 'The limit Building Regulations set for a replacement window.',
+                    'heat_value' => 'About 69% less',
+                    'heat_note' => 'Building Regulations set 1.4 W/m²K or lower for a replacement window, against 4.5 for the old one.',
                     'leak' => 0.06,
                     'leak_note' => 'New seals all the way round, built in.',
-                    'noise_db' => 40,
-                    'noise_value' => 'About 40 dB',
-                    'noise_note' => 'With acoustic laminated glass. A standard sealed unit is nearer 30.',
-                    'summary' => 'The lowest heat loss here, in one window that opens, locks and cleans like new. Acoustic glass is the choice for a noisy road.',
-                    'sources' => ['part-l'],
+                    'noise_db' => 36,
+                    'noise_value' => 'Quieter with acoustic glass',
+                    'noise_note' => 'On a noisy road, ask for acoustic laminated glass. It is made for the job.',
+                    'summary' => 'The lowest heat loss here, in one window that opens, locks and cleans like new.',
+                    'sources' => ['part-l', 'tp1'],
                 ],
             ],
             'heat_label' => 'Heat through the window',
-            'heat_unit' => 'W/m²K. Lower is warmer.',
+            'heat_unit' => 'Shorter bar, warmer room.',
             'leak_label' => 'Air leaking round it',
             'noise_label' => 'Street noise kept out',
             'noise_unit' => 'Higher is quieter.',
-            'noise_rule' => 'Every 10 dB sounds roughly half as loud.',
+            'noise_rule' => 'Every 10 dB sounds roughly half as loud. A bar with no figure beside it is a guide, not a measurement.',
             'svg_alt' => 'Cross-section through a sash window, with the warm room on the left and the cold street on the right, showing how much heat and noise passes through for the step chosen.',
         ],
 
@@ -426,7 +434,7 @@ function fenster_warm_guide_data(): array
                 ],
                 [
                     'title' => 'What is changing.',
-                    'copy' => 'A rented home needs an energy rating of E today. The government has said that rises to C by 1 October 2030, with a cap of £10,000 on what a landlord must spend. It is not law yet, but it is the direction, and it is a fair thing to mention.',
+                    'copy' => 'A rented home needs an energy rating of E today. The government has said that rises to C by 1 October 2030, with a cap of £10,000 on what a landlord must spend. It is not law yet, but it is the direction, and worth raising with your landlord.',
                     'source' => 'mees',
                 ],
             ],
@@ -442,20 +450,20 @@ function fenster_warm_guide_data(): array
                 ],
                 'problems_label' => 'What is wrong',
                 'problems' => [
-                    ['key' => 'draughts', 'label' => 'Draughts round the frame', 'text' => 'there are draughts coming in around the frames'],
-                    ['key' => 'rattle', 'label' => 'They rattle in the wind', 'text' => 'the windows rattle in the wind'],
-                    ['key' => 'close', 'label' => 'They will not close or lock', 'text' => 'they do not close or lock properly'],
-                    ['key' => 'glass', 'label' => 'Cracked or loose glass', 'text' => 'there is cracked or loose glass'],
-                    ['key' => 'rot', 'label' => 'Rotten or damaged timber', 'text' => 'there is rotten or damaged timber'],
-                    ['key' => 'damp', 'label' => 'Condensation and mould', 'text' => 'there is heavy condensation and mould around them'],
-                    ['key' => 'cold', 'label' => 'The room will not stay warm', 'text' => 'the room cannot be kept warm with the heating on'],
+                    ['key' => 'draughts', 'label' => 'Draughts round the frame', 'text' => 'There are draughts coming in around the frames.'],
+                    ['key' => 'rattle', 'label' => 'They rattle in the wind', 'text' => 'The windows rattle in the wind.'],
+                    ['key' => 'close', 'label' => 'They will not close or lock', 'text' => 'They do not close or lock properly.'],
+                    ['key' => 'glass', 'label' => 'Cracked or loose glass', 'text' => 'There is cracked or loose glass.'],
+                    ['key' => 'rot', 'label' => 'Rotten or damaged timber', 'text' => 'There is rotten or damaged timber.'],
+                    ['key' => 'damp', 'label' => 'Condensation and mould', 'text' => 'There is heavy condensation and mould around them.'],
+                    ['key' => 'cold', 'label' => 'The room will not stay warm', 'text' => 'The room cannot be kept warm with the heating on.'],
                 ],
                 'asks_label' => 'What you are asking for',
                 'asks' => [
-                    ['key' => 'repair', 'label' => 'A repair', 'text' => 'arrange for the windows to be inspected and repaired'],
-                    ['key' => 'proof', 'label' => 'Draught-proofing', 'text' => 'have the windows draught-proofed'],
-                    ['key' => 'permission', 'label' => 'Permission for removable fixes', 'text' => 'give me written permission to fit removable draught-proofing, such as brush strip, caulk rope and a window film kit, at my own cost, all of which I will take out when I leave'],
-                    ['key' => 'secondary', 'label' => 'A quote for secondary glazing', 'text' => 'consider a quote for secondary glazing, which adds a second window on the inside and leaves the existing windows untouched'],
+                    ['key' => 'repair', 'label' => 'A repair', 'text' => 'Please could you arrange for the windows to be inspected and repaired.'],
+                    ['key' => 'proof', 'label' => 'Draught-proofing', 'text' => 'I would like the windows to be draught-proofed.'],
+                    ['key' => 'permission', 'label' => 'Permission for removable fixes', 'text' => 'I would like your written permission to fit removable draught-proofing at my own cost, such as brush strip, caulk rope and a window film kit. I will take it all out when I leave.'],
+                    ['key' => 'secondary', 'label' => 'A quote for secondary glazing', 'text' => 'Would you consider a quote for secondary glazing? It adds a second window on the inside and leaves the existing windows untouched.'],
                 ],
                 'defaults' => ['problems' => ['draughts'], 'asks' => ['repair']],
                 'copy_label' => 'Copy the letter',
@@ -468,9 +476,9 @@ function fenster_warm_guide_data(): array
                     'greeting' => 'Dear {landlord},',
                     'opening' => 'I am writing about the windows at {address}.',
                     'which' => 'It concerns {rooms}.',
-                    'problem' => 'At the moment {problems}.',
-                    'effect' => 'It makes the home hard to heat, and I would like to sort it out before the coldest part of the winter.',
-                    'ask' => 'Could you please {asks}?',
+                    'problem' => '{problems}',
+                    'effect' => 'I would like to sort this out before the coldest part of the winter.',
+                    'ask' => '{asks}',
                     'access' => 'I am happy to arrange access at a time that suits. Could you let me know in writing what you propose, and roughly when?',
                     'sign' => 'Thank you,',
                 ],
@@ -500,7 +508,7 @@ function fenster_warm_guide_data(): array
                     'label' => 'Secondary glazing',
                     'cells' => [
                         ['status' => 'yes', 'copy' => 'Fitted inside, so no planning permission.'],
-                        ['status' => 'ask', 'copy' => 'Not generally needed, Historic England says, with exceptions.'],
+                        ['status' => 'ask', 'copy' => 'Usually needs no consent, Historic England says. Check for exceptions.'],
                         ['status' => 'yes', 'copy' => 'No planning permission. Check your lease.'],
                     ],
                 ],
@@ -656,7 +664,7 @@ function fenster_warm_guide_data(): array
             'items' => [
                 [
                     'question' => 'Can I stuff the gaps in my window with wet tissue or newspaper?',
-                    'answer' => 'It is better not to. Wet paper holds water against the timber and shrinks out of the gap as it dries. Removable caulk rope costs about £17 a pack, seals the same gaps properly and peels out clean in spring. For tonight, a rolled towel along the sill and a wedge in any rattling sash will do more.',
+                    'answer' => 'It is better not to. Wet paper holds water against the timber and shrinks out of the gap as it dries. Removable caulk rope costs about £17 a pack, seals the same gaps properly and peels out clean in spring. For tonight, a rolled towel along the bottom rail and a wedge in any rattling sash will do more.',
                 ],
                 [
                     'question' => 'How do I stop draughts coming through a sash window?',
@@ -688,7 +696,7 @@ function fenster_warm_guide_data(): array
                 ],
                 [
                     'question' => 'How do I reduce traffic noise through old windows?',
-                    'answer' => 'Seal the gaps first, since sound gets in wherever air does. After that it is the distance between two panes that counts. Secondary glazing with a gap of 100 mm or more reaches about 43 to 45 dB on the manufacturer\'s figures, against about 29 dB for a single 4 mm pane.',
+                    'answer' => 'Seal the gaps first, since sound gets in wherever air does. After that it is the distance between two panes that counts. Secondary glazing with a 100 mm gap reaches 43 to 45 dB on one manufacturer\'s figures, and a wider gap is quieter still.',
                 ],
             ],
         ],

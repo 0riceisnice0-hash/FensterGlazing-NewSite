@@ -79,7 +79,7 @@ $drawings = [
         </div>
 
         <div class="fg-warm-tonight__grid">
-            <div class="fg-warm-tonight__list" role="tablist" aria-labelledby="fg-warm-tonight-title" aria-orientation="vertical">
+            <div class="fg-warm-tonight__list" role="tablist" aria-labelledby="fg-warm-tonight-title">
                 <?php foreach ($items as $index => $item) : ?>
                     <button class="fg-warm-tonight__tab<?php echo $index === 0 ? ' is-active' : ''; ?>" type="button" role="tab" id="fg-warm-tonight-tab-<?php echo esc_attr($item['key']); ?>" aria-controls="fg-warm-tonight-panel-<?php echo esc_attr($item['key']); ?>" aria-selected="<?php echo $index === 0 ? 'true' : 'false'; ?>"<?php echo $index === 0 ? '' : ' tabindex="-1"'; ?> data-fg-warm-tab>
                         <span class="fg-warm-tonight__tab-label"><?php echo esc_html($item['label']); ?></span>

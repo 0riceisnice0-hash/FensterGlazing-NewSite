@@ -66,15 +66,15 @@ $example_values = [
     'landlord' => (string) ($letter_fallbacks['landlord'] ?? ''),
     'address' => (string) ($letter_fallbacks['address'] ?? ''),
     'rooms' => '',
-    'problems' => $letter_join($example_problems),
-    'asks' => $letter_join($example_asks),
+    'problems' => implode(' ', $example_problems),
+    'asks' => implode(' ', $example_asks),
 ];
 $example_blocks = [
     [$letter_fill((string) $letter_template['greeting'], $example_values)],
     [$letter_fill((string) $letter_template['opening'], $example_values)],
     array_filter([
         $example_problems !== [] ? $letter_fill((string) $letter_template['problem'], $example_values) : '',
-        $letter_fill((string) $letter_template['effect'], $example_values),
+        $example_problems !== [] ? $letter_fill((string) $letter_template['effect'], $example_values) : '',
     ], 'strlen'),
     array_filter([$example_asks !== [] ? $letter_fill((string) $letter_template['ask'], $example_values) : ''], 'strlen'),
     [$letter_fill((string) $letter_template['access'], $example_values)],
