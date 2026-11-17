@@ -191,9 +191,18 @@ if ($photo_url !== '') {
                             </figcaption>
                         </figure>
 
-                    <?php elseif ($block['type'] === 'photo') : ?>
+                    <?php elseif ($block['type'] === 'photo') :
+                        $photo_attrs = ['alt' => (string) $block['alt'], 'loading' => 'lazy', 'sizes' => '(min-width: 1240px) 562px, (min-width: 1024px) 48vw, (min-width: 720px) 672px, calc(100vw - 2rem)'];
+                        /* A theme without `fenster_image_srcset()` (live, 17/11/2026) adds no WebP copies itself, so ask for them here. */
+                        if (! function_exists('fenster_image_srcset')) {
+                            $photo_srcset = fenster_warm_manifest_srcset((string) $block['src']);
+                            if ($photo_srcset !== '') {
+                                $photo_attrs['srcset'] = $photo_srcset;
+                            }
+                        }
+                        ?>
                         <figure class="fg-journal-figure fgw-photo">
-                            <img <?php echo fenster_image_attr_string(FENSTER_THEME_URI . $block['src'], ['alt' => (string) $block['alt'], 'loading' => 'lazy', 'sizes' => '(min-width: 1240px) 562px, (min-width: 1024px) 48vw, (min-width: 720px) 672px, calc(100vw - 2rem)']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                            <img <?php echo fenster_image_attr_string(FENSTER_THEME_URI . $block['src'], $photo_attrs); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                             <figcaption><?php echo fenster_warm_inline($block['caption']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></figcaption>
                         </figure>
 

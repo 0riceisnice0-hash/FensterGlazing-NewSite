@@ -60,6 +60,40 @@ function fenster_warm_guide_related_posts(): array
 }
 
 /**
+ * The WebP copies of a theme image as a srcset, from `assets/images/landing/manifest.json`.
+ *
+ * Only for a theme whose image helper does not add them itself; `$src` is the
+ * theme-relative path, as the manifest records it.
+ */
+function fenster_warm_manifest_srcset(string $src): string
+{
+    static $manifest = null;
+
+    if ($manifest === null) {
+        $file = FENSTER_THEME_DIR . '/assets/images/landing/manifest.json';
+        $decoded = is_file($file) ? json_decode((string) file_get_contents($file), true) : null;
+        $manifest = is_array($decoded) ? $decoded : [];
+    }
+
+    foreach ($manifest as $entry) {
+        if (! is_array($entry) || ($entry['source'] ?? '') !== $src) {
+            continue;
+        }
+
+        $parts = [];
+        foreach ((array) ($entry['outputs'] ?? []) as $output) {
+            if (isset($output['file'], $output['width'])) {
+                $parts[] = FENSTER_THEME_URI . '/assets/images/landing/' . rawurlencode((string) $output['file']) . ' ' . (int) $output['width'] . 'w';
+            }
+        }
+
+        return implode(', ', $parts);
+    }
+
+    return '';
+}
+
+/**
  * Whether the guide and its banner exist on this host at all.
  */
 function fenster_warm_guide_enabled(): bool
