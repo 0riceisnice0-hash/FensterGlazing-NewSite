@@ -99,15 +99,15 @@ function fenster_warm_banner_in_season(?string $today = null): bool
 /**
  * Routes that never carry the banner.
  *
- * The homepage is out while its A/B test runs: a banner added part-way through
- * changes both arms' baseline and pulls people off the quote path the test is
- * measuring. The rest are pages where the visitor is already doing the thing
- * we would want them to do next.
+ * The homepage carries it (owner, 17/11/2026: it is where people look first).
+ * Both A/B versions get the identical banner, so the comparison between them
+ * stays fair; the 731-byte splitter at `/` never renders the theme and so
+ * never shows it. The routes below are pages where the visitor is already
+ * doing the thing we would want them to do next.
  */
 function fenster_warm_banner_excluded_slugs(): array
 {
     return [
-        'home',
         fenster_warm_guide_slug(),
         'online-quote',
         'book-a-consultation',
@@ -131,10 +131,6 @@ function fenster_warm_banner_should_render(): bool
 
     $forced = isset($_GET['warm_banner']) && $_GET['warm_banner'] === '1'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     if (! $forced && ! fenster_warm_banner_in_season()) {
-        return $decision = false;
-    }
-
-    if (is_front_page()) {
         return $decision = false;
     }
 
