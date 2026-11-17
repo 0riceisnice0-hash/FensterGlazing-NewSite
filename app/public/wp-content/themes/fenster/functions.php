@@ -63,8 +63,8 @@ $fenster_required_files = [
     /* THE WINTER GUIDE, `/stop-window-draughts/`, and the seasonal banner that
        links to it. Self-contained: this file, `inc/warm-guide-data.php`,
        `inc/warm-guide-graphics.php`, `template-parts/sections/warm-windows.php`,
-       `src/warm/` and `assets/warm/`. Host gated inside the file and live is
-       deliberately not on the list, so a theme deploy cannot publish it. */
+       `src/warm/` and `assets/warm/`. Host gated inside the file: test, local
+       and, since 17/11/2026 on the owner's go-ahead, live. */
     'inc/warm-guide.php',
 ];
 

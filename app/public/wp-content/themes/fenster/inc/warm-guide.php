@@ -7,11 +7,11 @@
  * The route itself is registered in `inc/generated-pages.php` next to
  * `/why-distinction/`, the same way every other virtual page is.
  *
- * HOST GATED, AND LIVE IS DELIBERATELY NOT ON THE LIST. Built on test on
- * 16/11/2026 for the owner to review. Until `fenster_warm_guide_enabled()`
- * names the live hosts, a theme deploy cannot publish the page, the banner or
- * the sitemap entry. Putting it live is one edit to that list, and per `AI.md`
- * the commit that makes it must say so.
+ * HOST GATED. Built on test on 16/11/2026 for the owner to review, and put on
+ * live on 17/11/2026 on the owner's go-ahead by adding the live hosts to
+ * `fenster_warm_guide_enabled()`. Taking those two hosts out again removes the
+ * page, the banner, the footer link and the sitemap and llms.txt entries from
+ * live in one edit.
  *
  * NOTHING HERE IS PER-VISITOR. Live pages are proxy-cached and served to
  * everybody, so the banner is decided only from the date and the route, which
@@ -75,9 +75,9 @@ function fenster_warm_guide_enabled(): bool
         'test.fensterglazing.com',   // the password-protected test site
         'localhost',
         '127.0.0.1',
-        // Live, when the owner approves the page. Uncomment both together.
-        // 'fensterglazing.com',
-        // 'www.fensterglazing.com',
+        // Live: the owner approved the guide and banner on 17/11/2026 ("okay go live").
+        'fensterglazing.com',
+        'www.fensterglazing.com',
     ], true));
 }
 
