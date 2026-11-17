@@ -50,12 +50,13 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
                 <a class="legend-assistant__about" href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>">Who is Legend?</a>
             </div>
             <div class="legend-assistant__stage" aria-hidden="true">
+                <?php /* Inside the chat panel, which is hidden until opened: lazy, so a visitor who never opens it never fetches these (speed, 17/11/2026). */ ?>
                 <span class="legend-assistant__roamer" data-legend-roamer>
                     <span class="legend-sprite" data-legend-roamer-sprite>
-                        <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288" decoding="async" fetchpriority="low">
+                        <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288" loading="lazy" decoding="async" fetchpriority="low">
                     </span>
                     <span class="legend-sleep-sprite" data-legend-sleep-sprite>
-                        <img src="<?php echo esc_url($legend_sleep_sprite); ?>" alt="" width="1536" height="208" decoding="async" fetchpriority="low">
+                        <img src="<?php echo esc_url($legend_sleep_sprite); ?>" alt="" width="1536" height="208" loading="lazy" decoding="async" fetchpriority="low">
                     </span>
                 </span>
             </div>

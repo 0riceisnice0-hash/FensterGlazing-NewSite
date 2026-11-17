@@ -59,29 +59,35 @@ if (function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled(
     array_splice($footer_company, 5, 0, [['label' => 'Fixing Draughty Windows', 'url' => fenster_warm_guide_url()]]);
 }
 ?>
+<?php
+/* Speed, 17/11/2026: every image down here waits until the visitor scrolls
+   near it, and the badges are footer-sized copies in assets/trust/footer/
+   (about 40 KB in all, against 270 KB for the originals, which emails and the
+   About page still use). */
+?>
 <footer class="site-footer">
     <div class="container site-footer__grid">
         <div class="site-footer__about">
-            <img class="site-footer__logo" src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/brand/18931 - 2026 - Fenster Glazing Logo - Dark Background.png'); ?>" alt="<?php echo esc_attr($brand['name']); ?>">
+            <img class="site-footer__logo" src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/brand/18931 - 2026 - Fenster Glazing Logo - Dark Background.png'); ?>" alt="<?php echo esc_attr($brand['name']); ?>" width="411" height="104" loading="lazy" decoding="async">
             <p><?php echo esc_html($brand['tagline']); ?></p>
             <div class="site-footer__trust" aria-label="<?php esc_attr_e('Accreditations', 'fenster'); ?>">
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/footer/fensa.webp'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>" width="181" height="96" loading="lazy" decoding="async">
                 </a>
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/consumer-protection-association/')); ?>" aria-label="<?php esc_attr_e('Learn about Consumer Protection Association protection', 'fenster'); ?>">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/cpa.png'); ?>" alt="<?php esc_attr_e('Consumer Protection Association', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/footer/cpa.webp'); ?>" alt="<?php esc_attr_e('Consumer Protection Association', 'fenster'); ?>" width="162" height="96" loading="lazy" decoding="async">
                 </a>
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/constructionline-gold/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s Constructionline Gold membership', 'fenster'); ?>">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/constructionline-gold-member.png'); ?>" alt="<?php esc_attr_e('Constructionline Gold Member', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/footer/constructionline-gold-member.webp'); ?>" alt="<?php esc_attr_e('Constructionline Gold Member', 'fenster'); ?>" width="191" height="96" loading="lazy" decoding="async">
                 </a>
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/ssip-health-and-safety/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s SSIP health and safety assessment', 'fenster'); ?>">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP health and safety assessed', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/footer/ssip.webp'); ?>" alt="<?php esc_attr_e('SSIP health and safety assessed', 'fenster'); ?>" width="148" height="96" loading="lazy" decoding="async">
                 </a>
                 <a class="fg-accreditation-logo-link site-footer__trust-mark" href="<?php echo esc_url((string) fenster_data('brand.google_reviews_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Google', 'fenster'); ?>">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/footer/google-5-stars.webp'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>" width="216" height="96" loading="lazy" decoding="async">
                 </a>
                 <a class="fg-accreditation-logo-link site-footer__trust-mark" href="<?php echo esc_url((string) fenster_data('brand.trustpilot_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Trustpilot', 'fenster'); ?>">
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>" width="355" height="150" loading="lazy" decoding="async">
                 </a>
             </div>
             <div class="site-footer__socials" aria-label="<?php esc_attr_e('Fenster Glazing social media', 'fenster'); ?>">
