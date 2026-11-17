@@ -1806,7 +1806,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'url' => fenster_warm_guide_url(),
             'seo' => [
                 'title_tag' => 'How to Fix Cold, Draughty Windows | Fenster Glazing',
-                'meta_description' => 'Stop draughts and heat loss through sash and single-glazed windows. Five fixes for tonight, what is allowed in rented and listed homes, and when to call us.',
+                'meta_description' => 'Free fixes for draughty sash and single-glazed windows, what to do if you rent, what is allowed in conservation areas, and what each fix costs.',
                 'canonical' => 'https://fensterglazing.com/' . $slug . '/',
                 'robots' => 'max-image-preview:large',
             ],
@@ -2516,7 +2516,7 @@ function fenster_maybe_render_llms_txt(): void
     $lines[] = '- [Care and maintenance guides](' . home_url('/care-and-maintenance/') . '): how to look after each product, common fixes to try, and when to call us.';
     /* The winter guide, only on a host where it is enabled. */
     if (function_exists('fenster_warm_guide_enabled') && fenster_warm_guide_enabled()) {
-        $lines[] = '- [How to fix cold, draughty windows](' . fenster_warm_guide_url() . '): free fixes for tonight, where sash and single-glazed windows leak, what each fix costs and what has been measured, and what is allowed in rented, listed and conservation-area homes.';
+        $lines[] = '- [How to fix cold, draughty windows](' . fenster_warm_guide_url() . '): what to do tonight about draughty sash and single-glazed windows, step-by-step advice for renters with a letter to the landlord, what is allowed in conservation areas and listed buildings, and what each fix costs and has been measured to do.';
     }
     $lines[] = '- [Contact](' . home_url('/contact/') . ')';
     $lines[] = '';

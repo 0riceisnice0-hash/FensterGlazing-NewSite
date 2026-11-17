@@ -226,9 +226,20 @@ function fenster_warm_enqueue_assets(): void
         return;
     }
 
+    /* The guide is an article in the blog's layout, so it needs the blog's
+       stylesheet in <head>, ahead of its own small one. */
+    $deps = ['fenster-main'];
+    $blog_css = FENSTER_THEME_DIR . '/assets/blog/blog.css';
+    if (is_file($blog_css)) {
+        if (! wp_style_is('fenster-blog', 'enqueued')) {
+            wp_enqueue_style('fenster-blog', FENSTER_THEME_URI . '/assets/blog/blog.css', ['fenster-main'], filemtime($blog_css) . '-' . filesize($blog_css));
+        }
+        $deps[] = 'fenster-blog';
+    }
+
     $css = FENSTER_THEME_DIR . '/assets/warm/warm.css';
     if (is_file($css)) {
-        wp_enqueue_style('fenster-warm', FENSTER_THEME_URI . '/assets/warm/warm.css', ['fenster-main'], filemtime($css) . '-' . filesize($css));
+        wp_enqueue_style('fenster-warm', FENSTER_THEME_URI . '/assets/warm/warm.css', $deps, filemtime($css) . '-' . filesize($css));
     }
 
     $js = FENSTER_THEME_DIR . '/assets/warm/warm.js';
