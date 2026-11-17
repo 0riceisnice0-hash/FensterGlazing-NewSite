@@ -1,6 +1,6 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-11-10
+Last updated: 2026-11-17
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
@@ -12,6 +12,32 @@ This is the short operational guide for any Codex agent or developer making chan
 - **Never render a per-visitor value into the page config.** The same caching makes it a leak, not just a dead value: a reference printed into cacheable HTML is baked into the cached copy and served to every later visitor of that page. `adAttributionRef` was removed from `fenster_enqueue_website_tracking_config()` for exactly this.
 
 ## Current Truth
+
+- **THE WINTER GUIDE `/stop-window-draughts/`, ITS SEASONAL BANNER AND THREE SPEED FIXES, LIVE 2026-11-17 14:51 UTC, RELEASE 11 (24-FILE TRANSPLANT ON LIVE'S OWN SOURCE).** Owner: *"okay go live"*, for the guide, the banner and the speed fixes reviewed on test.
+  - **What:**
+    - **The guide.** "How to fix cold, draughty windows" is a plain article in the blog layout: a short answer first, question headings, a renting section with a copyable letter to the landlord, conservation areas, costs, 10 FAQs and named sources. It has Article, FAQPage and BreadcrumbList schema, and lines in `page-sitemap.xml` and `llms.txt`. It comes from branch `winter-warmth-guide` (`9a1058fc` switches on the live hosts, `ae163c1e` adds the photo WebPs).
+    - **The banner.** "Struggling to keep warm?" runs from 1 November to 31 March. It is on every page except the guide, online-quote, book-a-consultation, contact, customer-portal and 3d-visualiser. It is identical on `/?home=a` and `/?home=b`, so the A/B comparison stays fair; the splitter at `/` never shows it. It closes for 30 days, held in `localStorage`, so nothing per-visitor is cached. Clicks go through the existing `data-fg-cta` `cta_click` event. The footer also gains a sitewide "Fixing Draughty Windows" link.
+    - **Speed.** The footer badges are 96px WebP copies in `assets/trust/footer/` (about 40 KB against about 270 KB), with every footer image lazy. The hidden chat panel's Legend sprites are lazy too.
+  - **Switch it off:** remove `fensterglazing.com` and `www.fensterglazing.com` from `fenster_warm_guide_enabled()` in `inc/warm-guide.php`. That takes out the page, the banner, the footer link, and the sitemap and llms.txt entries in one edit.
+  - **Live differs from `main` here:**
+    - Live's `fenster_image_attr_string()` adds no srcset, so `warm-windows.php` builds the photo's WebP set itself through `fenster_warm_manifest_srcset()` wherever `fenster_image_srcset()` is missing.
+    - `package.json` (the `build:warm` scripts) was not shipped.
+  - **Not shipped:**
+    - the M1 tracking fix;
+    - the plugin, jQuery and block-CSS dequeue;
+    - the `assets/.htaccess` asset cache headers;
+    - any change to the page cache, which stays `s-maxage=3600`.
+  - **Release:**
+    - Four of the eight changed files had moved on from `main`, so the hunks were applied by anchor to live's own copies, each keeping its own line endings (`generated-pages.php` and `generated-page.php` are CRLF on live; the rest are LF).
+    - Proved first in a hard-linked `themes/fenster-release` through WP-CLI renders (removed after). Old against new on `/?home=a`, `/?home=b`, `/casement-windows/`, `/contact/` and the Googlebot `/` differed only in the banner, footer and Legend images.
+    - Parents asserted by `md5sum -c parent11.md5`. Dry run exactly 8 `>fcsT`, 16 `>f+++++++++` and 3 `cd+++++++++`, then residual 0.
+    - Backup `~/ab-release/backup11-20261117-145144.tar`. Socket purge `msg:OK`.
+  - **Verified on live, logged out, in a real browser:**
+    - The guide returns `200` and is public-cached (`HIT` on repeat), with no console errors. It has its title and the canonical, Article, FAQPage and BreadcrumbList schema, 10 FAQs, `blog.css` and `warm.css`, a 240px + 736px layout at 1440, and the photo's https WebP srcset.
+    - The banner appears once on `/?home=a`, `/?home=b` and `/casement-windows/`, and not on `/contact/`. On a phone at 375 it sits under the fixed header with no sideways scroll.
+    - Bare `/` is still `private, no-store` (731 bytes).
+    - `llms.txt` and `page-sitemap.xml` list the guide.
+    - The footer WebP badges return `200 image/webp`.
 
 - **HOMEPAGE B: A TAPPING POINTER OVER THE DESIGNER, LIVE 2026-11-13 11:09, RELEASE 10 (THREE-FILE TRANSPLANT ON LIVE'S OWN SOURCE).** Owner: *"put the little point icon over the windowcad on b. to make it clear you click on it"*.
   - **What:** `.fg-hb__hint`, a hand with a green tap ring, loops every 3.2s over the middle of the designer and never catches a click. It goes for good when the window loses focus to the iframe (the only sign a click inside the designer gives the page). Still for people with reduced motion.
