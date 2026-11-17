@@ -19,6 +19,30 @@
   --fgw-heat: #e8743a;
 }
 
+/* A narrower list of contents than the blog's half-and-half split, so the
+   article gets the room: about 46rem of text beside a 15rem list. */
+.fg-warm .fg-journal-layout--contents {
+  @media (min-width: 1024px) {
+    grid-template-columns: 15rem minmax(0, 46rem);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
+.fg-warm .fg-journal-contents {
+  @media (min-width: 1024px) {
+    max-width: none;
+  }
+
+  li + li {
+    margin-top: 0.4rem;
+  }
+
+  a {
+    font-size: 0.875rem;
+    line-height: 1.3;
+  }
+}
+
 .fg-warm .fg-journal-body {
   a:not(.button) {
     color: var(--fgw-green-dark);
@@ -122,6 +146,13 @@
     background: #f2faf5;
     color: var(--color-steel);
   }
+}
+
+/* The body's link style is more specific than the chips', so restate it. */
+.fg-warm .fg-journal-body .fgw-jump a:not(.button) {
+  color: var(--color-steel);
+  font-weight: 600;
+  text-decoration: none;
 }
 
 /* --------------------------------------------------------------------------
