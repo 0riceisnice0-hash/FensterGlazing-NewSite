@@ -133,7 +133,6 @@ $schema = [
             <div class="container">
                 <div class="fg-journal-section-head">
                     <div>
-                        <p class="eyebrow"><?php esc_html_e('Guides', 'fenster'); ?></p>
                         <h2 id="<?php echo esc_attr($topic_id); ?>"><?php echo esc_html($topic); ?></h2>
                     </div>
                 </div>

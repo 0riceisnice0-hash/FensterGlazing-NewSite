@@ -461,7 +461,8 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Aluminium ventilation louvres supplied and fitted with the glazing package. Blade centres from 30mm to 95mm, sized to the free area your schedule needs.',
         ],
         'apecs-ingenious-locks-and-hardware' => [
-            'meta_description' => 'APECS and Ingenious locks, cylinders, handles and door hardware from Fenster Glazing, with security options for replacement doors.',
+            'title_tag' => 'APECS and Ingenious Locks on Composite Doors',
+            'meta_description' => 'The locks on our composite doors: an APECS 3-star cylinder and an ILH Duplex multipoint lock, what each does, and the £5,000 break-in guarantee.',
         ],
         'apecs-terms-conditions' => [
             'meta_description' => 'Terms for APECS and Ingenious locks, cylinders, handles, hinges and door hardware supplied with Fenster doors.',
@@ -477,13 +478,6 @@ function fenster_gsc_seo_overrides(): array
         ],
         'category/guides-knowledge' => [
             'meta_description' => 'Guides from Fenster Glazing on safe, practical window, door and glazing decisions for homes and commercial buildings.',
-        ],
-        'commercial-glazing-leeds' => [
-            'title_tag' => 'Commercial Glazing Leeds | Windows, Doors & Facades',
-            'meta_description' => 'Commercial glazing in Leeds from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
-        ],
-        'commercial-glazing-manchester' => [
-            'meta_description' => 'Commercial glazing in Manchester from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
         ],
         'commercial-glazing-milton-keynes' => [
             'meta_description' => 'Commercial glazing in Milton Keynes from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
@@ -507,6 +501,7 @@ function fenster_gsc_seo_overrides(): array
         // SEO plan 10/11/2026, 1.3: the page is a how-to and ranks for "how to
         // soundproof windows", so the description answers that search.
         'soundproof-windows' => [
+            'title_tag' => 'How to Soundproof Windows: A DIY Guide | Fenster',
             'meta_description' => 'How to soundproof windows: seal the gaps, add heavy curtains or secondary glazing, or fit acoustic laminated glass. What each fix does to the noise.',
         ],
         'tag/doors' => [
@@ -522,7 +517,8 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Browse Fenster Glazing articles on commercial windows, doors, energy performance and property maintenance.',
         ],
         'why-choose-fenster-over-anglian' => [
-            'meta_description' => 'Compare Fenster Glazing with Anglian for local expertise, product choice, survey-led fitting and clear pricing.',
+            'title_tag' => 'Fenster Glazing or Anglian: How to Compare Installers',
+            'meta_description' => 'Comparing Fenster Glazing with Anglian? What we offer in Milton Keynes, plus the questions to put to any installer so you can compare for yourself.',
         ],
         'about' => [
             'title_tag' => 'About Fenster Glazing | Local Windows & Doors Experts',
@@ -545,7 +541,7 @@ function fenster_gsc_seo_overrides(): array
         ],
         'what-are-integral-blinds' => [
             'title_tag' => 'What Are Integral Blinds and How Do They Work?',
-            'meta_description' => 'Learn how integral blinds work inside double glazing, including their benefits, controls and suitability for windows and doors.',
+            'meta_description' => 'Integral blinds sit sealed between the panes of a double glazed unit. How they work, how you operate them, and what it takes to add them to your windows.',
         ],
         // The scrape record for this route is titled "Book a Consultation",
         // which was still reaching the BreadcrumbList as the page name on live:
@@ -567,7 +563,7 @@ function fenster_gsc_seo_overrides(): array
         ],
         'how-to-clean-your-upvc-windows-at-home' => [
             'title_tag' => 'How to Clean uPVC Windows and Frames',
-            'meta_description' => 'Clean uPVC windows with a soft cloth and warm soapy water, then rinse and dry. Avoid scouring pads and cream cleaners, which scratch and dull the frames.',
+            'meta_description' => 'Clean uPVC frames, sills, hinges and glass the right way: what to use, what to avoid on foiled frames, and the checks that keep windows opening smoothly.',
         ],
         '3d-visualiser' => [
             'title_tag' => 'Window & Door Visualiser | Design Yours in 3D',
@@ -927,6 +923,13 @@ function fenster_commercial_county_profiles(): array
         'west-yorkshire' => ['county' => 'West Yorkshire', 'region' => 'West Yorkshire and the Leeds city region', 'towns' => ['Leeds', 'Bradford', 'Wakefield', 'Huddersfield', 'Halifax', 'Keighley'], 'context' => 'city offices, education estates, healthcare property and phased refurbishment programmes'],
         'wiltshire' => ['county' => 'Wiltshire', 'region' => 'Wiltshire and the south west', 'towns' => ['Swindon', 'Salisbury', 'Chippenham', 'Trowbridge', 'Marlborough', 'Devizes'], 'context' => 'business parks, public buildings, heritage-sensitive settings and live-building replacements'],
         'worcestershire' => ['county' => 'Worcestershire', 'region' => 'Worcestershire and the West Midlands', 'towns' => ['Worcester', 'Redditch', 'Kidderminster', 'Bromsgrove', 'Malvern', 'Evesham'], 'context' => 'schools, offices, healthcare premises and mixed commercial refurbishment sites'],
+        /* The four cities joined this template on 18/11/2026. Each had its own
+           imported page, 68 to 82 percent alike, and Manchester's still spoke
+           about Milton Keynes homeowners. */
+        'birmingham' => ['county' => 'Birmingham', 'region' => 'Birmingham city centre', 'towns' => ['Colmore Row', 'Jewellery Quarter', 'Digbeth', 'Edgbaston', 'Eastside', 'Aston'], 'context' => 'city offices, protected workshops, education estates and healthcare property'],
+        'leeds' => ['county' => 'Leeds', 'region' => 'Leeds city centre', 'towns' => ['The Headrow', 'Wellington Place', 'Leeds Dock', 'Holbeck', 'Headingley', 'Kirkstall'], 'context' => 'city offices, student accommodation, education estates and healthcare property'],
+        'manchester' => ['county' => 'Manchester', 'region' => 'Manchester city centre', 'towns' => ['Ancoats', 'Spinningfields', 'Deansgate', 'Northern Quarter', 'Oxford Road', 'Castlefield'], 'context' => 'city offices, mill conversions, education buildings and healthcare property'],
+        'sheffield' => ['county' => 'Sheffield', 'region' => 'Sheffield city centre', 'towns' => ['Kelham Island', 'Heart of the City', 'Cultural Industries Quarter', 'Attercliffe', 'Hillsborough', 'Ecclesall Road'], 'context' => 'converted works, university estates, offices and healthcare property'],
     ];
 }
 
@@ -946,16 +949,20 @@ function fenster_commercial_county_page(string $slug): ?array
 
     $profile = $profiles[$county_slug];
     $county = (string) $profile['county'];
-    $meta_description = sprintf(
+    require_once FENSTER_THEME_DIR . '/inc/commercial-area-detail.php';
+    $meta_description = (string) (fenster_commercial_area_detail($county_slug)['meta'] ?? sprintf(
         'Commercial glazing in %s: windows, doors, curtain walling and replacement glass for local businesses.',
         $county,
-    );
+    ));
 
     // SEO plan 10/11/2026, 1.4: 43 county titles ran past 60 characters and
     // Google cut them. Keep the long form where it fits, shorten where not.
     $title_tag = 'Commercial Glazing ' . $county . ' | Windows, Doors & Curtain Walling';
     if (mb_strlen($title_tag) > 60) {
         $title_tag = 'Commercial Glazing ' . $county . ' | Windows & Doors';
+    }
+    if (mb_strlen($title_tag) > 60) {
+        $title_tag = 'Commercial Glazing ' . $county;
     }
 
     return [
@@ -1128,15 +1135,6 @@ function fenster_get_generated_page(?string $slug = null): ?array
         $page['seo']['robots'] = 'max-image-preview:large';
         if ($slug === 'book-a-consultation') {
             $page['title'] = 'Book a Consultation';
-        }
-
-        /* The imported H1 here was the scraped listicle headline, "Commercial
-           Glazing Leeds: 5 Powerful Proven Strategies to Control Cost, Compliance
-           and Heat Loss in Office Refurbishment". The title tag was cleaned up in
-           July 2026 but the heading was left, so the page still opened on copy
-           STYLE.md rules out. */
-        if ($slug === 'commercial-glazing-leeds') {
-            $page['title'] = 'Commercial glazing in Leeds';
         }
 
         return $page_cache[$slug] = $page;

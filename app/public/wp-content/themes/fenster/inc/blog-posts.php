@@ -2961,6 +2961,7 @@ function fenster_blog_legacy_article_slugs(): array
         'what-is-the-difference-between-upvc-vs-composite-doors', 'which-is-better-triple-or-acoustic-glazing',
         'why-choose-fenster-over-anglian', 'window-maintenance',
         'windows-as-home-investments',
+        'commercial-window-installation-in-healthcare', 'commercial-window-maintenance',
     ];
 }
 
@@ -2983,7 +2984,7 @@ function fenster_blog_legacy_guide_topics(): array
             'benefits-of-upvc-windows-for-your-home', 'different-types-of-window-frame-materials',
             'how-to-choose-the-right-style-windows-for-your-home', 'how-to-know-when-to-replace-windows',
             'what-are-the-different-methods-of-installation-for-a-sash-window', 'what-are-integral-blinds',
-            'all-you-need-to-know-about-louvre-vents', 'the-history-of-upvc-windows', 'windows-as-home-investments',
+            'the-history-of-upvc-windows', 'windows-as-home-investments',
         ],
         'Doors' => [
             'what-is-the-difference-between-upvc-vs-composite-doors', 'choosing-the-right-front-door-for-your-home',
@@ -3001,6 +3002,11 @@ function fenster_blog_legacy_guide_topics(): array
             'window-maintenance', 'door-maintenance', 'how-to-clean-your-upvc-windows-at-home',
             'how-to-check-whether-your-planned-home-improvements-are-legal',
             'replacing-windows-doors-in-wolverton-mk', 'why-choose-fenster-over-anglian',
+            'glass-and-glazing-federation-ggf-standards',
+        ],
+        'Commercial buildings' => [
+            'commercial-window-installation-in-healthcare', 'commercial-window-maintenance',
+            'all-you-need-to-know-about-louvre-vents',
         ],
     ];
 }
@@ -3029,6 +3035,9 @@ function fenster_blog_legacy_guides_for_page(string $slug): array
         'french-doors' => ['difference-between-french-doors-and-sliding-patio-doors'],
         'patio-doors' => ['difference-between-french-doors-and-sliding-patio-doors'],
         'window-and-door-repairs' => ['window-maintenance', 'door-maintenance'],
+        'commercial-windows-and-doors' => ['commercial-window-maintenance', 'commercial-window-installation-in-healthcare'],
+        'healthcare-construction' => ['commercial-window-installation-in-healthcare', 'commercial-window-maintenance'],
+        'louvre-vents' => ['all-you-need-to-know-about-louvre-vents'],
     ];
 
     $slug = trim($slug, '/');

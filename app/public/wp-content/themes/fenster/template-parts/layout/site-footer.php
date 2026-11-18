@@ -32,6 +32,7 @@ $footer_company = [
     ['label' => 'About Fenster', 'url' => home_url('/about/')],
     ['label' => 'Why Trust Fenster', 'url' => home_url('/why-trust-fenster/')],
     ['label' => 'Meet the Team', 'url' => home_url('/meet-the-team/')],
+    ['label' => 'Careers', 'url' => home_url('/careers/')],
     ['label' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['label' => 'Care and Maintenance', 'url' => home_url('/care-and-maintenance/')],
     /* `AI.md` has recorded since 2026-08-26 that `/why-distinction/` is
