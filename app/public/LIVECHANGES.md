@@ -1,6 +1,6 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-11-17
+Last updated: 2026-11-18
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
@@ -12,6 +12,36 @@ This is the short operational guide for any Codex agent or developer making chan
 - **Never render a per-visitor value into the page config.** The same caching makes it a leak, not just a dead value: a reference printed into cacheable HTML is baked into the cached copy and served to every later visitor of that page. `adAttributionRef` was removed from `fenster_enqueue_website_tracking_config()` for exactly this.
 
 ## Current Truth
+
+- **24 GUIDES AND 51 COMMERCIAL AREA PAGES REVAMPED AND LINKED IN, LIVE 2026-11-18 11:50 UTC, RELEASE 12 (11-FILE TRANSPLANT ON LIVE'S OWN SOURCE).** Owner: *"fix them all - like complete revamp them all"*, then *"Yes, do both"* to source-checking the area facts and putting everything live.
+  - **Why:** a crawl of live on 18 November found 68 sitemap pages with no internal link from anywhere: 32 `/commercial-glazing-<area>/` pages and 36 others, made up of older guides, `/careers/` and `/why-choose-fenster-over-anglian/`.
+  - **What:**
+    - **Guides.** 24 older guides are rewritten straight into `data/pages.json`.
+    - **Commercial areas.** 51 `/commercial-glazing-<area>/` pages share one template, `template-parts/sections/commercial-county.php`. Local copy is in `data/commercial-areas.json` and the logic in `inc/commercial-area-detail.php`. Manchester, Birmingham, Leeds and Sheffield moved onto it.
+    - **Links.** The blog hub lists the guides by topic, the commercial hub links all 51 areas, product pages list their guides, the winter guide links out to the products and guides it mentions, and Careers is in the footer.
+  - **Facts:** 14 local claims were corrected after a source check, including Harlow Innovation Park, Ansty Park on the edge of Coventry, GSK on Gunnels Wood Road, the HGV Safety Permit for lorries over 12 tonnes, and the London Lorry Control Scheme. The check covered the named, riskier claims, not every well-known landmark.
+  - **Live differs from `main` here:** none of this code is on `main`. The test line is branch `seo/winter-guide-internal-links` (`bfa601ba`), which also carries the winter guide. Live's exact files are in `~/ab-release/stage12/`, so the next release must be built on live's own files.
+  - **Not shipped (still test-only, the rest of the 10 November SEO plan):**
+    - the other footer rows;
+    - product-specific quote links on guides;
+    - guide dates, `data/sitemap-lastmod.json` and `fenster_sitemap_lastmod`;
+    - `noindex` on `/wcad-thank-you/`;
+    - the other title changes and the `legalName` removal.
+  - **Still open:** `/nick-test-baboon/` and `/our-new-website/` return `410`, but their WordPress records are still published and need trashing in wp-admin.
+  - **Release:**
+    - Built by applying the hunks to live's own copies, each keeping its own line endings (`generated-pages.php` is CRLF on live).
+    - Proved first in a hard-linked `themes/fenster-release` through WP-CLI renders (removed after). Old against new differed only in the Careers footer link, the guide lists and the hub lists.
+    - Parents asserted by `md5sum -c parent12.md5` (9 files). Dry run exactly 9 changed, 2 added and 0 new directories, then residual 0. `php -l` passed.
+    - Backup `~/ab-release/backup12-20261118-115019.tar`. Socket purge `msg:OK`.
+    - Shipped (first 12 of md5): `data/commercial-areas.json` `5828b0863313`, `data/pages.json` `fbd322ef9c99`, `inc/blog-posts.php` `2bf776492651`, `inc/commercial-area-detail.php` `89c3dfaea846`, `inc/generated-pages.php` `90d8ebb09be8`, `inc/warm-guide-data.php` `528fa80217d7`, `template-parts/components/blog-related.php` `2568923c5d3c`, `template-parts/layout/site-footer.php` `d3ff3445515f`, `template-parts/sections/blog-hub.php` `3ab6f7f90865`, `template-parts/sections/commercial-county.php` `9f03175d4804`, `template-parts/sections/commercial-glazing-v2.php` `0d866151239f`.
+  - **Undo:** extract the backup over `themes/fenster`, delete the two added files (`data/commercial-areas.json`, `inc/commercial-area-detail.php`), then purge through the socket.
+  - **Verified on live, logged out:**
+    - 85 pages return `200` with public caching, and repeat requests `HIT`.
+    - Bare `/` is still `private, no-store` (731 bytes). `/?home=a` and `/?home=b` return `200` with the Careers link.
+    - The sitemap has 219 URLs, no duplicates and 51 area pages.
+    - All 288 internal links found on those pages return `200`.
+    - The blog hub links 24 of 24 guides and the commercial hub 51 of 51 areas. The winter guide has 62 internal links in its main content.
+    - At 375px, Leeds, the blog hub and the commercial hub have no sideways scroll, console errors or broken images. Layout was measured, because the cookie banner covered the screenshots.
 
 - **THE WINTER GUIDE `/stop-window-draughts/`, ITS SEASONAL BANNER AND THREE SPEED FIXES, LIVE 2026-11-17 14:51 UTC, RELEASE 11 (24-FILE TRANSPLANT ON LIVE'S OWN SOURCE).** Owner: *"okay go live"*, for the guide, the banner and the speed fixes reviewed on test.
   - **What:**
